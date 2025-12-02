@@ -1,0 +1,17 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<ellipse cx="12.0002" cy="18.3824" rx="0.617649" ry="0.617648" fill="#020202"/>
+<ellipse cx="12.0002" cy="5.61765" rx="0.617649" ry="0.617648" fill="#020202"/>
+<ellipse cx="17.4561" cy="8.80881" rx="0.617649" ry="0.617648" fill="#020202"/>
+<ellipse cx="17.4561" cy="15.1911" rx="0.617649" ry="0.617648" fill="#020202"/>
+<ellipse cx="6.54428" cy="15.1911" rx="0.617649" ry="0.617648" fill="#020202"/>
+<ellipse cx="6.54428" cy="8.80881" rx="0.617649" ry="0.617648" fill="#020202"/>
+<line x1="0.25" y1="-0.25" x2="10.8142" y2="-0.25" transform="matrix(0 -1 -1 0 11.8972 17.5052)" stroke="#020202" stroke-width="0.5" stroke-linecap="round"/>
+<line x1="0.25" y1="-0.25" x2="10.8142" y2="-0.25" transform="matrix(0.866026 -0.499999 -0.500001 -0.866025 7.16194 14.7527)" stroke="#020202" stroke-width="0.5" stroke-linecap="round"/>
+<line x1="0.25" y1="-0.25" x2="10.8142" y2="-0.25" transform="matrix(-0.866026 -0.499999 0.500001 -0.866025 16.8467 14.7527)" stroke="#020202" stroke-width="0.5" stroke-linecap="round"/>
+<line x1="6.50037" y1="13.85" x2="6.50037" y2="10.15" stroke="#020202" stroke-width="0.5" stroke-linecap="round"/>
+<line x1="17.7004" y1="13.85" x2="17.7004" y2="10.15" stroke="#020202" stroke-width="0.5" stroke-linecap="round"/>
+<line x1="0.25" y1="-0.25" x2="3.95001" y2="-0.25" transform="matrix(0.822372 -0.568949 0.568951 0.822372 13.1734 18.5221)" stroke="#020202" stroke-width="0.5" stroke-linecap="round"/>
+<line x1="0.25" y1="-0.25" x2="3.95001" y2="-0.25" transform="matrix(-0.822372 -0.568949 -0.568951 0.822372 16.5443 8.08362)" stroke="#020202" stroke-width="0.5" stroke-linecap="round"/>
+<line x1="0.25" y1="-0.25" x2="3.95001" y2="-0.25" transform="matrix(-0.822372 -0.568949 -0.568951 0.822372 10.7795 18.5221)" stroke="#020202" stroke-width="0.5" stroke-linecap="round"/>
+<line x1="0.25" y1="-0.25" x2="3.95001" y2="-0.25" transform="matrix(0.822372 -0.568949 0.568951 0.822372 7.5119 8.18689)" stroke="#020202" stroke-width="0.5" stroke-linecap="round"/>
+</svg>
