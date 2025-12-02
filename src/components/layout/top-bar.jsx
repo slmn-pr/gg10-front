@@ -15,7 +15,7 @@ const TopBar = () => (
     color="transparent"
     elevation={0}
     sx={{
-      bgcolor: 'background.default',
+      bgcolor: 'custom.bg1',
       pt: 1,
     }}
   >

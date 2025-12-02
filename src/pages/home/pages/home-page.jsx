@@ -18,8 +18,12 @@ import WorkspacePremiumRoundedIcon from '@/assets/icons/rank/legend.svg';
 import ExpandChevronIcon from '@/assets/icons/general/chevron-back.svg';
 import bg1 from '@/assets/images/lobby/bg-hero.png';
 
-import LobbyCard from '../components/lobby-card.jsx';
+import MultiPLayerIcon from '@/assets/icons/game-mode/multi-player.svg';
+import GoldBigIcon from '@/assets/icons/Rank icons/Gold_bigsize.svg';
 
+import LobbyCard from '../components/lobby-card.jsx';
+import { CardHeader } from '@mui/material';
+import UserStatsCard from '../components/UserStatsCard.jsx';
 
 const SvgIcon = ({ src, sx, ...props }) => (
   <Box
@@ -37,41 +41,65 @@ const SvgIcon = ({ src, sx, ...props }) => (
 );
 
 const UserStats = () => (
-  <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2, px: 1 }}>
+  <Stack
+    direction="row"
+    justifyContent="space-between"
+    alignItems="center"
+    sx={{ mb: 2, px: 1 }}
+    bgcolor="custom.bg1"
+    width="100%"
+  >
     {/* Multiplayer Stats */}
-    <Card sx={{ bgcolor: '#151826', p: 1.5, borderRadius: 4, width: '30%', textAlign: 'center', position: 'relative', overflow: 'visible' }}>
-      <Box sx={{ position: 'absolute', top: -10, left: '50%', transform: 'translateX(-50%)', color: '#FF0055' }}>
-        <SvgIcon src={ShieldRoundedIcon} sx={{ width: 20, height: 20 }} />
-      </Box>
-      <Typography variant="caption" color="error.main" sx={{ display: 'block', mt: 1, fontSize: '0.7rem' }}>مولتی پلیر</Typography>
-      <Box sx={{ my: 0.5 }}>
-        <SvgIcon src={WorkspacePremiumRoundedIcon} sx={{ width: 32, height: 32, filter: 'brightness(0) saturate(100%) invert(83%) sepia(35%) saturate(666%) hue-rotate(109deg) brightness(94%) contrast(89%)' }} />
-      </Box>
-      <Typography variant="body2" fontWeight="bold" color="white">لجند</Typography>
-      <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.65rem' }}>۵۰۰۰ امتیاز</Typography>
-    </Card>
+    <UserStatsCard
+      title="مولتی پلیر"
+      icon={MultiPLayerIcon}
+      rank="لجند"
+      value="۱۰۰۰۰"
+      rankIcon={WorkspacePremiumRoundedIcon}
+    />
 
     {/* Avatar */}
     <Stack alignItems="center" sx={{ mt: -2 }}>
-      <Avatar
-        src="https://i.pravatar.cc/150?img=11"
-        sx={{ width: 80, height: 80, border: '2px solid #151826', boxShadow: '0 0 20px rgba(0,0,0,0.5)' }}
-      />
-      <Typography variant="body2" fontWeight="bold" sx={{ mt: 0.5 }}>amir_gamer</Typography>
+      {/* <Avatar
+        src=""
+        sx={{
+          width: 100,
+          height: 100,
+          border: '2px solid #151826',
+          boxShadow: '0 0 20px rgba(0,0,0,0.5)',
+        }}
+      /> */}
+
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          height: '100%',
+        }}
+      >
+        <img
+          src="https://i.pravatar.cc/150?img=11"
+          alt="User Avatar"
+          style={{ borderRadius: 8 }}
+          width={120}
+          height={120}
+        />
+        <Typography variant="body2" color="white" fontWeight="bold" sx={{ mt: 1 }}>
+          amir_gamer
+        </Typography>
+      </Box>
     </Stack>
 
     {/* Battle Royale Stats */}
-    <Card sx={{ bgcolor: '#151826', p: 1.5, borderRadius: 4, width: '30%', textAlign: 'center', position: 'relative', overflow: 'visible' }}>
-      <Box sx={{ position: 'absolute', top: -10, left: '50%', transform: 'translateX(-50%)', color: '#FF0055' }}>
-        <SvgIcon src={ParaglidingRoundedIcon} sx={{ width: 20, height: 20 }} />
-      </Box>
-      <Typography variant="caption" color="error.main" sx={{ display: 'block', mt: 1, fontSize: '0.7rem' }}>بتل رویال</Typography>
-      <Box sx={{ my: 0.5 }}>
-        <SvgIcon src={WorkspacePremiumRoundedIcon} sx={{ width: 32, height: 32, filter: 'brightness(0) saturate(100%) invert(68%) sepia(59%) saturate(462%) hue-rotate(296deg) brightness(102%) contrast(101%)' }} />
-      </Box>
-      <Typography variant="body2" fontWeight="bold" color="white">آماتور</Typography>
-      <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.65rem' }}>۱۰۰ امتیاز</Typography>
-    </Card>
+    <UserStatsCard
+      title="بتل رویال"
+      rankIcon={GoldBigIcon}
+      icon={GoldBigIcon}
+      rank="آماتور"
+      value="۱۰۰ امتیاز"
+    />
   </Stack>
 );
 
@@ -120,7 +148,11 @@ const Banner = () => (
 );
 
 const GameModeSelector = () => (
-  <Stack direction="row" spacing={0} sx={{ mb: 2, bgcolor: '#151826', borderRadius: 3, p: 0.5 }}>
+  <Stack
+    direction="row"
+    spacing={0}
+    sx={{ mb: 2, bgcolor: '#151826', borderRadius: 3, p: 0.5 }}
+  >
     <Button
       fullWidth
       variant="contained"
@@ -158,47 +190,81 @@ const Filters = () => (
       icon={<SvgIcon src={FilterListRoundedIcon} sx={{ width: 16, height: 16 }} />}
       label="فیلترها"
       variant="outlined"
-      sx={{ borderRadius: 2, borderColor: '#2B2E40', color: '#fff', '& .MuiChip-icon': { color: '#fff' } }}
+      sx={{
+        borderRadius: 2,
+        borderColor: '#2B2E40',
+        color: '#fff',
+        '& .MuiChip-icon': { color: '#fff' },
+      }}
     />
     <Chip
       icon={<SvgIcon src={AccessTimeRoundedIcon} sx={{ width: 16, height: 16 }} />}
       label="کیلی"
       variant="outlined"
-      sx={{ borderRadius: 2, borderColor: '#2B2E40', color: '#fff', '& .MuiChip-icon': { color: '#fff' } }}
+      sx={{
+        borderRadius: 2,
+        borderColor: '#2B2E40',
+        color: '#fff',
+        '& .MuiChip-icon': { color: '#fff' },
+      }}
     />
     <Chip
       icon={<SvgIcon src={AutoModeRoundedIcon} sx={{ width: 16, height: 16 }} />}
       label="اتوریوایو"
       variant="outlined"
-      sx={{ borderRadius: 2, borderColor: '#2B2E40', color: '#fff', '& .MuiChip-icon': { color: '#fff' } }}
+      sx={{
+        borderRadius: 2,
+        borderColor: '#2B2E40',
+        color: '#fff',
+        '& .MuiChip-icon': { color: '#fff' },
+      }}
     />
     <Chip
       icon={<SvgIcon src={GroupsRoundedIcon} sx={{ width: 16, height: 16 }} />}
       label="اسکوادی"
       variant="outlined"
-      sx={{ borderRadius: 2, borderColor: '#2B2E40', color: '#fff', '& .MuiChip-icon': { color: '#fff' } }}
+      sx={{
+        borderRadius: 2,
+        borderColor: '#2B2E40',
+        color: '#fff',
+        '& .MuiChip-icon': { color: '#fff' },
+      }}
     />
   </Stack>
 );
-
-
 
 const HomePage = () => {
   const [myLobbiesExpanded, setMyLobbiesExpanded] = React.useState(true);
   const [allLobbiesExpanded, setAllLobbiesExpanded] = React.useState(true);
 
   return (
-    <Box sx={{ pb: 4 }}>
+    <Box sx={{ pb: 4, px: 0 }}>
+      {/* USer status */}
       <UserStats />
+
+      {/* Banner slider */}
       <Banner />
+
+      {/* Game mode selector */}
       <GameModeSelector />
+
+      {/* Filters */}
       <Filters />
 
       {/* My Lobbies Section */}
-      <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+        sx={{ mb: 2 }}
+      >
         <Stack direction="row" alignItems="center" spacing={1}>
-          <Typography variant="h6" fontWeight="bold">لابی‌های شما</Typography>
-          <Typography variant="body2" color="text.secondary">۲ لابی</Typography>
+          <Typography variant="h6" fontWeight="bold">
+            لابی‌های شما
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            ۲ لابی
+          </Typography>
         </Stack>
         <IconButton
           size="small"
@@ -243,10 +309,19 @@ const HomePage = () => {
       )}
 
       {/* All Lobbies Section */}
-      <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2, mt: 4 }}>
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+        sx={{ mb: 2, mt: 4 }}
+      >
         <Stack direction="row" alignItems="center" spacing={1}>
-          <Typography variant="h6" fontWeight="bold">فهرست همه لابی‌ها</Typography>
-          <Typography variant="body2" color="text.secondary">۴ لابی</Typography>
+          <Typography variant="h6" fontWeight="bold">
+            فهرست همه لابی‌ها
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            ۴ لابی
+          </Typography>
         </Stack>
       </Stack>
 
