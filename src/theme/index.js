@@ -1,6 +1,84 @@
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
+  typography: {
+    fontFamily: `'Estedad-FD', sans-serif`,
+    // Custom typography variants
+    title1: {
+      fontFamily: `'Estedad-FD', sans-serif`,
+      fontWeight: 700,
+      fontSize: '20px',
+      lineHeight: '40px',
+    },
+    title2: {
+      fontFamily: `'Estedad-FD', sans-serif`,
+      fontWeight: 700,
+      fontSize: '18px',
+      lineHeight: '36px',
+    },
+    title3: {
+      fontFamily: `'Estedad-FD', sans-serif`,
+      fontWeight: 700,
+      fontSize: '16px',
+      lineHeight: '32px',
+    },
+    sub1: {
+      fontFamily: `'Estedad-FD', sans-serif`,
+      fontWeight: 500,
+      fontSize: '14px',
+      lineHeight: '28px',
+    },
+    sub2: {
+      fontFamily: `'Estedad-FD', sans-serif`,
+      fontWeight: 500,
+      fontSize: '12px',
+      lineHeight: '24px',
+    },
+    sub3: {
+      fontFamily: `'Estedad-FD', sans-serif`,
+      fontWeight: 600,
+      fontSize: '10px',
+      lineHeight: '20px',
+    },
+    // Standard MUI variants
+    h1: {
+      fontFamily: `'Estedad-FD', sans-serif`,
+      fontWeight: 700,
+    },
+    h2: {
+      fontFamily: `'Estedad-FD', sans-serif`,
+      fontWeight: 700,
+    },
+    h3: {
+      fontFamily: `'Estedad-FD', sans-serif`,
+      fontWeight: 600,
+    },
+    h4: {
+      fontFamily: `'Estedad-FD', sans-serif`,
+      fontWeight: 600,
+    },
+    h5: {
+      fontFamily: `'Estedad-FD', sans-serif`,
+      fontWeight: 500,
+    },
+    h6: {
+      fontFamily: `'Estedad-FD', sans-serif`,
+      fontWeight: 500,
+    },
+    button: {
+      fontFamily: `'Estedad-FD', sans-serif`,
+      textTransform: 'none',
+      fontWeight: 500,
+    },
+    body1: {
+      fontFamily: `'Estedad-FD', sans-serif`,
+      fontWeight: 400,
+    },
+    body2: {
+      fontFamily: `'Estedad-FD', sans-serif`,
+      fontWeight: 400,
+    },
+  },
   palette: {
     mode: 'dark',
     primary: {
@@ -77,15 +155,6 @@ const theme = createTheme({
       primary: '#FFFFFF',
       secondary: '#A4A4A4',
       disabled: '#8A8A8A',
-    },
-  },
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: {
-        body: {
-          backgroundColor: '#131313',
-        },
-      },
     },
   },
 });

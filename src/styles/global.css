@@ -1,8 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 
 :root {
-  font-family: 'Plus Jakarta Sans Variable', 'Space Grotesk Variable', system-ui,
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Estedad-FD', sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color-scheme: dark;
@@ -20,6 +19,7 @@ body {
   color: #f9f9ff;
   font-feature-settings: 'frac', 'ss02';
   overflow-x: hidden;
+  font-family: 'Estedad-FD', sans-serif;
 }
 
 img {

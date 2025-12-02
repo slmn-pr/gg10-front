@@ -29,7 +29,7 @@ const md3Shadows = [
 ];
 
 const typography = {
-  fontFamily: `'Plus Jakarta Sans Variable', 'Space Grotesk Variable', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif`,
+  fontFamily: "Estedad-FD",
   displayLarge: { fontSize: '3.5rem', fontWeight: 500, letterSpacing: '-0.02em' },
   displayMedium: { fontSize: '3rem', fontWeight: 500 },
   displaySmall: { fontSize: '2.5rem', fontWeight: 500 },
@@ -52,7 +52,7 @@ const md3Theme = createTheme({
     mode: 'dark',
     ...sharedPalette,
   },
-  typography,
+  // typography,
   shape: shapeScale,
   shadows: md3Shadows,
   components: {

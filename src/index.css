@@ -1,1 +1,12 @@
 @import './styles/global.css';
+@import './styles/fonts.css';
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: #03050a;
+  color: #f9f9ff;
+  font-feature-settings: 'frac', 'ss02';
+  overflow-x: hidden;
+  font-family: 'Estedad-FD', sans-serif;
+}

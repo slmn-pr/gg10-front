@@ -1,7 +1,12 @@
 import { Box, Card, Icon, Stack, Typography } from '@mui/material';
 
-
-export default function UserStatsCard({ title, icon, rankIcon, rank = 'لجند', value = '۵۰۰۰' }) {
+export default function UserStatsCard({
+  title,
+  icon,
+  rankIcon,
+  rank = 'لجند',
+  value = '۵۰۰۰',
+}) {
   return (
     <Card
       sx={{
@@ -16,7 +21,7 @@ export default function UserStatsCard({ title, icon, rankIcon, rank = 'لجند'
       }}
     >
       <Stack direction="row" alignItems="center" justifyContent="center" spacing={1}>
-        <Typography variant="h5" color="error.main" sx={{ mb: 1 }}>
+        <Typography variant="sub1" color="error.main" sx={{ mb: 1 }}>
           {title}
         </Typography>
         <Icon color="#fff">
@@ -25,14 +30,22 @@ export default function UserStatsCard({ title, icon, rankIcon, rank = 'لجند'
       </Stack>
 
       <Box sx={{ bgcolor: 'custom.bg2', p: 1, borderRadius: 4 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Box
+          mt={1}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
           <img src={rankIcon} alt={rank} width={60} height={60} />
+          <Typography variant="sub3" fontWeight="bold" color="white">
+            {rank}
+          </Typography>
         </Box>
 
-        <Typography variant="subtitle2" fontWeight="bold" color="white">
-          {rank}
-        </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.65rem' }}>
+        <Typography variant="sub3" color="text.secondary" sx={{ fontSize: '0.65rem' }}>
           {value} امتیاز
         </Typography>
       </Box>
