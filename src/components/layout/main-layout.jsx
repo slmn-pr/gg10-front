@@ -11,8 +11,8 @@ const MainLayout = () => {
         display: 'flex',
         flexDirection: 'column',
         minHeight: '100vh',
-        bgcolor: 'background.default',
         overflowX: 'hidden',
+        backgroundColor: '#03050a',
       }}
     >
       <Container maxWidth="sm" sx={{ p: 0, display: 'flex', flexDirection: 'column', flexGrow: 1, overflowX: 'hidden' }}>
