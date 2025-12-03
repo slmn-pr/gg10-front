@@ -11,7 +11,7 @@ export default function GameModeSelector() {
     <Stack
       direction="row"
       spacing={0}
-      sx={{ mb: 2, bgcolor: '#151826', borderRadius: 3, p: 0.5 }}
+      sx={{ mb: 2, borderRadius: 1, p: 0.5 }}
     >
       <Box
         sx={{
