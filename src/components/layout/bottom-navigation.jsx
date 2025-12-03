@@ -13,7 +13,12 @@ import Box from '@mui/material/Box';
 const navItems = [
   { label: 'کیف پول', icon: <AccountBalanceWalletRoundedIcon />, path: '/wallet' },
   { label: 'لیدربرد', icon: <EmojiEventsRoundedIcon />, path: '/leaderboard' },
-  { label: '', icon: <HomeRoundedIcon sx={{ fontSize: 32 }} />, path: '/home', isMain: true },
+  {
+    label: '',
+    icon: <HomeRoundedIcon sx={{ fontSize: 32 }} />,
+    path: '/home',
+    isMain: true,
+  },
   { label: 'مأموریت‌ها', icon: <RocketLaunchRoundedIcon />, path: '/missions' },
   { label: 'حساب کاربری', icon: <PersonRoundedIcon />, path: '/user/profile' },
 ];
@@ -21,10 +26,7 @@ const navItems = [
 const MDBottomNavigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const value = useMemo(
-    () => location.pathname,
-    [location.pathname],
-  );
+  const value = useMemo(() => location.pathname, [location.pathname]);
 
   return (
     <Paper
@@ -93,8 +95,9 @@ const MDBottomNavigation = () => {
                       justifyContent: 'center',
                       color: 'white',
                       mt: -4,
-                      boxShadow: '0 8px 16px rgba(233, 30, 99, 0.5), 0 4px 8px rgba(233, 30, 99, 0.3)',
-                      border: '3px solid #0D0F17',
+                      boxShadow:
+                        '0 8px 16px rgba(233, 30, 99, 0.5), 0 4px 8px rgba(233, 30, 99, 0.3)',
+                      // border: '3px solid #0D0F17',
                       transition: 'transform 0.2s ease',
                       '&:hover': {
                         transform: 'scale(1.05)',
