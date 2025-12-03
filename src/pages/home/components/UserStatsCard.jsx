@@ -21,7 +21,7 @@ export default function UserStatsCard({
       }}
     >
       <Stack direction="row" alignItems="center" justifyContent="center" spacing={1}>
-        <Typography variant="sub1" color="error.main" sx={{ mb: 1 }}>
+        <Typography variant="sub1" color="custom.tint4" sx={{ mb: 1 }}>
           {title}
         </Typography>
         <Icon color="#fff">
