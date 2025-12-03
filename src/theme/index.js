@@ -127,6 +127,11 @@ const theme = createTheme({
       warning: '#FFC225',
       onWarning: '#020202',
       deleteOnModal: '#FF3333',
+      // Stroke colors
+      primaryStroke: '#DD6161',
+      blackStroke: '#000000',
+      progressStroke: '#262626',
+      bottomNavigationGreyLine: '#454545',
     },
     // Standard MUI error, success, warning, info
     error: {

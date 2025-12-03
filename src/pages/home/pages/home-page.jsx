@@ -11,14 +11,14 @@ import AccessTimeRoundedIcon from '@/assets/icons/lobby-card/time.svg';
 import FilterListRoundedIcon from '@/assets/icons/chips/filter.svg';
 import AutoModeRoundedIcon from '@/assets/icons/chips/auto-revive.svg';
 import GroupsRoundedIcon from '@/assets/icons/chips/squad.svg';
-import ShieldRoundedIcon from '@/assets/icons/chips/placement.svg';
-import ParaglidingRoundedIcon from '@/assets/icons/game-mode/battle-royal.svg';
+
 import ExpandChevronIcon from '@/assets/icons/general/chevron-back.svg';
 import bg1 from '@/assets/images/lobby/bg-hero.png';
 
 import LobbyCard from '../components/lobby-card.jsx';
 import UserStats from '../containers/UserStats.jsx';
 import BannerSlider from '../containers/BannerSlider.jsx';
+import GameModeSelector from '../components/GameModeTab.jsx';
 
 const SvgIcon = ({ src, sx, ...props }) => (
   <Box
@@ -35,42 +35,7 @@ const SvgIcon = ({ src, sx, ...props }) => (
   />
 );
 
-const GameModeSelector = () => (
-  <Stack
-    direction="row"
-    spacing={0}
-    sx={{ mb: 2, bgcolor: '#151826', borderRadius: 3, p: 0.5 }}
-  >
-    <Button
-      fullWidth
-      variant="contained"
-      startIcon={<SvgIcon src={ShieldRoundedIcon} />}
-      sx={{
-        bgcolor: '#FFB4AB',
-        color: '#000',
-        borderRadius: 2.5,
-        '&:hover': { bgcolor: '#FFB4AB' },
-        py: 1,
-        fontSize: '1rem',
-        fontWeight: 'bold',
-      }}
-    >
-      مولتی پلیر
-    </Button>
-    <Button
-      fullWidth
-      startIcon={<SvgIcon src={ParaglidingRoundedIcon} sx={{ color: '#fff' }} />}
-      sx={{
-        color: '#fff',
-        borderRadius: 2.5,
-        py: 1,
-        fontSize: '1rem',
-      }}
-    >
-      بتل رویال
-    </Button>
-  </Stack>
-);
+
 
 const Filters = () => (
   <Stack direction="row" spacing={1} sx={{ mb: 3, overflowX: 'auto', pb: 1 }}>
