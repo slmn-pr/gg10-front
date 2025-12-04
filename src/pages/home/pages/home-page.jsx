@@ -2,12 +2,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import Chip from '@mui/material/Chip';
 import IconButton from '@mui/material/IconButton';
-import AccessTimeRoundedIcon from '@/assets/icons/lobby-card/time.svg';
-import FilterListRoundedIcon from '@/assets/icons/chips/filter.svg';
-import AutoModeRoundedIcon from '@/assets/icons/chips/auto-revive.svg';
-import GroupsRoundedIcon from '@/assets/icons/chips/squad.svg';
 
 import ExpandChevronIcon from '@/assets/icons/general/chevron-back.svg';
 
@@ -15,6 +10,7 @@ import LobbyCard from '../components/lobby-card.jsx';
 import UserStats from '../containers/UserStats.jsx';
 import BannerSlider from '../containers/BannerSlider.jsx';
 import GameModeSelector from '../components/GameModeTab.jsx';
+import HomeFilters from '../containers/HomeFilters/index.jsx';
 
 const SvgIcon = ({ src, sx, ...props }) => (
   <Box
@@ -29,55 +25,6 @@ const SvgIcon = ({ src, sx, ...props }) => (
     }}
     {...props}
   />
-);
-
-const Filters = () => (
-  <Stack direction="row" spacing={1} sx={{ mb: 3, overflowX: 'auto', pb: 1 }}>
-    <Chip
-      icon={<SvgIcon src={FilterListRoundedIcon} sx={{ width: 16, height: 16 }} />}
-      label="فیلترها"
-      variant="outlined"
-      sx={{
-        borderRadius: 2,
-        borderColor: '#2B2E40',
-        color: '#fff',
-        '& .MuiChip-icon': { color: '#fff' },
-      }}
-    />
-    <Chip
-      icon={<SvgIcon src={AccessTimeRoundedIcon} sx={{ width: 16, height: 16 }} />}
-      label="کیلی"
-      variant="outlined"
-      sx={{
-        borderRadius: 2,
-        borderColor: '#2B2E40',
-        color: '#fff',
-        '& .MuiChip-icon': { color: '#fff' },
-      }}
-    />
-    <Chip
-      icon={<SvgIcon src={AutoModeRoundedIcon} sx={{ width: 16, height: 16 }} />}
-      label="اتوریوایو"
-      variant="outlined"
-      sx={{
-        borderRadius: 2,
-        borderColor: '#2B2E40',
-        color: '#fff',
-        '& .MuiChip-icon': { color: '#fff' },
-      }}
-    />
-    <Chip
-      icon={<SvgIcon src={GroupsRoundedIcon} sx={{ width: 16, height: 16 }} />}
-      label="اسکوادی"
-      variant="outlined"
-      sx={{
-        borderRadius: 2,
-        borderColor: '#2B2E40',
-        color: '#fff',
-        '& .MuiChip-icon': { color: '#fff' },
-      }}
-    />
-  </Stack>
 );
 
 const HomePage = () => {
@@ -99,7 +46,7 @@ const HomePage = () => {
         <GameModeSelector />
 
         {/* Filters */}
-        <Filters />
+        <HomeFilters />
 
         {/* My Lobbies Section */}
         <Stack
