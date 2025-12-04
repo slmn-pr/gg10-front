@@ -9,6 +9,9 @@ import NotificationsNoneRoundedIcon from '@mui/icons-material/NotificationsNoneR
 import AccountBalanceWalletRoundedIcon from '@mui/icons-material/AccountBalanceWalletRounded';
 import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
 import { useTheme } from '@emotion/react';
+import WalletIcon from '../icons/WalletIcon';
+import ChevronBackwardIcon from '../icons/ChevronBackward';
+import NotificationsIcon from '../icons/Notifications';
 
 export default function TopBar() {
   const theme = useTheme();
@@ -53,8 +56,8 @@ export default function TopBar() {
           <Button
             variant="contained"
             color="surface"
-            startIcon={<ArrowBackIosNewRoundedIcon width={20} height={20} />}
-            endIcon={<AccountBalanceWalletRoundedIcon width={20} height={20} />}
+            startIcon={<ChevronBackwardIcon />}
+            endIcon={<WalletIcon />}
             sx={{
               pointerEvents: 'auto', // Re-enable clicks on the button
               bgcolor: '#151826', // Slightly lighter than background
@@ -77,15 +80,16 @@ export default function TopBar() {
         </Box>
 
         {/* Notification Icon */}
-        <IconButton color="inherit" sx={{ zIndex: 2 }}>
-          <Badge
-            badgeContent={2}
-            color="error"
-            sx={{ '& .MuiBadge-badge': { bgcolor: '#FF0055', color: 'white' } }}
-          >
-            <NotificationsNoneRoundedIcon />
-          </Badge>
-        </IconButton>
+        {/* <IconButton color="inherit" sx={{ zIndex: 2 }} size='small'> */}
+        <Badge
+          badgeContent={'+99'}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          color="error"
+          sx={{ '& .MuiBadge-badge': { bgcolor: '#FF0055', color: 'white' } }}
+        >
+          <NotificationsIcon />
+        </Badge>
+        {/* </IconButton> */}
       </Toolbar>
     </AppBar>
   );
