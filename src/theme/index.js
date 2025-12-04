@@ -78,6 +78,18 @@ const theme = createTheme({
       fontFamily: `'Estedad-FD', sans-serif`,
       fontWeight: 400,
     },
+    caption1: {
+      fontFamily: `'Estedad-FD', sans-serif`,
+      fontWeight: 400,
+      fontSize: '12px',
+      lineHeight: '24px',
+    },
+    caption2: {
+      fontFamily: `'Estedad-FD', sans-serif`,
+      fontWeight: 400,
+      fontSize: '10px',
+      lineHeight: '20px',
+    },
   },
   palette: {
     mode: 'dark',
@@ -132,6 +144,19 @@ const theme = createTheme({
       blackStroke: '#000000',
       progressStroke: '#262626',
       bottomNavigationGreyLine: '#454545',
+
+      // Lobbies
+      dollar: '#00C016',
+      prize: '#DBB037',
+      glassOnCards: '#1A1D26',
+      cardsBg: '#1F1F1F',
+
+      // tags
+      tagOnCardPicBg: '#cfcfcf',
+
+      registering: '#00834f',
+      full: '#be9305',
+      live: '#e80000',
     },
     // Standard MUI error, success, warning, info
     error: {

@@ -6,34 +6,39 @@ import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import LinearProgress from '@mui/material/LinearProgress';
 
-// Icons
-import AccessTimeRoundedIcon from '@/assets/icons/lobby-card/time.svg';
-import PeopleRoundedIcon from '@/assets/icons/lobby-card/number.svg';
-import EmojiEventsRoundedIcon from '@/assets/icons/lobby-card/prize.svg';
-import PaidRoundedIcon from '@/assets/icons/lobby-card/entry_fee.svg';
-import AutoModeRoundedIcon from '@/assets/icons/chips/auto-revive.svg';
-import GroupsRoundedIcon from '@/assets/icons/chips/squad.svg';
-import PinIcon from '@/assets/icons/Tags icons/pin.svg';
-
-// Images
-import bg2 from '@/assets/images/lobby/bg-vip.png';
 import bg3 from '@/assets/images/lobby/bg-default.png';
-import lobbyAvatar from '@/assets/images/lobby/avatar.png';
+import vipBg from '@/assets/images/Lobbies card avatar.png';
 
-const SvgIcon = ({ src, sx, ...props }) => (
-  <Box
-    component="img"
-    src={src}
-    sx={{
-      width: '1em',
-      height: '1em',
-      display: 'inline-block',
-      verticalAlign: 'middle',
-      ...sx,
-    }}
-    {...props}
-  />
-);
+import { alpha, SvgIcon, useTheme } from '@mui/material';
+import PinIcon from '@/components/icons/PinIcon';
+import EntryFreeIcon from '@/components/icons/lobbie/EntryFreeIcon';
+import PrizeIcon from '@/components/icons/lobbie/PrizeIcon';
+import TimeIcon from '@/components/icons/lobbie/TimeIcon';
+import DoubleTagsIcon from '@/components/icons/DoubleTagsIcon';
+import LegendSmallIcon from '@/components/icons/rank/LegendSmallIcon';
+import GoldSmallIcon from '@/components/icons/rank/GoldSmallIcon';
+import SilverSmallIcon from '@/components/icons/rank/SilverSmallIcon';
+import SquadChipIcon from '@/components/icons/SquadChipIcon';
+import AutoReviveChipIcon from '@/components/icons/AutoReviveChipIcon';
+import PlacementChipIcon from '@/components/icons/chip/PlacementChipIcon';
+
+const STATUS_COLOR_MAP = {
+  'تکمیل ظرفیت': {
+    backgroundColor: 'rgba(255, 187, 96, 0.9)',
+    color: 'custom.full',
+    dot: '#3E2E1C',
+  },
+  'در حال برگزاری': {
+    backgroundColor: 'rgba(255, 105, 105, 0.9)',
+    color: 'custom.live',
+    dot: '#3E1C1C',
+  },
+  'در حال ثبت نام': {
+    backgroundColor: 'rgba(116, 247, 240, 0.9)',
+    color: 'custom.registering',
+    dot: '#1C3E3B',
+  },
+};
 
 const LobbyCard = ({
   title,
@@ -48,7 +53,10 @@ const LobbyCard = ({
   schedule = 'امروز ۱۷:۳۰',
   tags = ['اسکوادی', 'اتوریوایو', 'جایگاهی'],
 }) => {
-  const progress = maxPlayers ? Math.min(100, Math.round((currentPlayers / maxPlayers) * 100)) : 0;
+  const theme = useTheme();
+  const progress = maxPlayers
+    ? Math.min(100, Math.round((currentPlayers / maxPlayers) * 100))
+    : 0;
 
   const statusPalette = React.useMemo(() => {
     if (status?.includes('تکمیل') || isFull) {
@@ -83,25 +91,25 @@ const LobbyCard = ({
     () =>
       isVip
         ? {
-          panelBg: 'linear-gradient(90deg, #420018 0%, #2A000F 100%)',
-          panelBorder: '1px solid rgba(255, 54, 123, 0.2)',
-          progressBar: 'linear-gradient(90deg, #FF0055 0%, #FF4F9F 100%)',
-          curveBorderColor: '#FF367B',
-        }
+            panelBg: 'linear-gradient(90deg, #420018 0%, #2A000F 100%)',
+            panelBorder: '1px solid rgba(255, 54, 123, 0.2)',
+            progressBar: 'linear-gradient(90deg, #FF0055 0%, #FF4F9F 100%)',
+            curveBorderColor: '#FF367B',
+          }
         : {
-          panelBg: 'linear-gradient(90deg, #1A1D26 0%, #0C0E14 100%)',
-          panelBorder: '1px solid rgba(255, 255, 255, 0.05)',
-          progressBar: 'linear-gradient(90deg, #FF0055 0%, #FF4F9F 100%)',
-          curveBorderColor: 'rgba(255, 255, 255, 0.1)',
-        },
-    [isVip]
+            panelBg: 'linear-gradient(90deg, #1A1D26 0%, #0C0E14 100%)',
+            panelBorder: '1px solid rgba(255, 255, 255, 0.05)',
+            progressBar: 'linear-gradient(90deg, #FF0055 0%, #FF4F9F 100%)',
+            curveBorderColor: 'rgba(255, 255, 255, 0.1)',
+          },
+    [isVip],
   );
 
   const tagIcons = {
-    اسکوادی: <SvgIcon src={GroupsRoundedIcon} sx={{ width: 14, height: 14 }} />,
-    اسکواڈی: <SvgIcon src={GroupsRoundedIcon} sx={{ width: 14, height: 14 }} />,
-    اتوریوایو: <SvgIcon src={AutoModeRoundedIcon} sx={{ width: 14, height: 14 }} />,
-    جایگاهی: <SvgIcon src={EmojiEventsRoundedIcon} sx={{ width: 14, height: 14 }} />,
+    اسکوادی: <SquadChipIcon />,
+    اسکواڈی: <AutoReviveChipIcon />,
+    اتوریوایو: <AutoReviveChipIcon />,
+    جایگاهی: <PlacementChipIcon />,
   };
 
   return (
@@ -109,46 +117,55 @@ const LobbyCard = ({
       sx={{
         mb: 2,
         backgroundColor: 'transparent',
-        borderRadius: 1,
+        borderRadius: '8px',
         display: 'flex',
         flexDirection: 'row-reverse',
+        border: 'none',
         gap: 0,
         padding: 0,
         alignItems: 'stretch',
         position: 'relative',
         overflow: 'hidden',
-        height: 170,
+        minHeight: 120,
+        width: '100%',
       }}
     >
       {/* Image Section - RIGHT SIDE */}
       <Box
         sx={{
-          width: '35%',
+          width: '20%',
+
           position: 'relative',
           flexShrink: 0,
-          backgroundColor: '#05060C',
+          // backgroundColor: '#05060C',
           zIndex: 1,
-
         }}
       >
         <Box
           component="img"
-          src={isVip ? bg2 : bg3}
+          src={isVip ? vipBg : bg3}
           alt=""
           sx={{
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            objectPosition: 'center',
+            objectPosition: 'middle',
           }}
         />
 
         {/* Status Badge */}
         <Box
+          bgcolor={theme.palette.custom.tagOnCardPicBg}
           sx={{
             position: 'absolute',
-            top: 12,
-            right: 12,
+            top: 4,
+            right: 0,
+            border: 'none',
+            borderRadius: 0,
+            borderBottomRightRadius: '0px',
+            borderTopRightRadius: '0px',
+            borderTopLeftRadius: '8px',
+            borderBottomLeftRadius: '8px',
             px: 1.5,
             py: 0.5,
             borderRadius: 1,
@@ -157,33 +174,43 @@ const LobbyCard = ({
             display: 'inline-flex',
             alignItems: 'center',
             gap: 0.5,
-            backgroundColor: statusPalette.backgroundColor,
+            // color:,
+            // backgroundColor: statusPalette.backgroundColor,
             color: statusPalette.color,
             boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
           }}
         >
-          {status}
+          <Typography variant="sub3" color={STATUS_COLOR_MAP[status]?.color}>
+            {status}
+          </Typography>
         </Box>
 
         {/* Avatars */}
         <Stack
           direction="row"
-          spacing={-1}
+          spacing={-1.5}
+          bgcolor={alpha(theme.palette.custom.glassOnCards, 0.5)}
           sx={{
             position: 'absolute',
-            bottom: 12,
-            right: 12,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            bottom: 0,
+            left: 0,
+            right: 0,
             zIndex: 2,
           }}
         >
-          <Box sx={{ position: 'relative', display: 'flex' }}>
-            <Avatar sx={{ width: 28, height: 28, border: '2px solid #1A1D26' }} src={lobbyAvatar} />
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <SilverSmallIcon />
           </Box>
-          <Box sx={{ position: 'relative', display: 'flex' }}>
-            <Avatar sx={{ width: 28, height: 28, border: '2px solid #1A1D26' }} src={lobbyAvatar} />
+
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <GoldSmallIcon />
           </Box>
-          <Box sx={{ position: 'relative', display: 'flex' }}>
-            <Avatar sx={{ width: 28, height: 28, border: '2px solid #1A1D26' }} src={lobbyAvatar} />
+
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <LegendSmallIcon />
           </Box>
         </Stack>
       </Box>
@@ -192,11 +219,10 @@ const LobbyCard = ({
       <Box
         sx={{
           flex: 1,
-
-          background: cardStyles.panelBg,
-          border: cardStyles.panelBorder,
-          p: 2,
-          pr: 2,
+          background: isVip ? theme.palette.custom.shade3 : 'custom.cardsBg',
+          border: 'none',
+          px: 2,
+          py: 1,
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
@@ -211,36 +237,23 @@ const LobbyCard = ({
               sx={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: 0.5,
                 backgroundColor: '#000',
-                borderRadius: 1,
-                px: 1,
-                py: 0.5,
-                border: '1px solid rgba(255,255,255,0.1)',
+                borderRadius: 2,
+                px: 0.5,
+                bgcolor: '#000',
+                // border: '1px solid rgba(255,255,255,0.1)',
               }}
             >
-              <SvgIcon src={PinIcon} sx={{ width: 14, height: 14, color: '#fff', transform: 'rotate(45deg)' }} />
-              <Typography sx={{ color: '#fff', fontSize: '0.7rem', fontWeight: 700 }}>
-                ویژه
-              </Typography>
+              <Typography variant="caption2">ویژه</Typography>
+              <SvgIcon>
+                <PinIcon />
+              </SvgIcon>
             </Box>
           ) : (
             <Box />
           )}
 
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: 800,
-              color: '#FFFFFF',
-              fontSize: '1.2rem',
-              lineHeight: 1.2,
-              textAlign: 'right',
-              flex: 1,
-            }}
-          >
-            {title}
-          </Typography>
+          <Typography variant="sub1">{title}</Typography>
         </Stack>
 
         {/* Info Grid */}
@@ -248,38 +261,47 @@ const LobbyCard = ({
           {/* Time & Capacity (Left side of info) */}
           <Stack spacing={0.5} alignItems="flex-end">
             <Stack direction="row" alignItems="center" spacing={0.5}>
-              <Typography variant="caption" sx={{ color: '#fff', fontSize: '0.9rem', fontWeight: 500 }}>
-                {schedule}
-              </Typography>
-              <SvgIcon src={AccessTimeRoundedIcon} sx={{ width: 18, height: 18, color: '#fff', filter: 'brightness(0) invert(1)' }} />
+              <Typography variant="sub2">{schedule}</Typography>
+              <TimeIcon color="#fff" />
             </Stack>
             <Stack direction="row" alignItems="center" spacing={0.5}>
-              <Typography variant="caption" sx={{ color: '#fff', fontSize: '0.9rem', fontWeight: 500 }}>
+              <Typography variant="sub2" color="custom.greyOnBg1">
                 {currentPlayers}/{maxPlayers}
               </Typography>
-              <SvgIcon src={PeopleRoundedIcon} sx={{ width: 18, height: 18, color: '#fff', filter: 'brightness(0) invert(1)' }} />
+              <DoubleTagsIcon color="#fff" />
             </Stack>
           </Stack>
 
           {/* Entry & Prize (Right side of info) */}
           <Stack spacing={0.5} alignItems="flex-end">
+            {/* Entry Fee */}
             <Stack direction="row" alignItems="center" spacing={0.5}>
-              <Typography variant="body2" sx={{ color: '#00FF00', fontWeight: 700, fontSize: '0.9rem' }}>
-                {entryFee}
+              <Typography
+                variant="sub2"
+                color={theme.palette.custom.dollar}
+                sx={{ display: 'flex', alignItems: 'center', gap: 0.5, direction: 'rtl' }}
+              >
+                <span>ورودی:</span>
+                <span>{entryFee}</span>
               </Typography>
-              <Typography variant="caption" sx={{ color: '#00FF00', fontSize: '0.8rem' }}>
-                :ورودی
-              </Typography>
-              <SvgIcon src={PaidRoundedIcon} sx={{ width: 18, height: 18, color: '#fff', filter: 'brightness(0) invert(1)' }} />
+              <SvgIcon>
+                <EntryFreeIcon />
+              </SvgIcon>
             </Stack>
+
+            {/* Prize */}
             <Stack direction="row" alignItems="center" spacing={0.5}>
-              <Typography variant="body2" sx={{ color: '#FFD700', fontWeight: 700, fontSize: '0.9rem' }}>
-                {prize}
+              <Typography
+                variant="sub2"
+                sx={{ direction: 'rtl', display: 'flex', alignItems: 'center', gap: 0.5 }}
+                color={theme.palette.custom.prize}
+              >
+                <span>جایزه:</span>
+                <span>{prize}</span>
               </Typography>
-              <Typography variant="caption" sx={{ color: '#FFD700', fontSize: '0.8rem' }}>
-                :جایزه
-              </Typography>
-              <SvgIcon src={EmojiEventsRoundedIcon} sx={{ width: 18, height: 18, color: '#fff', filter: 'brightness(0) invert(1)' }} />
+              <SvgIcon>
+                <PrizeIcon />
+              </SvgIcon>
             </Stack>
           </Stack>
         </Stack>
@@ -317,10 +339,16 @@ const LobbyCard = ({
                 gap: 0.5,
               }}
             >
-              <Typography variant="caption" sx={{ color: '#FFFFFF', fontSize: '0.75rem', fontWeight: 500 }}>
+              <Typography
+                variant="caption"
+                sx={{ color: '#FFFFFF', fontSize: '0.75rem', fontWeight: 500 }}
+              >
                 {tag}
               </Typography>
-              {tagIcons[tag] && React.cloneElement(tagIcons[tag], { sx: { width: 16, height: 16, color: '#fff' } })}
+              {tagIcons[tag] &&
+                React.cloneElement(tagIcons[tag], {
+                  sx: { width: 16, height: 16, color: '#fff' },
+                })}
             </Box>
           ))}
         </Stack>

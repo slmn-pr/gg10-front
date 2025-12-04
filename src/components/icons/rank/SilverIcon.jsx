@@ -1,0 +1,90 @@
+export default function SilverIcon() {
+  return (
+    <svg
+      width="30"
+      height="30"
+      viewBox="0 0 30 30"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M15 0.744995L26.8429 7.8725V22.1275L15 29.255L3.1571 22.1275V7.8725L15 0.744995Z"
+        fill="url(#paint0_linear_61165_23914)"
+      />
+      <g filter="url(#filter0_n_61165_23914)">
+        <path
+          d="M14.7642 3.91284L23.9527 9.45645V20.5437L14.7642 26.0873L5.57577 20.5437V9.45645L14.7642 3.91284Z"
+          fill="#1C1C1C"
+        />
+      </g>
+      <path
+        d="M9.40264 10.2483L14.7642 13.8182L20.1258 10.2483L20.1871 10.3189V12.6894C19.0535 13.1974 17.5522 14.0863 16.4033 14.9471C15.6067 15.5397 14.994 16.1182 14.7642 16.5839C14.5498 16.1323 13.9217 15.5397 13.1251 14.9471C11.9762 14.0863 10.475 13.2115 9.34137 12.6894V10.3047L9.40264 10.2483Z"
+        fill="#C0C0C0"
+      />
+      <path
+        d="M9.40264 13.416L14.7642 17.2834L20.1258 13.416L20.1871 13.4925V16.0605C19.0535 16.6108 17.5522 17.5739 16.4033 18.5063C15.6067 19.1484 14.994 19.7751 14.7642 20.2795C14.5498 19.7904 13.9217 19.1484 13.1251 18.5063C11.9762 17.5739 10.475 16.6261 9.34137 16.0605V13.4772L9.40264 13.416Z"
+        fill="#C0C0C0"
+      />
+      <defs>
+        <filter
+          id="filter0_n_61165_23914"
+          x="5.57577"
+          y="3.91284"
+          width="18.3769"
+          height="22.1744"
+          filterUnits="userSpaceOnUse"
+          color-interpolation-filters="sRGB"
+        >
+          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="BackgroundImageFix"
+            result="shape"
+          />
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.55555558204650879 0.55555558204650879"
+            stitchTiles="stitch"
+            numOctaves="3"
+            result="noise"
+            seed="1585"
+          />
+          <feComponentTransfer in="noise" result="coloredNoise1">
+            <feFuncR type="linear" slope="2" intercept="-0.5" />
+            <feFuncG type="linear" slope="2" intercept="-0.5" />
+            <feFuncB type="linear" slope="2" intercept="-0.5" />
+            <feFuncA
+              type="discrete"
+              tableValues="1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 "
+            />
+          </feComponentTransfer>
+          <feComposite
+            operator="in"
+            in2="shape"
+            in="coloredNoise1"
+            result="noise1Clipped"
+          />
+          <feComponentTransfer in="noise1Clipped" result="color1">
+            <feFuncA type="table" tableValues="0 0.06" />
+          </feComponentTransfer>
+          <feMerge result="effect1_noise_61165_23914">
+            <feMergeNode in="shape" />
+            <feMergeNode in="color1" />
+          </feMerge>
+        </filter>
+        <linearGradient
+          id="paint0_linear_61165_23914"
+          x1="15"
+          y1="0.744995"
+          x2="15"
+          y2="29.255"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stop-color="#CFCFCF" />
+          <stop offset="0.9999" stop-color="#696969" stop-opacity="0.9" />
+        </linearGradient>
+      </defs>
+    </svg>
+  );
+}
