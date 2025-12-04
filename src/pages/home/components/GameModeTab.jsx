@@ -9,6 +9,8 @@ export default function GameModeSelector() {
   const [selectedGameMode, setSelectedGameMode] = useState('battle-royal');
   const theme = useTheme();
 
+  const isMultiplayerSelected = selectedGameMode === 'multiplayer';
+
   return (
     <Stack direction="row" spacing={0} sx={{ mb: 2, borderRadius: 1, p: 0.5 }}>
       <Box
@@ -20,36 +22,31 @@ export default function GameModeSelector() {
       >
         <Button
           fullWidth
-          variant={selectedGameMode === 'multiplayer' ? 'contained' : 'outlined'}
+          variant={isMultiplayerSelected ? 'contained' : 'outlined'}
           onClick={() => setSelectedGameMode('multiplayer')}
-          endIcon={
-            <MultiPlayerIcon
-              color={selectedGameMode === 'multiplayer' ? '#000' : '#fff'}
-            />
-          }
+          endIcon={<MultiPlayerIcon color={isMultiplayerSelected ? '#000' : '#fff'} />}
           sx={{
-            bgcolor: selectedGameMode === 'multiplayer' ? 'custom.tint1' : 'custom.bg2',
+            bgcolor: isMultiplayerSelected ? 'custom.tint1' : 'custom.bg2',
             borderRadius: 2,
             borderTopRightRadius: 0,
             borderBottomRightRadius: 0,
             transform: 'translateX(5px)',
-            color: selectedGameMode === 'multiplayer' ? '#000' : 'custom.tint4',
+            color: isMultiplayerSelected ? '#000' : 'custom.tint4',
             py: 1,
-            zIndex: selectedGameMode === 'multiplayer' ? 2 : 1,
+            zIndex: isMultiplayerSelected ? 2 : 1,
             fontSize: '1rem',
             fontWeight: 'bold',
-            border:
-              selectedGameMode === 'multiplayer'
-                ? `2px solid ${theme.palette.custom.primaryStroke}`
-                : '1px solid white',
+            border: isMultiplayerSelected
+              ? `2px solid ${theme.palette.custom.primaryStroke}`
+              : '1px solid white',
             '&:hover': {
-              bgcolor: selectedGameMode === 'multiplayer' ? 'custom.tint1' : 'custom.bg2',
+              bgcolor: isMultiplayerSelected ? 'custom.tint1' : 'custom.bg2',
             },
           }}
         >
           <Typography
             variant="title3"
-            sx={{ color: selectedGameMode === 'multiplayer' ? '#000' : '#fff' }}
+            sx={{ color: isMultiplayerSelected ? '#000' : '#fff' }}
           >
             {' '}
             مولتی پلیر
@@ -57,43 +54,37 @@ export default function GameModeSelector() {
         </Button>
         <Button
           fullWidth
-          variant={selectedGameMode === 'battle-royal' ? 'contained' : 'outlined'}
-          endIcon={
-            <BattleRoyalIcon
-              color={selectedGameMode === 'battle-royal' ? '#000' : '#fff'}
-            />
-          }
+          variant={!isMultiplayerSelected ? 'contained' : 'outlined'}
+          endIcon={<BattleRoyalIcon color={!isMultiplayerSelected ? '#000' : '#fff'} />}
           onClick={() => setSelectedGameMode('battle-royal')}
           startIcon={
             <SvgIcon
               src={ParaglidingRoundedIcon}
-              sx={{ color: selectedGameMode === 'battle-royal' ? '#000' : '#fff' }}
+              sx={{ color: !isMultiplayerSelected ? '#000' : '#fff' }}
             />
           }
           sx={{
-            color: selectedGameMode === 'battle-royal' ? '#fff' : 'custom.tint4',
-            bgcolor: selectedGameMode === 'battle-royal' ? 'custom.tint2' : 'custom.bg2',
+            color: !isMultiplayerSelected ? '#fff' : 'custom.tint4',
+            bgcolor: !isMultiplayerSelected ? 'custom.tint2' : 'custom.bg2',
             borderRadius: 2,
-            borderTopLeftRadius: selectedGameMode === 'battle-royal' ? 2 : 10,
-            borderBottomLeftRadius: selectedGameMode === 'battle-royal' ? 2 : 10,
+            borderTopLeftRadius: !isMultiplayerSelected ? 2 : 10,
+            borderBottomLeftRadius: !isMultiplayerSelected ? 2 : 10,
             transform: 'translateX(-5px)',
-            zIndex: selectedGameMode === 'battle-royal' ? 2 : 1,
+            zIndex: !isMultiplayerSelected ? 2 : 1,
             py: 1,
             fontSize: '1rem',
             fontWeight: 'bold',
-            border:
-              selectedGameMode === 'battle-royal'
-                ? `2px solid ${theme.palette.custom.primaryStroke}`
-                : '1px solid white',
+            border: !isMultiplayerSelected
+              ? `2px solid ${theme.palette.custom.primaryStroke}`
+              : '1px solid white',
             '&:hover': {
-              bgcolor:
-                selectedGameMode === 'battle-royal' ? 'custom.tint2' : 'custom.bg2',
+              bgcolor: !isMultiplayerSelected ? 'custom.tint2' : 'custom.bg2',
             },
           }}
         >
           <Typography
             variant="title3"
-            sx={{ color: selectedGameMode === 'battle-royal' ? '#000' : '#fff' }}
+            sx={{ color: !isMultiplayerSelected ? '#000' : '#fff' }}
           >
             بتل رویال
           </Typography>
