@@ -3,6 +3,7 @@ import ShieldRoundedIcon from '@/assets/icons/chips/placement.svg';
 import ParaglidingRoundedIcon from '@/assets/icons/game-mode/battle-royal.svg';
 import { useState } from 'react';
 import MultiPlayerIcon from '@/components/icons/MultiPlayer';
+import BattleRoyalIcon from '@/components/icons/BattleRoyal';
 
 export default function GameModeSelector() {
   const [selectedGameMode, setSelectedGameMode] = useState('battle-royal');
@@ -21,7 +22,11 @@ export default function GameModeSelector() {
           fullWidth
           variant={selectedGameMode === 'multiplayer' ? 'contained' : 'outlined'}
           onClick={() => setSelectedGameMode('multiplayer')}
-          startIcon={<MultiPlayerIcon />}
+          endIcon={
+            <MultiPlayerIcon
+              color={selectedGameMode === 'multiplayer' ? '#000' : '#fff'}
+            />
+          }
           sx={{
             bgcolor: selectedGameMode === 'multiplayer' ? 'custom.tint1' : 'custom.bg2',
             borderRadius: 2,
@@ -53,6 +58,11 @@ export default function GameModeSelector() {
         <Button
           fullWidth
           variant={selectedGameMode === 'battle-royal' ? 'contained' : 'outlined'}
+          endIcon={
+            <BattleRoyalIcon
+              color={selectedGameMode === 'battle-royal' ? '#000' : '#fff'}
+            />
+          }
           onClick={() => setSelectedGameMode('battle-royal')}
           startIcon={
             <SvgIcon
