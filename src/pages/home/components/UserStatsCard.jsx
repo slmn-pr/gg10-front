@@ -20,13 +20,11 @@ export default function UserStatsCard({
         overflow: 'visible',
       }}
     >
-      <Stack direction="row" alignItems="center" justifyContent="center" spacing={1}>
+      <Stack direction="row" alignItems="center" justifyContent="center" spacing={1} mb={0.5}>
         <Typography variant="sub1" color="custom.tint4" sx={{ mb: 1 }}>
           {title}
         </Typography>
-        <Icon color="#fff">
-          <img src={icon} alt={title} width={20} height={20} />
-        </Icon>
+        <Icon color="#fff">{icon}</Icon>
       </Stack>
 
       <Box sx={{ bgcolor: 'custom.bg2', p: 1, borderRadius: 4 }}>

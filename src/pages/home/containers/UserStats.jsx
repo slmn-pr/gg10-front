@@ -1,11 +1,14 @@
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography, useTheme } from '@mui/material';
 import UserStatsCard from '../components/UserStatsCard';
 
 import WorkspacePremiumRoundedIcon from '@/assets/icons/rank/legend.svg';
 import MultiPLayerIcon from '@/assets/icons/game-mode/multi-player.svg';
 import GoldBigIcon from '@/assets/icons/Rank icons/Gold_bigsize.svg';
+import MultiPlayerIcon from '@/components/icons/MultiPlayer';
+import BattleRoyalIcon from '@/components/icons/BattleRoyal';
 
 export default function UserStats() {
+  const theme = useTheme();
   return (
     <Stack
       direction="row"
@@ -18,7 +21,7 @@ export default function UserStats() {
       {/* Multiplayer Stats */}
       <UserStatsCard
         title="مولتی پلیر"
-        icon={MultiPLayerIcon}
+        icon={<MultiPlayerIcon color={theme.palette.primary.main} />}
         rank="لجند"
         value="۱۰۰۰۰"
         rankIcon={WorkspacePremiumRoundedIcon}
@@ -52,7 +55,7 @@ export default function UserStats() {
       <UserStatsCard
         title="بتل رویال"
         rankIcon={GoldBigIcon}
-        icon={GoldBigIcon}
+        icon={<BattleRoyalIcon color={theme.palette.primary.main} />}
         rank="آماتور"
         value="۱۰۰ امتیاز"
       />
