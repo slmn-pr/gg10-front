@@ -13,7 +13,7 @@ export default function UserStats() {
     <Stack
       direction="row"
       justifyContent="space-between"
-      alignItems="center"
+      alignItems="end"
       sx={{ px: 1 }}
       bgcolor="custom.bg1"
       width="100%"
@@ -28,7 +28,7 @@ export default function UserStats() {
       />
 
       {/* Avatar */}
-      <Stack alignItems="center" sx={{ mt: -2 }}>
+      <Stack alignItems="center" sx={{p: 2}}>
         <Box
           sx={{
             display: 'flex',
@@ -45,7 +45,7 @@ export default function UserStats() {
             width={120}
             height={120}
           />
-          <Typography variant="body2" color="white" fontWeight="bold" sx={{ mt: 1 }}>
+          <Typography variant="sub2" color="custom.whiteOnBg1" fontWeight="bold">
             amir_gamer
           </Typography>
         </Box>
