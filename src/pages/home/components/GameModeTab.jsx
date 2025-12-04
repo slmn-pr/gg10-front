@@ -1,5 +1,4 @@
 import { Box, Button, Stack, SvgIcon, Typography, useTheme } from '@mui/material';
-import ShieldRoundedIcon from '@/assets/icons/chips/placement.svg';
 import ParaglidingRoundedIcon from '@/assets/icons/game-mode/battle-royal.svg';
 import { useState } from 'react';
 import MultiPlayerIcon from '@/components/icons/MultiPlayer';
