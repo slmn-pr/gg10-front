@@ -2,9 +2,10 @@ import { Box, Button, Stack, SvgIcon, Typography, useTheme } from '@mui/material
 import ShieldRoundedIcon from '@/assets/icons/chips/placement.svg';
 import ParaglidingRoundedIcon from '@/assets/icons/game-mode/battle-royal.svg';
 import { useState } from 'react';
+import MultiPlayerIcon from '@/components/icons/MultiPlayer';
 
 export default function GameModeSelector() {
-  const [selectedGameMode, setSelectedGameMode] = useState('multiplayer');
+  const [selectedGameMode, setSelectedGameMode] = useState('battle-royal');
   const theme = useTheme();
 
   return (
@@ -18,36 +19,55 @@ export default function GameModeSelector() {
       >
         <Button
           fullWidth
-          variant="contained"
-          startIcon={<SvgIcon src={ShieldRoundedIcon} />}
+          variant={selectedGameMode === 'multiplayer' ? 'contained' : 'outlined'}
+          onClick={() => setSelectedGameMode('multiplayer')}
+          startIcon={<MultiPlayerIcon />}
           sx={{
-            bgcolor: 'custom.tint1',
+            bgcolor: selectedGameMode === 'multiplayer' ? 'custom.tint1' : 'custom.bg2',
+            borderRadius: 2,
+            borderTopRightRadius: 0,
+            borderBottomRightRadius: 0,
             transform: 'translateX(5px)',
-            color: '#000',
-            borderRadius: 2.5,
-            '&:hover': { bgcolor: '#FFB4AB' },
+            color: selectedGameMode === 'multiplayer' ? '#000' : 'custom.tint4',
             py: 1,
-            zIndex: 2,
+            zIndex: selectedGameMode === 'multiplayer' ? 2 : 1,
             fontSize: '1rem',
             fontWeight: 'bold',
             border:
               selectedGameMode === 'multiplayer'
                 ? `2px solid ${theme.palette.custom.primaryStroke}`
                 : '1px solid white',
+            '&:hover': {
+              bgcolor: selectedGameMode === 'multiplayer' ? 'custom.tint1' : 'custom.bg2',
+            },
           }}
         >
-          <Typography variant="title3"> مولتی پلیر</Typography>
+          <Typography
+            variant="title3"
+            sx={{ color: selectedGameMode === 'multiplayer' ? '#000' : '#fff' }}
+          >
+            {' '}
+            مولتی پلیر
+          </Typography>
         </Button>
         <Button
           fullWidth
-          startIcon={<SvgIcon src={ParaglidingRoundedIcon} sx={{ color: '#fff' }} />}
+          variant={selectedGameMode === 'battle-royal' ? 'contained' : 'outlined'}
+          onClick={() => setSelectedGameMode('battle-royal')}
+          startIcon={
+            <SvgIcon
+              src={ParaglidingRoundedIcon}
+              sx={{ color: selectedGameMode === 'battle-royal' ? '#000' : '#fff' }}
+            />
+          }
           sx={{
-            color: '#fff',
+            color: selectedGameMode === 'battle-royal' ? '#fff' : 'custom.tint4',
+            bgcolor: selectedGameMode === 'battle-royal' ? 'custom.tint2' : 'custom.bg2',
             borderRadius: 2,
-            borderTopLeftRadius: 0,
-            borderBottomLeftRadius: 0,
+            borderTopLeftRadius: selectedGameMode === 'battle-royal' ? 2 : 10,
+            borderBottomLeftRadius: selectedGameMode === 'battle-royal' ? 2 : 10,
             transform: 'translateX(-5px)',
-            zIndex: 1,
+            zIndex: selectedGameMode === 'battle-royal' ? 2 : 1,
             py: 1,
             fontSize: '1rem',
             fontWeight: 'bold',
@@ -55,9 +75,18 @@ export default function GameModeSelector() {
               selectedGameMode === 'battle-royal'
                 ? `2px solid ${theme.palette.custom.primaryStroke}`
                 : '1px solid white',
+            '&:hover': {
+              bgcolor:
+                selectedGameMode === 'battle-royal' ? 'custom.tint2' : 'custom.bg2',
+            },
           }}
         >
-          <Typography variant="title3">بتل رویال</Typography>
+          <Typography
+            variant="title3"
+            sx={{ color: selectedGameMode === 'battle-royal' ? '#000' : '#fff' }}
+          >
+            بتل رویال
+          </Typography>
         </Button>
       </Box>
     </Stack>
