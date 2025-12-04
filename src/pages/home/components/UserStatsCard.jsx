@@ -1,11 +1,30 @@
-import { Box, Card, Icon, Stack, Typography } from '@mui/material';
+import { Box, Card, Icon, Stack, SvgIcon, Typography } from '@mui/material';
+
+const RANK_MAP = {
+  legend: {
+    color: '#66D4E5',
+    title: 'لجند',
+  },
+  gold: {
+    color: '#9A7D26',
+    title: 'گلد',
+  },
+  silver: {
+    color: '#C0C0C0',
+    title: 'سیلور',
+  },
+  bronze: {
+    color: '#A97142',
+    title: 'برونز',
+  },
+};
 
 export default function UserStatsCard({
   title,
   icon,
   rankIcon,
-  rank = 'لجند',
-  value = '۵۰۰۰',
+  rank = RANK_MAP.legend.title,
+  value = 5000,
 }) {
   return (
     <Card
@@ -20,7 +39,13 @@ export default function UserStatsCard({
         overflow: 'visible',
       }}
     >
-      <Stack direction="row" alignItems="center" justifyContent="center" spacing={1} mb={0.5}>
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="center"
+        spacing={1}
+        mb={0.5}
+      >
         <Typography variant="sub1" color="custom.tint4" sx={{ mb: 1 }}>
           {title}
         </Typography>
@@ -37,15 +62,20 @@ export default function UserStatsCard({
             alignItems: 'center',
           }}
         >
-          <img src={rankIcon} alt={rank} width={60} height={60} />
-          <Typography variant="sub3" fontWeight="bold" color="white">
+          {rankIcon}
+          <Typography variant="sub2" fontWeight="bold" color={RANK_MAP.legend.color}>
             {rank}
           </Typography>
         </Box>
 
-        <Typography variant="sub3" color="text.secondary" sx={{ fontSize: '0.65rem' }}>
-          {value} امتیاز
-        </Typography>
+        <Stack direction="row" alignItems="center" justifyContent="center" spacing={0.5}>
+          <Typography variant="sub3" color={RANK_MAP.legend.color}>
+            امتیاز
+          </Typography>
+          <Typography variant="sub3" color={RANK_MAP.legend.color}>
+            {value}
+          </Typography>
+        </Stack>
       </Box>
     </Card>
   );
