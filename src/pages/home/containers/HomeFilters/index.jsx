@@ -8,6 +8,7 @@ import FiltersDrawer from './FiltersDrawer';
 import { useMemo, useRef } from 'react';
 import BattleRoyalFilterForm from './BattleRoyalFilterForm';
 import { useSearchParams } from 'react-router-dom';
+import MultiplayerFilterForm from './MultiplayerFilterForm';
 
 const filters = [
   { label: 'اسکوادی', icon: <SquadChipIcon /> },
@@ -42,7 +43,7 @@ export default function HomeFilters() {
         />
       ))}
       <FiltersDrawer>
-        {gameMode === 'multiplayer' ? <>ss</> : <BattleRoyalFilterForm />}
+        {gameMode === 'multiplayer' ? <MultiplayerFilterForm /> : <BattleRoyalFilterForm />}
         {/* <FormControlLabel
           dir="rtl"
           control={<Checkbox color="primary" />}

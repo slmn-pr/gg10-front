@@ -29,8 +29,8 @@ export default function FiltersDrawer({ children }) {
             maxWidth: 'sm', // maxWidth="sm" in Material-UI is approximately 600px
             width: '100%',
             mx: 'auto',
-            mb: 7,
-            minHeight: 500,
+            mb: 6,
+            height: 'auto',
             borderTopLeftRadius: 8,
             borderTopRightRadius: 8,
             bgcolor: 'custom.modalBg',
@@ -58,7 +58,7 @@ export default function FiltersDrawer({ children }) {
           <Box>{children}</Box>
 
           {/* Footer buttons */}
-          <Stack direction="row" spacing={2} alignItems="center">
+          <Stack direction="row" spacing={2} alignItems="center" sx={{ pb: 5 }}>
             <Button variant="text" color="primary" disabled={isDiabled}>
               <Typography
                 variant="button2"
@@ -79,7 +79,10 @@ export default function FiltersDrawer({ children }) {
               size="large"
               disabled={isDiabled}
             >
-              <Typography variant="button1" color={isDiabled ? 'custom.disabledGreyOnBg2' : 'custom.whiteOnBg1'}>
+              <Typography
+                variant="button1"
+                color={isDiabled ? 'custom.disabledGreyOnBg2' : 'custom.whiteOnBg1'}
+              >
                 اعمال فیلترها
               </Typography>
             </Button>
