@@ -9,17 +9,79 @@ import { BATTLE_ROYAL_DEFAULT_VALUES, MULTIPLAYER_DEFAULT_VALUES } from './conts
 
 export default function FiltersDrawer({ children, defaultValues }) {
   const [open, setOpen] = useState(false);
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const gameMode = searchParams.get('gameMode') || 'multiplayer';
 
-  const methods = useForm({
-    defaultValues:
-      defaultValues || gameMode === 'multiplayer'
+  // Get default values based on game mode
+  const getDefaultValues = useCallback(() => {
+    const baseDefaults =
+      gameMode === 'multiplayer'
         ? MULTIPLAYER_DEFAULT_VALUES
-        : BATTLE_ROYAL_DEFAULT_VALUES,
+        : BATTLE_ROYAL_DEFAULT_VALUES;
+
+    // Parse filter values from search params
+    const paramsDefaults = { ...baseDefaults };
+    Object.keys(baseDefaults).forEach((key) => {
+      const paramValue = searchParams.get(key);
+      if (paramValue === 'true') {
+        paramsDefaults[key] = true;
+      } else if (paramValue === 'false') {
+        paramsDefaults[key] = false;
+      }
+    });
+
+    // console.log('[getDefaultValues] paramsDefaults', paramsDefaults);
+
+    return paramsDefaults;
+  }, [gameMode, searchParams]);
+
+  const methods = useForm({
+    defaultValues: defaultValues || getDefaultValues(),
     mode: 'onChange',
   });
+
+  // Clean up old filter params when gameMode changes
+  // useEffect(() => {
+  //   const currentParams = new URLSearchParams(searchParams);
+  //   const currentGameModeDefaults =
+  //     gameMode === 'multiplayer'
+  //       ? MULTIPLAYER_DEFAULT_VALUES
+  //       : BATTLE_ROYAL_DEFAULT_VALUES;
+  //   const otherGameModeDefaults =
+  //     gameMode === 'multiplayer'
+  //       ? BATTLE_ROYAL_DEFAULT_VALUES
+  //       : MULTIPLAYER_DEFAULT_VALUES;
+
+  //   let hasChanges = false;
+
+  //   // Remove filter params that belong to the other game mode
+  //   Object.keys(otherGameModeDefaults).forEach((key) => {
+  //     if (currentParams.has(key)) {
+  //       currentParams.delete(key);
+  //       hasChanges = true;
+  //     }
+  //   });
+
+  //   // Calculate defaults from cleaned params
+  //   const paramsDefaults = { ...currentGameModeDefaults };
+  //   Object.keys(currentGameModeDefaults).forEach((key) => {
+  //     const paramValue = currentParams.get(key);
+  //     if (paramValue === 'true') {
+  //       paramsDefaults[key] = true;
+  //     } else if (paramValue === 'false') {
+  //       paramsDefaults[key] = false;
+  //     }
+  //   });
+
+  //   if (hasChanges) {
+  //     setSearchParams(currentParams, { replace: true });
+  //   }
+
+  //   // Reset form with new defaults
+  //   methods.reset(paramsDefaults);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [gameMode]);
 
   const formValues = methods.watch();
 
@@ -28,12 +90,49 @@ export default function FiltersDrawer({ children, defaultValues }) {
     .map(([key]) => key);
 
   const resetFilters = useCallback(() => {
+    const currentParams = new URLSearchParams(searchParams);
+    const baseDefaults =
+      gameMode === 'multiplayer'
+        ? MULTIPLAYER_DEFAULT_VALUES
+        : BATTLE_ROYAL_DEFAULT_VALUES;
+
+    // Remove all filter params
+    Object.keys(baseDefaults).forEach((key) => {
+      currentParams.delete(key);
+    });
+
+    setSearchParams(currentParams, { replace: true });
+
     if (gameMode === 'multiplayer') {
       methods.reset(MULTIPLAYER_DEFAULT_VALUES);
     } else {
       methods.reset(BATTLE_ROYAL_DEFAULT_VALUES);
     }
-  }, [methods, gameMode]);
+    setOpen(false);
+  }, [methods, gameMode, searchParams, setSearchParams]);
+
+  const applyFilters = useCallback(() => {
+    const currentParams = new URLSearchParams(searchParams);
+    const baseDefaults =
+      gameMode === 'multiplayer'
+        ? MULTIPLAYER_DEFAULT_VALUES
+        : BATTLE_ROYAL_DEFAULT_VALUES;
+
+    // Remove all old filter params
+    Object.keys(baseDefaults).forEach((key) => {
+      currentParams.delete(key);
+    });
+
+    // Add only active filters (true values) to search params
+    Object.entries(formValues).forEach(([key, value]) => {
+      if (value === true && baseDefaults.hasOwnProperty(key)) {
+        currentParams.set(key, 'true');
+      }
+    });
+
+    setSearchParams(currentParams, { replace: true });
+    setOpen(false);
+  }, [formValues, gameMode, searchParams, setSearchParams]);
 
   const isDiabled = useMemo(
     () => Object.values(formValues).every((value) => value === false),
@@ -116,6 +215,7 @@ export default function FiltersDrawer({ children, defaultValues }) {
               sx={{ flex: 1, borderRadius: 8 }}
               size="large"
               disabled={isDiabled}
+              onClick={applyFilters}
             >
               <Typography
                 variant="button1"
