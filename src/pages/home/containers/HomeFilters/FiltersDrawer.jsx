@@ -1,15 +1,44 @@
-import { Drawer, Typography, Box, Stack, Button } from '@mui/material';
+import { Drawer, Typography, Box, Stack, Button, IconButton } from '@mui/material';
 import FilterChip from './components/FilterChip';
 import FilterChipIcon from '@/components/icons/FilterChipIcon';
-import { useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import CloseIcon from '@/components/icons/general/CloseIcon';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useSearchParams } from 'react-router-dom';
+import { BATTLE_ROYAL_DEFAULT_VALUES, MULTIPLAYER_DEFAULT_VALUES } from './conts';
 
-export default function FiltersDrawer({ children }) {
+export default function FiltersDrawer({ children, defaultValues }) {
   const [open, setOpen] = useState(true);
+  const [searchParams] = useSearchParams();
 
-  // const methods = useForm();
+  const gameMode = searchParams.get('gameMode') || 'multiplayer';
 
-  const isDiabled = true;
+  const methods = useForm({
+    defaultValues:
+      defaultValues || gameMode === 'multiplayer'
+        ? MULTIPLAYER_DEFAULT_VALUES
+        : BATTLE_ROYAL_DEFAULT_VALUES,
+    mode: 'onChange',
+  });
+
+  const formValues = methods.watch();
+
+  const activeFilters = Object.entries(formValues)
+    .filter(([key, value]) => value === true)
+    .map(([key]) => key);
+
+  const resetFilters = useCallback(() => {
+    if (gameMode === 'multiplayer') {
+      methods.reset(MULTIPLAYER_DEFAULT_VALUES);
+    } else {
+      methods.reset(BATTLE_ROYAL_DEFAULT_VALUES);
+    }
+  }, [methods, gameMode]);
+
+  const isDiabled = useMemo(
+    () => Object.values(formValues).every((value) => value === false),
+    [formValues],
+  );
 
   return (
     <>
@@ -50,16 +79,25 @@ export default function FiltersDrawer({ children }) {
             justifyContent="space-between"
             alignItems="center"
           >
-            <CloseIcon />
+            <IconButton onClick={() => setOpen(false)}>
+              <CloseIcon />
+            </IconButton>
             <Typography variant="h6">فیلتر ها</Typography>
           </Stack>
 
           {/* Content */}
-          <Box>{children}</Box>
+          <Box>
+            <FormProvider {...methods}>{children}</FormProvider>
+          </Box>
 
           {/* Footer buttons */}
           <Stack direction="row" spacing={2} alignItems="center" sx={{ pb: 5 }}>
-            <Button variant="text" color="primary" disabled={isDiabled}>
+            <Button
+              variant="text"
+              color="primary"
+              disabled={isDiabled}
+              onClick={resetFilters}
+            >
               <Typography
                 variant="button2"
                 color={isDiabled ? 'custom.disabledGreyOnBg2' : 'custom.deleteOnModal'}
@@ -83,7 +121,8 @@ export default function FiltersDrawer({ children }) {
                 variant="button1"
                 color={isDiabled ? 'custom.disabledGreyOnBg2' : 'custom.whiteOnBg1'}
               >
-                اعمال فیلترها
+                <span> اعمال فیلترها</span>
+                {activeFilters.length > 0 && <span>({activeFilters.length})</span>}
               </Typography>
             </Button>
           </Stack>
