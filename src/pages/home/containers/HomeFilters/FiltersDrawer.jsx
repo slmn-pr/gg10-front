@@ -9,6 +9,8 @@ export default function FiltersDrawer({ children }) {
 
   // const methods = useForm();
 
+  const isDiabled = true;
+
   return (
     <>
       <FilterChip
@@ -57,10 +59,10 @@ export default function FiltersDrawer({ children }) {
 
           {/* Footer buttons */}
           <Stack direction="row" spacing={2} alignItems="center">
-            <Button variant="text" color="primary">
+            <Button variant="text" color="primary" disabled={isDiabled}>
               <Typography
-                variant="button1"
-                color="custom.deleteOnModal"
+                variant="button2"
+                color={isDiabled ? 'custom.disabledGreyOnBg2' : 'custom.deleteOnModal'}
                 sx={{
                   textDecoration: 'underline',
                   textUnderlineOffset: 7,
@@ -72,11 +74,12 @@ export default function FiltersDrawer({ children }) {
 
             <Button
               variant="outlined"
-              color="custom.whiteOnBg1"
+              color={isDiabled ? 'custom.disabledGreyOnBg2' : 'custom.whiteOnBg1'}
               sx={{ flex: 1, borderRadius: 8 }}
               size="large"
+              disabled={isDiabled}
             >
-              <Typography variant="button2" color="custom.whiteOnBg1">
+              <Typography variant="button1" color={isDiabled ? 'custom.disabledGreyOnBg2' : 'custom.whiteOnBg1'}>
                 اعمال فیلترها
               </Typography>
             </Button>
