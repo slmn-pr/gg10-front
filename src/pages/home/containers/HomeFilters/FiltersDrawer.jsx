@@ -8,7 +8,7 @@ import { useSearchParams } from 'react-router-dom';
 import { BATTLE_ROYAL_DEFAULT_VALUES, MULTIPLAYER_DEFAULT_VALUES } from './conts';
 
 export default function FiltersDrawer({ children, defaultValues }) {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [searchParams] = useSearchParams();
 
   const gameMode = searchParams.get('gameMode') || 'multiplayer';

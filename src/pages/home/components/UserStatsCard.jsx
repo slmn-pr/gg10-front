@@ -37,7 +37,6 @@ export default function UserStatsCard({
   icon,
   rankIcon,
   randCode = 1,
-  // rank = RANK_MAP.legend.title,
   value = 5000,
 }) {
   const rankTitle = RANK_CODE_MAP[randCode].title;

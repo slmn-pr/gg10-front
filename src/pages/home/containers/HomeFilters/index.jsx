@@ -22,7 +22,7 @@ export default function HomeFilters() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const gameMode = useMemo(
-    () => (searchParams.get('gameMode') ? searchParams.get('gameMode') : 'battle-royal'),
+    () => (searchParams.get('gameMode') ? searchParams.get('gameMode') : 'multiplayer'),
     [searchParams],
   );
 
@@ -43,12 +43,11 @@ export default function HomeFilters() {
         />
       ))}
       <FiltersDrawer>
-        {gameMode === 'multiplayer' ? <MultiplayerFilterForm /> : <BattleRoyalFilterForm />}
-        {/* <FormControlLabel
-          dir="rtl"
-          control={<Checkbox color="primary" />}
-          label="سرچ اند دیستروی"
-        /> */}
+        {gameMode === 'multiplayer' ? (
+          <MultiplayerFilterForm />
+        ) : (
+          <BattleRoyalFilterForm />
+        )}
       </FiltersDrawer>
     </Stack>
   );
