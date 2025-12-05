@@ -32,6 +32,7 @@ const MDBottomNavigation = () => {
     <Paper
       elevation={0}
       sx={{
+        height: 70,
         position: 'fixed',
         bottom: 0,
         left: 0,

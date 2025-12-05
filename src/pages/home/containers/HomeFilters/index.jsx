@@ -4,20 +4,25 @@ import FilterChipIcon from '@/components/icons/FilterChipIcon';
 import KillChipIcon from '@/components/icons/KillChipIcon';
 import AutoReviveChipIcon from '@/components/icons/AutoReviveChipIcon';
 import SquadChipIcon from '@/components/icons/SquadChipIcon';
+import FiltersDrawer from './FiltersDrawer';
+import { useRef } from 'react';
 
 const filters = [
-  {
-    label: 'فیلترها',
-    icon: <FilterChipIcon />,
-  },
+  { label: 'اسکوادی', icon: <SquadChipIcon /> },
   { label: 'کیلی', icon: <KillChipIcon /> },
   { label: 'اتوریوایو', icon: <AutoReviveChipIcon /> },
-  { label: 'اسکوادی', icon: <SquadChipIcon /> },
 ];
 
 export default function HomeFilters() {
+  const containerElement = useRef(null);
   return (
-    <Stack direction="row-reverse" spacing={2} sx={{ mb: 3, overflowX: 'auto', pb: 1 }}>
+    <Stack
+      ref={containerElement}
+      direction="row"
+      justifyContent="flex-end"
+      spacing={2}
+      sx={{ mb: 3, overflowX: 'auto', pb: 1 }}
+    >
       {filters.map((filter) => (
         <FilterChip
           key={filter.label}
@@ -26,6 +31,7 @@ export default function HomeFilters() {
           onClick={() => {}}
         />
       ))}
+      <FiltersDrawer containerElement={containerElement.current} />
     </Stack>
   );
 }

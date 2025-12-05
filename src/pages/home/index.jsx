@@ -6,11 +6,11 @@ import IconButton from '@mui/material/IconButton';
 
 import ExpandChevronIcon from '@/assets/icons/general/chevron-back.svg';
 
-import LobbyCard from '../components/lobby-card.jsx';
-import UserStats from '../containers/UserStats.jsx';
-import BannerSlider from '../containers/BannerSlider.jsx';
-import GameModeSelector from '../components/GameModeTab.jsx';
-import HomeFilters from '../containers/HomeFilters/index.jsx';
+import LobbyCard from './components/lobby-card.jsx';
+import UserStats from './containers/UserStats.jsx';
+import BannerSlider from './containers/BannerSlider.jsx';
+import GameModeSelector from './components/GameModeTab.jsx';
+import HomeFilters from './containers/HomeFilters/index.jsx';
 
 const SvgIcon = ({ src, sx, ...props }) => (
   <Box
