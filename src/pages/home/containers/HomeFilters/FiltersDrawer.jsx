@@ -4,8 +4,11 @@ import FilterChipIcon from '@/components/icons/FilterChipIcon';
 import { useState } from 'react';
 import CloseIcon from '@/components/icons/general/CloseIcon';
 
-export default function FiltersDrawer({ containerElement }) {
+export default function FiltersDrawer({ children }) {
   const [open, setOpen] = useState(true);
+
+  // const methods = useForm();
+
   return (
     <>
       <FilterChip
@@ -18,15 +21,14 @@ export default function FiltersDrawer({ containerElement }) {
         variant="temporary"
         open={open}
         onClose={() => setOpen(false)}
-        container={containerElement}
         sx={{
-          zIndex: 999, // بالاتر از bottom-navigation که zIndex: 1000 دارد
+          zIndex: 999, // higher than bottom navigation which has zIndex: 1000
           '& .MuiDrawer-paper': {
-            maxWidth: '600px', // maxWidth="sm" در Material-UI حدود 600px است
+            maxWidth: 'sm', // maxWidth="sm" in Material-UI is approximately 600px
             width: '100%',
             mx: 'auto',
-            mb: 5,
-            minHeight: 200,
+            mb: 7,
+            minHeight: 500,
             borderTopLeftRadius: 8,
             borderTopRightRadius: 8,
             bgcolor: 'custom.modalBg',
@@ -34,9 +36,7 @@ export default function FiltersDrawer({ containerElement }) {
         }}
         BackdropProps={{
           sx: {
-            // backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            // overlay فقط تا بالای bottom-navigation می‌آید
-            bottom: '70px', // ارتفاع bottom-navigation
+            bottom: '70px', // bottom navigation height
           },
         }}
       >
@@ -53,7 +53,7 @@ export default function FiltersDrawer({ containerElement }) {
           </Stack>
 
           {/* Content */}
-          <Box>Content here ...</Box>
+          <Box>{children}</Box>
 
           {/* Footer buttons */}
           <Stack direction="row" spacing={2} alignItems="center">
@@ -73,7 +73,7 @@ export default function FiltersDrawer({ containerElement }) {
             <Button
               variant="outlined"
               color="custom.whiteOnBg1"
-              sx={{ flex: 1 }}
+              sx={{ flex: 1, borderRadius: 8 }}
               size="large"
             >
               <Typography variant="button2" color="custom.whiteOnBg1">

@@ -1,14 +1,33 @@
 import { Box, Button, Stack, SvgIcon, Typography, useTheme } from '@mui/material';
 import ParaglidingRoundedIcon from '@/assets/icons/game-mode/battle-royal.svg';
-import { useState } from 'react';
 import MultiPlayerIcon from '@/components/icons/MultiPlayer';
 import BattleRoyalIcon from '@/components/icons/BattleRoyal';
+import { useSearchParams } from 'react-router-dom';
+import { useMemo } from 'react';
 
 export default function GameModeSelector() {
-  const [selectedGameMode, setSelectedGameMode] = useState('battle-royal');
   const theme = useTheme();
 
-  const isMultiplayerSelected = selectedGameMode === 'multiplayer';
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const isMultiplayerSelected = useMemo(
+    () =>
+      searchParams.get('gameMode')
+        ? searchParams.get('gameMode') === 'multiplayer'
+        : true,
+    [searchParams],
+  );
+
+  const handleGameModeChange = (gameMode) => {
+    if (!gameMode) {
+      searchParams.delete('gameMode');
+    } else {
+      searchParams.set('gameMode', gameMode);
+    }
+
+    // Attach to search params
+    setSearchParams(searchParams);
+  };
 
   return (
     <Stack direction="row" spacing={0} sx={{ mb: 2, borderRadius: 1, p: 0.5 }}>
@@ -22,7 +41,7 @@ export default function GameModeSelector() {
         <Button
           fullWidth
           variant={isMultiplayerSelected ? 'contained' : 'outlined'}
-          onClick={() => setSelectedGameMode('multiplayer')}
+          onClick={() => handleGameModeChange('multiplayer')}
           endIcon={<MultiPlayerIcon color={isMultiplayerSelected ? '#000' : '#fff'} />}
           sx={{
             bgcolor: isMultiplayerSelected ? 'custom.tint1' : 'custom.bg2',
@@ -55,7 +74,7 @@ export default function GameModeSelector() {
           fullWidth
           variant={!isMultiplayerSelected ? 'contained' : 'outlined'}
           endIcon={<BattleRoyalIcon color={!isMultiplayerSelected ? '#000' : '#fff'} />}
-          onClick={() => setSelectedGameMode('battle-royal')}
+          onClick={() => handleGameModeChange('battle-royal')}
           startIcon={
             <SvgIcon
               src={ParaglidingRoundedIcon}
