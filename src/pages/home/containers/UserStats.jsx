@@ -58,6 +58,7 @@ export default function UserStats() {
         rankIcon={<GoldBigIcon />}
         icon={<BattleRoyalIcon color={theme.palette.primary.main} />}
         rank="آماتور"
+        randCode={2}
         value="100"
       />
     </Stack>

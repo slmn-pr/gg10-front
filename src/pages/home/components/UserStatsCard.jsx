@@ -19,13 +19,30 @@ const RANK_MAP = {
   },
 };
 
+const RANK_CODE_MAP = {
+  1: RANK_MAP.legend,
+  2: RANK_MAP.gold,
+  3: RANK_MAP.silver,
+  4: RANK_MAP.bronze,
+};
+
+// RANK CODE GUIDE
+// 1: Legend
+// 2: Gold
+// 3: Silver
+// 4: Bronze
+
 export default function UserStatsCard({
   title,
   icon,
   rankIcon,
-  rank = RANK_MAP.legend.title,
+  randCode = 1,
+  // rank = RANK_MAP.legend.title,
   value = 5000,
 }) {
+  const rankTitle = RANK_CODE_MAP[randCode].title;
+  const rankColor = RANK_CODE_MAP[randCode].color;
+
   return (
     <Card
       sx={{
@@ -63,16 +80,16 @@ export default function UserStatsCard({
           }}
         >
           {rankIcon}
-          <Typography variant="sub2" fontWeight="bold" color={RANK_MAP.legend.color}>
-            {rank}
+          <Typography variant="sub2" fontWeight="bold" color={rankColor}>
+            {rankTitle}
           </Typography>
         </Box>
 
         <Stack direction="row" alignItems="center" justifyContent="center" spacing={0.5}>
-          <Typography variant="sub3" color={RANK_MAP.legend.color}>
+          <Typography variant="sub3" color={rankColor}>
             امتیاز
           </Typography>
-          <Typography variant="sub3" color={RANK_MAP.legend.color}>
+          <Typography variant="sub3" color={rankColor}>
             {value}
           </Typography>
         </Stack>
