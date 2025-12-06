@@ -1,6 +1,15 @@
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 440,
+      md: 768,
+      lg: 1024,
+      xl: 1280,
+    },
+  },
   typography: {
     fontFamily: `'Estedad-FD', sans-serif`,
     // Custom typography variants
