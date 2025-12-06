@@ -3,13 +3,12 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import Avatar from '@mui/material/Avatar';
 import LinearProgress from '@mui/material/LinearProgress';
 
 import bg3 from '@/assets/images/lobby/bg-default.png';
 import vipBg from '@/assets/images/Lobbies card avatar.png';
 
-import { alpha, SvgIcon, useTheme } from '@mui/material';
+import { alpha, Divider, SvgIcon, useTheme } from '@mui/material';
 import PinIcon from '@/components/icons/PinIcon';
 import EntryFreeIcon from '@/components/icons/lobbie/EntryFreeIcon';
 import PrizeIcon from '@/components/icons/lobbie/PrizeIcon';
@@ -21,6 +20,8 @@ import SilverSmallIcon from '@/components/icons/rank/SilverSmallIcon';
 import SquadChipIcon from '@/components/icons/SquadChipIcon';
 import AutoReviveChipIcon from '@/components/icons/AutoReviveChipIcon';
 import PlacementChipIcon from '@/components/icons/chip/PlacementChipIcon';
+import CustomTag from '@/components/tag';
+import CapacityIcon from '@/components/icons/CapacityIcon';
 
 const STATUS_COLOR_MAP = {
   'تکمیل ظرفیت': {
@@ -87,24 +88,6 @@ const LobbyCard = ({
     };
   }, [status, isRegistered, isFull]);
 
-  const cardStyles = React.useMemo(
-    () =>
-      isVip
-        ? {
-            panelBg: 'linear-gradient(90deg, #420018 0%, #2A000F 100%)',
-            panelBorder: '1px solid rgba(255, 54, 123, 0.2)',
-            progressBar: 'linear-gradient(90deg, #FF0055 0%, #FF4F9F 100%)',
-            curveBorderColor: '#FF367B',
-          }
-        : {
-            panelBg: 'linear-gradient(90deg, #1A1D26 0%, #0C0E14 100%)',
-            panelBorder: '1px solid rgba(255, 255, 255, 0.05)',
-            progressBar: 'linear-gradient(90deg, #FF0055 0%, #FF4F9F 100%)',
-            curveBorderColor: 'rgba(255, 255, 255, 0.1)',
-          },
-    [isVip],
-  );
-
   const tagIcons = {
     اسکوادی: <SquadChipIcon />,
     اسکواڈی: <AutoReviveChipIcon />,
@@ -116,8 +99,8 @@ const LobbyCard = ({
     <Card
       sx={{
         mb: 2,
-        backgroundColor: 'transparent',
-        borderRadius: '8px',
+        background: isVip ? theme.palette.custom.shade3 : theme.palette.custom.cardsBg,
+        borderRadius: 2,
         display: 'flex',
         flexDirection: 'row-reverse',
         border: 'none',
@@ -166,8 +149,8 @@ const LobbyCard = ({
             borderTopRightRadius: '0px',
             borderTopLeftRadius: '8px',
             borderBottomLeftRadius: '8px',
-            px: 1.5,
-            py: 0.5,
+            padding: 1,
+            py: 0,
             borderRadius: 1,
             fontWeight: 700,
             fontSize: '0.75rem',
@@ -219,7 +202,7 @@ const LobbyCard = ({
       <Box
         sx={{
           flex: 1,
-          background: isVip ? theme.palette.custom.shade3 : 'custom.cardsBg',
+          background: isVip ? theme.palette.custom.shade3 : theme.palette.custom.cardsBg,
           border: 'none',
           px: 2,
           py: 1,
@@ -237,16 +220,17 @@ const LobbyCard = ({
               sx={{
                 display: 'flex',
                 alignItems: 'center',
-                backgroundColor: '#000',
-                borderRadius: 2,
-                px: 0.5,
-                bgcolor: '#000',
+                backgroundColor: theme.palette.custom.tagsBlackBg,
+                borderRadius: '2px',
+                px: 1,
                 // border: '1px solid rgba(255,255,255,0.1)',
               }}
             >
-              <Typography variant="caption2">ویژه</Typography>
+              <Typography variant="caption2" color={theme.palette.custom.iconsWhite}>
+                ویژه
+              </Typography>
               <SvgIcon>
-                <PinIcon />
+                <PinIcon color={theme.palette.custom.iconsWhite} />
               </SvgIcon>
             </Box>
           ) : (
@@ -257,18 +241,30 @@ const LobbyCard = ({
         </Stack>
 
         {/* Info Grid */}
-        <Stack direction="row" justifyContent="flex-end" spacing={3} sx={{ mt: 1 }}>
+        <Stack direction="row" justifyContent="flex-end" spacing={3}>
           {/* Time & Capacity (Left side of info) */}
-          <Stack spacing={0.5} alignItems="flex-end">
-            <Stack direction="row" alignItems="center" spacing={0.5}>
-              <Typography variant="sub2">{schedule}</Typography>
-              <TimeIcon color="#fff" />
+          <Stack spacing={0.5} alignItems="flex-end" sx={{ flex: 1 }}>
+            <Stack
+              direction="row"
+              alignItems="center"
+              spacing={0.5}
+              sx={{ width: '100%' }}
+            >
+              <Typography variant="sub2" color={theme.palette.custom.whiteOnBg2}>
+                {schedule}
+              </Typography>
+              <TimeIcon color={theme.palette.custom.iconsWhite} />
             </Stack>
-            <Stack direction="row" alignItems="center" spacing={0.5}>
-              <Typography variant="sub2" color="custom.greyOnBg1">
+            <Stack
+              direction="row"
+              alignItems="center"
+              spacing={0.5}
+              sx={{ width: '100%' }}
+            >
+              <Typography variant="subtitle2" color={theme.palette.custom.greyOnBg1}>
                 {currentPlayers}/{maxPlayers}
               </Typography>
-              <DoubleTagsIcon color="#fff" />
+              <CapacityIcon color={theme.palette.custom.greyOnBg1} />
             </Stack>
           </Stack>
 
@@ -307,49 +303,35 @@ const LobbyCard = ({
         </Stack>
 
         {/* Progress Bar */}
-        <Box sx={{ mt: 1.5, mb: 1 }}>
+        <Box>
           <LinearProgress
             variant="determinate"
             value={progress}
             sx={{
-              height: 6,
+              // height: 7,
               borderRadius: 999,
-              backgroundColor: 'rgba(255,255,255,0.1)',
+              backgroundColor: theme.palette.background.progressbarBg,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+
+              border: `1px solid ${theme.palette.stroke.progressbar}`,
               '& .MuiLinearProgress-bar': {
-                borderRadius: 999,
-                background: cardStyles.progressBar,
+                borderRadius: '24px',
+                // height: 3,
+
+                background: theme.palette.primary.main,
               },
             }}
           />
         </Box>
 
+        <Divider sx={{ my: 1, background: theme.palette.stroke.black, height: '2px' }} />
+
         {/* Bottom Tags */}
         <Stack direction="row" spacing={1} sx={{ justifyContent: 'flex-end' }}>
           {tags.slice(0, 3).map((tag) => (
-            <Box
-              key={tag}
-              sx={{
-                px: 1.5,
-                py: 0.5,
-                borderRadius: 1,
-                backgroundColor: '#000',
-                border: '1px solid rgba(255,255,255,0.1)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 0.5,
-              }}
-            >
-              <Typography
-                variant="caption"
-                sx={{ color: '#FFFFFF', fontSize: '0.75rem', fontWeight: 500 }}
-              >
-                {tag}
-              </Typography>
-              {tagIcons[tag] &&
-                React.cloneElement(tagIcons[tag], {
-                  sx: { width: 16, height: 16, color: '#fff' },
-                })}
-            </Box>
+            <CustomTag title={tag} icon={tagIcons[tag]} />
           ))}
         </Stack>
       </Box>

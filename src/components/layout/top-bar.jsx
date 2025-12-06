@@ -56,8 +56,8 @@ export default function TopBar() {
           <Button
             variant="contained"
             color="surface"
-            startIcon={<ChevronBackwardIcon />}
-            endIcon={<WalletIcon />}
+            startIcon={<ChevronBackwardIcon color={theme.palette.custom.whiteOnBg2} />}
+            endIcon={<WalletIcon color={theme.palette.custom.tint4} />}
             sx={{
               pointerEvents: 'auto', // Re-enable clicks on the button
               bgcolor: '#151826', // Slightly lighter than background
@@ -75,20 +75,35 @@ export default function TopBar() {
               },
             }}
           >
-            <Typography variant="button2">افزایش موجودی</Typography>
+            <Typography
+              variant="button2"
+              sx={{ fontSize: theme.typography.button2.fontSize }}
+            >
+              افزایش موجودی
+            </Typography>
           </Button>
         </Box>
 
         {/* Notification Icon */}
         {/* <IconButton color="inherit" sx={{ zIndex: 2 }} size='small'> */}
-        <Badge
-          badgeContent={'+99'}
-          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-          color="error"
-          sx={{ '& .MuiBadge-badge': { bgcolor: '#FF0055', color: 'white' } }}
-        >
-          <NotificationsIcon />
-        </Badge>
+        <IconButton size="small" sx={{ width: 40, height: 40 }}>
+          <Badge
+            variant="standard"
+            badgeContent={'+99'}
+            overlap="circular"
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            color="error"
+            sx={{
+              '& .MuiBadge-badge': {
+                bgcolor: '#FF0055',
+                color: 'white',
+                fontSize: theme.typography.caption2.fontSize,
+              },
+            }}
+          >
+            <NotificationsIcon />
+          </Badge>
+        </IconButton>
         {/* </IconButton> */}
       </Toolbar>
     </AppBar>

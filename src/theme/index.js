@@ -174,11 +174,23 @@ const theme = createTheme({
 
       // tags
       tagOnCardPicBg: '#cfcfcf',
-
-      registering: '#00834f',
-      full: '#be9305',
-      live: '#e80000',
+      iconsWhite: '#FFFFFF',
+      iconsBlack: '#020202',
+      tagsBlackBg: '#090406',
+      tagsOnCardsPicBg: '#CFCFCF',
+      registering: '#00834F',
+      live: '#E80000',
+      full: '#BE9305',
+      finished: '#6D6D6D',
     },
+
+    stroke: {
+      primary: '#DD6161',
+      black: '#000000',
+      progressbar: '#262626',
+      bottomNavigationGreyLine: '#454545',
+    },
+
     // Standard MUI error, success, warning, info
     error: {
       main: '#DA0606',
@@ -200,6 +212,7 @@ const theme = createTheme({
     background: {
       default: '#131313', // bg1
       paper: '#212121', // bg2
+      progressbarBg: '#171717',
     },
     // Text colors
     text: {

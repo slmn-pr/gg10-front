@@ -16,7 +16,7 @@ const MainLayout = () => {
           flexDirection: 'column',
           minHeight: '100vh',
           overflowX: 'hidden',
-          backgroundColor: '#03050a',
+          backgroundColor: '#FFDFEB',
         }}
       >
         <Container
@@ -28,6 +28,7 @@ const MainLayout = () => {
             flexDirection: 'column',
             flexGrow: 1,
             overflowX: 'hidden',
+            backgroundColor: '#000',
             gap: 0.5,
           }}
         >

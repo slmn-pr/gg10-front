@@ -41,7 +41,7 @@ const HomePage = () => {
         <BannerSlider />
       </Box>
 
-      <Stack bgcolor="custom.bg1" p={1} borderRadius={1}>
+      <Stack bgcolor="custom.bg1" px={2} borderRadius={1}>
         {/* `Game mode selector */}
         <GameModeSelector />
 
