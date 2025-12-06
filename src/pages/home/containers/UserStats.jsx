@@ -16,7 +16,7 @@ export default function UserStats() {
       direction="row"
       justifyContent="space-between"
       alignItems="end"
-      sx={{ px: 1 }}
+      sx={{ px: 0.5, py: 1 }}
       bgcolor="custom.bg1"
       width="100%"
     >

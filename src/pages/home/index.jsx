@@ -34,7 +34,9 @@ const HomePage = () => {
   return (
     <Stack sx={{ pb: 4, px: 0 }} spacing={0.5}>
       {/* USer status */}
-      <UserStats />
+      <Box sx={{ px: 2, py: 0.5, bgcolor: 'custom.bg1' }}>
+        <UserStats />
+      </Box>
 
       {/* Banner slider */}
       <Box sx={{ p: 1, bgcolor: 'custom.bg1' }}>

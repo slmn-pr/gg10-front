@@ -47,8 +47,8 @@ export default function UserStatsCard({
       sx={{
         bgcolor: 'unset',
         backgroundImage: 'none',
-        p: 1.5,
-        borderRadius: 8,
+        // padding: 1,
+        borderRadius: 2,
         width: '30%',
         textAlign: 'center',
         position: 'relative',
