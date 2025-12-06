@@ -7,6 +7,7 @@ import MultiPlayerIcon from '@/components/icons/MultiPlayer';
 import BattleRoyalIcon from '@/components/icons/BattleRoyal';
 import LegendRankIcon from '@/components/icons/rank/LegendRankIcon';
 import GoldBigIcon from '@/components/icons/rank/GoldBigIcon';
+import UserAvatarImage from '@/assets/images/photo_2025-11-16_17-02-55 1.png';
 
 export default function UserStats() {
   const theme = useTheme();
@@ -40,7 +41,7 @@ export default function UserStats() {
           }}
         >
           <img
-            src="https://i.pravatar.cc/150?img=11"
+            src={UserAvatarImage}
             alt="User Avatar"
             style={{ borderRadius: 8 }}
             width={120}
