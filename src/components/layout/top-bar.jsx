@@ -41,31 +41,24 @@ export default function TopBar() {
           <Button
             variant="contained"
             color="surface"
-            startIcon={<ChevronBackwardIcon color={theme.palette.custom.whiteOnBg2} />}
-            endIcon={<WalletIcon color={theme.palette.custom.tint4} />}
             sx={{
               pointerEvents: 'auto', // Re-enable clicks on the button
               bgcolor: '#151826', // Slightly lighter than background
               color: '#E0E0E0',
               borderRadius: 2, // Perfect rectangle
-              px: 2,
-              py: 0.8,
+              px: '18px',
+              py: 1,
               fontSize: '0.75rem',
               fontWeight: 'bold',
               textTransform: 'none',
-              border: '1px solid #2B2E40',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
-              '&:hover': {
-                bgcolor: '#1E2130',
-              },
+              backgroundColor: theme.palette.custom.bg2,
             }}
           >
-            <Typography
-              variant="button2"
-              sx={{ fontSize: theme.typography.button2.fontSize }}
-            >
+            <ChevronBackwardIcon color={theme.palette.custom.whiteOnBg2} />
+            <Typography variant="button2" sx={{ mx: 0.5 }}>
               افزایش موجودی
             </Typography>
+            <WalletIcon color={theme.palette.custom.tint4} />
           </Button>
         </Box>
 
