@@ -12,6 +12,7 @@ import { useTheme } from '@emotion/react';
 import WalletIcon from '../icons/WalletIcon';
 import ChevronBackwardIcon from '../icons/ChevronBackward';
 import NotificationsIcon from '../icons/Notifications';
+import Logo from '../icons/Logo';
 
 export default function TopBar() {
   const theme = useTheme();
@@ -27,23 +28,7 @@ export default function TopBar() {
     >
       <Toolbar sx={{ justifyContent: 'space-between', px: 2, position: 'relative' }}>
         {/* Logo */}
-        <Typography
-          variant="title1"
-          component="div"
-          sx={{
-            fontWeight: 900,
-            letterSpacing: 1,
-            zIndex: 2,
-            fontSize: '26px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 0.15,
-            fontFamily: 'Russo One, sans-serif',
-          }}
-        >
-          <span style={{ color: theme.palette.custom.primaryOnBg2 }}>GG</span>
-          <span>10</span>
-        </Typography>
+        <Logo />
 
         {/* Balance Button - Centered Absolutely */}
         <Box

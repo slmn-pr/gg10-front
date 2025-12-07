@@ -5,12 +5,15 @@ import UserProfilePage from '@/pages/user/pages/user-profile-page.jsx';
 import AdminDashboardPage from '@/pages/admin/pages/admin-dashboard-page.jsx';
 import LoginPage from '@/pages/auth/pages/login-page.jsx';
 import MainLayout from '@/components/layout/main-layout.jsx';
+import NotificationsPage from '@/pages/notifications/index.jsx';
 
 const AppRouter = () => (
   <Routes>
     <Route element={<MainLayout />}>
       <Route path="/" element={<Navigate to="/home" replace />} />
       <Route path="/home" element={<HomePage />} />
+
+      <Route path="/notifications" element={<NotificationsPage />} />
       <Route path="/user/profile" element={<UserProfilePage />} />
       <Route
         path="/admin"
