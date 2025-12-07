@@ -11,6 +11,8 @@ import UserStats from './containers/UserStats.jsx';
 import BannerSlider from './containers/BannerSlider.jsx';
 import GameModeSelector from './components/GameModeTab.jsx';
 import HomeFilters from './containers/HomeFilters/index.jsx';
+import ChevronUpIcon from '@/components/icons/ChevronUp.jsx';
+import LobbyCardHeader from './components/LobbyCardHeader.jsx';
 
 const SvgIcon = ({ src, sx, ...props }) => (
   <Box
@@ -51,35 +53,13 @@ const HomePage = () => {
         <HomeFilters />
 
         {/* My Lobbies Section */}
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          sx={{ mb: 2 }}
-        >
-          <Stack direction="row" alignItems="center" spacing={1}>
-            <Typography variant="h6" fontWeight="bold">
-              لابی‌های شما
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              ۲ لابی
-            </Typography>
-          </Stack>
-          <IconButton
-            size="small"
-            onClick={() => setMyLobbiesExpanded(!myLobbiesExpanded)}
-            sx={{ color: 'text.secondary' }}
-          >
-            <SvgIcon
-              src={ExpandChevronIcon}
-              sx={{
-                width: 20,
-                height: 20,
-                transform: myLobbiesExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
-                transition: 'transform 0.2s ease',
-              }}
-            />
-          </IconButton>
+        <Stack direction="row" justifyContent="space-between" alignItems="center">
+          {/* Lobby header */}
+          <LobbyCardHeader
+            name="لابی‌های شما"
+            title="۲ لابی"
+            onExpand={() => setMyLobbiesExpanded(!myLobbiesExpanded)}
+          />
         </Stack>
 
         {myLobbiesExpanded && (
@@ -108,21 +88,7 @@ const HomePage = () => {
         )}
 
         {/* All Lobbies Section */}
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          sx={{ mb: 2, mt: 4 }}
-        >
-          <Stack direction="row" alignItems="center" spacing={1}>
-            <Typography variant="h6" fontWeight="bold">
-              فهرست همه لابی‌ها
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              ۴ لابی
-            </Typography>
-          </Stack>
-        </Stack>
+        <LobbyCardHeader name="فهرست همه لابی‌ها" title="۴ لابی" />
 
         <LobbyCard
           title="آیزولیتد ۴۰ نفره جایگاهی"
