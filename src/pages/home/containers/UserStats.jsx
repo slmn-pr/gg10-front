@@ -1,8 +1,6 @@
-import { Box, Stack, SvgIcon, Typography, useTheme } from '@mui/material';
+import { Box, Stack, Typography, useTheme } from '@mui/material';
 import UserStatsCard from '../components/UserStatsCard';
 
-import WorkspacePremiumRoundedIcon from '@/assets/icons/rank/legend.svg';
-import MultiPLayerIcon from '@/assets/icons/game-mode/multi-player.svg';
 import MultiPlayerIcon from '@/components/icons/MultiPlayer';
 import BattleRoyalIcon from '@/components/icons/BattleRoyal';
 import LegendRankIcon from '@/components/icons/rank/LegendRankIcon';
@@ -16,7 +14,7 @@ export default function UserStats() {
       direction="row"
       justifyContent="space-between"
       alignItems="end"
-      sx={{ px: 0.5, py: 1 }}
+      sx={{ px: 0.5 }}
       bgcolor="custom.bg1"
       width="100%"
     >
@@ -30,7 +28,7 @@ export default function UserStats() {
       />
 
       {/* Avatar */}
-      <Stack alignItems="center" sx={{ p: 2 }}>
+      <Stack alignItems="center">
         <Box
           sx={{
             display: 'flex',
@@ -44,10 +42,10 @@ export default function UserStats() {
             src={UserAvatarImage}
             alt="User Avatar"
             style={{ borderRadius: 8 }}
-            width={120}
-            height={120}
+            width={100}
+            height={100}
           />
-          <Typography variant="sub2" color="custom.whiteOnBg1" fontWeight="bold">
+          <Typography variant="sub2" color="custom.whiteOnBg1">
             amir_gamer
           </Typography>
         </Box>
@@ -55,12 +53,11 @@ export default function UserStats() {
 
       {/* Battle Royale Stats */}
       <UserStatsCard
-        title="بتل رویال"
         rankIcon={<GoldBigIcon />}
         icon={<BattleRoyalIcon color={theme.palette.primary.main} />}
-        rank="آماتور"
         randCode={2}
         value="100"
+        title={"بتل رویال"}
       />
     </Stack>
   );

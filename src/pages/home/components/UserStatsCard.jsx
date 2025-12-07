@@ -7,7 +7,7 @@ const RANK_MAP = {
   },
   gold: {
     color: '#9A7D26',
-    title: 'گلد',
+    title: 'مستر',
   },
   silver: {
     color: '#C0C0C0',
