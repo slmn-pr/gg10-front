@@ -47,7 +47,9 @@ const HomePage = () => {
 
       <Stack bgcolor="custom.bg1" px={2} borderRadius={1}>
         {/* `Game mode selector */}
-        <GameModeSelector />
+        <Box sx={{ my: '12px' }}>
+          <GameModeSelector />
+        </Box>
 
         {/* Filters */}
         <HomeFilters />
