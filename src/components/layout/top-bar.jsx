@@ -5,16 +5,15 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import NotificationsNoneRoundedIcon from '@mui/icons-material/NotificationsNoneRounded';
-import AccountBalanceWalletRoundedIcon from '@mui/icons-material/AccountBalanceWalletRounded';
-import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
 import { useTheme } from '@emotion/react';
 import WalletIcon from '../icons/WalletIcon';
 import ChevronBackwardIcon from '../icons/ChevronBackward';
 import NotificationsIcon from '../icons/Notifications';
 import Logo from '../icons/Logo';
+import { useNavigate } from 'react-router-dom';
 
 export default function TopBar() {
+  const navigate = useNavigate();
   const theme = useTheme();
   return (
     <AppBar
@@ -64,7 +63,11 @@ export default function TopBar() {
 
         {/* Notification Icon */}
         {/* <IconButton color="inherit" sx={{ zIndex: 2 }} size='small'> */}
-        <IconButton size="small" sx={{ width: 40, height: 40 }}>
+        <IconButton
+          size="small"
+          sx={{ width: 40, height: 40 }}
+          onClick={() => navigate('/notifications')}
+        >
           <Badge
             variant="standard"
             badgeContent={'+99'}

@@ -6,31 +6,31 @@ import EmptyBox from './components/EmptyBox';
 
 export default function NotificationsPage() {
   const theme = useTheme();
-//   const [notifications, setNotifications] = useState([
-//     {
-//       id: 1,
-//       title: 'دریافت جایزه... تبریک!',
-//       description:
-//         'مبلغ 1,000,000 تومان بابت قهرمانی در لابی “قهرمانان”موجودی کیف پولت شارژ شد.',
-//       date: '30 آبان',
-//     },
-//     {
-//       id: 2,
-//       title: 'دریافت جایزه... تبریک!',
-//       description:
-//         'مبلغ 1,000,000 تومان بابت قهرمانی در لابی “قهرمانان”موجودی کیف پولت شارژ شد.',
-//       date: '30 آبان',
-//     },
-//     {
-//       id: 1,
-//       title: 'دریافت جایزه... تبریک!',
-//       description:
-//         'مبلغ 1,000,000 تومان بابت قهرمانی در لابی “قهرمانان”موجودی کیف پولت شارژ شد.',
-//       date: '30 آبان',
-//     },
-//   ]);
+  const [notifications, setNotifications] = useState([
+    {
+      id: 1,
+      title: 'دریافت جایزه... تبریک!',
+      description:
+        'مبلغ 1,000,000 تومان بابت قهرمانی در لابی “قهرمانان”موجودی کیف پولت شارژ شد.',
+      date: '30 آبان',
+    },
+    {
+      id: 2,
+      title: 'دریافت جایزه... تبریک!',
+      description:
+        'مبلغ 1,000,000 تومان بابت قهرمانی در لابی “قهرمانان”موجودی کیف پولت شارژ شد.',
+      date: '30 آبان',
+    },
+    {
+      id: 1,
+      title: 'دریافت جایزه... تبریک!',
+      description:
+        'مبلغ 1,000,000 تومان بابت قهرمانی در لابی “قهرمانان”موجودی کیف پولت شارژ شد.',
+      date: '30 آبان',
+    },
+  ]);
 
-  const notifications = [];
+  // const notifications = [];
   return (
     <PageContainer>
       {/* Head */}
