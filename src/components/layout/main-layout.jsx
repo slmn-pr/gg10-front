@@ -27,7 +27,8 @@ const MainLayout = () => {
             display: 'flex',
             flexDirection: 'column',
             flexGrow: 1,
-            overflowX: 'hidden',
+            // overflowX: 'hidden',
+            overflow: 'auto',
             backgroundColor: '#000',
             gap: 0.5,
           }}

@@ -3,7 +3,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
 
-*{
+* {
   box-sizing: border-box;
 }
 body {
@@ -14,4 +14,21 @@ body {
   font-feature-settings: 'frac', 'ss02';
   overflow-x: hidden;
   font-family: 'Estedad-FD', sans-serif;
+  /* overflow: hidden; */
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: transparent;
 }
