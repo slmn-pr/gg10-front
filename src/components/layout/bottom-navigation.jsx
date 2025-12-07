@@ -1,124 +1,186 @@
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import Paper from '@mui/material/Paper';
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
-import EmojiEventsRoundedIcon from '@mui/icons-material/EmojiEventsRounded';
-import RocketLaunchRoundedIcon from '@mui/icons-material/RocketLaunchRounded';
-import AccountBalanceWalletRoundedIcon from '@mui/icons-material/AccountBalanceWalletRounded';
 import { useMemo } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import Box from '@mui/material/Box';
+import { useNavigate, useLocation } from 'react-router-dom';
+import {
+  Box,
+  Paper,
+  IconButton,
+  Typography,
+  useTheme,
+  alpha,
+  Button,
+} from '@mui/material';
 
-const navItems = [
-  { label: 'کیف پول', icon: <AccountBalanceWalletRoundedIcon />, path: '/wallet' },
-  { label: 'لیدربرد', icon: <EmojiEventsRoundedIcon />, path: '/leaderboard' },
-  {
-    label: '',
-    icon: <HomeRoundedIcon sx={{ fontSize: 32 }} />,
-    path: '/home',
-    isMain: true,
-  },
-  { label: 'مأموریت‌ها', icon: <RocketLaunchRoundedIcon />, path: '/missions' },
-  { label: 'حساب کاربری', icon: <PersonRoundedIcon />, path: '/user/profile' },
-];
+import HomeIcon from '../icons/navigation/HomeIcon';
+import MissionsIcon from '../icons/navigation/MissionsIcon';
+import AccountIcon from '../icons/navigation/AccountIcon';
+import LeaderBoard from '../icons/navigation/LeaderBoard';
+import WalletIcon from '../icons/navigation/WalletIcon';
 
 const MDBottomNavigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const value = useMemo(() => location.pathname, [location.pathname]);
+  const theme = useTheme();
+
+  const activePath = useMemo(() => location.pathname, [location.pathname]);
+
+  const navItems = [
+    {
+      label: 'کیف پول',
+      icon: (active) => (
+        <WalletIcon
+          color={active ? theme.palette.primary.main : theme.palette.custom.iconsWhite}
+        />
+      ),
+      path: '/wallet',
+    },
+    {
+      label: 'لیدربرد',
+      icon: (active) => (
+        <LeaderBoard
+          color={active ? theme.palette.primary.main : theme.palette.custom.iconsWhite}
+        />
+      ),
+      path: '/leaderboard',
+    },
+    {
+      label: '',
+      isMain: true,
+      icon: () => <HomeIcon color={theme.palette.custom.whiteOnBg1} />,
+      path: '/home',
+    },
+    {
+      label: 'مأموریت‌ها',
+      icon: (active) => (
+        <MissionsIcon
+          color={active ? theme.palette.primary.main : theme.palette.custom.iconsWhite}
+        />
+      ),
+      path: '/missions',
+    },
+    {
+      label: 'حساب کاربری',
+      icon: (active) => (
+        <AccountIcon
+          color={active ? theme.palette.primary.main : theme.palette.custom.iconsWhite}
+        />
+      ),
+      path: '/user/profile',
+    },
+  ];
 
   return (
     <Paper
       elevation={0}
       sx={{
-        height: 70,
         position: 'fixed',
         bottom: 0,
-        left: 0,
-        right: 0,
+        left: '50%',
+        transform: 'translateX(-50%)',
+        width: 440,
+        height: 72,
+        bgcolor: 'custom.bg1',
+        borderTop: `1px solid ${theme.palette.custom.bottomNavigationGreyLine}`,
         zIndex: 1000,
-        bgcolor: 'transparent',
-        pointerEvents: 'none', // Allow clicks to pass through wrapper
+        pointerEvents: 'none',
       }}
     >
       <Box
         sx={{
-          maxWidth: 'sm',
-          mx: 'auto',
-          pointerEvents: 'auto', // Re-enable clicks
+          pointerEvents: 'auto',
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          px: 3,
+          position: 'relative',
           background: '#0D0F17',
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
         }}
       >
-        <BottomNavigation
-          value={value}
-          onChange={(_event, newValue) => {
-            if (newValue !== value) {
-              navigate(newValue);
-            }
-          }}
-          showLabels
-          sx={{
-            bgcolor: 'transparent',
-            height: 70,
-            '& .MuiBottomNavigationAction-root': {
-              color: '#6B7280',
-              minWidth: 'auto',
-              padding: '6px 0',
-              transition: 'all 0.2s ease',
-              '&.Mui-selected': {
-                color: '#FF0055', // Pink/magenta for selected items
-                fontWeight: 700,
-              },
-              '&:hover': {
-                fontWeight: 600,
-              },
-            },
-          }}
-        >
-          {navItems.map((item) => (
-            <BottomNavigationAction
+        {navItems.map((item) =>
+          item.isMain ? (
+            // ---------- MAIN ACTION BUTTON ----------
+            <IconButton
               key={item.path}
-              value={item.path}
-              label={item.label}
-              icon={
-                item.isMain ? (
-                  <Box
-                    sx={{
-                      width: 60,
-                      height: 60,
-                      background: 'linear-gradient(135deg, #FF0055 0%, #E91E63 100%)',
-                      borderRadius: '50%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: 'white',
-                      mt: -4,
-                      boxShadow:
-                        '0 8px 16px rgba(233, 30, 99, 0.5), 0 4px 8px rgba(233, 30, 99, 0.3)',
-                      // border: '3px solid #0D0F17',
-                      transition: 'transform 0.2s ease',
-                      '&:hover': {
-                        transform: 'scale(1.05)',
-                      },
-                    }}
-                  >
-                    <HomeRoundedIcon sx={{ fontSize: 28 }} />
-                  </Box>
-                ) : (
-                  item.icon
-                )
-              }
+              onClick={() => navigate(item.path)}
               sx={{
-                ...(item.isMain && {
-                  overflow: 'visible',
-                }),
+                transform: 'translateY(-50%)',
+                width: 60,
+                height: 60,
+                borderRadius: '50%',
+                bgcolor: theme.palette.primary.main,
+                boxShadow: `0 8px 16px ${alpha(
+                  theme.palette.primary.main,
+                  0.3,
+                )}, 0 4px 8px ${alpha(theme.palette.primary.main, 0.7)}`,
+
+                '&:active': {
+                  bgcolor: theme.palette.primary.main,
+                },
+                '&:hover': {
+                  bgcolor: theme.palette.primary.main,
+                },
+
+                '&::after': {
+                  content: '""',
+                  position: 'absolute',
+                  top: '25px',
+                  transform: 'translateY(-50%)',
+                  left: 'calc(100% + 10px)',
+                  width: '150px',
+                  height: '1px',
+                  bgcolor: theme.palette.primary.main,
+                },
+
+                '&::befor': {
+                  content: '""',
+                  position: 'absolute',
+                  top: '25px',
+                  transform: 'translateY(-50%)',
+                  left: 'calc(-100% - 10px)',
+                  width: '150px',
+                  height: '10px',
+                  bgcolor: theme.palette.primary.main,
+                },
               }}
-            />
-          ))}
-        </BottomNavigation>
+            >
+              {item.icon(activePath === item.path)}
+            </IconButton>
+          ) : (
+            // ---------- NORMAL NAV ITEMS ----------
+
+            <Button
+              onClick={() => navigate(item.path)}
+              sx={{
+                color:
+                  activePath === item.path
+                    ? theme.palette.primary.main
+                    : theme.palette.custom.iconsWhite,
+                flexDirection: 'column',
+                padding: 0,
+              }}
+            >
+              {item.icon(activePath === item.path)}
+
+              <Typography
+                variant="caption"
+                sx={{
+                  color:
+                    activePath === item.path
+                      ? theme.palette.primary.main
+                      : theme.palette.custom.whiteOnBg1,
+                  mt: 0.5,
+                  fontWeight: activePath === item.path ? 700 : 400,
+                  fontSize: 12,
+                }}
+              >
+                {item.label}
+              </Typography>
+            </Button>
+          ),
+        )}
       </Box>
     </Paper>
   );
