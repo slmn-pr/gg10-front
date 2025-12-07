@@ -77,11 +77,12 @@ const MDBottomNavigation = () => {
         left: '50%',
         transform: 'translateX(-50%)',
         width: 440,
-        height: 72,
+        height: '60px',
         bgcolor: 'custom.bg1',
-        borderTop: `1px solid ${theme.palette.custom.bottomNavigationGreyLine}`,
+        // borderTop: `1px solid ${theme.palette.custom.bottomNavigationGreyLine}`,
         zIndex: 1000,
         pointerEvents: 'none',
+        px: 2,
       }}
     >
       <Box
@@ -92,7 +93,6 @@ const MDBottomNavigation = () => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          px: 3,
           position: 'relative',
           background: '#0D0F17',
           borderTopLeftRadius: 20,
@@ -126,23 +126,23 @@ const MDBottomNavigation = () => {
                 '&::after': {
                   content: '""',
                   position: 'absolute',
-                  top: '25px',
+                  top: '30px',
                   transform: 'translateY(-50%)',
-                  left: 'calc(100% + 10px)',
-                  width: '150px',
+                  left: 'calc(100% + 8px)',
+                  width: '180px',
                   height: '1px',
-                  bgcolor: theme.palette.primary.main,
+                  bgcolor: theme.palette.custom.bottomNavigationGreyLine,
                 },
 
-                '&::befor': {
+                '&::before': {
                   content: '""',
                   position: 'absolute',
-                  top: '25px',
+                  top: '30px',
                   transform: 'translateY(-50%)',
-                  left: 'calc(-100% - 10px)',
-                  width: '150px',
-                  height: '10px',
-                  bgcolor: theme.palette.primary.main,
+                  right: 'calc(100% + 8px)',
+                  width: '180px',
+                  height: '1px',
+                  bgcolor: theme.palette.custom.bottomNavigationGreyLine,
                 },
               }}
             >
