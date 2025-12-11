@@ -1,9 +1,6 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 export default function useHorizentalScroll(containerRef) {
-  // ----------------------------------------
-  // DRAG SCROLL + SNAP
-  // ----------------------------------------
   useEffect(() => {
     const el = containerRef?.current;
     if (!el) return;
@@ -15,50 +12,70 @@ export default function useHorizentalScroll(containerRef) {
     const onMouseDown = (e) => {
       isDown = true;
       el.style.cursor = 'grabbing';
-
-      // در لحظه‌ی Drag نباید smooth فعال باشد
-      el.style.scrollBehavior = 'auto';
-
+      el.style.scrollBehavior = 'auto'; // Disable smooth scroll during drag
       startX = e.pageX - el.offsetLeft;
       scrollLeft = el.scrollLeft;
     };
 
-    const onMouseLeave = () => {
+    const onMouseLeaveOrUp = () => {
       isDown = false;
       el.style.cursor = 'grab';
-
-      // فعال شدن اسنپ نرم بعد از رها کردن
-      el.style.scrollBehavior = 'smooth';
-    };
-
-    const onMouseUp = () => {
-      isDown = false;
-      el.style.cursor = 'grab';
-
-      // بعد از رها کردن اسکرول اسنپ آرام انجام شود
-      el.style.scrollBehavior = 'smooth';
+      el.style.scrollBehavior = 'smooth'; // Re-enable smooth snap on release
     };
 
     const onMouseMove = (e) => {
       if (!isDown) return;
+      e.preventDefault(); // Prevent text selection, etc.
       const x = e.pageX - el.offsetLeft;
       const walk = x - startX;
       el.scrollLeft = scrollLeft - walk;
     };
 
+    // --- Touch Event Handlers for Mobile ---
+    const onTouchStart = (e) => {
+      isDown = true;
+      el.style.scrollBehavior = 'auto';
+      startX = e.touches[0].pageX - el.offsetLeft;
+      scrollLeft = el.scrollLeft;
+    };
+
+    const onTouchEnd = () => {
+      isDown = false;
+      el.style.scrollBehavior = 'smooth';
+    };
+
+    const onTouchMove = (e) => {
+      if (!isDown) return;
+      // No preventDefault() here, to allow for vertical scroll if needed
+      const x = e.touches[0].pageX - el.offsetLeft;
+      const walk = x - startX;
+      el.scrollLeft = scrollLeft - walk;
+    };
+
+    // Add Mouse Event Listeners
     el.addEventListener('mousedown', onMouseDown);
-    el.addEventListener('mouseleave', onMouseLeave);
-    el.addEventListener('mouseup', onMouseUp);
+    el.addEventListener('mouseleave', onMouseLeaveOrUp);
+    el.addEventListener('mouseup', onMouseLeaveOrUp);
     el.addEventListener('mousemove', onMouseMove);
 
-    // وقتی کاربر با انگشت اسکرول می‌کند هم نرم باشد
+    // Add Touch Event Listeners
+    el.addEventListener('touchstart', onTouchStart);
+    el.addEventListener('touchend', onTouchEnd);
+    el.addEventListener('touchmove', onTouchMove);
+
+    // Initial style
     el.style.scrollBehavior = 'smooth';
 
+    // Cleanup function
     return () => {
       el.removeEventListener('mousedown', onMouseDown);
-      el.removeEventListener('mouseleave', onMouseLeave);
-      el.removeEventListener('mouseup', onMouseUp);
+      el.removeEventListener('mouseleave', onMouseLeaveOrUp);
+      el.removeEventListener('mouseup', onMouseLeaveOrUp);
       el.removeEventListener('mousemove', onMouseMove);
+
+      el.removeEventListener('touchstart', onTouchStart);
+      el.removeEventListener('touchend', onTouchEnd);
+      el.removeEventListener('touchmove', onTouchMove);
     };
-  }, []);
+  }, [containerRef]); // Rerun if the ref changes
 }
