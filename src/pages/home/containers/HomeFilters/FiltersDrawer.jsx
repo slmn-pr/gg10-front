@@ -10,7 +10,7 @@ import { useTheme } from '@mui/material/styles';
 
 export default function FiltersDrawer({ children, defaultValues }) {
   console.log('[FiltersDrawer] defaultValues', defaultValues);
-  
+
   const [open, setOpen] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const theme = useTheme();
@@ -131,6 +131,10 @@ export default function FiltersDrawer({ children, defaultValues }) {
         onClose={() => setOpen(false)}
         sx={{
           zIndex: 999, // higher than bottom navigation which has zIndex: 1000
+          '& .MuiBackdrop-root': {
+            maxWidth: 'sm', // maxWidth="sm" in Material-UI is approximately 600px
+            mx: 'auto',
+          },
           '& .MuiDrawer-paper': {
             maxWidth: 'sm', // maxWidth="sm" in Material-UI is approximately 600px
             width: '100%',
