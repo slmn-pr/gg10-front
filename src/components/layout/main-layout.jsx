@@ -22,8 +22,8 @@ const MainLayout = () => {
         <Container
           maxWidth="sm"
           sx={{
-            paddingLeft: { sm: 0 },
-            paddingRight: { sm: 0 },
+            paddingLeft: { xs: 0 },
+            paddingRight: { xs: 0 },
             display: 'flex',
             flexDirection: 'column',
             flexGrow: 1,
