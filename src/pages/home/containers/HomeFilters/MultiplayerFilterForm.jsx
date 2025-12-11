@@ -17,15 +17,15 @@ export default function MultiplayerFilterForm() {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      name={field.name}
-                      inputRef={field.ref}
-                      checked={!!field.value}
-                      onChange={(_event, checked) => field.onChange(checked)}
-                      onBlur={field.onBlur}
-                      color="primary"
+                      {...field}
+                      checked={field.value}
+                      onChange={(event, checked) => {
+                        console.log('onChange', event, checked);
+                        field.onChange(checked);
+                      }}
                     />
                   }
-                  label="سرچ اند دیستروی"
+                  label={"سرچ اند دیستروی"}
                 />
               )}
             />
@@ -94,8 +94,6 @@ export default function MultiplayerFilterForm() {
             />
           </Grid>
         </Grid>
-
-  
 
         {/* Switchs */}
         <Stack spacing={3}>

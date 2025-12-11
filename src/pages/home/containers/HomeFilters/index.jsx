@@ -11,6 +11,7 @@ import MultiplayerFilterForm from './MultiplayerFilterForm';
 import { BATTLE_ROYAL_DEFAULT_VALUES, MULTIPLAYER_DEFAULT_VALUES } from './conts';
 import { useTheme } from '@mui/material/styles';
 import SearchAndDestroyIcon from '@/components/icons/chip/SearchAndDestroyIcon';
+import { FormProvider, useForm } from 'react-hook-form';
 
 const filters = [
   { label: 'اسکوادی', icon: SquadChipIcon, key: 'squad' },
@@ -19,7 +20,7 @@ const filters = [
   {
     label: 'سرچ اند دیستروی',
     icon: SearchAndDestroyIcon,
-    key: 'searchAndDistribute',
+    key: 'searchAndDistro',
   },
 ];
 
@@ -27,6 +28,8 @@ export default function HomeFilters() {
   const containerRef = useRef(null);
   const theme = useTheme();
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const methods = useForm();
 
   const gameMode = useMemo(
     () => (searchParams.get('gameMode') ? searchParams.get('gameMode') : 'multiplayer'),
@@ -39,7 +42,10 @@ export default function HomeFilters() {
       : Object.keys(BATTLE_ROYAL_DEFAULT_VALUES);
   }, [gameMode]);
 
+  // console.log('[HomeFilters] defaultValues', defaultValues);
+
   const defaultValues = useMemo(() => {
+    // console.log('[HomeFilters] defaultValueNames', defaultValueNames);
     const res = {};
     defaultValueNames.forEach((name) => {
       res[name] = searchParams.get(name) ? Boolean(searchParams.get(name)) : false;
@@ -164,13 +170,15 @@ export default function HomeFilters() {
         );
       })}
 
-      <FiltersDrawer defaultValues={defaultValues}>
-        {gameMode === 'multiplayer' ? (
-          <MultiplayerFilterForm />
-        ) : (
-          <BattleRoyalFilterForm />
-        )}
-      </FiltersDrawer>
+      <FormProvider {...methods}>
+        <FiltersDrawer defaultValues={defaultValues}>
+          {gameMode === 'multiplayer' ? (
+            <MultiplayerFilterForm />
+          ) : (
+            <BattleRoyalFilterForm />
+          )}
+        </FiltersDrawer>
+      </FormProvider>
     </Stack>
   );
 }

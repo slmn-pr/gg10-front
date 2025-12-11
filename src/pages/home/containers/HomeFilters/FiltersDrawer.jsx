@@ -39,19 +39,11 @@ export default function FiltersDrawer({ children, defaultValues }) {
     return paramsDefaults;
   }, [gameMode, searchParams]);
 
-  const methods = useForm({
-    defaultValues: defaultValues,
-    values: {
-      solo: true,
-    },
-    mode: 'onChange',
-  });
+  // const formValues = methods.watch();
 
-  const formValues = methods.watch();
-
-  const activeFilters = Object.entries(formValues)
-    .filter(([key, value]) => value === true)
-    .map(([key]) => key);
+  // const activeFilters = Object.entries(formValues)
+  //   .filter(([key, value]) => value === true)
+  //   .map(([key]) => key);
 
   const resetFilters = useCallback(() => {
     const currentParams = new URLSearchParams(searchParams);
@@ -67,13 +59,13 @@ export default function FiltersDrawer({ children, defaultValues }) {
 
     setSearchParams(currentParams, { replace: true });
 
-    if (gameMode === 'multiplayer') {
-      methods.reset(MULTIPLAYER_DEFAULT_VALUES);
-    } else {
-      methods.reset(BATTLE_ROYAL_DEFAULT_VALUES);
-    }
+    // if (gameMode === 'multiplayer') {
+    //   methods.reset(MULTIPLAYER_DEFAULT_VALUES);
+    // } else {
+    //   methods.reset(BATTLE_ROYAL_DEFAULT_VALUES);
+    // }
     setOpen(false);
-  }, [methods, gameMode, searchParams, setSearchParams]);
+  }, [gameMode, searchParams, setSearchParams]);
 
   const applyFilters = useCallback(() => {
     const currentParams = new URLSearchParams(searchParams);
@@ -88,20 +80,22 @@ export default function FiltersDrawer({ children, defaultValues }) {
     });
 
     // Add only active filters (true values) to search params
-    Object.entries(formValues).forEach(([key, value]) => {
-      if (value === true && baseDefaults.hasOwnProperty(key)) {
-        currentParams.set(key, 'true');
-      }
-    });
+    // Object.entries(formValues).forEach(([key, value]) => {
+    //   if (value === true && baseDefaults.hasOwnProperty(key)) {
+    //     currentParams.set(key, 'true');
+    //   }
+    // });
 
     setSearchParams(currentParams, { replace: true });
     setOpen(false);
-  }, [formValues, gameMode, searchParams, setSearchParams]);
+  }, [gameMode, searchParams, setSearchParams]);
 
-  const isDiabled = useMemo(
-    () => Object.values(formValues).every((value) => value === false),
-    [formValues],
-  );
+  // const isDiabled = useMemo(
+  //   () => Object.values(formValues).every((value) => value === false),
+  //   [formValues],
+  // );
+
+  const isDiabled = true;
 
   // Clean up old filter params when gameMode changes
   useEffect(() => {
@@ -114,7 +108,7 @@ export default function FiltersDrawer({ children, defaultValues }) {
     });
     setSearchParams(searchParams, { replace: true });
 
-    methods.reset(sources);
+    // methods.reset(sources);
   }, [gameMode]);
 
   return (
@@ -168,9 +162,7 @@ export default function FiltersDrawer({ children, defaultValues }) {
           </Stack>
 
           {/* Content */}
-          <Box>
-            <FormProvider {...methods}>{children}</FormProvider>
-          </Box>
+          <Box>{children}</Box>
 
           {/* Footer buttons */}
           <Stack direction="row" spacing={2} alignItems="center" sx={{ pb: 5 }}>
@@ -205,7 +197,7 @@ export default function FiltersDrawer({ children, defaultValues }) {
                 color={isDiabled ? 'custom.disabledGreyOnBg2' : 'custom.whiteOnBg1'}
               >
                 <span> اعمال فیلترها</span>
-                {activeFilters.length > 0 && <span>({activeFilters.length})</span>}
+                {/* {activeFilters.length > 0 && <span>({activeFilters.length})</span>} */}
               </Typography>
             </Button>
           </Stack>

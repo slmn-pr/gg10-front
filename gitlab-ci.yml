@@ -1,0 +1,43 @@
+stages:
+  - install
+  - build
+  - deploy
+
+variables:
+  NODE_ENV: 'production'
+
+cache:
+  paths:
+    - node_modules/
+
+# install_dependencies:
+#   stage: install
+#   image: node:18
+#   script:
+#     - npm ci
+#   artifacts:
+#     paths:
+#       - node_modules/
+
+build_app:
+  stage: install & build
+  image: node:18
+  script:
+    - npm ci
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
+
+deploy_to_server:
+  stage: deploy
+  image: alpine:latest
+  before_script:
+    - apt install --no-cache openssh-client
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+  script:
+    - scp -r dist/* $SSH_USER@$SSH_HOST:/var/www/html/
+  only:
+    - main
