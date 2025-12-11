@@ -9,7 +9,9 @@ import { BATTLE_ROYAL_DEFAULT_VALUES, MULTIPLAYER_DEFAULT_VALUES } from './conts
 import { useTheme } from '@mui/material/styles';
 
 export default function FiltersDrawer({ children, defaultValues }) {
-  const [open, setOpen] = useState(true);
+  console.log('[FiltersDrawer] defaultValues', defaultValues);
+  
+  const [open, setOpen] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const theme = useTheme();
   const gameMode = searchParams.get('gameMode') || 'multiplayer';
@@ -38,7 +40,10 @@ export default function FiltersDrawer({ children, defaultValues }) {
   }, [gameMode, searchParams]);
 
   const methods = useForm({
-    defaultValues: defaultValues || getDefaultValues(),
+    defaultValues: defaultValues,
+    values: {
+      solo: true,
+    },
     mode: 'onChange',
   });
 

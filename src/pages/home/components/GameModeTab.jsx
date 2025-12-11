@@ -61,11 +61,11 @@ export default function GameModeSelector() {
           border: '2px solid white',
 
           '&.Mui-selected': {
-            backgroundColor: theme.palette.custom.tint1,
+            backgroundColor: theme.palette.custom.tint2,
             color: '#000',
             border: `2px solid ${theme.palette.custom.primaryStroke}`,
             '&:hover': {
-              backgroundColor: theme.palette.custom.tint1,
+              backgroundColor: theme.palette.custom.tint2,
             },
           },
           '&.Mui-not-selected': {
@@ -105,11 +105,11 @@ export default function GameModeSelector() {
           border: '2px solid white',
 
           '&.Mui-selected': {
-            backgroundColor: theme.palette.custom.tint1,
+            backgroundColor: theme.palette.custom.tint2,
             color: '#000',
             border: `2px solid ${theme.palette.custom.primaryStroke}`,
             '&:hover': {
-              backgroundColor: theme.palette.custom.tint1,
+              backgroundColor: theme.palette.custom.tint2,
             },
           },
         }}
@@ -151,7 +151,7 @@ export default function GameModeSelector() {
   //         onClick={() => handleGameModeChange('multiplayer')}
   //         endIcon={<MultiPlayerIcon color={isMultiplayerSelected ? '#000' : '#fff'} />}
   //         sx={{
-  //           bgcolor: isMultiplayerSelected ? 'custom.tint1' : 'custom.bg2',
+  //           bgcolor: isMultiplayerSelected ? 'custom.tint2' : 'custom.bg2',
   //           borderRadius: 2,
   //           borderTopRightRadius: isMultiplayerSelected ? 10 : 0,
   //           borderBottomRightRadius: isMultiplayerSelected ? 10 : 0,
@@ -165,7 +165,7 @@ export default function GameModeSelector() {
   //             ? `2px solid ${theme.palette.custom.primaryStroke}`
   //             : '1px solid white',
   //           '&:hover': {
-  //             bgcolor: isMultiplayerSelected ? 'custom.tint1' : 'custom.bg2',
+  //             bgcolor: isMultiplayerSelected ? 'custom.tint2' : 'custom.bg2',
   //           },
   //         }}
   //       >

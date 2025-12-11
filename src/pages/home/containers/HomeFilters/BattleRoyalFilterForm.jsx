@@ -52,8 +52,10 @@ const THIRD_ROW_CHECK_BOXES = [
 ];
 
 export default function BattleRoyalFilterForm() {
-  const { control } = useFormContext();
+  const { control, watch } = useFormContext();
   const theme = useTheme();
+
+  const formValues = watch();
 
   return (
     <form dir="rtl">
@@ -73,22 +75,35 @@ export default function BattleRoyalFilterForm() {
               <Controller
                 name={checkbox.name}
                 control={control}
-                render={({ field }) => (
-                  <FormControlLabel
-                    sx={{ margin: 0 }}
-                    control={
-                      <Checkbox
-                        name={field.name}
-                        inputRef={field.ref}
-                        checked={!!field.value}
-                        onChange={(_event, checked) => field.onChange(checked)}
-                        onBlur={field.onBlur}
-                        color="primary"
-                      />
-                    }
-                    label={<Typography variant="sub1">{checkbox.label}</Typography>}
-                  />
-                )}
+                render={({ field }) => {
+                  console.log(
+                    `[BattleRoyalFilterForm] [FIRST ROW] ${checkbox.name}`,
+                    field,
+                  );
+
+                  return (
+                    <FormControlLabel
+                      sx={{ margin: 0 }}
+                      control={
+                        <Checkbox
+                          defaultChecked={formValues[checkbox.name]}
+                          name={field.name}
+                          slotProps={{
+                            input: {
+                              ref: field.ref,
+                            },
+                          }}
+                          // inputRef={field.ref}
+                          // checked={!!field.value}
+                          onChange={(_event, checked) => field.onChange(checked)}
+                          onBlur={field.onBlur}
+                          color="primary"
+                        />
+                      }
+                      label={<Typography variant="sub1">{checkbox.label}</Typography>}
+                    />
+                  );
+                }}
               />
             </Grid>
           ))}
