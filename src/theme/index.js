@@ -276,6 +276,23 @@ const theme = createTheme({
         },
       },
     },
+    MuiButton: {
+      defaultProps: {
+        dir: 'rtl',
+      },
+      styleOverrides: {
+        startIcon: {
+          marginRight: -4, // -4px
+          marginLeft: '8px',
+        },
+        endIcon: {
+          marginRight: 8,
+          marginLeft: -4,
+          // margin-right: -4px;
+          // margin-left: 8px;
+        },
+      },
+    },
   },
 });
 

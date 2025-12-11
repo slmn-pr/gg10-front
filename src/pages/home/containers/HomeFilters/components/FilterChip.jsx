@@ -6,8 +6,8 @@ export default function FilterChip({ onClick, label, icon, active = false }) {
     <Button
       size="large"
       variant="outlined"
-      endIcon={icon}
-      startIcon={active ? <FilterChipCloseButton /> : <></>}
+      startIcon={icon}
+      endIcon={active ? <FilterChipCloseButton /> : <></>}
       sx={{
         minWidth: 'max-content',
         borderRadius: 2,

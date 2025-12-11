@@ -5,7 +5,7 @@ export default function FilterDrawerToggler({ onClick, label, icon, active = fal
     <Button
       size="large"
       variant="outlined"
-      endIcon={icon}
+      startIcon={icon}
       sx={{
         minWidth: 'max-content',
         borderRadius: 2,
