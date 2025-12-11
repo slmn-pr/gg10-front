@@ -27,6 +27,7 @@ import LobbyCardTag from './LobbyCardTag';
 import AutoReviveSmallIcon from './icons/AutoReviveSmallIcon';
 import PlacementSmallIcon from './icons/PlacementSmallIcon';
 import SquadSmallIcon from './icons/SquadSmallIcon';
+import CustomProgressBar from '@/components/CustomProgressBar';
 
 const STATUS_COLOR_MAP = {
   'تکمیل ظرفیت': {
@@ -326,26 +327,7 @@ const LobbyCard = ({
 
         {/* Progress Bar */}
         <Box mt="1.5px">
-          <LinearProgress
-            variant="determinate"
-            value={progress}
-            sx={{
-              // height: 7,
-              borderRadius: 999,
-              backgroundColor: theme.palette.background.progressbarBg,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-
-              border: `1px solid ${theme.palette.stroke.progressbar}`,
-              '& .MuiLinearProgress-bar': {
-                borderRadius: '24px',
-                // height: 3,
-
-                background: theme.palette.primary.main,
-              },
-            }}
-          />
+          <CustomProgressBar progress={progress} />
         </Box>
 
         <Divider

@@ -6,12 +6,14 @@ import AdminDashboardPage from '@/pages/admin/pages/admin-dashboard-page.jsx';
 import LoginPage from '@/pages/auth/pages/login-page.jsx';
 import MainLayout from '@/components/layout/main-layout.jsx';
 import NotificationsPage from '@/pages/notifications/index.jsx';
+import LobbyPage from '@/pages/lobby/index.jsx';
 
 const AppRouter = () => (
   <Routes>
     <Route element={<MainLayout />}>
       <Route path="/" element={<Navigate to="/home" replace />} />
       <Route path="/home" element={<HomePage />} />
+      <Route path="/lobby" element={<LobbyPage />} />
 
       <Route path="/notifications" element={<NotificationsPage />} />
       <Route path="/user/profile" element={<UserProfilePage />} />

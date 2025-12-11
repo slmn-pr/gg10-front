@@ -281,6 +281,7 @@ const theme = createTheme({
         dir: 'rtl',
       },
       styleOverrides: {
+        root: { borderRadius: '8px' },
         startIcon: {
           marginRight: -4, // -4px
           marginLeft: '8px',
