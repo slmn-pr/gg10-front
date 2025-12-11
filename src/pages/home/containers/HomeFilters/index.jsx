@@ -1,10 +1,10 @@
-import { Box, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 import FilterChip from './components/FilterChip';
 import KillChipIcon from '@/components/icons/KillChipIcon';
 import AutoReviveChipIcon from '@/components/icons/AutoReviveChipIcon';
 import SquadChipIcon from '@/components/icons/SquadChipIcon';
 import FiltersDrawer from './FiltersDrawer';
-import { useCallback, useMemo, useRef, useEffect } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import BattleRoyalFilterForm from './BattleRoyalFilterForm';
 import { useSearchParams } from 'react-router-dom';
 import MultiplayerFilterForm from './MultiplayerFilterForm';
@@ -12,6 +12,7 @@ import { BATTLE_ROYAL_DEFAULT_VALUES, MULTIPLAYER_DEFAULT_VALUES } from './conts
 import { useTheme } from '@mui/material/styles';
 import SearchAndDestroyIcon from '@/components/icons/chip/SearchAndDestroyIcon';
 import { FormProvider, useForm } from 'react-hook-form';
+import useHorizentalScroll from './hooks/useHorizenatlScroll';
 
 const filters = [
   { label: 'اسکوادی', icon: SquadChipIcon, key: 'squad' },
@@ -29,8 +30,6 @@ export default function HomeFilters() {
   const theme = useTheme();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const methods = useForm();
-
   const gameMode = useMemo(
     () => (searchParams.get('gameMode') ? searchParams.get('gameMode') : 'multiplayer'),
     [searchParams],
@@ -45,13 +44,16 @@ export default function HomeFilters() {
   // console.log('[HomeFilters] defaultValues', defaultValues);
 
   const defaultValues = useMemo(() => {
-    // console.log('[HomeFilters] defaultValueNames', defaultValueNames);
-    const res = {};
+    // console.log('[HomeFilters] searchParams', searchParams);
+
+    const defaultValues = {};
     defaultValueNames.forEach((name) => {
-      res[name] = searchParams.get(name) ? Boolean(searchParams.get(name)) : false;
+      defaultValues[name] = searchParams.get(name) === 'true';
     });
-    return res;
+    return defaultValues;
   }, [defaultValueNames]);
+
+  const methods = useForm({ defaultValues, mode: 'onChange' });
 
   const toggleFilter = useCallback(
     (filter) => {
@@ -61,124 +63,75 @@ export default function HomeFilters() {
       else searchParams.set(filter.key, 'true');
 
       setSearchParams(searchParams, { replace: true });
+
+      // Set to form values
+      methods.setValue(filter.key, !has);
     },
-    [searchParams],
+    [searchParams, methods],
   );
 
-  // ----------------------------------------
-  // DRAG SCROLL + SNAP
-  // ----------------------------------------
+  // Handle filter chips horizental scrol
+  useHorizentalScroll(containerRef);
+
   useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-
-    let isDown = false;
-    let startX;
-    let scrollLeft;
-
-    const onMouseDown = (e) => {
-      isDown = true;
-      el.style.cursor = 'grabbing';
-
-      // در لحظه‌ی Drag نباید smooth فعال باشد
-      el.style.scrollBehavior = 'auto';
-
-      startX = e.pageX - el.offsetLeft;
-      scrollLeft = el.scrollLeft;
-    };
-
-    const onMouseLeave = () => {
-      isDown = false;
-      el.style.cursor = 'grab';
-
-      // فعال شدن اسنپ نرم بعد از رها کردن
-      el.style.scrollBehavior = 'smooth';
-    };
-
-    const onMouseUp = () => {
-      isDown = false;
-      el.style.cursor = 'grab';
-
-      // بعد از رها کردن اسکرول اسنپ آرام انجام شود
-      el.style.scrollBehavior = 'smooth';
-    };
-
-    const onMouseMove = (e) => {
-      if (!isDown) return;
-      const x = e.pageX - el.offsetLeft;
-      const walk = x - startX;
-      el.scrollLeft = scrollLeft - walk;
-    };
-
-    el.addEventListener('mousedown', onMouseDown);
-    el.addEventListener('mouseleave', onMouseLeave);
-    el.addEventListener('mouseup', onMouseUp);
-    el.addEventListener('mousemove', onMouseMove);
-
-    // وقتی کاربر با انگشت اسکرول می‌کند هم نرم باشد
-    el.style.scrollBehavior = 'smooth';
-
-    return () => {
-      el.removeEventListener('mousedown', onMouseDown);
-      el.removeEventListener('mouseleave', onMouseLeave);
-      el.removeEventListener('mouseup', onMouseUp);
-      el.removeEventListener('mousemove', onMouseMove);
-    };
-  }, []);
+    methods.reset(defaultValues);
+  }, [defaultValues]);
 
   return (
-    <Stack
-      ref={containerRef}
-      direction="row"
-      spacing={2}
-      sx={{
-        mb: 3,
-        pb: 1,
-        overflowX: 'auto',
-        overflowY: 'hidden',
-        whiteSpace: 'nowrap',
+    <>
+      <Stack
+        ref={containerRef}
+        direction="row"
+        spacing={2}
+        sx={{
+          mb: 3,
+          pb: 1,
+          overflowX: 'auto',
+          overflowY: 'hidden',
+          whiteSpace: 'nowrap',
 
-        cursor: 'grab',
-        userSelect: 'none',
+          cursor: 'grab',
+          userSelect: 'none',
 
-        scrollSnapType: 'x mandatory',
-        '& > *': {
-          scrollSnapAlign: 'center',
-        },
+          scrollSnapType: 'x mandatory',
+          '& > *': {
+            scrollSnapAlign: 'center',
+          },
 
-        scrollbarWidth: 'none',
-        '&::-webkit-scrollbar': { display: 'none' },
+          scrollbarWidth: 'none',
+          '&::-webkit-scrollbar': { display: 'none' },
 
-        WebkitOverflowScrolling: 'touch',
+          WebkitOverflowScrolling: 'touch',
 
-        // Smooth scroll animation
-        scrollBehavior: 'smooth',
-      }}
-    >
-      {filters.map((filter) => {
-        const active = searchParams.get(filter.key);
-        const iconColor = active ? theme.palette.custom.blackOnPrimary : 'white';
+          // Smooth scroll animation
+          scrollBehavior: 'smooth',
+        }}
+      >
+        {filters.map((filter) => {
+          const active = searchParams.get(filter.key);
+          const iconColor = active ? theme.palette.custom.blackOnPrimary : 'white';
 
-        return (
-          <FilterChip
-            active={active}
-            key={filter.label}
-            icon={<filter.icon color={iconColor} />}
-            label={filter.label}
-            onClick={() => toggleFilter(filter)}
-          />
-        );
-      })}
+          return (
+            <FilterChip
+              active={active}
+              key={filter.label}
+              icon={<filter.icon color={iconColor} />}
+              label={filter.label}
+              onClick={() => toggleFilter(filter)}
+            />
+          );
+        })}
 
-      <FormProvider {...methods}>
-        <FiltersDrawer defaultValues={defaultValues}>
-          {gameMode === 'multiplayer' ? (
-            <MultiplayerFilterForm />
-          ) : (
-            <BattleRoyalFilterForm />
-          )}
-        </FiltersDrawer>
-      </FormProvider>
-    </Stack>
+        <FormProvider {...methods}>
+          <FiltersDrawer>
+            {gameMode === 'multiplayer' ? (
+              <MultiplayerFilterForm />
+            ) : (
+              <BattleRoyalFilterForm />
+            )}
+          </FiltersDrawer>
+        </FormProvider>
+      </Stack>
+    </>
   );
 }

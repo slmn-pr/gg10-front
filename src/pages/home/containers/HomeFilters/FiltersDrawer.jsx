@@ -3,47 +3,28 @@ import FilterChip from './components/FilterChip';
 import FilterChipIcon from '@/components/icons/FilterChipIcon';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import CloseIcon from '@/components/icons/general/CloseIcon';
-import { FormProvider, useForm } from 'react-hook-form';
 import { useSearchParams } from 'react-router-dom';
 import { BATTLE_ROYAL_DEFAULT_VALUES, MULTIPLAYER_DEFAULT_VALUES } from './conts';
 import { useTheme } from '@mui/material/styles';
+import { useFormContext, useWatch } from 'react-hook-form';
+import FilterDrawerToggler from './components/FilterDrawerToggler';
 
-export default function FiltersDrawer({ children, defaultValues }) {
-  console.log('[FiltersDrawer] defaultValues', defaultValues);
-
+export default function FiltersDrawer({ children }) {
   const [open, setOpen] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const theme = useTheme();
   const gameMode = searchParams.get('gameMode') || 'multiplayer';
 
-  // Get default values based on game mode
-  const getDefaultValues = useCallback(() => {
-    const baseDefaults =
-      gameMode === 'multiplayer'
-        ? MULTIPLAYER_DEFAULT_VALUES
-        : BATTLE_ROYAL_DEFAULT_VALUES;
+  const { watch } = useFormContext();
+  const formValues = watch();
+  const activeFilters = useMemo(() => {
+    console.log('[HomeFilters] formValues', formValues);
+    return Object.keys(formValues).filter((key) => formValues[key]);
+  }, [formValues, searchParams]);
 
-    // Parse filter values from search params
-    const paramsDefaults = { ...baseDefaults };
-    Object.keys(baseDefaults).forEach((key) => {
-      const paramValue = searchParams.get(key);
-      if (paramValue === 'true') {
-        paramsDefaults[key] = true;
-      } else if (paramValue === 'false') {
-        paramsDefaults[key] = false;
-      }
-    });
-
-    // console.log('[getDefaultValues] paramsDefaults', paramsDefaults);
-
-    return paramsDefaults;
-  }, [gameMode, searchParams]);
-
-  // const formValues = methods.watch();
-
-  // const activeFilters = Object.entries(formValues)
-  //   .filter(([key, value]) => value === true)
-  //   .map(([key]) => key);
+  useEffect(() => {
+    console.log('[FiltersDrawer] activeFilters', activeFilters);
+  }, [activeFilters]);
 
   const resetFilters = useCallback(() => {
     const currentParams = new URLSearchParams(searchParams);
@@ -59,43 +40,34 @@ export default function FiltersDrawer({ children, defaultValues }) {
 
     setSearchParams(currentParams, { replace: true });
 
-    // if (gameMode === 'multiplayer') {
-    //   methods.reset(MULTIPLAYER_DEFAULT_VALUES);
-    // } else {
-    //   methods.reset(BATTLE_ROYAL_DEFAULT_VALUES);
-    // }
     setOpen(false);
   }, [gameMode, searchParams, setSearchParams]);
 
   const applyFilters = useCallback(() => {
     const currentParams = new URLSearchParams(searchParams);
+
     const baseDefaults =
       gameMode === 'multiplayer'
         ? MULTIPLAYER_DEFAULT_VALUES
         : BATTLE_ROYAL_DEFAULT_VALUES;
 
-    // Remove all old filter params
+    // پاک کردن params قدیمی
     Object.keys(baseDefaults).forEach((key) => {
       currentParams.delete(key);
     });
 
-    // Add only active filters (true values) to search params
-    // Object.entries(formValues).forEach(([key, value]) => {
-    //   if (value === true && baseDefaults.hasOwnProperty(key)) {
-    //     currentParams.set(key, 'true');
-    //   }
-    // });
+    // اضافه‌کردن فقط فیلترهای فعال (true)
+    Object.entries(formValues).forEach(([key, value]) => {
+      if (value === true && baseDefaults.hasOwnProperty(key)) {
+        currentParams.set(key, 'true');
+      }
+    });
 
     setSearchParams(currentParams, { replace: true });
     setOpen(false);
-  }, [gameMode, searchParams, setSearchParams]);
+  }, [gameMode, searchParams, setSearchParams, formValues]);
 
-  // const isDiabled = useMemo(
-  //   () => Object.values(formValues).every((value) => value === false),
-  //   [formValues],
-  // );
-
-  const isDiabled = true;
+  const isDiabled = Object.values(formValues).every((value) => value === false);
 
   // Clean up old filter params when gameMode changes
   useEffect(() => {
@@ -113,9 +85,24 @@ export default function FiltersDrawer({ children, defaultValues }) {
 
   return (
     <>
-      <FilterChip
-        label="فیلترها"
-        icon={<FilterChipIcon />}
+      <FilterDrawerToggler
+        active={activeFilters.length > 0}
+        label={
+          <Typography
+            variant="subtitle2"
+            sx={{ display: 'flex', alignItems: 'center', gap: 0.25 }}
+          >
+            {activeFilters.length > 0 && <span>({activeFilters.length})</span>}
+            <span>فیلترها</span>
+          </Typography>
+        }
+        icon={
+          <FilterChipIcon
+            color={
+              activeFilters.length > 0 ? theme.palette.custom.blackOnPrimary : 'white'
+            }
+          />
+        }
         onClick={() => setOpen(true)}
       />
       <Drawer
@@ -197,7 +184,7 @@ export default function FiltersDrawer({ children, defaultValues }) {
                 color={isDiabled ? 'custom.disabledGreyOnBg2' : 'custom.whiteOnBg1'}
               >
                 <span> اعمال فیلترها</span>
-                {/* {activeFilters.length > 0 && <span>({activeFilters.length})</span>} */}
+                {activeFilters.length > 0 && <span>({activeFilters.length})</span>}
               </Typography>
             </Button>
           </Stack>
