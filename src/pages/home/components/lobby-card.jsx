@@ -22,6 +22,11 @@ import AutoReviveChipIcon from '@/components/icons/AutoReviveChipIcon';
 import PlacementChipIcon from '@/components/icons/chip/PlacementChipIcon';
 import CustomTag from '@/components/tag';
 import CapacityIcon from '@/components/icons/CapacityIcon';
+import LeadingIcon from '@/components/icons/LeadingIcon';
+import LobbyCardTag from './LobbyCardTag';
+import AutoReviveSmallIcon from './icons/AutoReviveSmallIcon';
+import PlacementSmallIcon from './icons/PlacementSmallIcon';
+import SquadSmallIcon from './icons/SquadSmallIcon';
 
 const STATUS_COLOR_MAP = {
   'تکمیل ظرفیت': {
@@ -89,16 +94,16 @@ const LobbyCard = ({
   }, [status, isRegistered, isFull]);
 
   const tagIcons = {
-    اسکوادی: <SquadChipIcon />,
+    اسکوادی: <SquadSmallIcon />,
     اسکواڈی: <AutoReviveChipIcon />,
-    اتوریوایو: <AutoReviveChipIcon />,
-    جایگاهی: <PlacementChipIcon />,
+    اتوریوایو: <AutoReviveSmallIcon />,
+    جایگاهی: <PlacementSmallIcon />,
   };
 
   return (
     <Card
       sx={{
-        mb: 2,
+        mb: '12px',
         background: isVip ? theme.palette.custom.shade3 : theme.palette.custom.cardsBg,
         borderRadius: 2,
         display: 'flex',
@@ -109,15 +114,16 @@ const LobbyCard = ({
         alignItems: 'stretch',
         position: 'relative',
         overflow: 'hidden',
-        minHeight: 120,
+        // minHeight: 120,
         width: '100%',
+        height: '112px',
       }}
     >
       {/* Image Section - RIGHT SIDE */}
       <Box
         sx={{
-          width: '20%',
-
+          width: '88px',
+          height: '112px',
           position: 'relative',
           flexShrink: 0,
           // backgroundColor: '#05060C',
@@ -204,8 +210,8 @@ const LobbyCard = ({
           flex: 1,
           background: isVip ? theme.palette.custom.shade3 : theme.palette.custom.cardsBg,
           border: 'none',
-          px: 2,
-          py: 1,
+          px: 1,
+          // py: 1,
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
@@ -214,40 +220,46 @@ const LobbyCard = ({
         }}
       >
         {/* Top Row: VIP Badge + Title */}
-        <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
-          {isVip ? (
+        <Stack
+          direction="row"
+          justifyContent={isVip ? 'space-between' : 'flex-end'}
+          alignItems="center"
+        >
+          {isVip && (
             <Box
               sx={{
                 display: 'flex',
                 alignItems: 'center',
                 backgroundColor: theme.palette.custom.tagsBlackBg,
                 borderRadius: '2px',
+                height: '20px',
                 px: 1,
+                // py: 0.5,
                 // border: '1px solid rgba(255,255,255,0.1)',
               }}
             >
-              <Typography variant="caption2" color={theme.palette.custom.iconsWhite}>
+              <Typography
+                variant="caption2"
+                color={theme.palette.custom.iconsWhite}
+                sx={{ marginInlineEnd: 0.25 }}
+              >
                 ویژه
               </Typography>
-              <SvgIcon>
-                <PinIcon color={theme.palette.custom.iconsWhite} />
-              </SvgIcon>
+              <LeadingIcon color={theme.palette.custom.iconsWhite} />
             </Box>
-          ) : (
-            <Box />
           )}
 
           <Typography variant="sub1">{title}</Typography>
         </Stack>
 
         {/* Info Grid */}
-        <Stack direction="row" justifyContent="flex-end" spacing={3}>
+        <Stack direction="row" justifyContent="flex-end">
           {/* Time & Capacity (Left side of info) */}
-          <Stack spacing={0.5} alignItems="flex-end" sx={{ flex: 1 }}>
+          <Stack alignItems="flex-end" sx={{ flex: 1 }}>
             <Stack
               direction="row"
               alignItems="center"
-              spacing={0.5}
+              spacing={0.25}
               sx={{ width: '100%' }}
             >
               <Typography variant="sub2" color={theme.palette.custom.whiteOnBg2}>
@@ -258,7 +270,7 @@ const LobbyCard = ({
             <Stack
               direction="row"
               alignItems="center"
-              spacing={0.5}
+              spacing={0.25}
               sx={{ width: '100%' }}
             >
               <Typography variant="subtitle2" color={theme.palette.custom.greyOnBg1}>
@@ -269,9 +281,10 @@ const LobbyCard = ({
           </Stack>
 
           {/* Entry & Prize (Right side of info) */}
-          <Stack spacing={0.5} alignItems="flex-end">
+          <Stack alignItems="flex-end">
             {/* Entry Fee */}
             <Stack direction="row" alignItems="center" spacing={0.5}>
+              {/* Label */}
               <Typography
                 variant="sub2"
                 color={theme.palette.custom.dollar}
@@ -280,9 +293,8 @@ const LobbyCard = ({
                 <span>ورودی:</span>
                 <span>{entryFee}</span>
               </Typography>
-              <SvgIcon>
-                <EntryFreeIcon />
-              </SvgIcon>
+              {/* Icon */}
+              <EntryFreeIcon />
             </Stack>
 
             {/* Prize */}
@@ -295,15 +307,13 @@ const LobbyCard = ({
                 <span>جایزه:</span>
                 <span>{prize}</span>
               </Typography>
-              <SvgIcon>
-                <PrizeIcon />
-              </SvgIcon>
+              <PrizeIcon />
             </Stack>
           </Stack>
         </Stack>
 
         {/* Progress Bar */}
-        <Box>
+        <Box mt="1.5px">
           <LinearProgress
             variant="determinate"
             value={progress}
@@ -326,12 +336,14 @@ const LobbyCard = ({
           />
         </Box>
 
-        <Divider sx={{ my: 1, background: theme.palette.stroke.black, height: '2px' }} />
+        <Divider
+          sx={{ my: 0.5, background: theme.palette.stroke.black, height: '2px' }}
+        />
 
         {/* Bottom Tags */}
-        <Stack direction="row" spacing={1} sx={{ justifyContent: 'flex-end' }}>
+        <Stack direction="row" spacing={0.5} sx={{ justifyContent: 'flex-end' }} mb={0.5}>
           {tags.slice(0, 3).map((tag) => (
-            <CustomTag title={tag} icon={tagIcons[tag]} />
+            <LobbyCardTag title={tag} icon={tagIcons[tag]} />
           ))}
         </Stack>
       </Box>
