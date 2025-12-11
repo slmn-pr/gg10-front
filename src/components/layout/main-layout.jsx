@@ -34,7 +34,7 @@ const MainLayout = () => {
           }}
         >
           <TopBar />
-          <Box component="main" sx={{ flexGrow: 1, pb: 12, px: 0, overflowX: 'hidden' }}>
+          <Box component="main" sx={{ flexGrow: 1, pb: 12, px: 0, overflow: 'hidden' }}>
             <Outlet />
           </Box>
           <BottomNav />

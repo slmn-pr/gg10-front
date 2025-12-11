@@ -6,11 +6,12 @@ import CloseIcon from '@/components/icons/general/CloseIcon';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useSearchParams } from 'react-router-dom';
 import { BATTLE_ROYAL_DEFAULT_VALUES, MULTIPLAYER_DEFAULT_VALUES } from './conts';
+import { useTheme } from '@mui/material/styles';
 
 export default function FiltersDrawer({ children, defaultValues }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
-
+  const theme = useTheme();
   const gameMode = searchParams.get('gameMode') || 'multiplayer';
 
   // Get default values based on game mode
@@ -40,48 +41,6 @@ export default function FiltersDrawer({ children, defaultValues }) {
     defaultValues: defaultValues || getDefaultValues(),
     mode: 'onChange',
   });
-
-  // Clean up old filter params when gameMode changes
-  // useEffect(() => {
-  //   const currentParams = new URLSearchParams(searchParams);
-  //   const currentGameModeDefaults =
-  //     gameMode === 'multiplayer'
-  //       ? MULTIPLAYER_DEFAULT_VALUES
-  //       : BATTLE_ROYAL_DEFAULT_VALUES;
-  //   const otherGameModeDefaults =
-  //     gameMode === 'multiplayer'
-  //       ? BATTLE_ROYAL_DEFAULT_VALUES
-  //       : MULTIPLAYER_DEFAULT_VALUES;
-
-  //   let hasChanges = false;
-
-  //   // Remove filter params that belong to the other game mode
-  //   Object.keys(otherGameModeDefaults).forEach((key) => {
-  //     if (currentParams.has(key)) {
-  //       currentParams.delete(key);
-  //       hasChanges = true;
-  //     }
-  //   });
-
-  //   // Calculate defaults from cleaned params
-  //   const paramsDefaults = { ...currentGameModeDefaults };
-  //   Object.keys(currentGameModeDefaults).forEach((key) => {
-  //     const paramValue = currentParams.get(key);
-  //     if (paramValue === 'true') {
-  //       paramsDefaults[key] = true;
-  //     } else if (paramValue === 'false') {
-  //       paramsDefaults[key] = false;
-  //     }
-  //   });
-
-  //   if (hasChanges) {
-  //     setSearchParams(currentParams, { replace: true });
-  //   }
-
-  //   // Reset form with new defaults
-  //   methods.reset(paramsDefaults);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [gameMode]);
 
   const formValues = methods.watch();
 
@@ -139,6 +98,20 @@ export default function FiltersDrawer({ children, defaultValues }) {
     [formValues],
   );
 
+  // Clean up old filter params when gameMode changes
+  useEffect(() => {
+    let sources =
+      gameMode === 'multiplayer'
+        ? BATTLE_ROYAL_DEFAULT_VALUES
+        : MULTIPLAYER_DEFAULT_VALUES;
+    Object.keys(sources).forEach((key) => {
+      searchParams.delete(key);
+    });
+    setSearchParams(searchParams, { replace: true });
+
+    methods.reset(sources);
+  }, [gameMode]);
+
   return (
     <>
       <FilterChip
@@ -161,7 +134,8 @@ export default function FiltersDrawer({ children, defaultValues }) {
             height: 'auto',
             borderTopLeftRadius: 8,
             borderTopRightRadius: 8,
-            bgcolor: 'custom.modalBg',
+            bgcolor: theme.palette.custom.modalBg,
+            backgroundImage: 'none',
           },
         }}
         BackdropProps={{
@@ -170,7 +144,7 @@ export default function FiltersDrawer({ children, defaultValues }) {
           },
         }}
       >
-        <Stack spacing={2} sx={{ py: 2, px: 5 }}>
+        <Stack spacing={2} sx={{ py: 2, px: 2 }}>
           {/* Header */}
           <Stack
             direction="row"
@@ -212,7 +186,7 @@ export default function FiltersDrawer({ children, defaultValues }) {
             <Button
               variant="outlined"
               color={isDiabled ? 'custom.disabledGreyOnBg2' : 'custom.whiteOnBg1'}
-              sx={{ flex: 1, borderRadius: 8 }}
+              sx={{ flex: 1, borderRadius: 2 }}
               size="large"
               disabled={isDiabled}
               onClick={applyFilters}
