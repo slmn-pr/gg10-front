@@ -1,4 +1,4 @@
-import { Stack } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 import FilterChip from './components/FilterChip';
 import KillChipIcon from '@/components/icons/KillChipIcon';
 import AutoReviveChipIcon from '@/components/icons/AutoReviveChipIcon';
@@ -82,8 +82,10 @@ export default function HomeFilters() {
       <Stack
         ref={containerRef}
         direction="row"
-        spacing={2}
+        gap={2}
         sx={{
+          direction: 'rtl',
+
           mb: 3,
           pb: 1,
           overflowX: 'auto',
@@ -107,6 +109,18 @@ export default function HomeFilters() {
           scrollBehavior: 'smooth',
         }}
       >
+        {/* Filters Drawer */}
+        <FormProvider {...methods}>
+          <FiltersDrawer>
+            {gameMode === 'multiplayer' ? (
+              <MultiplayerFilterForm />
+            ) : (
+              <BattleRoyalFilterForm />
+            )}
+          </FiltersDrawer>
+        </FormProvider>
+
+        {/* Filters Chips */}
         {filters.map((filter) => {
           const active = searchParams.get(filter.key);
           const iconColor = active ? theme.palette.custom.blackOnPrimary : 'white';
@@ -121,16 +135,6 @@ export default function HomeFilters() {
             />
           );
         })}
-
-        <FormProvider {...methods}>
-          <FiltersDrawer>
-            {gameMode === 'multiplayer' ? (
-              <MultiplayerFilterForm />
-            ) : (
-              <BattleRoyalFilterForm />
-            )}
-          </FiltersDrawer>
-        </FormProvider>
       </Stack>
     </>
   );

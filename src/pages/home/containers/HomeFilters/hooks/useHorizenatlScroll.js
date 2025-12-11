@@ -1,9 +1,14 @@
+// hooks/useHorizentalScroll.js
+
 import { useEffect } from 'react';
 
 export default function useHorizentalScroll(containerRef) {
   useEffect(() => {
     const el = containerRef?.current;
     if (!el) return;
+
+    // Detect the layout direction from the component's computed style
+    const isRtl = window.getComputedStyle(el).direction === 'rtl';
 
     let isDown = false;
     let startX;
@@ -12,7 +17,7 @@ export default function useHorizentalScroll(containerRef) {
     const onMouseDown = (e) => {
       isDown = true;
       el.style.cursor = 'grabbing';
-      el.style.scrollBehavior = 'auto'; // Disable smooth scroll during drag
+      el.style.scrollBehavior = 'auto';
       startX = e.pageX - el.offsetLeft;
       scrollLeft = el.scrollLeft;
     };
@@ -20,18 +25,20 @@ export default function useHorizentalScroll(containerRef) {
     const onMouseLeaveOrUp = () => {
       isDown = false;
       el.style.cursor = 'grab';
-      el.style.scrollBehavior = 'smooth'; // Re-enable smooth snap on release
+      el.style.scrollBehavior = 'smooth';
     };
 
     const onMouseMove = (e) => {
       if (!isDown) return;
-      e.preventDefault(); // Prevent text selection, etc.
+      e.preventDefault();
       const x = e.pageX - el.offsetLeft;
       const walk = x - startX;
-      el.scrollLeft = scrollLeft - walk;
+
+      // If RTL, we must add the walk value; otherwise, subtract it.
+      el.scrollLeft = isRtl ? scrollLeft + walk : scrollLeft - walk;
     };
 
-    // --- Touch Event Handlers for Mobile ---
+    // --- Touch Event Handlers ---
     const onTouchStart = (e) => {
       isDown = true;
       el.style.scrollBehavior = 'auto';
@@ -46,24 +53,22 @@ export default function useHorizentalScroll(containerRef) {
 
     const onTouchMove = (e) => {
       if (!isDown) return;
-      // No preventDefault() here, to allow for vertical scroll if needed
       const x = e.touches[0].pageX - el.offsetLeft;
       const walk = x - startX;
-      el.scrollLeft = scrollLeft - walk;
+
+      // Apply the same RTL logic for touch events
+      el.scrollLeft = isRtl ? scrollLeft + walk : scrollLeft - walk;
     };
 
-    // Add Mouse Event Listeners
+    // Add event listeners
     el.addEventListener('mousedown', onMouseDown);
     el.addEventListener('mouseleave', onMouseLeaveOrUp);
     el.addEventListener('mouseup', onMouseLeaveOrUp);
     el.addEventListener('mousemove', onMouseMove);
-
-    // Add Touch Event Listeners
     el.addEventListener('touchstart', onTouchStart);
     el.addEventListener('touchend', onTouchEnd);
     el.addEventListener('touchmove', onTouchMove);
 
-    // Initial style
     el.style.scrollBehavior = 'smooth';
 
     // Cleanup function
@@ -72,7 +77,6 @@ export default function useHorizentalScroll(containerRef) {
       el.removeEventListener('mouseleave', onMouseLeaveOrUp);
       el.removeEventListener('mouseup', onMouseLeaveOrUp);
       el.removeEventListener('mousemove', onMouseMove);
-
       el.removeEventListener('touchstart', onTouchStart);
       el.removeEventListener('touchend', onTouchEnd);
       el.removeEventListener('touchmove', onTouchMove);
