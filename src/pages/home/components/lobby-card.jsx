@@ -146,6 +146,7 @@ const LobbyCard = ({
         <Box
           bgcolor={theme.palette.custom.tagOnCardPicBg}
           sx={{
+            direction: 'rtl',
             position: 'absolute',
             top: 4,
             right: 0,
@@ -158,17 +159,28 @@ const LobbyCard = ({
             padding: 1,
             py: 0,
             borderRadius: 1,
-            fontWeight: 700,
-            fontSize: '0.75rem',
+            gap: 0.5,
+
             display: 'inline-flex',
             alignItems: 'center',
-            gap: 0.5,
-            // color:,
-            // backgroundColor: statusPalette.backgroundColor,
+
             color: statusPalette.color,
             boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
           }}
         >
+          {status === 'در حال برگزاری' ? (
+            <Box
+              bgcolor={STATUS_COLOR_MAP[status]?.color}
+              sx={{
+                width: 4,
+                height: 4,
+                borderRadius: '50%',
+                // backgroundColor: STATUS_COLOR_MAP[status]?.color,
+              }}
+            ></Box>
+          ) : (
+            <></>
+          )}
           <Typography variant="sub3" color={STATUS_COLOR_MAP[status]?.color}>
             {status}
           </Typography>
@@ -273,7 +285,7 @@ const LobbyCard = ({
               spacing={0.25}
               sx={{ width: '100%' }}
             >
-              <Typography variant="subtitle2" color={theme.palette.custom.greyOnBg1}>
+              <Typography variant="sub2" color={theme.palette.custom.greyOnBg1}>
                 {currentPlayers}/{maxPlayers}
               </Typography>
               <CapacityIcon color={theme.palette.custom.greyOnBg1} />
@@ -341,7 +353,7 @@ const LobbyCard = ({
         />
 
         {/* Bottom Tags */}
-        <Stack direction="row" spacing={0.5} sx={{ justifyContent: 'flex-end' }} mb={0.5}>
+        <Stack direction="row" spacing={0.5} sx={{ justifyContent: 'flex-end' }} mb={1}>
           {tags.slice(0, 3).map((tag) => (
             <LobbyCardTag title={tag} icon={tagIcons[tag]} />
           ))}
