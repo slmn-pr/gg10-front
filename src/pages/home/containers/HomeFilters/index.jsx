@@ -4,7 +4,7 @@ import KillChipIcon from '@/components/icons/KillChipIcon';
 import AutoReviveChipIcon from '@/components/icons/AutoReviveChipIcon';
 import SquadChipIcon from '@/components/icons/SquadChipIcon';
 import FiltersDrawer from './FiltersDrawer';
-import { useCallback, useMemo, useRef } from 'react';
+import { useCallback, useMemo, useRef, useEffect } from 'react';
 import BattleRoyalFilterForm from './BattleRoyalFilterForm';
 import { useSearchParams } from 'react-router-dom';
 import MultiplayerFilterForm from './MultiplayerFilterForm';
@@ -24,9 +24,8 @@ const filters = [
 ];
 
 export default function HomeFilters() {
-  const containerElement = useRef(null);
+  const containerRef = useRef(null);
   const theme = useTheme();
-
   const [searchParams, setSearchParams] = useSearchParams();
 
   const gameMode = useMemo(
@@ -35,62 +34,143 @@ export default function HomeFilters() {
   );
 
   const defaultValueNames = useMemo(() => {
-    if (gameMode === 'multiplayer') return Object.keys(MULTIPLAYER_DEFAULT_VALUES);
-    else return Object.keys(BATTLE_ROYAL_DEFAULT_VALUES);
+    return gameMode === 'multiplayer'
+      ? Object.keys(MULTIPLAYER_DEFAULT_VALUES)
+      : Object.keys(BATTLE_ROYAL_DEFAULT_VALUES);
   }, [gameMode]);
 
-  // Read default values from search params base defaultValueNames
   const defaultValues = useMemo(() => {
-    let res = {};
-
-    for (let i of defaultValueNames) {
-      res[i] = searchParams.get(i) ? Boolean(searchParams.get(i)) : false;
-    }
+    const res = {};
+    defaultValueNames.forEach((name) => {
+      res[name] = searchParams.get(name) ? Boolean(searchParams.get(name)) : false;
+    });
     return res;
   }, [defaultValueNames]);
 
   const toggleFilter = useCallback(
     (filter) => {
-      if (searchParams.has(filter.key)) {
-        searchParams.delete(filter.key);
-      } else {
-        searchParams.set(filter.key, 'true');
-      }
+      const has = searchParams.has(filter.key);
+
+      if (has) searchParams.delete(filter.key);
+      else searchParams.set(filter.key, 'true');
+
       setSearchParams(searchParams, { replace: true });
     },
     [searchParams],
   );
+
+  // ----------------------------------------
+  // DRAG SCROLL + SNAP
+  // ----------------------------------------
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    const onMouseDown = (e) => {
+      isDown = true;
+      el.style.cursor = 'grabbing';
+
+      // در لحظه‌ی Drag نباید smooth فعال باشد
+      el.style.scrollBehavior = 'auto';
+
+      startX = e.pageX - el.offsetLeft;
+      scrollLeft = el.scrollLeft;
+    };
+
+    const onMouseLeave = () => {
+      isDown = false;
+      el.style.cursor = 'grab';
+
+      // فعال شدن اسنپ نرم بعد از رها کردن
+      el.style.scrollBehavior = 'smooth';
+    };
+
+    const onMouseUp = () => {
+      isDown = false;
+      el.style.cursor = 'grab';
+
+      // بعد از رها کردن اسکرول اسنپ آرام انجام شود
+      el.style.scrollBehavior = 'smooth';
+    };
+
+    const onMouseMove = (e) => {
+      if (!isDown) return;
+      const x = e.pageX - el.offsetLeft;
+      const walk = x - startX;
+      el.scrollLeft = scrollLeft - walk;
+    };
+
+    el.addEventListener('mousedown', onMouseDown);
+    el.addEventListener('mouseleave', onMouseLeave);
+    el.addEventListener('mouseup', onMouseUp);
+    el.addEventListener('mousemove', onMouseMove);
+
+    // وقتی کاربر با انگشت اسکرول می‌کند هم نرم باشد
+    el.style.scrollBehavior = 'smooth';
+
+    return () => {
+      el.removeEventListener('mousedown', onMouseDown);
+      el.removeEventListener('mouseleave', onMouseLeave);
+      el.removeEventListener('mouseup', onMouseUp);
+      el.removeEventListener('mousemove', onMouseMove);
+    };
+  }, []);
+
   return (
-    <>
-      {/* <Box>{JSON.stringify(defaultValues)}</Box>; */}
-      <Stack
-        ref={containerElement}
-        direction="row"
-        justifyContent="flex-end"
-        spacing={2}
-        sx={{ mb: 3, overflowX: 'auto', pb: 1 }}
-      >
-        {filters.map((filter) => {
-          let active = searchParams.get(filter.key);
-          let iconColor = active ? theme.palette.custom.blackOnPrimary : 'white';
-          return (
-            <FilterChip
-              active={active}
-              key={filter.label}
-              icon={<filter.icon color={iconColor} />}
-              label={filter.label}
-              onClick={() => toggleFilter(filter)}
-            />
-          );
-        })}
-        <FiltersDrawer defaultValues={defaultValues}>
-          {gameMode === 'multiplayer' ? (
-            <MultiplayerFilterForm />
-          ) : (
-            <BattleRoyalFilterForm />
-          )}
-        </FiltersDrawer>
-      </Stack>
-    </>
+    <Stack
+      ref={containerRef}
+      direction="row"
+      spacing={2}
+      sx={{
+        mb: 3,
+        pb: 1,
+        overflowX: 'auto',
+        overflowY: 'hidden',
+        whiteSpace: 'nowrap',
+
+        cursor: 'grab',
+        userSelect: 'none',
+
+        scrollSnapType: 'x mandatory',
+        '& > *': {
+          scrollSnapAlign: 'center',
+        },
+
+        scrollbarWidth: 'none',
+        '&::-webkit-scrollbar': { display: 'none' },
+
+        WebkitOverflowScrolling: 'touch',
+
+        // Smooth scroll animation
+        scrollBehavior: 'smooth',
+      }}
+    >
+      {filters.map((filter) => {
+        const active = searchParams.get(filter.key);
+        const iconColor = active ? theme.palette.custom.blackOnPrimary : 'white';
+
+        return (
+          <FilterChip
+            active={active}
+            key={filter.label}
+            icon={<filter.icon color={iconColor} />}
+            label={filter.label}
+            onClick={() => toggleFilter(filter)}
+          />
+        );
+      })}
+
+      <FiltersDrawer defaultValues={defaultValues}>
+        {gameMode === 'multiplayer' ? (
+          <MultiplayerFilterForm />
+        ) : (
+          <BattleRoyalFilterForm />
+        )}
+      </FiltersDrawer>
+    </Stack>
   );
 }
