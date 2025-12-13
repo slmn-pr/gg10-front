@@ -21,7 +21,7 @@ export default function BottomNavigationItem({ path, active = false, sx, childre
       }}
     >
       <Typography
-        variant="caption"
+        variant="sub2"
         sx={{
           color: active ? theme.palette.primary.main : theme.palette.custom.whiteOnBg1,
           mt: 0.5,

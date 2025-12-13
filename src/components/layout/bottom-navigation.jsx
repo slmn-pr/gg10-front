@@ -80,8 +80,9 @@ const MDBottomNavigation = () => {
         transform: 'translateX(-50%)',
         maxWidth: 440, // استفاده از maxWidth برای انعطاف بیشتر
         width: '100%', // پر کردن عرض در دستگاه‌های کوچک
-        height: '70px', // افزایش ارتفاع برای جای دادن دکمه بزرگتر
+        height: '60px', // افزایش ارتفاع برای جای دادن دکمه بزرگتر
         bgcolor: 'custom.bg1',
+        borderRadius: 0,
         zIndex: 1000,
         // این استایل‌ها به Paper اضافه می‌شود تا شبیه نوار تیره شود
         borderTopLeftRadius: 20,
@@ -100,6 +101,7 @@ const MDBottomNavigation = () => {
           width: '100%',
           height: '100%',
           position: 'relative',
+          borderRadius: 0,
         }}
       >
         {/* Wallet */}
@@ -111,15 +113,19 @@ const MDBottomNavigation = () => {
                 : theme.palette.custom.iconsWhite
             }
           />
-          <Typography variant="caption" color={theme.palette.custom.whiteOnBg1}>
+          <Typography variant="sub2" color={theme.palette.custom.whiteOnBg1}>
             کیف پول
           </Typography>
         </BottomNavigationItem>
 
         {/* Leaderboard */}
-        <BottomNavigationItem path="/leaderboard" active={activePath === '/leaderboard'} sx={{
-          marginLeft: '24px',
-        }}>
+        <BottomNavigationItem
+          path="/leaderboard"
+          active={activePath === '/leaderboard'}
+          sx={{
+            marginLeft: '24px',
+          }}
+        >
           <LeaderBoard
             color={
               activePath === '/leaderboard'
@@ -127,7 +133,7 @@ const MDBottomNavigation = () => {
                 : theme.palette.custom.iconsWhite
             }
           />
-          <Typography variant="caption" color={theme.palette.custom.whiteOnBg1}>
+          <Typography variant="sub2" color={theme.palette.custom.whiteOnBg1}>
             لیدربرد
           </Typography>
         </BottomNavigationItem>
@@ -139,8 +145,8 @@ const MDBottomNavigation = () => {
           sx={{
             position: 'absolute',
             left: '50%',
-            top: '-50%',
-            transform: 'translate(-40px, 5px)',
+            bottom: '30px',
+            transform: 'translate(-40px)',
             // transform: 'translateY(-50%)',
             width: 60,
             height: 60,
@@ -191,7 +197,7 @@ const MDBottomNavigation = () => {
         {/* Missions */}
         <BottomNavigationItem path="/missions" active={activePath === '/missions'}>
           <MissionsIcon color={theme.palette.custom.whiteOnBg1} />
-          <Typography variant="caption" color={theme.palette.custom.whiteOnBg1}>
+          <Typography variant="sub2" color={theme.palette.custom.whiteOnBg1}>
             مأموریت‌ها
           </Typography>
         </BottomNavigationItem>
@@ -202,7 +208,7 @@ const MDBottomNavigation = () => {
           active={activePath === '/user/profile'}
         >
           <AccountIcon color={theme.palette.custom.whiteOnBg1} />
-          <Typography variant="caption" color={theme.palette.custom.whiteOnBg1}>
+          <Typography variant="sub2" color={theme.palette.custom.whiteOnBg1}>
             حساب کاربری
           </Typography>
         </BottomNavigationItem>
