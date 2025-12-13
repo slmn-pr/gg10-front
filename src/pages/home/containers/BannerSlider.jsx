@@ -132,9 +132,9 @@ export default function HeroSlider({ slides = [], autoplayDelay = 3000, loop = t
             el: '.swiper-pagination',
             clickable: true,
             dynamicBullets: false,
-              renderBullet: (index, className) => {
-                return `<span class="${className}"></span>`;
-              },
+            renderBullet: (index, className) => {
+              return `<span class="${className}"></span>`;
+            },
             // renderCustomBullets: (swiper, total, current) => {
             //   return `<span class="swiper-pagination-bullet">${current + 1}</span>`;
             // },
@@ -186,7 +186,7 @@ export default function HeroSlider({ slides = [], autoplayDelay = 3000, loop = t
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            gap: '8px',
+            gap: '2px',
             display: 'flex !important',
             justifyContent: 'center !important',
           },
@@ -197,7 +197,6 @@ export default function HeroSlider({ slides = [], autoplayDelay = 3000, loop = t
             opacity: 1,
             cursor: 'pointer',
             transition: 'all 0.3s ease',
-            margin: '0 4px !important',
           },
           '& .swiper-pagination-bullet-active': {
             backgroundColor: theme.palette.custom.greyOnBg1,
