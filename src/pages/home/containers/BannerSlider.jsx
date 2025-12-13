@@ -36,21 +36,36 @@ export default function HeroSlider({ slides = [], autoplayDelay = 3000, loop = t
       title: 'به GG10 خوش آمدید',
       highlight: 'GG10',
       subtitle: 'بهترین تجربه بازی آنلاین را با ما تجربه کنید',
-      image: '/images/lobby/bg-hero.png',
+      image: '/images/banner_slide.png',
     },
     {
       id: 2,
       title: 'مسابقات هیجان‌انگیز',
       highlight: 'مسابقات',
       subtitle: 'در مسابقات مختلف شرکت کنید و برنده جوایز شوید',
-      image: '/images/lobby/bg-hero.png',
+      image: '/images/banner_slide.png',
     },
     {
       id: 3,
       title: 'جامعه بزرگ بازیکنان',
       highlight: 'جامعه',
       subtitle: 'به جامعه هزاران بازیکن بپیوندید',
-      image: '/images/lobby/bg-hero.png',
+      image: '/images/banner_slide.png',
+    },
+    {
+      id: 4,
+      title: 'جامعه بزرگ بازیکنان',
+      highlight: 'جامعه',
+      subtitle: 'به جامعه هزاران بازیکن بپیوندید',
+      image: '/images/banner_slide.png',
+    },
+
+    {
+      id: 5,
+      title: 'جامعه بزرگ بازیکنان',
+      highlight: 'جامعه',
+      subtitle: 'به جامعه هزاران بازیکن بپیوندید',
+      image: '/images/banner_slide.png',
     },
   ];
 
@@ -89,11 +104,12 @@ export default function HeroSlider({ slides = [], autoplayDelay = 3000, loop = t
     <Box
       sx={{
         width: '100%',
-        borderRadius: 4,
-        overflow: 'hidden',
+        // height: 130,
+        borderRadius: 2,
+        overflow: 'visible',
         boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
         position: 'relative',
-        mb: 2,
+        mb: 1,
       }}
     >
       <Box
@@ -104,6 +120,7 @@ export default function HeroSlider({ slides = [], autoplayDelay = 3000, loop = t
         }}
       >
         <Swiper
+          height={130}
           modules={[Autoplay, Pagination]}
           autoplay={{
             delay: autoplayDelay,
@@ -112,14 +129,15 @@ export default function HeroSlider({ slides = [], autoplayDelay = 3000, loop = t
           }}
           loop={loop}
           pagination={{
+            el: '.swiper-pagination',
             clickable: true,
             dynamicBullets: false,
-            renderBullet: (index, className) => {
-              return `<span class="${className}"></span>`;
-            },
-            renderCustomBullets: (swiper, total, current) => {
-              return `<span class="swiper-pagination-bullet">${current + 1}</span>`;
-            },
+              renderBullet: (index, className) => {
+                return `<span class="${className}"></span>`;
+              },
+            // renderCustomBullets: (swiper, total, current) => {
+            //   return `<span class="swiper-pagination-bullet">${current + 1}</span>`;
+            // },
           }}
           dir={direction}
           rtl={direction === 'rtl'}
@@ -127,77 +145,28 @@ export default function HeroSlider({ slides = [], autoplayDelay = 3000, loop = t
           slidesPerView={1}
         >
           {slidesToRender.map((slide) => (
-            <SwiperSlide key={slide.id}>
+            <SwiperSlide key={slide.id} style={{ height: '120px' }}>
               <Box
                 sx={{
                   position: 'relative',
-                  width: '100%',
-                  height: '100%',
+                  height: '120px',
                   overflow: 'hidden',
-                  '&:hover .hero-image': {
-                    transform: 'scale(1.05)',
-                  },
                 }}
               >
                 {/* Background Image */}
-                <Box
-                  className="hero-image"
-                  sx={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    backgroundImage: `url(${slide.image})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    transition: 'transform 0.5s ease-in-out',
+                <img
+                  src={slide.image}
+                  alt={slide.title}
+                  style={{
+                    // height: '100%',
+                    // width: '100%',
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                    margin: 'auto',
+                    objectFit: 'cover',
+                    borderRadius: '8px',
                   }}
                 />
-
-                {/* Dark Overlay */}
-                <Box
-                  sx={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    background:
-                      'linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.6) 100%)',
-                    zIndex: 1,
-                  }}
-                />
-
-                {/* Content Overlay */}
-                <Box
-                  sx={{
-                    position: 'relative',
-                    zIndex: 2,
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    textAlign: 'center',
-                    px: 3,
-                    py: 4,
-                  }}
-                >
-                  {/* Title with Highlight */}
-                  <Box sx={{ mb: 1.5 }}>{renderTitle(slide.title, slide.highlight)}</Box>
-
-                  {/* Subtitle */}
-                  <Typography
-                    variant="sub1"
-                    sx={{
-                      color: theme.palette.text.primary,
-                      maxWidth: { xs: '100%', sm: '80%', md: '70%' },
-                    }}
-                  >
-                    {slide.subtitle}
-                  </Typography>
-                </Box>
               </Box>
             </SwiperSlide>
           ))}
@@ -206,29 +175,33 @@ export default function HeroSlider({ slides = [], autoplayDelay = 3000, loop = t
 
       {/* Custom Pagination Styles */}
       <Box
+        className="swiper-pagination"
         sx={{
           transform: 'translateX(-50%)',
-          '& .swiper-pagination': {
-            bottom: '16px !important',
+          '&.swiper-pagination': {
+            bottom: '-10px !important',
+            left: '50% !important',
+            transform: 'translateX(-50%) !important',
             position: 'absolute',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
             gap: '8px',
+            display: 'flex !important',
+            justifyContent: 'center !important',
           },
           '& .swiper-pagination-bullet': {
-            width: '8px',
-            height: '8px',
-            backgroundColor: 'red',
+            width: '6px',
+            height: '6px',
+            backgroundColor: theme.palette.primary.main,
             opacity: 1,
             cursor: 'pointer',
             transition: 'all 0.3s ease',
             margin: '0 4px !important',
           },
           '& .swiper-pagination-bullet-active': {
-            backgroundColor: theme.palette.custom.primaryOnBg2,
-            width: '24px',
-            borderRadius: '4px',
+            backgroundColor: theme.palette.custom.greyOnBg1,
+            borderRadius: '50%',
           },
         }}
       />
