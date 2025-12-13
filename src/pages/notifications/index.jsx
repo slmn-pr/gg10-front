@@ -35,12 +35,19 @@ export default function NotificationsPage() {
     <PageContainer>
       {/* Head */}
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-        <Typography variant="button1" color={theme.palette.custom.whiteOnBg1}>
-          اعلان‌ها
-        </Typography>
-        <IconButton size="small">
-          <ChevronForwardIcon color={theme.palette.custom.whiteOnBg1} />
-        </IconButton>
+        <Button
+          variant="text"
+          color="primary"
+          size="small"
+          startIcon={<ChevronForwardIcon color={theme.palette.custom.whiteOnBg1} />}
+          sx={{ transform: 'translateX(1px)' }}
+        >
+          <Typography variant="button1" color={theme.palette.custom.whiteOnBg1}>
+            اعلان‌ها
+          </Typography>
+        </Button>
+
+        {/* <IconButton size="small"></IconButton> */}
       </Box>
 
       {/* Body */}
