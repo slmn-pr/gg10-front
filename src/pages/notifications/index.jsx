@@ -3,9 +3,11 @@ import { PageContainer } from '@/components/layout';
 import { Box, Button, IconButton, Stack, Typography, useTheme } from '@mui/material';
 import { useState } from 'react';
 import EmptyBox from './components/EmptyBox';
+import { useNavigate } from 'react-router-dom';
 
 export default function NotificationsPage() {
   const theme = useTheme();
+  const navigate = useNavigate();
   const [notifications, setNotifications] = useState([
     {
       id: 1,
@@ -41,6 +43,7 @@ export default function NotificationsPage() {
           size="small"
           startIcon={<ChevronForwardIcon color={theme.palette.custom.whiteOnBg1} />}
           sx={{ transform: 'translateX(6px)', py: '6px' }}
+          onClick={() => navigate('/home')}
         >
           <Typography variant="button1" color={theme.palette.custom.whiteOnBg1}>
             اعلان‌ها
