@@ -13,17 +13,36 @@ import { useTheme } from '@mui/material/styles';
 import SearchAndDestroyIcon from '@/components/icons/chip/SearchAndDestroyIcon';
 import { FormProvider, useForm } from 'react-hook-form';
 import useHorizentalScroll from './hooks/useHorizenatlScroll';
+import HardPointIcon from '@/components/icons/HardPointIcon';
+import MyLobbiesRankIcon from '@/components/icons/MyLobbiesRankIcon';
 
-const filters = [
-  { label: 'اسکوادی', icon: SquadChipIcon, key: 'squad' },
-  { label: 'کیلی', icon: KillChipIcon, key: 'killie' },
-  { label: 'اتوریوایو', icon: AutoReviveChipIcon, key: 'autoRevive' },
-  {
-    label: 'سرچ اند دیستروی',
-    icon: SearchAndDestroyIcon,
-    key: 'searchAndDistro',
-  },
-];
+// const filters = [
+//   { label: 'اسکوادی', icon: SquadChipIcon, key: 'squad' },
+//   { label: 'کیلی', icon: KillChipIcon, key: 'killie' },
+//   { label: 'اتوریوایو', icon: AutoReviveChipIcon, key: 'autoRevive' },
+//   {
+//     label: 'سرچ اند دیستروی',
+//     icon: SearchAndDestroyIcon,
+//     key: 'searchAndDistro',
+//   },
+// ];
+
+const filters = {
+  'battle-royal': [
+    { label: 'کیلی', icon: KillChipIcon, key: 'killie' },
+    { label: 'اتوریوایو', icon: AutoReviveChipIcon, key: 'autoRevive' },
+    { label: 'اسکوادی', icon: SquadChipIcon, key: 'squad' },
+  ],
+  multiplayer: [
+    {
+      label: 'سرچ اند دیستروی',
+      icon: SearchAndDestroyIcon,
+      key: 'searchAndDistro',
+    },
+    { label: 'هاردپوینت', icon: HardPointIcon, key: 'hardpoint' },
+    { label: 'لابی های رنک من', icon: MyLobbiesRankIcon, key: 'myRankLobbies' },
+  ],
+};
 
 export default function HomeFilters() {
   const containerRef = useRef(null);
@@ -82,7 +101,7 @@ export default function HomeFilters() {
       <Stack
         ref={containerRef}
         direction="row"
-        gap={2}
+        gap={1}
         sx={{
           direction: 'rtl',
 
@@ -121,7 +140,7 @@ export default function HomeFilters() {
         </FormProvider>
 
         {/* Filters Chips */}
-        {filters.map((filter) => {
+        {filters[gameMode]?.map((filter) => {
           const active = searchParams.get(filter.key);
           const iconColor = active ? theme.palette.custom.blackOnPrimary : 'white';
 
