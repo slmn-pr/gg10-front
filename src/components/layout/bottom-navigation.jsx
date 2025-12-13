@@ -16,6 +16,7 @@ import MissionsIcon from '../icons/navigation/MissionsIcon';
 import AccountIcon from '../icons/navigation/AccountIcon';
 import LeaderBoard from '../icons/navigation/LeaderBoard';
 import WalletIcon from '../icons/navigation/WalletIcon';
+import BottomNavigationItem from './BottomNavigationItem';
 
 const MDBottomNavigation = () => {
   const navigate = useNavigate();
@@ -91,108 +92,120 @@ const MDBottomNavigation = () => {
       <Stack
         direction="row"
         alignItems="center"
-        justifyContent="space-around" // توزیع مساوی آیتم‌ها
-        spacing={0} // حذف spacing پیش‌فرض
+        justifyContent="space-between"
+        spacing={0}
         sx={{
-          pointerEvents: 'auto', // فعال کردن قابلیت کلیک
+          px: '16px',
+          pointerEvents: 'auto',
           width: '100%',
           height: '100%',
           position: 'relative',
         }}
       >
-        {navItems.map((item) =>
-          item.isMain ? (
-            // ---------- MAIN ACTION BUTTON ----------
-            <Box
-              key={item.path}
-              sx={{
-                position: 'relative',
-                height: '100%',
-                display: 'flex',
-                alignItems: 'flex-start',
-                justifyContent: 'center',
-                paddingTop: '0px',
-              }}
-            >
-              <IconButton
-                onClick={() => navigate(item.path)}
-                sx={{
-                  transform: 'translateY(-50%)',
-                  width: 60,
-                  height: 60,
-                  borderRadius: '50%',
-                  bgcolor: theme.palette.primary.main,
-                  boxShadow: `0 8px 16px ${alpha(
-                    theme.palette.primary.main,
-                    0.3,
-                  )}, 0 4px 8px ${alpha(theme.palette.primary.main, 0.7)}`,
+        {/* Wallet */}
+        <BottomNavigationItem path="/wallet" active={activePath === '/wallet'}>
+          <WalletIcon
+            color={
+              activePath === '/wallet'
+                ? theme.palette.primary.main
+                : theme.palette.custom.iconsWhite
+            }
+          />
+          <Typography variant="caption" color={theme.palette.custom.whiteOnBg1}>
+            کیف پول
+          </Typography>
+        </BottomNavigationItem>
 
-                  '&::after': {
-                    content: '""',
-                    position: 'absolute',
-                    top: '30px',
-                    transform: 'translateY(-50%)',
-                    left: 'calc(100% + 8px)',
-                    width: '200px',
-                    height: '1px',
-                    bgcolor: theme.palette.custom.bottomNavigationGreyLine,
-                  },
+        {/* Leaderboard */}
+        <BottomNavigationItem path="/leaderboard" active={activePath === '/leaderboard'} sx={{
+          marginLeft: '24px',
+        }}>
+          <LeaderBoard
+            color={
+              activePath === '/leaderboard'
+                ? theme.palette.primary.main
+                : theme.palette.custom.iconsWhite
+            }
+          />
+          <Typography variant="caption" color={theme.palette.custom.whiteOnBg1}>
+            لیدربرد
+          </Typography>
+        </BottomNavigationItem>
 
-                  '&::before': {
-                    content: '""',
-                    position: 'absolute',
-                    top: '30px',
-                    transform: 'translateY(-50%)',
-                    right: 'calc(100% + 8px)',
-                    width: '160px',
-                    height: '1px',
-                    bgcolor: theme.palette.custom.bottomNavigationGreyLine,
-                  },
-                  '&:active': { bgcolor: theme.palette.primary.main },
-                  '&:hover': { bgcolor: theme.palette.primary.main },
-                }}
-              >
-                {item.icon(activePath === item.path)}
-              </IconButton>
-            </Box>
-          ) : (
-            // ---------- NORMAL NAV ITEMS (Button) ----------
-            <Button
-              key={item.path}
-              onClick={() => navigate(item.path)}
-              sx={{
-                color:
-                  activePath === item.path
-                    ? theme.palette.primary.main
-                    : theme.palette.custom.iconsWhite,
-                flexDirection: 'column',
-                padding: '8px 4px',
-                minWidth: 0,
-                height: '100%',
-                '&:hover': {
-                  bgcolor: 'transparent',
-                },
-              }}
-            >
-              {item.icon(activePath === item.path)}
+        {/* Home */}
+        <BottomNavigationItem
+          path="/home"
+          active={activePath === '/home'}
+          sx={{
+            position: 'absolute',
+            left: '50%',
+            top: '-50%',
+            transform: 'translate(-40px, 5px)',
+            // transform: 'translateY(-50%)',
+            width: 60,
+            height: 60,
+            borderRadius: '50%',
+            bgcolor: theme.palette.primary.main,
+            boxShadow: `0 8px 16px ${alpha(
+              theme.palette.primary.main,
+              0.3,
+            )}, 0 4px 8px ${alpha(theme.palette.primary.main, 0.7)}`,
 
-              <Typography
-                variant="caption"
-                sx={{
-                  color:
-                    activePath === item.path
-                      ? theme.palette.primary.main
-                      : theme.palette.custom.whiteOnBg1,
-                  mt: 0.5,
-                  fontWeight: activePath === item.path ? 700 : 400,
-                  fontSize: 12,
-                }}
-              >
-                {item.label}
-              </Typography>
-            </Button>
-          ),
-        )}
+            '&:active': {
+              bgcolor: theme.palette.primary.main,
+            },
+
+            '&:hover': {
+              bgcolor: theme.palette.primary.main,
+            },
+
+            '&::after': {
+              content: '""',
+              position: 'absolute',
+              top: '30px',
+              transform: 'translateY(-50%)',
+              left: 'calc(100% + 8px)',
+              width: '190px',
+              height: '1px',
+              bgcolor: theme.palette.custom.bottomNavigationGreyLine,
+            },
+
+            '&::before': {
+              content: '""',
+              position: 'absolute',
+              top: '30px',
+              transform: 'translateY(-50%)',
+              right: 'calc(100% + 8px)',
+              width: '170px',
+              height: '1px',
+              bgcolor: theme.palette.custom.bottomNavigationGreyLine,
+            },
+          }}
+        >
+          <HomeIcon color={theme.palette.custom.whiteOnBg1} />
+        </BottomNavigationItem>
+
+        {/* Fake */}
+        <Box sx={{ width: '60px', height: '60px', backgroundColor: 'transparent' }} />
+
+        {/* Missions */}
+        <BottomNavigationItem path="/missions" active={activePath === '/missions'}>
+          <MissionsIcon color={theme.palette.custom.whiteOnBg1} />
+          <Typography variant="caption" color={theme.palette.custom.whiteOnBg1}>
+            مأموریت‌ها
+          </Typography>
+        </BottomNavigationItem>
+
+        {/* User Profile */}
+        <BottomNavigationItem
+          path="/user/profile"
+          active={activePath === '/user/profile'}
+        >
+          <AccountIcon color={theme.palette.custom.whiteOnBg1} />
+          <Typography variant="caption" color={theme.palette.custom.whiteOnBg1}>
+            حساب کاربری
+          </Typography>
+        </BottomNavigationItem>
       </Stack>
     </Paper>
   );
