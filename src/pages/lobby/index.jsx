@@ -3,11 +3,28 @@ import ChevronBackward from '@/components/icons/ChevronBackward';
 import ChevronForwardIcon from '@/components/icons/ChevronForward';
 import ShareIcon from '@/components/icons/ShareIcon';
 import { PageContainer } from '@/components/layout';
-import { Box, Button, IconButton, Stack, Typography, useTheme } from '@mui/material';
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  IconButton,
+  Stack,
+  Typography,
+  useTheme,
+} from '@mui/material';
+import { useState } from 'react';
 // import topImage from '@/assets/images/lobby/top-image.png';
+
+const filterItems = [
+  { key: 'results', label: 'نتایج' },
+  { key: 'rewards', label: 'جوایز' },
+  { key: 'rules', label: 'قوانین' },
+  { key: 'lobby', label: 'لابی' },
+];
 
 export default function LobbyPage() {
   const theme = useTheme();
+  const [activeFilter, setActiveFilter] = useState(filterItems[0].key);
   return (
     <Box>
       {/* Top section */}
@@ -47,21 +64,21 @@ export default function LobbyPage() {
         </Stack>
       </Box>
 
-      {/* Button */}
-      <Stack justifyContent="center">
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{ mt: '12px', mx: 'auto', px: '66px', py: '4px' }}
-        >
-          <Typography variant="button1" color="custom.whiteOnBg2">
-            نمایش آیدی و پسورد روم
-          </Typography>
-        </Button>
-      </Stack>
+      <PageContainer spacing={1}>
+        {/* Button */}
+        <Stack justifyContent="center">
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{ mt: '12px', mx: 'auto', px: '66px', py: '4px' }}
+          >
+            <Typography variant="button1" color="custom.whiteOnBg2">
+              نمایش آیدی و پسورد روم
+            </Typography>
+          </Button>
+        </Stack>
 
-      {/* Status section */}
-      <PageContainer>
+        {/* Status section */}
         <Box>
           {/* Status & Time */}
           <Stack
@@ -97,6 +114,40 @@ export default function LobbyPage() {
 
           <CustomProgressBar progress={85} />
         </Box>
+
+        {/* Filter buttons */}
+        <ButtonGroup
+          variant="outlined"
+          color="custom.greyOnBg1"
+          aria-label="Basic button group"
+          sx={{ mx: 'auto' }}
+          size="large"
+          fullWidth
+        >
+          {filterItems.map((item) => (
+            <Button
+              fullWidth
+              key={item.key}
+              onClick={() => setActiveFilter(item.key)}
+              sx={{
+                flex: 1,
+                backgroundColor:
+                  activeFilter === item.key ? 'custom.tint2' : 'transparent',
+                borderColor:
+                  activeFilter === item.key ? 'custom.primaryStroke' : 'custom.greyOnBg1',
+              }}
+            >
+              <Typography
+                variant="title3"
+                color={
+                  activeFilter === item.key ? 'custom.blackOnPrimary' : 'custom.whiteOnPrimary'
+                }
+              >
+                {item.label}
+              </Typography>
+            </Button>
+          ))}
+        </ButtonGroup>
       </PageContainer>
 
       {/* <Typography variant="h1">This is lobby page</Typography> */}

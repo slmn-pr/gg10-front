@@ -6,12 +6,15 @@ const PageContainer = ({
   maxWidth = 'lg',
   withBottomNav = false,
   bottomSlot,
+  spacing = 3,
+  py = 3,
+  px = 0,
 }) => (
   <Container
     maxWidth={maxWidth}
     sx={{
-      py: 1,
-      px: 0,
+      py,
+      px,
       backgroundColor: 'custom.bg1',
       height: 'calc(100vh - 100px)',
       overflowY: 'scroll',
@@ -22,7 +25,7 @@ const PageContainer = ({
       'scrollbar-width': 'none',
     }}
   >
-    <Stack spacing={3} pb={withBottomNav ? 8 : 0}>
+    <Stack spacing={spacing} pb={withBottomNav ? 8 : 0}>
       {children}
     </Stack>
     {bottomSlot}
