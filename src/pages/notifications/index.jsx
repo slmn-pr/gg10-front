@@ -32,7 +32,7 @@ export default function NotificationsPage() {
 
   // const notifications = [];
   return (
-    <PageContainer>
+    <PageContainer px={{ xs: '10px' }} py={{ xs: 0 }} spacing={2}>
       {/* Head */}
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
         <Button
@@ -40,7 +40,7 @@ export default function NotificationsPage() {
           color="primary"
           size="small"
           startIcon={<ChevronForwardIcon color={theme.palette.custom.whiteOnBg1} />}
-          sx={{ transform: 'translateX(1px)' }}
+          sx={{ transform: 'translateX(6px)', py: '6px' }}
         >
           <Typography variant="button1" color={theme.palette.custom.whiteOnBg1}>
             اعلان‌ها

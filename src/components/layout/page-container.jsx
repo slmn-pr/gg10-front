@@ -13,8 +13,8 @@ const PageContainer = ({
   <Container
     maxWidth={maxWidth}
     sx={{
-      py,
-      px,
+      py: py,
+      px: px,
       backgroundColor: 'custom.bg1',
       height: 'calc(100vh - 100px)',
       overflowY: 'scroll',
