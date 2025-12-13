@@ -11,12 +11,12 @@ const MainLayout = () => {
     <ThemeProvider theme={mainTheme}>
       <CssBaseline />
       <Box
+        bgcolor="custom.tint1"
         sx={{
           display: 'flex',
           flexDirection: 'column',
           minHeight: '100vh',
           overflowX: 'hidden',
-          backgroundColor: '#FFDFEB',
         }}
       >
         <Container
