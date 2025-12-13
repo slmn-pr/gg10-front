@@ -109,7 +109,6 @@ const LobbyCard = ({
         alignItems: 'stretch',
         position: 'relative',
         overflow: 'hidden',
-        // minHeight: 120,
         width: '100%',
         minHeight: '112px',
       }}
@@ -118,10 +117,8 @@ const LobbyCard = ({
       <Box
         sx={{
           width: '88px',
-          // height: '112px',
           position: 'relative',
           flexShrink: 0,
-          // backgroundColor: '#05060C',
           zIndex: 1,
         }}
       >
@@ -329,7 +326,12 @@ const LobbyCard = ({
         />
 
         {/* Bottom Tags */}
-        <Stack direction="row" spacing={0.5} sx={{ justifyContent: 'flex-end' }} mb={1}>
+        <Stack
+          direction="row"
+          spacing={0.5}
+          sx={{ justifyContent: 'flex-end' }}
+          mb={0.25}
+        >
           {tags.slice(0, 3).map((tag) => (
             <LobbyCardTag title={tag} icon={tagIcons[tag]} />
           ))}
