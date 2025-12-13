@@ -8,6 +8,7 @@ import {
   useTheme,
   alpha,
   Button,
+  Stack,
 } from '@mui/material';
 
 import HomeIcon from '../icons/navigation/HomeIcon';
@@ -76,82 +77,88 @@ const MDBottomNavigation = () => {
         bottom: 0,
         left: '50%',
         transform: 'translateX(-50%)',
-        width: 440,
-        height: '60px',
+        maxWidth: 440, // استفاده از maxWidth برای انعطاف بیشتر
+        width: '100%', // پر کردن عرض در دستگاه‌های کوچک
+        height: '70px', // افزایش ارتفاع برای جای دادن دکمه بزرگتر
         bgcolor: 'custom.bg1',
-        // borderTop: `1px solid ${theme.palette.custom.bottomNavigationGreyLine}`,
         zIndex: 1000,
-        pointerEvents: 'none',
-        px: 2,
+        // این استایل‌ها به Paper اضافه می‌شود تا شبیه نوار تیره شود
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        // opacity: 0.9, // اگر می‌خواهید نوار کمی شفاف باشد
       }}
     >
-      <Box
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-around" // توزیع مساوی آیتم‌ها
+        spacing={0} // حذف spacing پیش‌فرض
         sx={{
-          pointerEvents: 'auto',
+          pointerEvents: 'auto', // فعال کردن قابلیت کلیک
           width: '100%',
           height: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
           position: 'relative',
-          background: '#0D0F17',
-          borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,
         }}
       >
         {navItems.map((item) =>
           item.isMain ? (
             // ---------- MAIN ACTION BUTTON ----------
-            <IconButton
+            <Box
               key={item.path}
-              onClick={() => navigate(item.path)}
               sx={{
-                transform: 'translateY(-50%)',
-                width: 60,
-                height: 60,
-                borderRadius: '50%',
-                bgcolor: theme.palette.primary.main,
-                boxShadow: `0 8px 16px ${alpha(
-                  theme.palette.primary.main,
-                  0.3,
-                )}, 0 4px 8px ${alpha(theme.palette.primary.main, 0.7)}`,
-
-                '&:active': {
-                  bgcolor: theme.palette.primary.main,
-                },
-                '&:hover': {
-                  bgcolor: theme.palette.primary.main,
-                },
-
-                '&::after': {
-                  content: '""',
-                  position: 'absolute',
-                  top: '30px',
-                  transform: 'translateY(-50%)',
-                  left: 'calc(100% + 8px)',
-                  width: '180px',
-                  height: '1px',
-                  bgcolor: theme.palette.custom.bottomNavigationGreyLine,
-                },
-
-                '&::before': {
-                  content: '""',
-                  position: 'absolute',
-                  top: '30px',
-                  transform: 'translateY(-50%)',
-                  right: 'calc(100% + 8px)',
-                  width: '180px',
-                  height: '1px',
-                  bgcolor: theme.palette.custom.bottomNavigationGreyLine,
-                },
+                position: 'relative',
+                height: '100%',
+                display: 'flex',
+                alignItems: 'flex-start',
+                justifyContent: 'center',
+                paddingTop: '0px',
               }}
             >
-              {item.icon(activePath === item.path)}
-            </IconButton>
-          ) : (
-            // ---------- NORMAL NAV ITEMS ----------
+              <IconButton
+                onClick={() => navigate(item.path)}
+                sx={{
+                  transform: 'translateY(-50%)',
+                  width: 60,
+                  height: 60,
+                  borderRadius: '50%',
+                  bgcolor: theme.palette.primary.main,
+                  boxShadow: `0 8px 16px ${alpha(
+                    theme.palette.primary.main,
+                    0.3,
+                  )}, 0 4px 8px ${alpha(theme.palette.primary.main, 0.7)}`,
 
+                  '&::after': {
+                    content: '""',
+                    position: 'absolute',
+                    top: '30px',
+                    transform: 'translateY(-50%)',
+                    left: 'calc(100% + 8px)',
+                    width: '200px',
+                    height: '1px',
+                    bgcolor: theme.palette.custom.bottomNavigationGreyLine,
+                  },
+
+                  '&::before': {
+                    content: '""',
+                    position: 'absolute',
+                    top: '30px',
+                    transform: 'translateY(-50%)',
+                    right: 'calc(100% + 8px)',
+                    width: '160px',
+                    height: '1px',
+                    bgcolor: theme.palette.custom.bottomNavigationGreyLine,
+                  },
+                  '&:active': { bgcolor: theme.palette.primary.main },
+                  '&:hover': { bgcolor: theme.palette.primary.main },
+                }}
+              >
+                {item.icon(activePath === item.path)}
+              </IconButton>
+            </Box>
+          ) : (
+            // ---------- NORMAL NAV ITEMS (Button) ----------
             <Button
+              key={item.path}
               onClick={() => navigate(item.path)}
               sx={{
                 color:
@@ -159,7 +166,12 @@ const MDBottomNavigation = () => {
                     ? theme.palette.primary.main
                     : theme.palette.custom.iconsWhite,
                 flexDirection: 'column',
-                padding: 0,
+                padding: '8px 4px',
+                minWidth: 0,
+                height: '100%',
+                '&:hover': {
+                  bgcolor: 'transparent',
+                },
               }}
             >
               {item.icon(activePath === item.path)}
@@ -181,7 +193,7 @@ const MDBottomNavigation = () => {
             </Button>
           ),
         )}
-      </Box>
+      </Stack>
     </Paper>
   );
 };
