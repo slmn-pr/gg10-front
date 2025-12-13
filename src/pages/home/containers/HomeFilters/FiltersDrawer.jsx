@@ -92,8 +92,8 @@ export default function FiltersDrawer({ children }) {
             variant="subtitle2"
             sx={{ display: 'flex', alignItems: 'center', gap: 0.25 }}
           >
-            {activeFilters.length > 0 && <span>({activeFilters.length})</span>}
             <span>فیلترها</span>
+            {activeFilters.length > 0 && <span>({activeFilters.length})</span>}
           </Typography>
         }
         icon={

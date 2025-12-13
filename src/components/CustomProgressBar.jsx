@@ -5,9 +5,10 @@ export default function CustomProgressBar({ progress = 50 }) {
   return (
     <LinearProgress
       variant="determinate"
+
       value={progress}
       sx={{
-        // height: 7,
+        height: 5,
         borderRadius: 999,
         backgroundColor: theme.palette.background.progressbarBg,
         display: 'flex',

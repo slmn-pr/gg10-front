@@ -1,4 +1,4 @@
-import { Box, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 import FilterChip from './components/FilterChip';
 import KillChipIcon from '@/components/icons/KillChipIcon';
 import AutoReviveChipIcon from '@/components/icons/AutoReviveChipIcon';

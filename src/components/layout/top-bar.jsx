@@ -53,11 +53,11 @@ export default function TopBar() {
               backgroundColor: theme.palette.custom.bg2,
             }}
           >
-            <ChevronBackwardIcon color={theme.palette.custom.whiteOnBg2} />
+            <WalletIcon color={theme.palette.custom.tint4} />
             <Typography variant="button2" sx={{ mx: 0.5 }}>
               افزایش موجودی
             </Typography>
-            <WalletIcon color={theme.palette.custom.tint4} />
+            <ChevronBackwardIcon color={theme.palette.custom.whiteOnBg2} />
           </Button>
         </Box>
 

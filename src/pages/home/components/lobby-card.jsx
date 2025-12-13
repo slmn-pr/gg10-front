@@ -3,24 +3,18 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import LinearProgress from '@mui/material/LinearProgress';
 
 import bg3 from '@/assets/images/lobby/bg-default.png';
 import vipBg from '@/assets/images/Lobbies card avatar.png';
 
-import { alpha, Divider, SvgIcon, useTheme } from '@mui/material';
-import PinIcon from '@/components/icons/PinIcon';
+import { alpha, Divider, useTheme } from '@mui/material';
 import EntryFreeIcon from '@/components/icons/lobbie/EntryFreeIcon';
 import PrizeIcon from '@/components/icons/lobbie/PrizeIcon';
 import TimeIcon from '@/components/icons/lobbie/TimeIcon';
-import DoubleTagsIcon from '@/components/icons/DoubleTagsIcon';
 import LegendSmallIcon from '@/components/icons/rank/LegendSmallIcon';
 import GoldSmallIcon from '@/components/icons/rank/GoldSmallIcon';
 import SilverSmallIcon from '@/components/icons/rank/SilverSmallIcon';
-import SquadChipIcon from '@/components/icons/SquadChipIcon';
 import AutoReviveChipIcon from '@/components/icons/AutoReviveChipIcon';
-import PlacementChipIcon from '@/components/icons/chip/PlacementChipIcon';
-import CustomTag from '@/components/tag';
 import CapacityIcon from '@/components/icons/CapacityIcon';
 import LeadingIcon from '@/components/icons/LeadingIcon';
 import LobbyCardTag from './LobbyCardTag';
@@ -117,14 +111,14 @@ const LobbyCard = ({
         overflow: 'hidden',
         // minHeight: 120,
         width: '100%',
-        height: '112px',
+        minHeight: '112px',
       }}
     >
       {/* Image Section - RIGHT SIDE */}
       <Box
         sx={{
           width: '88px',
-          height: '112px',
+          // height: '112px',
           position: 'relative',
           flexShrink: 0,
           // backgroundColor: '#05060C',
