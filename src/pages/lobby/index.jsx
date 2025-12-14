@@ -13,6 +13,14 @@ import {
   useTheme,
 } from '@mui/material';
 import { useState } from 'react';
+import PlayerCard from './components/PlayerCard';
+import PlayerEmptyCard from './components/PlayerEmptyCard';
+import LobbyVsIcon from '@/assets/LobbyVsIcon';
+import TeamSideContainer from './containers/TeamSideContainer';
+import TimeIcon from '@/components/icons/lobbie/TimeIcon';
+import CapacityIcon from '@/components/icons/CapacityIcon';
+import StatusIcon from '@/components/icons/lobby/StatusIcon';
+import EntryFreeIcon from '@/components/icons/lobbie/EntryFreeIcon';
 // import topImage from '@/assets/images/lobby/top-image.png';
 
 const filterItems = [
@@ -24,7 +32,7 @@ const filterItems = [
 
 export default function LobbyPage() {
   const theme = useTheme();
-  const [activeFilter, setActiveFilter] = useState(filterItems[0].key);
+  const [activeFilter, setActiveFilter] = useState('lobby');
   return (
     <Box>
       {/* Top section */}
@@ -83,17 +91,22 @@ export default function LobbyPage() {
           {/* Status & Time */}
           <Stack
             direction="row"
-            alignItems="center"
             justifyContent="space-between"
+            alignItems="center"
             sx={{ direction: 'rtl' }}
           >
-            <Typography variant="sub1" color="custom.live">
-              وضعیت: در حال برگزاری
-            </Typography>
-
-            <Typography variant="sub1" color="custom.tint1">
-              زمان: امشب 23:30
-            </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <StatusIcon color={theme.palette.custom.live} />
+              <Typography variant="sub1" color="custom.live">
+                وضعیت: در حال برگزاری
+              </Typography>
+            </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <TimeIcon color={theme.palette.custom.tint1} />
+              <Typography variant="sub1" color="custom.tint1">
+                زمان: امشب 23:30
+              </Typography>
+            </Box>
           </Stack>
 
           {/* Entry Fee & capacity */}
@@ -103,13 +116,19 @@ export default function LobbyPage() {
             justifyContent="space-between"
             sx={{ direction: 'rtl' }}
           >
-            <Typography variant="sub1" color="custom.dollar">
-              ورودی: 100,000 تومان
-            </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <EntryFreeIcon color={theme.palette.custom.dollar} />
+              <Typography variant="sub1" color="custom.dollar">
+                ورودی: 100,000 تومان
+              </Typography>
+            </Box>
 
-            <Typography variant="sub1" color="custom.greyOnBg1">
-              ظرفیت: 30/40
-            </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <CapacityIcon color={theme.palette.custom.greyOnBg1} />
+              <Typography variant="sub1" color="custom.greyOnBg1">
+                ظرفیت: 30/40
+              </Typography>
+            </Box>
           </Stack>
 
           <CustomProgressBar progress={85} />
@@ -140,7 +159,9 @@ export default function LobbyPage() {
               <Typography
                 variant="title3"
                 color={
-                  activeFilter === item.key ? 'custom.blackOnPrimary' : 'custom.whiteOnPrimary'
+                  activeFilter === item.key
+                    ? 'custom.blackOnPrimary'
+                    : 'custom.whiteOnPrimary'
                 }
               >
                 {item.label}
@@ -148,6 +169,27 @@ export default function LobbyPage() {
             </Button>
           ))}
         </ButtonGroup>
+
+        {/* TEAM SIDES */}
+        <Box style={{ marginTop: '32px' }}>
+          {/* Side 1 */}
+          <TeamSideContainer />
+
+          {/* VS ICON */}
+          <Box
+            sx={{
+              width: '100%',
+              height: '56px',
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            <LobbyVsIcon />
+          </Box>
+
+          {/* Side 2 */}
+          <TeamSideContainer />
+        </Box>
       </PageContainer>
 
       {/* <Typography variant="h1">This is lobby page</Typography> */}
