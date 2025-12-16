@@ -39,7 +39,9 @@ export default function TopBar() {
         }}
       >
         {/* Logo */}
-        <Logo />
+        <Button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} sx={{ p: 0 }}>
+          <Logo />
+        </Button>
 
         {/* Balance Button - Centered Absolutely */}
         <Box
