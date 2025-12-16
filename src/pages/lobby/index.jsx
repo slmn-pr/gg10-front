@@ -13,8 +13,6 @@ import {
   useTheme,
 } from '@mui/material';
 import { useState } from 'react';
-import PlayerCard from './components/PlayerCard';
-import PlayerEmptyCard from './components/PlayerEmptyCard';
 import LobbyVsIcon from '@/assets/LobbyVsIcon';
 import TeamSideContainer from './containers/TeamSideContainer';
 import TimeIcon from '@/components/icons/lobbie/TimeIcon';
