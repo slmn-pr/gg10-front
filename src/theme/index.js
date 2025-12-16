@@ -182,6 +182,14 @@ const theme = createTheme({
       live: '#E80000',
       full: '#BE9305',
       finished: '#6D6D6D',
+
+      // States
+      errorOnPrimaryBg: '#FE3A3A',
+      errorOnSecondaryBg: '#FF4242',
+      errorOnTertiaryBg: '#B10A0A',
+      success: '#146C43',
+      warning: '#FFC225',
+      info: '#FFDFEB',
     },
 
     stroke: {
@@ -294,6 +302,23 @@ const theme = createTheme({
         },
       },
     },
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          direction: 'rtl',
+        },
+      },
+    },
+
+    MuiSnackbar:{
+      styleOverrides: {
+        root: {
+          // direction: 'rtl',  
+          px: "16px",
+          py: "6px"
+        },
+      },
+    }
   },
 });
 

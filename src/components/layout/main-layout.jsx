@@ -4,11 +4,27 @@ import TopBar from './top-bar';
 import BottomNav from './bottom-navigation';
 import { Outlet } from 'react-router-dom';
 import mainTheme from '@/theme/index.js';
-import { CssBaseline, ThemeProvider } from '@mui/material';
+import { Alert, CssBaseline, Snackbar, ThemeProvider, Typography } from '@mui/material';
+import useOnlineStatus from '@/hooks/useOnlineStatus';
+import OfflineSnakbar from '../OfflineSnakbar';
+import ErrorSnakBar from '../snackbar/ErrorSnakBar';
 
 const MainLayout = () => {
   return (
     <ThemeProvider theme={mainTheme}>
+      {/* Offline Snakbar */}
+      <OfflineSnakbar />
+
+      {/* Server error Snakbar */}
+      {/* <ErrorSnakBar
+        open={true}
+        message="سرور موقتا از دسترس خارج شده،
+بعد از چند دقیقه مجددا تلاش کنید"
+        actionText="تلاش مجدد"
+        onAction={() => {}}
+        onClose={() => {}}
+      /> */}
+
       <CssBaseline />
 
       <TopBar />
