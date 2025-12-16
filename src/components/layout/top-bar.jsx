@@ -21,11 +21,23 @@ export default function TopBar() {
       color="transparent"
       elevation={0}
       sx={{
+        maxWidth: 'sm',
+        mx: 'auto',
         bgcolor: 'custom.bg1',
-        pt: 1,
       }}
     >
-      <Toolbar sx={{ justifyContent: 'space-between', px: 2, position: 'relative' }}>
+      <Toolbar
+        sx={{
+          maxWidth: 'sm',
+          width: '100%',
+          justifyContent: 'space-between',
+          px: 2,
+          position: 'sticky',
+          top: 0,
+          left: 0,
+          zIndex: 1000,
+        }}
+      >
         {/* Logo */}
         <Logo />
 

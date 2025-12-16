@@ -10,6 +10,9 @@ const MainLayout = () => {
   return (
     <ThemeProvider theme={mainTheme}>
       <CssBaseline />
+
+      <TopBar />
+
       <Box
         bgcolor="custom.tint1"
         sx={{
@@ -28,12 +31,11 @@ const MainLayout = () => {
             flexDirection: 'column',
             flexGrow: 1,
             // overflowX: 'hidden',
-            overflow: 'auto',
+            // overflow: 'auto',
             backgroundColor: '#000',
             gap: 0.5,
           }}
         >
-          <TopBar />
           <Box component="main" sx={{ flexGrow: 1, pb: 12, px: 0, overflow: 'hidden' }}>
             <Outlet />
           </Box>
