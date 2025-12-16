@@ -4,10 +4,15 @@ import { useNavigate } from 'react-router-dom';
 export default function BottomNavigationItem({ path, active = false, sx, children }) {
   const theme = useTheme();
   const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(path, {
+      preventScrollReset: false,
+    });
+  };
   return (
     <Button
       key={path}
-      onClick={() => navigate(path)}
+      onClick={handleClick}
       sx={{
         color: active ? theme.palette.primary.main : theme.palette.custom.iconsWhite,
         flexDirection: 'column',

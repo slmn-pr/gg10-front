@@ -7,28 +7,33 @@ import LoginPage from '@/pages/auth/pages/login-page.jsx';
 import MainLayout from '@/components/layout/main-layout.jsx';
 import NotificationsPage from '@/pages/notifications/index.jsx';
 import LobbyPage from '@/pages/lobby/index.jsx';
+import useScrollTop from '@/hooks/useScrollTop.js';
+import { Box } from '@mui/material';
 
-const AppRouter = () => (
-  <Routes>
-    <Route element={<MainLayout />}>
-      <Route path="/" element={<Navigate to="/home" replace />} />
-      <Route path="/home" element={<HomePage />} />
-      <Route path="/lobby" element={<LobbyPage />} />
+const AppRouter = () => {
+  useScrollTop();
+  return (
+    <Routes>
+      <Route element={<MainLayout />}>
+        <Route path="/" element={<Navigate to="/home" replace />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/lobby" element={<LobbyPage />} />
 
-      <Route path="/notifications" element={<NotificationsPage />} />
-      <Route path="/user/profile" element={<UserProfilePage />} />
-      <Route
-        path="/admin"
-        element={
-          <ProtectedRoute roles={['admin']}>
-            <AdminDashboardPage />
-          </ProtectedRoute>
-        }
-      />
-    </Route>
-    <Route path="/auth/login" element={<LoginPage />} />
-    <Route path="*" element={<Navigate to="/home" replace />} />
-  </Routes>
-);
+        <Route path="/notifications" element={<NotificationsPage />} />
+        <Route path="/user/profile" element={<UserProfilePage />} />
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute roles={['admin']}>
+              <AdminDashboardPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<Box sx={{ height: '200vh' }}>Not found!</Box>} />
+      </Route>
+      <Route path="/auth/login" element={<LoginPage />} />
+    </Routes>
+  );
+};
 
 export default AppRouter;
