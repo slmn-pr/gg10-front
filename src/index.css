@@ -10,7 +10,7 @@ body {
   background-color: #03050a;
   color: #f9f9ff;
   font-feature-settings: 'frac', 'ss02';
-  overflow-x: hidden;
+  overflow-x: unset;
   font-family: 'Estedad-FD', sans-serif;
   /* overflow: hidden; */
 }

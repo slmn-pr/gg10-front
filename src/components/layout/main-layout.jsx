@@ -34,7 +34,7 @@ const MainLayout = () => {
           display: 'flex',
           flexDirection: 'column',
           minHeight: '100vh',
-          overflowX: 'hidden',
+          // overflowX: 'hidden',
         }}
       >
         <Container
@@ -53,7 +53,7 @@ const MainLayout = () => {
         >
           <OfflineSnakbar />
 
-          <Box component="main" sx={{ flexGrow: 1, pb: 12, px: 0, overflow: 'hidden' }}>
+          <Box component="main" sx={{ flexGrow: 1, pb: 12, px: 0 }}>
             <Outlet />
           </Box>
           <BottomNav />

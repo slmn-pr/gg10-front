@@ -13,6 +13,7 @@ import GameModeSelector from './components/GameModeTab.jsx';
 import HomeFilters from './containers/HomeFilters/index.jsx';
 import ChevronUpIcon from '@/components/icons/ChevronUp.jsx';
 import LobbyCardHeader from './components/LobbyCardHeader.jsx';
+import { useTheme } from '@mui/material';
 
 const SvgIcon = ({ src, sx, ...props }) => (
   <Box
@@ -33,6 +34,8 @@ const HomePage = () => {
   const [myLobbiesExpanded, setMyLobbiesExpanded] = React.useState(true);
   const [allLobbiesExpanded, setAllLobbiesExpanded] = React.useState(true);
 
+  const theme = useTheme();
+
   return (
     <Stack sx={{ pb: 4, px: 0 }} spacing={0.5}>
       {/* USer status */}
@@ -45,25 +48,42 @@ const HomePage = () => {
         <BannerSlider />
       </Box>
 
-      <Stack bgcolor="custom.bg1" px={2} borderRadius={1}>
-        {/* `Game mode selector */}
-        <Box sx={{ my: '12px' }}>
-          <GameModeSelector />
+      <Stack bgcolor="custom.bg1" px={2} borderRadius={1} sx={{ width: '100%' }}>
+        {/* Sticky Header */}
+        <Box
+          bgcolor={theme.palette.custom.bg1}
+          sx={{
+            position: 'sticky',
+            top: 60,
+            zIndex: 1000,
+            pt: 1,
+            width: '100%',
+          }}
+        >
+          {/* Game Mode */}
+          <Box px={2} mb={1}>
+            <GameModeSelector />
+          </Box>
+
+          {/* Filters */}
+          <Box px={2}>
+            <HomeFilters />
+          </Box>
         </Box>
 
-        {/* Filters */}
-        <HomeFilters />
-
-        {/* My Lobbies Section */}
-        <Stack direction="row" justifyContent="space-between" alignItems="center">
-          {/* Lobby header */}
+        {/* Section Title – dynamic */}
+        <Box
+          px={2}
+          pb={1}
+          // sx={{ position: 'sticky', top: 120, zIndex: 1000 }}
+          bgcolor={theme.palette.custom.bg1}
+        >
           <LobbyCardHeader
-            name="لابی‌های شما"
-            title="۲ لابی"
+            name={myLobbiesExpanded ? 'لابی‌های شما' : 'فهرست همه لابی‌ها'}
+            title={myLobbiesExpanded ? '۲ لابی' : '۴ لابی'}
             onExpand={() => setMyLobbiesExpanded(!myLobbiesExpanded)}
           />
-        </Stack>
-
+        </Box>
         {myLobbiesExpanded && (
           <>
             <LobbyCard
@@ -90,7 +110,9 @@ const HomePage = () => {
         )}
 
         {/* All Lobbies Section */}
-        <LobbyCardHeader name="فهرست همه لابی‌ها" title="۴ لابی" />
+        <Box>
+          <LobbyCardHeader name="فهرست همه لابی‌ها" title="۴ لابی" />
+        </Box>
 
         <LobbyCard
           title="آیزولیتد ۴۰ نفره جایگاهی"
