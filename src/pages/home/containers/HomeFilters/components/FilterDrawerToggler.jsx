@@ -18,6 +18,7 @@ export default function FilterDrawerToggler({ onClick, label, icon, active = fal
       }}
       onClick={onClick}
     >
+      
       <Typography variant="subtitle2" color={active ? 'custom.blackOnPrimary' : 'white'}>
         {label}
       </Typography>

@@ -93,7 +93,25 @@ export default function FiltersDrawer({ children }) {
             sx={{ display: 'flex', alignItems: 'center', gap: 0.25 }}
           >
             <span>فیلترها</span>
-            {activeFilters.length > 0 && <span>({activeFilters.length})</span>}
+            {activeFilters.length > 0 && (
+              <IconButton
+                size="small"
+                sx={{
+                  width: 20,
+                  height: 20,
+
+                  borderRadius: '50%',
+                  backgroundColor: theme.palette.custom.shade4,
+                  border: `2px solid ${theme.palette.custom.primaryStroke}`,
+                  '&:hover': {
+                    backgroundColor: theme.palette.custom.shade4,
+                    border: `2px solid ${theme.palette.custom.primaryStroke}`,
+                  },
+                }}
+              >
+                <Typography variant="sub2">{activeFilters.length}</Typography>
+              </IconButton>
+            )}
           </Typography>
         }
         icon={
