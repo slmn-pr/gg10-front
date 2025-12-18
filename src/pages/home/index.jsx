@@ -190,7 +190,7 @@ const HomePage = () => {
           expanded={allLobbiesExpanded}
           onChange={(e, expanded) => setAllLobbiesExpanded(expanded)}
           sx={{
-            bgcolor: 'transparent',
+            bgcolor: 'custom.bg1',
             boxShadow: 'none',
             '&:before': { display: 'none' },
             '&.Mui-expanded': { margin: 0 },
@@ -241,42 +241,44 @@ const HomePage = () => {
             />
           </AccordionSummary>
           <AccordionDetails>
-            <LobbyCard
-              title="آیزولیتد ۴۰ نفره جایگاهی"
-              status="در حال برگزاری"
-              entryFee="۱۰۰,۰۰۰ تومن"
-              prize="۱۰,۰۰۰,۰۰۰ تومن"
-              currentPlayers={30}
-              maxPlayers={40}
-              isVip={true}
-            />
-            <LobbyCard
-              title="آیزولیتد ۴۰ نفره جایگاهی"
-              status="در حال برگزاری"
-              entryFee="۱۰۰,۰۰۰ تومن"
-              prize="۱۰,۰۰۰,۰۰۰ تومن"
-              currentPlayers={35}
-              maxPlayers={40}
-              isVip={false}
-            />
-            <LobbyCard
-              title="آیزولیتد ۴۰ نفره جایگاهی"
-              status="در حال برگزاری"
-              entryFee="۱۰۰,۰۰۰ تومن"
-              prize="۱۰,۰۰۰,۰۰۰ تومن"
-              currentPlayers={38}
-              maxPlayers={40}
-              isVip={false}
-            />
-            <LobbyCard
-              title="آیزولیتد ۴۰ نفره جایگاهی"
-              status="در حال برگزاری"
-              entryFee="۱۰۰,۰۰۰ تومن"
-              prize="۱۰,۰۰۰,۰۰۰ تومن"
-              currentPlayers={25}
-              maxPlayers={40}
-              isVip={true}
-            />
+            <Stack spacing={2}>
+              <LobbyCard
+                title="آیزولیتد ۴۰ نفره جایگاهی"
+                status="در حال برگزاری"
+                entryFee="۱۰۰,۰۰۰ تومن"
+                prize="۱۰,۰۰۰,۰۰۰ تومن"
+                currentPlayers={30}
+                maxPlayers={40}
+                isVip={true}
+              />
+              <LobbyCard
+                title="آیزولیتد ۴۰ نفره جایگاهی"
+                status="در حال برگزاری"
+                entryFee="۱۰۰,۰۰۰ تومن"
+                prize="۱۰,۰۰۰,۰۰۰ تومن"
+                currentPlayers={35}
+                maxPlayers={40}
+                isVip={false}
+              />
+              <LobbyCard
+                title="آیزولیتد ۴۰ نفره جایگاهی"
+                status="در حال برگزاری"
+                entryFee="۱۰۰,۰۰۰ تومن"
+                prize="۱۰,۰۰۰,۰۰۰ تومن"
+                currentPlayers={38}
+                maxPlayers={40}
+                isVip={false}
+              />
+              <LobbyCard
+                title="آیزولیتد ۴۰ نفره جایگاهی"
+                status="در حال برگزاری"
+                entryFee="۱۰۰,۰۰۰ تومن"
+                prize="۱۰,۰۰۰,۰۰۰ تومن"
+                currentPlayers={25}
+                maxPlayers={40}
+                isVip={true}
+              />
+            </Stack>
           </AccordionDetails>
         </Accordion>
       </Stack>

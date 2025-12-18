@@ -99,7 +99,7 @@ const LobbyCard = ({
     <Card
       sx={{
         mb: '12px',
-        background: isVip ? theme.palette.custom.gray : theme.palette.custom.cardsBg,
+        background: isVip ? theme.palette.custom.grey6 : theme.palette.custom.cardsBg,
         borderRadius: 2,
         display: 'flex',
         flexDirection: 'row-reverse',

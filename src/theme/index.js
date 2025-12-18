@@ -190,6 +190,24 @@ const theme = createTheme({
       success: '#146C43',
       warning: '#FFC225',
       info: '#FFDFEB',
+
+      // greys
+      black: '#020202',
+      grey8: '#090406',
+      grey7: '#161616',
+      grey6: '#1f1f1f',
+      gray5: '#262626',
+      gray4: '#454545',
+      gray3: '#717171',
+      gray2: '#8a8a8a',
+      gray1: '#a4a4a4',
+      grey0: '#d0d0d0',
+      white: '#ffffff',
+
+      //  Neutral colors
+      primaryBg: '#131313',
+      secondaryBg: '#212121',
+      tertiaryBackground: '#ffffff',
     },
 
     stroke: {
