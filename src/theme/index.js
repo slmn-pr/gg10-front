@@ -310,15 +310,15 @@ const theme = createTheme({
       },
     },
 
-    MuiSnackbar:{
+    MuiSnackbar: {
       styleOverrides: {
         root: {
-          // direction: 'rtl',  
-          px: "16px",
-          py: "6px"
+          // direction: 'rtl',
+          px: '16px',
+          py: '6px',
         },
       },
-    }
+    },
   },
 });
 

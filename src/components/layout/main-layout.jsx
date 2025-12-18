@@ -13,7 +13,6 @@ const MainLayout = () => {
   return (
     <ThemeProvider theme={mainTheme}>
       {/* Offline Snakbar */}
-      <OfflineSnakbar />
 
       {/* Server error Snakbar */}
       {/* <ErrorSnakBar
@@ -52,6 +51,8 @@ const MainLayout = () => {
             gap: 0.5,
           }}
         >
+          <OfflineSnakbar />
+
           <Box component="main" sx={{ flexGrow: 1, pb: 12, px: 0, overflow: 'hidden' }}>
             <Outlet />
           </Box>

@@ -20,9 +20,18 @@ export default function ErrorSnakBar({
   return (
     <Snackbar
       open={open}
-      autoHideDuration={3_000}
+      // autoHideDuration={3_000}
       onClose={onClose}
-      sx={{ bottom: '130px' }}
+      sx={{ 
+        "&.MuiSnackbar-root ":{
+          bottom: '130px',
+          maxWidth: '344px',
+          width: '100%',
+          left: '50%',
+          transform: 'translateX(-50%)',
+        }
+      }}
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
     >
       <Alert
         closeText="close"
