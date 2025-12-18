@@ -1,7 +1,7 @@
 import ChevronUpIcon from '@/components/icons/ChevronUp';
 import { Box, IconButton, Stack, Typography } from '@mui/material';
 
-export default function LobbyCardHeader({ name, title, onExpand }) {
+export default function LobbyCardHeader({ name, title, onExpand, expandIcon }) {
   return (
     <Stack
       direction="row"
@@ -14,6 +14,7 @@ export default function LobbyCardHeader({ name, title, onExpand }) {
         <Typography variant="title2" color="text.white" sx={{ direction: 'rtl' }}>
           {title}
         </Typography>
+        {expandIcon && <Box>{expandIcon}</Box>}
 
         {onExpand && (
           <IconButton size="small" onClick={onExpand} sx={{ color: 'text.secondary' }}>
@@ -22,9 +23,11 @@ export default function LobbyCardHeader({ name, title, onExpand }) {
         )}
       </Box>
 
-      <Typography variant="h6" fontWeight="bold">
-        {name}
-      </Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Typography variant="h6" fontWeight="bold">
+          {name}
+        </Typography>
+      </Box>
     </Stack>
   );
 }
