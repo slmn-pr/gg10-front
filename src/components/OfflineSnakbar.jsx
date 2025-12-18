@@ -1,7 +1,6 @@
 import useOnlineStatus from '@/hooks/useOnlineStatus';
 
 import ErrorSnakBar from './snackbar/ErrorSnakBar';
-import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 export default function OfflineSnakbar() {
