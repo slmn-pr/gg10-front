@@ -16,18 +16,19 @@ import useHorizentalScroll from './hooks/useHorizenatlScroll';
 import HardPointIcon from '@/components/icons/HardPointIcon';
 import MyLobbiesRankIcon from '@/components/icons/MyLobbiesRankIcon';
 
-// const filters = [
-//   { label: 'اسکوادی', icon: SquadChipIcon, key: 'squad' },
-//   { label: 'کیلی', icon: KillChipIcon, key: 'killie' },
-//   { label: 'اتوریوایو', icon: AutoReviveChipIcon, key: 'autoRevive' },
-//   {
-//     label: 'سرچ اند دیستروی',
-//     icon: SearchAndDestroyIcon,
-//     key: 'searchAndDistro',
-//   },
-// ];
+const selectedFIlterMap = {
+  freeLobby: 'لابی های رایگان',
+  paidLobby: 'لابی های پرداختی',
+  squad: 'اسکوادی',
+  killie: 'کیلی',
+  autoRevive: 'اتوریوایو',
+  searchAndDistro: 'سرچ اند دیستروی',
+  hardpoint: 'هاردپوینت',
+  myRankLobbies: 'لابی های با رنک مجاز من',
+  rankOnlyLobby: 'لابی های با رنک مجاز من', // FIX: Its must replace with myRankLobbies
+};
 
-const filters = {
+const suggestedFilters = {
   'battle-royal': [
     { label: 'کیلی', icon: KillChipIcon, key: 'killie' },
     { label: 'اتوریوایو', icon: AutoReviveChipIcon, key: 'autoRevive' },
@@ -89,6 +90,21 @@ export default function HomeFilters() {
     [searchParams, methods],
   );
 
+  const selectedFiltersExceptSuggested = useMemo(() => {
+    let result = [];
+    let a = searchParams.forEach((value, key) => {
+      if (
+        defaultValueNames.includes(key) &&
+        !suggestedFilters[gameMode]?.some((filter) => filter.key === key)
+      ) {
+        return result.push(key);
+      }
+    });
+    console.log('[selectedFiltersExceptSuggested] result', result);
+
+    return result;
+  }, [searchParams, gameMode]);
+
   // Handle filter chips horizental scrol
   useHorizentalScroll(containerRef);
 
@@ -139,8 +155,23 @@ export default function HomeFilters() {
           </FiltersDrawer>
         </FormProvider>
 
+        {/* Also render selected filters except suggested filters */}
+        {selectedFiltersExceptSuggested.map((key) => {
+          const active = searchParams.get(key);
+          const iconColor = active ? theme.palette.custom.blackOnPrimary : 'white';
+
+          return (
+            <FilterChip
+              active={active}
+              key={key}
+              label={selectedFIlterMap[key]}
+              onClick={() => toggleFilter({ key })}
+            />
+          );
+        })}
+
         {/* Filters Chips */}
-        {filters[gameMode]?.map((filter) => {
+        {suggestedFilters[gameMode]?.map((filter) => {
           const active = searchParams.get(filter.key);
           const iconColor = active ? theme.palette.custom.blackOnPrimary : 'white';
 
