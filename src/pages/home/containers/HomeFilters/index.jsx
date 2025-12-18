@@ -16,16 +16,35 @@ import useHorizentalScroll from './hooks/useHorizenatlScroll';
 import HardPointIcon from '@/components/icons/HardPointIcon';
 import MyLobbiesRankIcon from '@/components/icons/MyLobbiesRankIcon';
 
+// Complete filter map organized by game mode
+const filterMap = {
+  'battle-royal': {
+    solo: 'سولو',
+    double: 'دابل',
+    trios: 'تریو',
+    squad: 'اسکوادی',
+    killie: 'کیلی',
+    ranked: 'جایگاهی',
+    tagie: 'تگی',
+    autoRevive: 'اتو ریوایو',
+    freeLobby: 'لابی های رایگان',
+    rankOnlyLobby: 'لابی های با رنک مجاز من',
+  },
+  multiplayer: {
+    searchAndDistro: 'سرچ اند دیستروی',
+    hardpoint: 'هاردپوینت',
+    freeForAll: 'فری فور آل',
+    duo: 'دوئل',
+    freeLobby: 'لابی های رایگان',
+    rankOnlyLobby: 'لابی های با رنک مجاز من',
+    myRankLobbies: 'لابی های رنک من',
+  },
+};
+
+// Legacy map for backward compatibility (can be removed if not used elsewhere)
 const selectedFIlterMap = {
-  freeLobby: 'لابی های رایگان',
-  paidLobby: 'لابی های پرداختی',
-  squad: 'اسکوادی',
-  killie: 'کیلی',
-  autoRevive: 'اتوریوایو',
-  searchAndDistro: 'سرچ اند دیستروی',
-  hardpoint: 'هاردپوینت',
-  myRankLobbies: 'لابی های با رنک مجاز من',
-  rankOnlyLobby: 'لابی های با رنک مجاز من', // FIX: Its must replace with myRankLobbies
+  ...filterMap['battle-royal'],
+  ...filterMap['multiplayer'],
 };
 
 const suggestedFilters = {
@@ -64,53 +83,57 @@ export default function HomeFilters() {
   // console.log('[HomeFilters] defaultValues', defaultValues);
 
   const defaultValues = useMemo(() => {
-    // console.log('[HomeFilters] searchParams', searchParams);
-
     const defaultValues = {};
     defaultValueNames.forEach((name) => {
       defaultValues[name] = searchParams.get(name) === 'true';
     });
     return defaultValues;
-  }, [defaultValueNames]);
+  }, [defaultValueNames, searchParams]);
 
   const methods = useForm({ defaultValues, mode: 'onChange' });
 
   const toggleFilter = useCallback(
     (filter) => {
-      const has = searchParams.has(filter.key);
+      const newParams = new URLSearchParams(searchParams);
+      const has = newParams.has(filter.key);
 
-      if (has) searchParams.delete(filter.key);
-      else searchParams.set(filter.key, 'true');
+      if (has) {
+        newParams.delete(filter.key);
+      } else {
+        newParams.set(filter.key, 'true');
+      }
 
-      setSearchParams(searchParams, { replace: true });
+      setSearchParams(newParams, { replace: true });
 
       // Set to form values
       methods.setValue(filter.key, !has);
     },
-    [searchParams, methods],
+    [searchParams, setSearchParams, methods],
   );
 
   const selectedFiltersExceptSuggested = useMemo(() => {
-    let result = [];
-    let a = searchParams.forEach((value, key) => {
-      if (
-        defaultValueNames.includes(key) &&
-        !suggestedFilters[gameMode]?.some((filter) => filter.key === key)
-      ) {
-        return result.push(key);
+    const result = [];
+    const suggestedKeys = suggestedFilters[gameMode]?.map((filter) => filter.key) || [];
+
+    // Get all active filter keys from searchParams
+    defaultValueNames.forEach((key) => {
+      const isActive = searchParams.get(key) === 'true';
+      const isNotSuggested = !suggestedKeys.includes(key);
+
+      if (isActive && isNotSuggested) {
+        result.push(key);
       }
     });
-    console.log('[selectedFiltersExceptSuggested] result', result);
 
     return result;
-  }, [searchParams, gameMode]);
+  }, [searchParams, gameMode, defaultValueNames]);
 
   // Handle filter chips horizental scrol
   useHorizentalScroll(containerRef);
 
   useEffect(() => {
     methods.reset(defaultValues);
-  }, [defaultValues]);
+  }, [defaultValues, methods]);
 
   return (
     <>
@@ -157,14 +180,14 @@ export default function HomeFilters() {
 
         {/* Also render selected filters except suggested filters */}
         {selectedFiltersExceptSuggested.map((key) => {
-          const active = searchParams.get(key);
-          const iconColor = active ? theme.palette.custom.blackOnPrimary : 'white';
+          const active = searchParams.get(key) === 'true';
+          const label = filterMap[gameMode]?.[key] || selectedFIlterMap[key] || key;
 
           return (
             <FilterChip
               active={active}
               key={key}
-              label={selectedFIlterMap[key]}
+              label={label}
               onClick={() => toggleFilter({ key })}
             />
           );
@@ -172,7 +195,7 @@ export default function HomeFilters() {
 
         {/* Filters Chips */}
         {suggestedFilters[gameMode]?.map((filter) => {
-          const active = searchParams.get(filter.key);
+          const active = searchParams.get(filter.key) === 'true';
           const iconColor = active ? theme.palette.custom.blackOnPrimary : 'white';
 
           return (
