@@ -128,7 +128,7 @@ export default function HomeFilters() {
     return result;
   }, [searchParams, gameMode, defaultValueNames]);
 
-  // Handle filter chips horizental scrol
+  // Handle filter chips horizontal scroll with RTL, mouse, touch, and smooth scrolling support
   useHorizentalScroll(containerRef);
 
   useEffect(() => {
