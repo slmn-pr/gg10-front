@@ -55,7 +55,7 @@ const HomePage = () => {
           sx={{
             position: 'sticky',
             top: 60,
-            zIndex: 1000,
+            zIndex: 999,
             pt: 1,
             width: '100%',
           }}
