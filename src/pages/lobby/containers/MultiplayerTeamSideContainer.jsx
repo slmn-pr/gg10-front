@@ -49,7 +49,13 @@ export default function MultiplayerTeamSideContainer({ players = [] }) {
             sx={{ width: '100%', mx: 'auto' }}
           >
             {row.map((player) => (
-              <PlayerCard key={player.name} {...player} />
+              <PlayerCard
+                key={player.name}
+                rank={player.rank}
+                playerName={player.name}
+                isLeader={player.isLeader}
+                freeSlot={player.freeSlot}
+              />
             ))}
           </Stack>
         </>

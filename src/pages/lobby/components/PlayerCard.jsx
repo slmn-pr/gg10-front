@@ -1,4 +1,3 @@
-import SilverIcon from '@/components/icons/rank/SilverIcon';
 import { RANK_CODE_MAP } from '@/consts';
 import { Box, Typography, useTheme } from '@mui/material';
 import PlayerEmptyCard from './PlayerEmptyCard';
@@ -12,6 +11,7 @@ export default function PlayerCard({
   const rankData = RANK_CODE_MAP[rank];
   const rankTitle = rankData?.title;
   const rankColor = rankData?.color;
+  const rankIcon = rankData?.icon;
 
   const theme = useTheme();
 
@@ -44,10 +44,10 @@ export default function PlayerCard({
               height: '30px',
               position: 'absolute',
               bottom: -8,
-              right: 0,
+              right: -2,
             }}
           >
-            <SilverIcon />
+            {rankIcon}
           </Box>
         </Box>
       ) : (

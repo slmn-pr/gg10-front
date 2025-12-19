@@ -1,3 +1,5 @@
+import { generateFakeMultiplayerData } from './genrate_fake_data';
+
 export const MULTIPLAYER_TEAM_SLOTS = {
   '1V1': {
     slots: 1,
@@ -84,18 +86,8 @@ export const MULTIPLAYER_TEAM_SLOTS = {
     slots: 6,
     teamSize: 6,
     players: {
-      team1: Array.from({ length: 6 }, (_, i) => ({
-        name: `Player ${i + 1}`,
-        rank: i + 1,
-        isLeader: i === 2,
-        freeSlot: true,
-      })),
-      team2: Array.from({ length: 6 }, (_, i) => ({
-        name: `Player ${i + 7}`,
-        rank: i + 7,
-        isLeader: i === 2,
-        freeSlot: true,
-      })),
+      team1: generateFakeMultiplayerData(6),
+      team2: generateFakeMultiplayerData(6),
     },
   },
 
@@ -103,18 +95,8 @@ export const MULTIPLAYER_TEAM_SLOTS = {
     slots: 7,
     teamSize: 7,
     players: {
-      team1: Array.from({ length: 7 }, (_, i) => ({
-        name: `Player ${i + 1}`,
-        rank: i + 1,
-        isLeader: i === 3,
-        freeSlot: true,
-      })),
-      team2: Array.from({ length: 7 }, (_, i) => ({
-        name: `Player ${i + 8}`,
-        rank: i + 8,
-        isLeader: i === 3,
-        freeSlot: true,
-      })),
+      team1: generateFakeMultiplayerData(7),
+      team2: generateFakeMultiplayerData(7),
     },
   },
 
@@ -122,18 +104,8 @@ export const MULTIPLAYER_TEAM_SLOTS = {
     slots: 8,
     teamSize: 8,
     players: {
-      team1: Array.from({ length: 8 }, (_, i) => ({
-        name: `Player ${i + 1}`,
-        rank: i + 1,
-        isLeader: i === 3,
-        freeSlot: true,
-      })),
-      team2: Array.from({ length: 8 }, (_, i) => ({
-        name: `Player ${i + 9}`,
-        rank: i + 9,
-        isLeader: i === 3,
-        freeSlot: true,
-      })),
+      team1: generateFakeMultiplayerData(8),
+      team2: generateFakeMultiplayerData(8),
     },
   },
 
@@ -141,18 +113,8 @@ export const MULTIPLAYER_TEAM_SLOTS = {
     slots: 9,
     teamSize: 9,
     players: {
-      team1: Array.from({ length: 9 }, (_, i) => ({
-        name: `Player ${i + 1}`,
-        rank: i + 1,
-        isLeader: i === 4,
-        freeSlot: true,
-      })),
-      team2: Array.from({ length: 9 }, (_, i) => ({
-        name: `Player ${i + 10}`,
-        rank: i + 10,
-        isLeader: i === 4,
-        freeSlot: true,
-      })),
+      team1: generateFakeMultiplayerData(9),
+      team2: generateFakeMultiplayerData(9),
     },
   },
 
@@ -160,18 +122,8 @@ export const MULTIPLAYER_TEAM_SLOTS = {
     slots: 10,
     teamSize: 10,
     players: {
-      team1: Array.from({ length: 10 }, (_, i) => ({
-        name: `Player ${i + 1}`,
-        rank: i + 1,
-        isLeader: i === 4,
-        freeSlot: true,
-      })),
-      team2: Array.from({ length: 10 }, (_, i) => ({
-        name: `Player ${i + 11}`,
-        rank: i + 11,
-        isLeader: i === 4,
-        freeSlot: true,
-      })),
+      team1: generateFakeMultiplayerData(10),
+      team2: generateFakeMultiplayerData(10),
     },
   },
 };
