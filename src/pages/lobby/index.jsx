@@ -1,8 +1,6 @@
 import CustomProgressBar from '@/components/CustomProgressBar';
-import ChevronBackward from '@/components/icons/ChevronBackward';
 import ChevronForwardIcon from '@/components/icons/ChevronForward';
 import ShareIcon from '@/components/icons/ShareIcon';
-import { PageContainer } from '@/components/layout';
 import {
   Box,
   Button,
@@ -13,8 +11,6 @@ import {
   useTheme,
 } from '@mui/material';
 import { useMemo, useState } from 'react';
-import LobbyVsIcon from '@/assets/LobbyVsIcon';
-import TeamSideContainer from './containers/MultiplayerTeamSideContainer';
 import TimeIcon from '@/components/icons/lobbie/TimeIcon';
 import CapacityIcon from '@/components/icons/CapacityIcon';
 import StatusIcon from '@/components/icons/lobby/StatusIcon';

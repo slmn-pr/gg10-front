@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
@@ -22,6 +22,7 @@ import AutoReviveSmallIcon from './icons/AutoReviveSmallIcon';
 import PlacementSmallIcon from './icons/PlacementSmallIcon';
 import SquadSmallIcon from './icons/SquadSmallIcon';
 import CustomProgressBar from '@/components/CustomProgressBar';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const STATUS_COLOR_MAP = {
   'تکمیل ظرفیت': {
@@ -54,10 +55,13 @@ const LobbyCard = ({
   schedule = 'امروز ۱۷:۳۰',
   tags = ['اسکوادی', 'اتوریوایو', 'جایگاهی'],
 }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const theme = useTheme();
   const progress = maxPlayers
     ? Math.min(100, Math.round((currentPlayers / maxPlayers) * 100))
     : 0;
+
+  const navigate = useNavigate();
 
   const statusPalette = React.useMemo(() => {
     if (status?.includes('تکمیل') || isFull) {
@@ -95,6 +99,17 @@ const LobbyCard = ({
     جایگاهی: <PlacementSmallIcon />,
   };
 
+  const handleCardClick = useCallback(() => {
+    const gameMode = searchParams.get('gameMode') || 'multiplayer';
+    const teamType = searchParams.get('team_type') || 1;
+    // const
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set('gameMode', gameMode);
+    newParams.set('team_type', teamType);
+    setSearchParams(newParams);
+    navigate(`/lobby?${newParams.toString()}`);
+  }, [searchParams, setSearchParams, navigate]);
+
   return (
     <Card
       sx={{
@@ -111,7 +126,7 @@ const LobbyCard = ({
         minHeight: '112px',
       }}
     >
-      <CardActionArea sx={{ display: 'flex', flexDirection: 'row-reverse' }}>
+      <CardActionArea sx={{ display: 'flex', flexDirection: 'row-reverse' }} onClick={handleCardClick}>
         {/* Image Section - RIGHT SIDE */}
         <Box
           sx={{
