@@ -337,6 +337,25 @@ const theme = createTheme({
         },
       },
     },
+
+    MuiAccordion: {
+      defaultProps: {
+        // dir: 'rtl',
+      },
+      styleOverrides: {
+        root: ({ theme }) => ({
+          backgroundColor: theme.palette.custom.black,
+          boxShadow: 'none',
+          '&:before': { display: 'none' },
+          '&.Mui-expanded': { margin: 0 },
+          '& .MuiAccordionSummary-root': {
+            minHeight: 'auto',
+            px: 2,
+            py: 1,
+          },
+        }),
+      },
+    },
   },
 });
 

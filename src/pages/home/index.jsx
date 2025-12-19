@@ -80,7 +80,7 @@ const HomePage = () => {
         <BannerSlider />
       </Box>
 
-      <Stack bgcolor="custom.bg1" px={2} borderRadius={1} sx={{ width: '100%' }}>
+      <Stack bgcolor="custom.bg1" px={2} borderRadius={1} spacing={1} sx={{ width: '100%' }}>
         {/* Sticky Header */}
         <Box
           ref={stickyHeaderRef}
@@ -109,22 +109,6 @@ const HomePage = () => {
           expanded={myLobbiesExpanded}
           onChange={(e, expanded) => setMyLobbiesExpanded(expanded)}
           sx={{
-            bgcolor: 'custom.bg1',
-            boxShadow: 'none',
-            '&:before': { display: 'none' },
-            '&.Mui-expanded': { margin: 0 },
-            '& .MuiAccordionSummary-root': {
-              minHeight: 'auto',
-              px: 2,
-              py: 1,
-              bgcolor: theme.palette.custom.bg1,
-              position: 'sticky',
-              top: 60 + stickyHeaderHeight,
-              zIndex: 998,
-              '&.Mui-expanded': {
-                minHeight: 'auto',
-              },
-            },
             '& .MuiAccordionDetails-root': {
               px: 0,
               pb: 0,
@@ -190,22 +174,6 @@ const HomePage = () => {
           expanded={allLobbiesExpanded}
           onChange={(e, expanded) => setAllLobbiesExpanded(expanded)}
           sx={{
-            bgcolor: 'custom.bg1',
-            boxShadow: 'none',
-            '&:before': { display: 'none' },
-            '&.Mui-expanded': { margin: 0 },
-            '& .MuiAccordionSummary-root': {
-              minHeight: 'auto',
-              px: 2,
-              py: 1,
-              bgcolor: theme.palette.custom.bg1,
-              position: 'sticky',
-              top: 60 + stickyHeaderHeight,
-              zIndex: 998,
-              '&.Mui-expanded': {
-                minHeight: 'auto',
-              },
-            },
             '& .MuiAccordionDetails-root': {
               px: 0,
               pb: 0,
