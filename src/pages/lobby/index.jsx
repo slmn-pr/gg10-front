@@ -12,13 +12,18 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import LobbyVsIcon from '@/assets/LobbyVsIcon';
-import TeamSideContainer from './containers/TeamSideContainer';
+import TeamSideContainer from './containers/MultiplayerTeamSideContainer';
 import TimeIcon from '@/components/icons/lobbie/TimeIcon';
 import CapacityIcon from '@/components/icons/CapacityIcon';
 import StatusIcon from '@/components/icons/lobby/StatusIcon';
 import EntryFreeIcon from '@/components/icons/lobbie/EntryFreeIcon';
+import MultiPLayerLayout from './layout/MultiPLayerLayout';
+import { MULTIPLAYER_TEAM_SLOTS } from './_mock/multiplayer';
+import MultiplayerTeamSideContainer from './containers/MultiplayerTeamSideContainer';
+import { useSearchParams } from 'react-router-dom';
+import useMultiplayerTeamTypeTranslate from '@/hooks/lobby/useMultiplayerTEamTypeTranslate';
 // import topImage from '@/assets/images/lobby/top-image.png';
 
 const filterItems = [
@@ -30,7 +35,16 @@ const filterItems = [
 
 export default function LobbyPage() {
   const theme = useTheme();
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [activeFilter, setActiveFilter] = useState('lobby');
+
+  const searchedTeamType = useMemo(
+    () => searchParams.get('team_type') || 1,
+    [searchParams],
+  );
+  const teamType = useMultiplayerTeamTypeTranslate(searchedTeamType);
+
   return (
     <Box
       sx={{
@@ -158,9 +172,9 @@ export default function LobbyPage() {
               sx={{
                 flex: 1,
                 backgroundColor:
-                  activeFilter === item.key ? 'custom.tint2' : 'transparent',
+                  activeFilter === item.key ? 'custom.tint1' : 'transparent',
                 borderColor:
-                  activeFilter === item.key ? 'custom.primaryStroke' : 'custom.greyOnBg1',
+                  activeFilter === item.key ? 'custom.tint2' : 'custom.greyOnBg1',
               }}
             >
               <Typography
@@ -178,25 +192,22 @@ export default function LobbyPage() {
         </ButtonGroup>
       </Box>
 
-      {/* TEAM SIDES */}
+      {/* TEAM SIDES (Multiplayer version) */}
       <Box style={{ marginTop: '32px' }}>
-        {/* Side 1 */}
-        <TeamSideContainer />
-
-        {/* VS ICON */}
-        <Box
-          sx={{
-            width: '100%',
-            height: '56px',
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        >
-          <LobbyVsIcon />
-        </Box>
-
-        {/* Side 2 */}
-        <TeamSideContainer />
+        <MultiPLayerLayout
+          side1Slot={
+            <MultiplayerTeamSideContainer
+              teamType={teamType}
+              players={MULTIPLAYER_TEAM_SLOTS[teamType].players.team1}
+            />
+          }
+          side2Slot={
+            <MultiplayerTeamSideContainer
+              teamType={teamType}
+              players={MULTIPLAYER_TEAM_SLOTS[teamType].players.team2}
+            />
+          }
+        />
       </Box>
 
       {/* <Typography variant="h1">This is lobby page</Typography> */}

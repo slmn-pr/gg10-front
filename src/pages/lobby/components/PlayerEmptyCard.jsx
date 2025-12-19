@@ -1,13 +1,20 @@
-import { Box } from '@mui/material';
+import AddPLayerCTAIcon from '@/components/icons/AddPLayerCTAIcon';
+import { Box, Button } from '@mui/material';
 
 export default function PlayerEmptyCard() {
   return (
-    <Box sx={{ width: '74px', height: '84px' }}>
-      <img
-        src="/images/lobby_player_empty.png"
-        alt="player empty card"
-        style={{ width: '74px', height: '84px' }}
-      />
-    </Box>
+    <Button
+      sx={{
+        width: '74px',
+        height: '84px',
+        backgroundColor: 'custom.secondaryBg',
+        borderRadius: '8px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <AddPLayerCTAIcon />
+    </Button>
   );
 }
