@@ -11,12 +11,12 @@ export default function FilterChip({ onClick, label, icon, active = false }) {
       sx={{
         minWidth: 'max-content',
         borderRadius: 2,
-        borderColor: active ? 'custom.primaryStroke' : 'white',
+        borderColor: active ? 'custom.tint2' : 'white',
         borderWidth: 2,
         color: active ? 'custom.blackOnPrimary' : 'white',
         p: 1,
         '& .MuiChip-icon': { color: '#fff' },
-        backgroundColor: active ? 'custom.tint2' : 'transparent',
+        backgroundColor: active ? 'custom.tint1' : 'transparent',
       }}
       onClick={onClick}
     >

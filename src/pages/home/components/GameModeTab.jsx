@@ -61,11 +61,11 @@ export default function GameModeSelector() {
           border: '2px solid white',
 
           '&.Mui-selected': {
-            backgroundColor: theme.palette.custom.tint2,
+            backgroundColor: theme.palette.custom.tint1,
             color: '#000',
-            border: `2px solid ${theme.palette.custom.primaryStroke}`,
+            border: `2px solid ${theme.palette.custom.tint2}`,
             '&:hover': {
-              backgroundColor: theme.palette.custom.tint2,
+              backgroundColor: theme.palette.custom.tint1,
             },
           },
           '&.Mui-not-selected': {
@@ -105,11 +105,11 @@ export default function GameModeSelector() {
           border: '2px solid white',
 
           '&.Mui-selected': {
-            backgroundColor: theme.palette.custom.tint2,
+            backgroundColor: theme.palette.custom.tint1,
             color: '#000',
-            border: `2px solid ${theme.palette.custom.primaryStroke}`,
+            border: `2px solid ${theme.palette.custom.tint2}`,
             '&:hover': {
-              backgroundColor: theme.palette.custom.tint2,
+              backgroundColor: theme.palette.custom.tint1,
             },
           },
         }}

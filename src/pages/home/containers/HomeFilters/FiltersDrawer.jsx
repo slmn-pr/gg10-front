@@ -102,10 +102,10 @@ export default function FiltersDrawer({ children }) {
 
                   borderRadius: '50%',
                   backgroundColor: theme.palette.custom.shade4,
-                  border: `2px solid ${theme.palette.custom.primaryStroke}`,
+                  border: `2px solid ${theme.palette.custom.tint2}`,
                   '&:hover': {
                     backgroundColor: theme.palette.custom.shade4,
-                    border: `2px solid ${theme.palette.custom.primaryStroke}`,
+                    border: `2px solid ${theme.palette.custom.tint2}`,
                   },
                 }}
               >

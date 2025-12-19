@@ -81,7 +81,7 @@ const HomePage = () => {
       </Box>
 
       <Stack
-        bgcolor="custom.bg1"
+        bgcolor="custom.black"
         px={2}
         borderRadius={1}
         spacing={1}
