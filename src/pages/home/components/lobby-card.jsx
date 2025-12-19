@@ -5,7 +5,6 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 
-import bg3 from '@/assets/images/lobby/bg-default.png';
 import vipBg from '@/assets/images/Lobbies card avatar.png';
 
 import { alpha, Divider, useTheme } from '@mui/material';
@@ -117,6 +116,7 @@ const LobbyCard = ({
         <Box
           sx={{
             width: '88px',
+            height: '100%',
             position: 'relative',
             flexShrink: 0,
             zIndex: 1,
@@ -124,7 +124,7 @@ const LobbyCard = ({
         >
           <Box
             component="img"
-            src={isVip ? vipBg : bg3}
+            src={vipBg}
             alt=""
             sx={{
               width: '100%',
