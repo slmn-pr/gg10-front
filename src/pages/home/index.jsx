@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -34,15 +34,15 @@ const SvgIcon = ({ src, sx, ...props }) => (
 );
 
 const HomePage = () => {
-  const [myLobbiesExpanded, setMyLobbiesExpanded] = React.useState(true);
-  const [allLobbiesExpanded, setAllLobbiesExpanded] = React.useState(true);
-  const stickyHeaderRef = React.useRef(null);
-  const [stickyHeaderHeight, setStickyHeaderHeight] = React.useState(0);
+  const [myLobbiesExpanded, setMyLobbiesExpanded] = useState(true);
+  const [allLobbiesExpanded, setAllLobbiesExpanded] = useState(true);
+  const stickyHeaderRef = useRef(null);
+  const [stickyHeaderHeight, setStickyHeaderHeight] = useState(0);
 
   const theme = useTheme();
 
   // Calculate sticky header height
-  React.useEffect(() => {
+  useEffect(() => {
     const updateStickyHeaderHeight = () => {
       if (stickyHeaderRef.current) {
         setStickyHeaderHeight(stickyHeaderRef.current.offsetHeight);
@@ -80,26 +80,32 @@ const HomePage = () => {
         <BannerSlider />
       </Box>
 
-      <Stack bgcolor="custom.bg1" px={2} borderRadius={1} spacing={1} sx={{ width: '100%' }}>
+      <Stack
+        bgcolor="custom.bg1"
+        px={2}
+        borderRadius={1}
+        spacing={1}
+        sx={{ width: '100%' }}
+      >
         {/* Sticky Header */}
         <Box
           ref={stickyHeaderRef}
           bgcolor={theme.palette.custom.bg1}
           sx={{
             position: 'sticky',
-            top: 60,
+            top: 56,
             zIndex: 999,
             pt: 1,
             width: '100%',
           }}
         >
           {/* Game Mode */}
-          <Box px={2} mb={1}>
+          <Box mb={1}>
             <GameModeSelector />
           </Box>
 
           {/* Filters */}
-          <Box px={2}>
+          <Box>
             <HomeFilters />
           </Box>
         </Box>
@@ -109,9 +115,25 @@ const HomePage = () => {
           expanded={myLobbiesExpanded}
           onChange={(e, expanded) => setMyLobbiesExpanded(expanded)}
           sx={{
+            bgcolor: 'transparent',
+            boxShadow: 'none',
+            '&:before': { display: 'none' },
+            '&.Mui-expanded': { margin: 0 },
             '& .MuiAccordionDetails-root': {
               px: 0,
               pb: 0,
+            },
+            '& .MuiAccordionSummary-root': {
+              minHeight: 'auto',
+              px: 0,
+              py: 1,
+              bgcolor: theme.palette.custom.bg1,
+              position: 'sticky',
+              top: 56 + stickyHeaderHeight,
+              zIndex: 998,
+              '&.Mui-expanded': {
+                minHeight: 'auto',
+              },
             },
           }}
         >
@@ -174,9 +196,25 @@ const HomePage = () => {
           expanded={allLobbiesExpanded}
           onChange={(e, expanded) => setAllLobbiesExpanded(expanded)}
           sx={{
+            bgcolor: 'transparent',
+            boxShadow: 'none',
+            '&:before': { display: 'none' },
+            '&.Mui-expanded': { margin: 0 },
             '& .MuiAccordionDetails-root': {
               px: 0,
               pb: 0,
+            },
+            '& .MuiAccordionSummary-root': {
+              minHeight: 'auto',
+              px: 0,
+              py: 1,
+              bgcolor: theme.palette.custom.bg1,
+              position: 'sticky',
+              top: 56 + stickyHeaderHeight,
+              zIndex: 998,
+              '&.Mui-expanded': {
+                minHeight: 'auto',
+              },
             },
           }}
         >
