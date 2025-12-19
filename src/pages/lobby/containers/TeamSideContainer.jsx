@@ -4,11 +4,17 @@ import PlayerEmptyCard from '../components/PlayerEmptyCard';
 
 export default function TeamSideContainer() {
   return (
-    <Stack direction="row" flexWrap="wrap" justifyContent="space-evenly" spacing={1}>
+    <Stack
+      direction="row"
+      flexWrap="wrap"
+      justifyContent="space-evenly"
+      spacing={1}
+      sx={{ width: '360px' }}
+    >
       <PlayerCard />
       <PlayerEmptyCard />
       <PlayerCard />
-      <PlayerCard />
+      <PlayerCard isLeader />
       <PlayerCard />
     </Stack>
   );

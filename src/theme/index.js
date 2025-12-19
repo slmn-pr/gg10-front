@@ -128,9 +128,10 @@ const theme = createTheme({
       shade3: '#48011B',
       shade4: '#180009',
       // Primary tints
-      tint1: '#FFDFEB',
-      tint2: '#FFC4C4',
-      tint3: '#FF3F7C',
+      tint0: '#FFDFEB',
+      tint1: '#FFC4C4',
+      tint2: '#DD6161',
+      tint3: '#FF317C',
       tint4: '#E40B5A',
       // Primary text colors
       whiteOnPrimary: '#FFFFFF',

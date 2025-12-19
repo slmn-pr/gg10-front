@@ -32,8 +32,15 @@ export default function LobbyPage() {
   const theme = useTheme();
   const [activeFilter, setActiveFilter] = useState('lobby');
   return (
-    <Box>
-      {/* Top section */}
+    <Box
+      sx={{
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      {/* Top section (Lobby image) */}
       <Box sx={{ position: 'relative' }}>
         {/* Image */}
         <img src="/images/sample_lobby.png" alt="top image" />
@@ -70,7 +77,7 @@ export default function LobbyPage() {
         </Stack>
       </Box>
 
-      <PageContainer spacing={1}>
+      <Box sx={{ width: '344px', mx: 'auto' }}>
         {/* Button */}
         <Stack justifyContent="center">
           <Button
@@ -84,7 +91,7 @@ export default function LobbyPage() {
           </Button>
         </Stack>
 
-        {/* Status section */}
+        {/* Status section (Status & Time & Entry Fee & capacity) */}
         <Box>
           {/* Status & Time */}
           <Stack
@@ -129,10 +136,12 @@ export default function LobbyPage() {
             </Box>
           </Stack>
 
-          <CustomProgressBar progress={85} />
+          <Box mt={0.25} mb={1.25}>
+            <CustomProgressBar progress={85} />
+          </Box>
         </Box>
 
-        {/* Filter buttons */}
+        {/* Filter buttons (Results & Rewards & Rules & Lobby) */}
         <ButtonGroup
           variant="outlined"
           color="custom.greyOnBg1"
@@ -167,28 +176,28 @@ export default function LobbyPage() {
             </Button>
           ))}
         </ButtonGroup>
+      </Box>
 
-        {/* TEAM SIDES */}
-        <Box style={{ marginTop: '32px' }}>
-          {/* Side 1 */}
-          <TeamSideContainer />
+      {/* TEAM SIDES */}
+      <Box style={{ marginTop: '32px' }}>
+        {/* Side 1 */}
+        <TeamSideContainer />
 
-          {/* VS ICON */}
-          <Box
-            sx={{
-              width: '100%',
-              height: '56px',
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          >
-            <LobbyVsIcon />
-          </Box>
-
-          {/* Side 2 */}
-          <TeamSideContainer />
+        {/* VS ICON */}
+        <Box
+          sx={{
+            width: '100%',
+            height: '56px',
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <LobbyVsIcon />
         </Box>
-      </PageContainer>
+
+        {/* Side 2 */}
+        <TeamSideContainer />
+      </Box>
 
       {/* <Typography variant="h1">This is lobby page</Typography> */}
     </Box>

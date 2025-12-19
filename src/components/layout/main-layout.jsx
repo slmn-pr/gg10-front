@@ -29,7 +29,7 @@ const MainLayout = () => {
       <TopBar />
 
       <Box
-        bgcolor="custom.tint1"
+        bgcolor="custom.tint0"
         sx={{
           display: 'flex',
           flexDirection: 'column',

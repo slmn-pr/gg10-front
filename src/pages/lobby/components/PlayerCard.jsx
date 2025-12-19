@@ -1,16 +1,31 @@
 import SilverIcon from '@/components/icons/rank/SilverIcon';
 import { RANK_CODE_MAP } from '@/consts';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 
-export default function PlayerCard({ rank = 1, playerName = 'amir_gamer' }) {
+export default function PlayerCard({
+  rank = 1,
+  playerName = 'amir_gamer',
+  isLeader = false,
+}) {
   const rankData = RANK_CODE_MAP[rank];
   const rankTitle = rankData?.title;
   const rankColor = rankData?.color;
 
+  const theme = useTheme();
+
   return (
     <Box sx={{ position: 'relative', width: 'fit-content' }}>
       {/* Avatar */}
-      <Box sx={{ width: '75px', height: '75px', position: 'relative' }}>
+      <Box
+        sx={{
+          width: '75px',
+          height: '75px',
+          position: 'relative',
+          borderRadius: '8px',
+          border: isLeader ? `1px solid ${theme.palette.custom.tint2}` : 'none',
+          boxShadow: isLeader ? `0px 4px 24px 1px ${theme.palette.custom.tint3}` : 'none',
+        }}
+      >
         <img
           src="/images/player_card_sample.png"
           alt="avatar"
@@ -34,7 +49,7 @@ export default function PlayerCard({ rank = 1, playerName = 'amir_gamer' }) {
 
       {/* Player name */}
       <Box sx={{ textAlign: 'center' }}>
-        <Typography variant="sub2" color="custom.whiteOnBg1">
+        <Typography variant="sub2" color={isLeader ? 'custom.tint2' : 'custom.whiteOnBg1'}>
           {playerName}
         </Typography>
       </Box>
