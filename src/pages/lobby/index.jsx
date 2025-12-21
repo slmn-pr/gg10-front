@@ -20,6 +20,8 @@ import { MULTIPLAYER_TEAM_SLOTS } from './_mock/multiplayer';
 import MultiplayerTeamSideContainer from './containers/MultiplayerTeamSideContainer';
 import { useSearchParams } from 'react-router-dom';
 import useMultiplayerTeamTypeTranslate from '@/hooks/lobby/useMultiplayerTEamTypeTranslate';
+import BattleRoyalTeamSideContainer from './containers/BattleRoyalTeamSideSoloContainer';
+import BattleRoyalContainer from './containers/BattleRoyalContainer';
 // import topImage from '@/assets/images/lobby/top-image.png';
 
 const filterItems = [
@@ -32,6 +34,11 @@ const filterItems = [
 export default function LobbyPage() {
   const theme = useTheme();
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const gameMode = useMemo(
+    () => searchParams.get('gameMode') || 'multiplayer',
+    [searchParams],
+  );
 
   const [activeFilter, setActiveFilter] = useState('lobby');
 
@@ -188,22 +195,27 @@ export default function LobbyPage() {
         </ButtonGroup>
       </Box>
 
-      {/* TEAM SIDES (Multiplayer version) */}
       <Box style={{ marginTop: '32px' }}>
-        <MultiPLayerLayout
-          side1Slot={
-            <MultiplayerTeamSideContainer
-              teamType={teamType}
-              players={MULTIPLAYER_TEAM_SLOTS[teamType].players.team1}
-            />
-          }
-          side2Slot={
-            <MultiplayerTeamSideContainer
-              teamType={teamType}
-              players={MULTIPLAYER_TEAM_SLOTS[teamType].players.team2}
-            />
-          }
-        />
+        {/* TEAM SIDES (Multiplayer version) */}
+        {gameMode === 'multiplayer' && (
+          <MultiPLayerLayout
+            side1Slot={
+              <MultiplayerTeamSideContainer
+                teamType={teamType}
+                players={MULTIPLAYER_TEAM_SLOTS[teamType].players.team1}
+              />
+            }
+            side2Slot={
+              <MultiplayerTeamSideContainer
+                teamType={teamType}
+                players={MULTIPLAYER_TEAM_SLOTS[teamType].players.team2}
+              />
+            }
+          />
+        )}
+
+        {/* TEAM SIDE (Battle Royal version) */}
+        {gameMode === 'battle-royal' && <BattleRoyalContainer />}
       </Box>
 
       {/* <Typography variant="h1">This is lobby page</Typography> */}
