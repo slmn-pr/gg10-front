@@ -185,7 +185,7 @@ export default function LobbyPage() {
         </ButtonGroup>
       </Box>
 
-      <Box sx={{px: "16px"}}>
+      <Box sx={{ width: '344px' }}>
         {/* LOBBY SECTION  */}
         {activeFilter === 'lobby' && <LobbySection />}
 

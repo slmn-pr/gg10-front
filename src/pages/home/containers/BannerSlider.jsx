@@ -6,6 +6,47 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Box, Typography, useTheme } from '@mui/material';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { useRTL } from '@/app/providers/rtl-provider';
+import SliderWrapper from '@/components/SliderWrapper';
+
+// Default slides if none provided
+const defaultSlides = [
+  {
+    id: 1,
+    title: 'به GG10 خوش آمدید',
+    highlight: 'GG10',
+    subtitle: 'بهترین تجربه بازی آنلاین را با ما تجربه کنید',
+    image: '/images/banner_slide.png',
+  },
+  {
+    id: 2,
+    title: 'مسابقات هیجان‌انگیز',
+    highlight: 'مسابقات',
+    subtitle: 'در مسابقات مختلف شرکت کنید و برنده جوایز شوید',
+    image: '/images/banner_slide.png',
+  },
+  {
+    id: 3,
+    title: 'جامعه بزرگ بازیکنان',
+    highlight: 'جامعه',
+    subtitle: 'به جامعه هزاران بازیکن بپیوندید',
+    image: '/images/banner_slide.png',
+  },
+  {
+    id: 4,
+    title: 'جامعه بزرگ بازیکنان',
+    highlight: 'جامعه',
+    subtitle: 'به جامعه هزاران بازیکن بپیوندید',
+    image: '/images/banner_slide.png',
+  },
+
+  {
+    id: 5,
+    title: 'جامعه بزرگ بازیکنان',
+    highlight: 'جامعه',
+    subtitle: 'به جامعه هزاران بازیکن بپیوندید',
+    image: '/images/banner_slide.png',
+  },
+];
 
 /**
  * @typedef {Object} Slide
@@ -28,46 +69,6 @@ import { useRTL } from '@/app/providers/rtl-provider';
 export default function HeroSlider({ slides = [], autoplayDelay = 3000, loop = true }) {
   const theme = useTheme();
   const { direction } = useRTL();
-
-  // Default slides if none provided
-  const defaultSlides = [
-    {
-      id: 1,
-      title: 'به GG10 خوش آمدید',
-      highlight: 'GG10',
-      subtitle: 'بهترین تجربه بازی آنلاین را با ما تجربه کنید',
-      image: '/images/banner_slide.png',
-    },
-    {
-      id: 2,
-      title: 'مسابقات هیجان‌انگیز',
-      highlight: 'مسابقات',
-      subtitle: 'در مسابقات مختلف شرکت کنید و برنده جوایز شوید',
-      image: '/images/banner_slide.png',
-    },
-    {
-      id: 3,
-      title: 'جامعه بزرگ بازیکنان',
-      highlight: 'جامعه',
-      subtitle: 'به جامعه هزاران بازیکن بپیوندید',
-      image: '/images/banner_slide.png',
-    },
-    {
-      id: 4,
-      title: 'جامعه بزرگ بازیکنان',
-      highlight: 'جامعه',
-      subtitle: 'به جامعه هزاران بازیکن بپیوندید',
-      image: '/images/banner_slide.png',
-    },
-
-    {
-      id: 5,
-      title: 'جامعه بزرگ بازیکنان',
-      highlight: 'جامعه',
-      subtitle: 'به جامعه هزاران بازیکن بپیوندید',
-      image: '/images/banner_slide.png',
-    },
-  ];
 
   const slidesToRender = slides.length > 0 ? slides : defaultSlides;
 
@@ -101,109 +102,18 @@ export default function HeroSlider({ slides = [], autoplayDelay = 3000, loop = t
   };
 
   return (
-    <Box
-      sx={{
-        width: '100%',
-        // height: 130,
-        borderRadius: 2,
-        overflow: 'visible',
-        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
-        position: 'relative',
-        mb: 1,
-      }}
-    >
-      <Box
-        sx={{
-          '& .swiper-slide': {
-            height: { xs: '200px', sm: '240px', md: '280px' },
-          },
-        }}
-      >
-        <Swiper
-          height={130}
-          modules={[Autoplay, Pagination]}
-          autoplay={{
-            delay: autoplayDelay,
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true,
-          }}
-          loop={loop}
-          pagination={{
-            el: '.swiper-pagination',
-            clickable: true,
-            dynamicBullets: false,
-            renderBullet: (index, className) => {
-              return `<span class="${className}"></span>`;
-            },
-            // renderCustomBullets: (swiper, total, current) => {
-            //   return `<span class="swiper-pagination-bullet">${current + 1}</span>`;
-            // },
-          }}
-          dir={direction}
-          rtl={direction === 'rtl'}
-          spaceBetween={0}
-          slidesPerView={1}
-        >
-          {slidesToRender.map((slide) => (
-            <SwiperSlide key={slide.id} style={{ height: '120px' }}>
-              <Box
-                sx={{
-                  position: 'relative',
-                  height: '120px',
-                  overflow: 'hidden',
-                }}
-              >
-                {/* Background Image */}
-                <img
-                  src={slide.image}
-                  alt={slide.title}
-                  style={{
-                    // height: '100%',
-                    // width: '100%',
-                    maxWidth: '100%',
-                    maxHeight: '100%',
-                    margin: 'auto',
-                    objectFit: 'cover',
-                    borderRadius: '8px',
-                  }}
-                />
-              </Box>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </Box>
-
-      {/* Custom Pagination Styles */}
-      <Box
-        className="swiper-pagination"
-        sx={{
-          transform: 'translateX(-50%)',
-          '&.swiper-pagination': {
-            bottom: '-10px !important',
-            left: '50% !important',
-            transform: 'translateX(-50%) !important',
-            position: 'absolute',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: '2px',
-            display: 'flex !important',
-            justifyContent: 'center !important',
-          },
-          '& .swiper-pagination-bullet': {
-            width: '6px',
-            height: '6px',
-            backgroundColor: theme.palette.primary.main,
-            opacity: 1,
-            cursor: 'pointer',
-            transition: 'all 0.3s ease',
-          },
-          '& .swiper-pagination-bullet-active': {
-            backgroundColor: theme.palette.custom.greyOnBg1,
-            borderRadius: '50%',
-          },
-        }}
-      />
+    <Box sx={{ height: '140px' }}>
+      <SliderWrapper>
+        {slidesToRender.map((slide) => (
+          <SwiperSlide key={slide.id} style={{ height: '120px' }}>
+            <img
+              src={slide.image}
+              alt={slide.title}
+              style={{ height: '100%', width: '100%', objectFit: 'cover' }}
+            />
+          </SwiperSlide>
+        ))}
+      </SliderWrapper>
     </Box>
   );
 }
