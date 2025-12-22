@@ -6,15 +6,21 @@ import { Box } from '@mui/material';
 export default function BattleRoyalContainer() {
   const [searchParams] = useSearchParams();
 
-  const teamCapacity = searchParams.get('team_capacity') || 1;
+  const teamCapacity = searchParams.get('team_capacity')
+    ? parseInt(searchParams.get('team_capacity'))
+    : 1;
 
   return (
-    <Box>
+    <Box sx={{ width: '100%'   }}>
       {/* <BattleRoyalTeamsContainer /> */}
       {/* Solo mode */}
-      {/* {teamCapacity === 1 && <BattleRoyalTeamSideSoloContainer />} */}
+      {teamCapacity === 1 && <BattleRoyalTeamSideSoloContainer />}
 
-      {/* {teamCapacity > 1 && <BattleRoyalTeamsContainer />} */}
+      {/* Double mode */}
+      {/* TODO: Implement double mode */}
+
+      {/* Multi mode */}
+      {teamCapacity > 2 && <BattleRoyalTeamsContainer teamCapacity={teamCapacity} />}
     </Box>
   );
 }

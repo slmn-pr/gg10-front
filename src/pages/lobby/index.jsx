@@ -35,10 +35,12 @@ export default function LobbyPage() {
   const theme = useTheme();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const gameMode = useMemo(
-    () => searchParams.get('gameMode') || 'multiplayer',
-    [searchParams],
-  );
+  // const gameMode = useMemo(
+  //   () => searchParams.get('gameMode') || 'multiplayer',
+  //   [searchParams],
+  // );
+
+  const gameMode = 'battle-royal';
 
   const [activeFilter, setActiveFilter] = useState('lobby');
 
@@ -195,7 +197,7 @@ export default function LobbyPage() {
         </ButtonGroup>
       </Box>
 
-      <Box style={{ marginTop: '32px' }}>
+      <Box style={{ marginTop: '32px', width: '344px' }}>
         {/* TEAM SIDES (Multiplayer version) */}
         {gameMode === 'multiplayer' && (
           <MultiPLayerLayout
@@ -215,7 +217,7 @@ export default function LobbyPage() {
         )}
 
         {/* TEAM SIDE (Battle Royal version) */}
-        {gameMode === 'battle-royal' && <BattleRoyalContainer />}
+        {gameMode === 'battle-royal' && <BattleRoyalContainer  />}
       </Box>
 
       {/* <Typography variant="h1">This is lobby page</Typography> */}

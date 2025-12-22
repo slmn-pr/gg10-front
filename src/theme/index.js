@@ -111,6 +111,18 @@ const theme = createTheme({
       fontSize: '10px',
       lineHeight: '20px',
     },
+    eng_numbers_bold: {
+      fontFamily: `'Estedad-FD', sans-serif`,
+      fontWeight: 700,
+      fontSize: '18px',
+      lineHeight: '32px',
+    },
+    eng_numbers_regular: {
+      fontFamily: `'Estedad-FD', sans-serif`,
+      fontWeight: 400,
+      fontSize: '18px',
+      lineHeight: '32px',
+    },
   },
   palette: {
     mode: 'dark',
