@@ -2,6 +2,7 @@ import { useSearchParams } from 'react-router-dom';
 import BattleRoyalTeamSideSoloContainer from './BattleRoyalTeamSideSoloContainer';
 import BattleRoyalTeamsContainer from './BattleRoyalTeamsContainer';
 import { Box } from '@mui/material';
+import BattleRoyalTeamSideDoubleContainer from './BattleRoyalTeamSideDoubleContainer';
 
 export default function BattleRoyalContainer() {
   const [searchParams] = useSearchParams();
@@ -17,6 +18,7 @@ export default function BattleRoyalContainer() {
       {teamCapacity === 1 && <BattleRoyalTeamSideSoloContainer />}
 
       {/* Double mode */}
+      {teamCapacity === 2 && <BattleRoyalTeamSideDoubleContainer  />}
       {/* TODO: Implement double mode */}
 
       {/* Multi mode */}
