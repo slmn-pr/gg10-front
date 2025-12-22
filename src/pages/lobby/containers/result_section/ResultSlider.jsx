@@ -18,7 +18,13 @@ const sliderItems = [
       'https://wallpapers.com/images/high/4k-call-of-duty-mobile-soldiers-4itlo1m4y9ndmpko.webp',
     title: 'Item 2',
   },
-    ];
+  {
+    id: 3,
+    image:
+      'https://wallpapers.com/images/high/4k-call-of-duty-rubble-9ftcdlk5t7ltum5c.webp',
+    title: 'Item 3',
+  },
+];
 
 export default function ResultSlider() {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -41,11 +47,11 @@ export default function ResultSlider() {
       <Box>
         <SliderWrapper>
           {sliderItems.map((item, index) => (
-            <SwiperSlide key={item.id} style={{ height: '120px', borderRadius: '8px' }}>
+            <SwiperSlide key={item.id} style={{ height: '155px', borderRadius: '8px' }}>
               <Box
                 sx={{
                   position: 'relative',
-                  height: '120px',
+                  height: '155px',
                   overflow: 'hidden',
                   cursor: 'pointer',
                 }}
