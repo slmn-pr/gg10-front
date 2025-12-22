@@ -1,7 +1,7 @@
 import { Stack } from '@mui/material';
-import PlayerCard from '../components/PlayerCard';
-import PlayerEmptyCard from '../components/PlayerEmptyCard';
-import { MULTIPLAYER_TEAM_SLOTS } from '../_mock/multiplayer';
+import PlayerCard from '../../components/PlayerCard';
+import PlayerEmptyCard from '../../components/PlayerEmptyCard';
+import { MULTIPLAYER_TEAM_SLOTS } from '../../_mock/multiplayer';
 import { useMemo } from 'react';
 
 /** This container handle the multi player team side layout

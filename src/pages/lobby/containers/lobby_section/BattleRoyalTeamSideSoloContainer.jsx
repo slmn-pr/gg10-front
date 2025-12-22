@@ -1,6 +1,6 @@
 import { Box, Grid, Stack, Typography } from '@mui/material';
-import PlayerCard from '../components/PlayerCard';
-import PlayerEmptyCard from '../components/PlayerEmptyCard';
+import PlayerCard from '../../components/PlayerCard';
+import PlayerEmptyCard from '../../components/PlayerEmptyCard';
 
 const _mock = [
   {
@@ -47,13 +47,12 @@ const _mock = [
   },
 ];
 
-
 /**
  * THis component handle the battle royal team side layout for solo mode
  * Each team just have 1 player.
  * Grid the teams in rows of 4 records.
  * @param {Array} teams - The teams array.
- * 
+ *
  */
 export default function BattleRoyalTeamSideSoloContainer({ teams = _mock }) {
   return (
@@ -69,7 +68,6 @@ export default function BattleRoyalTeamSideSoloContainer({ teams = _mock }) {
       >
         {teams.map((team, index) => (
           <Box key={index} sx={{ position: 'relative' }}>
-
             {/* Shows the team index in english number */}
             <Typography
               variant="sub2"

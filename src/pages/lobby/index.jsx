@@ -10,19 +10,14 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import TimeIcon from '@/components/icons/lobbie/TimeIcon';
 import CapacityIcon from '@/components/icons/CapacityIcon';
 import StatusIcon from '@/components/icons/lobby/StatusIcon';
 import EntryFreeIcon from '@/components/icons/lobbie/EntryFreeIcon';
-import MultiPLayerLayout from './layout/MultiPLayerLayout';
-import { MULTIPLAYER_TEAM_SLOTS } from './_mock/multiplayer';
-import MultiplayerTeamSideContainer from './containers/MultiplayerTeamSideContainer';
 import { useSearchParams } from 'react-router-dom';
-import useMultiplayerTeamTypeTranslate from '@/hooks/lobby/useMultiplayerTEamTypeTranslate';
-import BattleRoyalTeamSideContainer from './containers/BattleRoyalTeamSideSoloContainer';
-import BattleRoyalContainer from './containers/BattleRoyalContainer';
-// import topImage from '@/assets/images/lobby/top-image.png';
+import LobbySection from './containers/lobby_section';
+import ResultsSection from './containers/result_section';
 
 const filterItems = [
   { key: 'results', label: 'نتایج' },
@@ -35,20 +30,12 @@ export default function LobbyPage() {
   const theme = useTheme();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // const gameMode = useMemo(
-  //   () => searchParams.get('gameMode') || 'multiplayer',
-  //   [searchParams],
-  // );
-
-  const gameMode = 'battle-royal';
-
   const [activeFilter, setActiveFilter] = useState('lobby');
 
-  const searchedTeamType = useMemo(
-    () => searchParams.get('team_type') || 1,
-    [searchParams],
-  );
-  const teamType = useMultiplayerTeamTypeTranslate(searchedTeamType);
+  useEffect(() => {
+    // clea all search params
+    setSearchParams({});
+  }, [activeFilter]);
 
   return (
     <Box
@@ -96,6 +83,7 @@ export default function LobbyPage() {
         </Stack>
       </Box>
 
+      {/* BUtton & lobby details section */}
       <Box sx={{ width: '344px', mx: 'auto' }}>
         {/* Button */}
         <Stack justifyContent="center">
@@ -197,30 +185,19 @@ export default function LobbyPage() {
         </ButtonGroup>
       </Box>
 
-      <Box style={{ marginTop: '32px', width: '344px' }}>
-        {/* TEAM SIDES (Multiplayer version) */}
-        {gameMode === 'multiplayer' && (
-          <MultiPLayerLayout
-            side1Slot={
-              <MultiplayerTeamSideContainer
-                teamType={teamType}
-                players={MULTIPLAYER_TEAM_SLOTS[teamType].players.team1}
-              />
-            }
-            side2Slot={
-              <MultiplayerTeamSideContainer
-                teamType={teamType}
-                players={MULTIPLAYER_TEAM_SLOTS[teamType].players.team2}
-              />
-            }
-          />
-        )}
+      <Box sx={{px: "16px"}}>
+        {/* LOBBY SECTION  */}
+        {activeFilter === 'lobby' && <LobbySection />}
 
-        {/* TEAM SIDE (Battle Royal version) */}
-        {gameMode === 'battle-royal' && <BattleRoyalContainer  />}
+        {/* RESULTS SECTION */}
+        {activeFilter === 'results' && <ResultsSection />}
+
+        {/* REWARDS SECTION */}
+        {/* {activeFilter === 'rewards' && <RewardsSection />} */}
+
+        {/* RULES SECTION */}
+        {/* {activeFilter === 'rules' && <RulesSection />} */}
       </Box>
-
-      {/* <Typography variant="h1">This is lobby page</Typography> */}
     </Box>
   );
 }

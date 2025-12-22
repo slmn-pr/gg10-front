@@ -1,7 +1,7 @@
 import { Box, Grid, Stack, Typography } from '@mui/material';
 import { useMemo } from 'react';
-import PlayerEmptyCard from '../components/PlayerEmptyCard';
-import { generateFakeBattleRoyalData } from '../_mock/battle_royal';
+import PlayerEmptyCard from '../../components/PlayerEmptyCard';
+import { generateFakeBattleRoyalData } from '../../_mock/battle_royal';
 
 export default function BattleRoyalTeamsContainer({ teamCapacity = 3 }) {
   const teamsMock = generateFakeBattleRoyalData(3, teamCapacity);

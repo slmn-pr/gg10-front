@@ -1,7 +1,7 @@
 import { Box, Stack, Typography } from '@mui/material';
-import PlayerEmptyCard from '../components/PlayerEmptyCard';
+import PlayerEmptyCard from '../../components/PlayerEmptyCard';
 import { useMemo } from 'react';
-import PlayerCard from '../components/PlayerCard';
+import PlayerCard from '../../components/PlayerCard';
 
 const _mock = [
   {
