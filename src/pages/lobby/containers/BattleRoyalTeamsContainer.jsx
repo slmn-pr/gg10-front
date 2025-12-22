@@ -7,7 +7,7 @@ const _mock = generateFakeBattleRoyalData(3, 2);
 
 export default function BattleRoyalTeamsContainer({ teamCapacity = 2, teams = _mock }) {
   // Slice the teams base on each team capacity
-  const teams = useMemo(() => {
+  const teamsCustom = useMemo(() => {
     return Array.from({ length: teamCapacity }, (_, index) => {
       return {
         label: `Team ${index + 1}`,
@@ -18,7 +18,7 @@ export default function BattleRoyalTeamsContainer({ teamCapacity = 2, teams = _m
 
   return (
     <Grid container spacing={2}>
-      {teams.map((team, index) => (
+      {teamsCustom.map((team, index) => (
         <Stack direction="row" spacing={2}>
           {/* <Typography variant="h6">{team.label}</Typography> */}
 
