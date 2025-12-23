@@ -85,7 +85,7 @@ export default function LobbyPage() {
       </Box>
 
       {/* BUtton & lobby details section */}
-      <Box sx={{ width: '344px', mx: 'auto' }}>
+      <Box sx={{ width: '100%', px: '16px' }}>
         {/* Button */}
         <Stack justifyContent="center">
           <Button

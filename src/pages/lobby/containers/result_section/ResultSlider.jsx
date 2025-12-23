@@ -60,10 +60,13 @@ export default function ResultSlider() {
 
   return (
     <>
-      <Box>
+      <Box sx={{ width: '344px' }}>
         <SliderWrapper>
           {sliderItems.map((item, index) => (
-            <SwiperSlide key={item.id} style={{ height: '155px', borderRadius: '8px' }}>
+            <SwiperSlide
+              key={item.id}
+              style={{ width: '10px', height: '155px', borderRadius: '8px' }}
+            >
               <Box
                 sx={{
                   position: 'relative',

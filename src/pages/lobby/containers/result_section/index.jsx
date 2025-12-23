@@ -46,7 +46,7 @@ export default function ResultsSection() {
       )}
 
       {content && (
-        <Stack spacing={2}>
+        <Stack spacing={2} sx={{zIndex: 1000}}>
           <Typography
             component="p"
             variant="title3"
