@@ -19,6 +19,7 @@ import { useSearchParams } from 'react-router-dom';
 import LobbySection from './containers/lobby_section';
 import ResultsSection from './containers/result_section';
 import RewardsSection from './containers/rewards_section';
+import RulesSection from './containers/rules_section';
 
 const filterItems = [
   { key: 'results', label: 'نتایج' },
@@ -31,7 +32,7 @@ export default function LobbyPage() {
   const theme = useTheme();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [activeFilter, setActiveFilter] = useState('lobby');
+  const [activeFilter, setActiveFilter] = useState('rules');
 
   // useEffect(() => {
   //   // clea all search params
@@ -186,7 +187,7 @@ export default function LobbyPage() {
         </ButtonGroup>
       </Box>
 
-      <Box>
+      <Box sx={{ width: '100%', px: '16px' }}>
         {/* LOBBY SECTION  */}
         {activeFilter === 'lobby' && <LobbySection />}
 
@@ -197,7 +198,7 @@ export default function LobbyPage() {
         {activeFilter === 'rewards' && <RewardsSection />}
 
         {/* RULES SECTION */}
-        {/* {activeFilter === 'rules' && <RulesSection />} */}
+        {activeFilter === 'rules' && <RulesSection />}
       </Box>
     </Box>
   );
