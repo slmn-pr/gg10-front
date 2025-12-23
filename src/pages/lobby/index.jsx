@@ -2,10 +2,12 @@ import CustomProgressBar from '@/components/CustomProgressBar';
 import ChevronForwardIcon from '@/components/icons/ChevronForward';
 import ShareIcon from '@/components/icons/ShareIcon';
 import {
+  Alert,
   Box,
   Button,
   ButtonGroup,
   IconButton,
+  Snackbar,
   Stack,
   Typography,
   useTheme,
@@ -31,13 +33,33 @@ const filterItems = [
 export default function LobbyPage() {
   const theme = useTheme();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const [activeFilter, setActiveFilter] = useState('rules');
+
+  const lobbyData = {
+    link: 'https://www.google.com',
+    name: 'Lobby name',
+    time: 'امشب 23:30',
+    entryFee: '100,000 تومان',
+    capacity: '30/40',
+    progress: 85,
+    status: 'در حال برگزاری',
+    gameMode: 'جایگاهی',
+    teamType: '4 نفره',
+    teamCapacity: 4,
+  };
 
   // useEffect(() => {
   //   // clea all search params
   //   setSearchParams({});
   // }, [activeFilter]);
+
+  // when called copy lobby link in clipboard and show success mui snackbar
+  const handleShare = () => {
+    navigator.clipboard.writeText(lobbyData.link);
+    setSnackbarOpen(true);
+  };
 
   return (
     <Box
@@ -79,7 +101,8 @@ export default function LobbyPage() {
             </Typography>
           </Stack>
 
-          <IconButton>
+          {/* Share button */}
+          <IconButton onClick={handleShare}>
             <ShareIcon color={theme.palette.custom.iconsWhite} />
           </IconButton>
         </Stack>
@@ -200,6 +223,29 @@ export default function LobbyPage() {
         {/* RULES SECTION */}
         {activeFilter === 'rules' && <RulesSection />}
       </Box>
+
+      <Snackbar
+        color="success"
+        open={snackbarOpen}
+        autoHideDuration={3_000} // 3 seconds
+        onClose={() => setSnackbarOpen(false)}
+        sx={
+          {
+            // width: '100%',
+          }
+        }
+      >
+        <Alert
+          variant="filled"
+          color="success"
+          sx={{ direction: 'rtl', width: '100%' }}
+          icon={false}
+        >
+          <Typography variant="sub1" color="custom.white">
+            لینک لابی کپی شد
+          </Typography>
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }
