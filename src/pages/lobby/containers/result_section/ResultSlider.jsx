@@ -4,6 +4,8 @@ import { SwiperSlide } from 'swiper/react';
 import { useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import CloseIcon from '@/components/icons/general/CloseIcon';
+import ChevronForwardIcon from '@/components/icons/ChevronForward';
+import ChevronBackward from '@/components/icons/ChevronBackward';
 
 const sliderItems = [
   {
@@ -40,7 +42,21 @@ export default function ResultSlider() {
     setSelectedImageIndex(index);
   };
 
+  const handleNext = () => {
+    if (selectedImageIndex < sliderItems.length - 1) {
+      setSelectedImageIndex(selectedImageIndex + 1);
+    }
+  };
+
+  const handlePrev = () => {
+    if (selectedImageIndex > 0) {
+      setSelectedImageIndex(selectedImageIndex - 1);
+    }
+  };
+
   const selectedImage = sliderItems[selectedImageIndex];
+  const canGoNext = selectedImageIndex < sliderItems.length - 1;
+  const canGoPrev = selectedImageIndex > 0;
 
   return (
     <>
@@ -88,7 +104,7 @@ export default function ResultSlider() {
             maxWidth: 'sm',
             width: '100%',
             mx: 'auto',
-            mb: 6,
+            // mb: 6,
             height: 'auto',
             maxHeight: '90vh',
             borderTopLeftRadius: 8,
@@ -120,7 +136,7 @@ export default function ResultSlider() {
             <IconButton onClick={() => setDrawerOpen(false)}>
               <CloseIcon />
             </IconButton>
-            <Typography variant="h6">تصاویر</Typography>
+            {/* <Typography variant="h6">تصاویر</Typography> */}
             <Box sx={{ width: 40 }} /> {/* Spacer for centering */}
           </Stack>
 
@@ -132,23 +148,105 @@ export default function ResultSlider() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              px: 2,
-              py: 2,
+              // px: 0.5,
+              // py: 2,
               minHeight: 0,
+              position: 'relative',
             }}
           >
             {selectedImage && (
-              <img
-                src={selectedImage.image}
-                alt={selectedImage.title}
-                style={{
-                  width: '100%',
-                  height: 'auto',
-                  maxHeight: '60vh',
-                  objectFit: 'contain',
-                  borderRadius: '8px',
-                }}
-              />
+              <>
+                <Box sx={{ position: 'relative', width: '100%' }}>
+                  {/* Selected Image */}
+                  <Box sx={{ position: 'relative' }}>
+                    <img
+                      src={selectedImage.image}
+                      alt={selectedImage.title}
+                      style={{
+                        width: '100%',
+                        height: 'auto',
+                        maxHeight: '60vh',
+                        objectFit: 'contain',
+                        borderRadius: '8px',
+                      }}
+                    />
+
+                    {/* Navigate Buttons */}
+                    <Stack
+                      direction="row"
+                      spacing={1}
+                      justifyContent="space-between"
+                      alignItems="center"
+                      sx={{
+                        width: '100%',
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        zIndex: 10,
+                      }}
+                    >
+                      {/* Previous Button */}
+                      <IconButton
+                        onClick={handlePrev}
+                        sx={{
+                          borderRadius: '4px',
+                          padding: '0',
+                          backgroundColor: theme.palette.custom.gray1,
+                          hover: {
+                            backgroundColor: theme.palette.custom.gray1,
+                          },
+                          ':focus': {
+                            backgroundColor: theme.palette.custom.gray1,
+                          },
+                        }}
+                      >
+                        <ChevronBackward color="black" />
+                      </IconButton>
+
+                      {/* Next Button */}
+                      <IconButton
+                        onClick={handleNext}
+                        sx={{
+                          borderRadius: '4px',
+                          padding: '0',
+                          backgroundColor: theme.palette.custom.gray1,
+                          hover: {
+                            backgroundColor: theme.palette.custom.gray1,
+                          },
+                          ':focus': {
+                            backgroundColor: theme.palette.custom.gray1,
+                          },
+                        }}
+                      >
+                        <ChevronForwardIcon color="black" />
+                      </IconButton>
+                    </Stack>
+                  </Box>
+
+                  {/* Counter Label */}
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      px: 1.5,
+                      py: 0.5,
+                    }}
+                  >
+                    <Typography
+                      variant="caption2"
+                      sx={{
+                        color: 'white',
+                        direction: 'rtl',
+                      }}
+                    >
+                      {sliderItems.length} / {selectedImageIndex + 1}
+                    </Typography>
+                  </Box>
+                </Box>
+              </>
             )}
           </Box>
 
