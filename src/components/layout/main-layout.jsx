@@ -56,7 +56,6 @@ const MainLayout = () => {
           <Box component="main" sx={{ flexGrow: 1, pb: 8, px: 0 }}>
             <Outlet />
           </Box>
-          <BottomNav />
         </Container>
       </Box>
     </ThemeProvider>

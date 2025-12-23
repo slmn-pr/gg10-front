@@ -1,15 +1,6 @@
 import { useMemo } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import {
-  Box,
-  Paper,
-  IconButton,
-  Typography,
-  useTheme,
-  alpha,
-  Button,
-  Stack,
-} from '@mui/material';
+import { useLocation } from 'react-router-dom';
+import { Box, Paper, Typography, useTheme, alpha, Stack } from '@mui/material';
 
 import HomeIcon from '../icons/navigation/HomeIcon';
 import MissionsIcon from '../icons/navigation/MissionsIcon';
@@ -18,57 +9,11 @@ import LeaderBoard from '../icons/navigation/LeaderBoard';
 import WalletIcon from '../icons/navigation/WalletIcon';
 import BottomNavigationItem from './BottomNavigationItem';
 
-const MDBottomNavigation = () => {
-  const navigate = useNavigate();
+const BottomNav = () => {
   const location = useLocation();
   const theme = useTheme();
 
   const activePath = useMemo(() => location.pathname, [location.pathname]);
-
-  const navItems = [
-    {
-      label: 'کیف پول',
-      icon: (active) => (
-        <WalletIcon
-          color={active ? theme.palette.primary.main : theme.palette.custom.iconsWhite}
-        />
-      ),
-      path: '/wallet',
-    },
-    {
-      label: 'لیدربرد',
-      icon: (active) => (
-        <LeaderBoard
-          color={active ? theme.palette.primary.main : theme.palette.custom.iconsWhite}
-        />
-      ),
-      path: '/leaderboard',
-    },
-    {
-      label: '',
-      isMain: true,
-      icon: () => <HomeIcon color={theme.palette.custom.whiteOnBg1} />,
-      path: '/home',
-    },
-    {
-      label: 'مأموریت‌ها',
-      icon: (active) => (
-        <MissionsIcon
-          color={active ? theme.palette.primary.main : theme.palette.custom.iconsWhite}
-        />
-      ),
-      path: '/missions',
-    },
-    {
-      label: 'حساب کاربری',
-      icon: (active) => (
-        <AccountIcon
-          color={active ? theme.palette.primary.main : theme.palette.custom.iconsWhite}
-        />
-      ),
-      path: '/user/profile',
-    },
-  ];
 
   return (
     <Paper
@@ -217,4 +162,4 @@ const MDBottomNavigation = () => {
   );
 };
 
-export default MDBottomNavigation;
+export default BottomNav;

@@ -17,6 +17,7 @@ import HomeFilters from './containers/HomeFilters/index.jsx';
 import ChevronUpIcon from '@/components/icons/ChevronUp.jsx';
 import LobbyCardHeader from './components/LobbyCardHeader.jsx';
 import { useTheme } from '@mui/material';
+import BottomNav from '@/components/layout/bottom-navigation.jsx';
 
 const SvgIcon = ({ src, sx, ...props }) => (
   <Box
@@ -288,6 +289,8 @@ const HomePage = () => {
           </AccordionDetails>
         </Accordion>
       </Stack>
+
+      <BottomNav />
     </Stack>
   );
 };
