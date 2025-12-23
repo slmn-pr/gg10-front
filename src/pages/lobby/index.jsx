@@ -18,6 +18,7 @@ import EntryFreeIcon from '@/components/icons/lobbie/EntryFreeIcon';
 import { useSearchParams } from 'react-router-dom';
 import LobbySection from './containers/lobby_section';
 import ResultsSection from './containers/result_section';
+import RewardsSection from './containers/rewards_section';
 
 const filterItems = [
   { key: 'results', label: 'نتایج' },
@@ -32,10 +33,10 @@ export default function LobbyPage() {
 
   const [activeFilter, setActiveFilter] = useState('lobby');
 
-  useEffect(() => {
-    // clea all search params
-    setSearchParams({});
-  }, [activeFilter]);
+  // useEffect(() => {
+  //   // clea all search params
+  //   setSearchParams({});
+  // }, [activeFilter]);
 
   return (
     <Box
@@ -185,7 +186,7 @@ export default function LobbyPage() {
         </ButtonGroup>
       </Box>
 
-      <Box sx={{ width: '344px' }}>
+      <Box>
         {/* LOBBY SECTION  */}
         {activeFilter === 'lobby' && <LobbySection />}
 
@@ -193,7 +194,7 @@ export default function LobbyPage() {
         {activeFilter === 'results' && <ResultsSection />}
 
         {/* REWARDS SECTION */}
-        {/* {activeFilter === 'rewards' && <RewardsSection />} */}
+        {activeFilter === 'rewards' && <RewardsSection />}
 
         {/* RULES SECTION */}
         {/* {activeFilter === 'rules' && <RulesSection />} */}

@@ -221,6 +221,12 @@ const theme = createTheme({
       primaryBg: '#131313',
       secondaryBg: '#212121',
       tertiaryBackground: '#ffffff',
+
+      // ranks
+      legend: '#66D4E5',
+      gold: '#9A7D26',
+      silver: '#C0C0C0',
+      bronze: '#A97142',
     },
 
     stroke: {
