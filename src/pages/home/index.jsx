@@ -83,7 +83,7 @@ const HomePage = () => {
 
       <Stack
         bgcolor="custom.black"
-        px={2}
+        // px={2}
         borderRadius={1}
         spacing={1}
         sx={{ width: '100%' }}
@@ -97,11 +97,12 @@ const HomePage = () => {
             top: 56,
             zIndex: 999,
             pt: 1,
+            // px: 2,
             width: '100%',
           }}
         >
           {/* Game Mode */}
-          <Box mb={1}>
+          <Box mb={1} px={2}>
             <GameModeSelector />
           </Box>
 
@@ -111,183 +112,185 @@ const HomePage = () => {
           </Box>
         </Box>
 
-        {/* My Lobbies Accordion */}
-        <Accordion
-          expanded={myLobbiesExpanded}
-          onChange={(e, expanded) => setMyLobbiesExpanded(expanded)}
-          sx={{
-            bgcolor: 'transparent',
-            boxShadow: 'none',
-            '&:before': { display: 'none' },
-            '&.Mui-expanded': { margin: 0 },
-            '& .MuiAccordionDetails-root': {
-              px: 0,
-              pb: 0,
-            },
-            '& .MuiAccordionSummary-root': {
-              minHeight: 'auto',
-              px: 0,
-              py: 1,
-              bgcolor: theme.palette.custom.bg1,
-              position: 'sticky',
-              top: 56 + stickyHeaderHeight,
-              zIndex: 998,
-              '&.Mui-expanded': {
-                minHeight: 'auto',
-              },
-            },
-          }}
-        >
-          <AccordionSummary
-            expandIcon={false}
+        <Box>
+          {/* My Lobbies Accordion */}
+          <Accordion
+            expanded={myLobbiesExpanded}
+            onChange={(e, expanded) => setMyLobbiesExpanded(expanded)}
             sx={{
-              '& .MuiAccordionSummary-content': {
-                margin: 0,
+              bgcolor: 'transparent',
+              boxShadow: 'none',
+              '&:before': { display: 'none' },
+              '&.Mui-expanded': { margin: 0 },
+              '& .MuiAccordionDetails-root': {
+                px: 0,
+                pb: 0,
+              },
+              '& .MuiAccordionSummary-root': {
+                minHeight: 'auto',
+                px: 0,
+                py: 1,
+                bgcolor: theme.palette.custom.bg1,
+                position: 'sticky',
+                top: 56 + stickyHeaderHeight,
+                zIndex: 998,
                 '&.Mui-expanded': {
-                  margin: 0,
+                  minHeight: 'auto',
                 },
               },
             }}
           >
-            <LobbyCardHeader
-              name="لابی های شما"
-              title="4 لابی"
-              expandIcon={
-                <IconButton
-                  size="small"
-                  sx={{
-                    color: 'text.secondary',
-                    transform: myLobbiesExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
-                    transition: 'transform 0.3s ease',
-                  }}
-                >
-                  <ChevronUpIcon />
-                </IconButton>
-              }
-            />
-          </AccordionSummary>
-          <AccordionDetails>
-            <Stack spacing={2}>
-              <LobbyCard
-                title="آیزولیتد ۴۰ نفره جایگاهی"
-                status="در حال ثبت نام"
-                entryFee="۱۰۰,۰۰۰ تومن"
-                prize="۱۰,۰۰۰,۰۰۰ تومن"
-                currentPlayers={30}
-                maxPlayers={40}
-                isRegistered={true}
-                isVip={true}
+            <AccordionSummary
+              expandIcon={false}
+              sx={{
+                '& .MuiAccordionSummary-content': {
+                  margin: 0,
+                  '&.Mui-expanded': {
+                    margin: 0,
+                  },
+                },
+              }}
+            >
+              <LobbyCardHeader
+                name="لابی های شما"
+                title="4 لابی"
+                expandIcon={
+                  <IconButton
+                    size="small"
+                    sx={{
+                      color: 'text.secondary',
+                      transform: myLobbiesExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
+                      transition: 'transform 0.3s ease',
+                    }}
+                  >
+                    <ChevronUpIcon />
+                  </IconButton>
+                }
               />
-              <LobbyCard
-                title="آیزولیتد ۴۰ نفره جایگاهی"
-                status="تکمیل ظرفیت"
-                entryFee="۱۰۰,۰۰۰ تومن"
-                prize="۱۰,۰۰۰,۰۰۰ تومن"
-                currentPlayers={40}
-                maxPlayers={40}
-                isFull={true}
-                isVip={false}
-              />
-            </Stack>
-          </AccordionDetails>
-        </Accordion>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Stack spacing={2}>
+                <LobbyCard
+                  title="آیزولیتد ۴۰ نفره جایگاهی"
+                  status="در حال ثبت نام"
+                  entryFee="۱۰۰,۰۰۰ تومن"
+                  prize="۱۰,۰۰۰,۰۰۰ تومن"
+                  currentPlayers={30}
+                  maxPlayers={40}
+                  isRegistered={true}
+                  isVip={true}
+                />
+                <LobbyCard
+                  title="آیزولیتد ۴۰ نفره جایگاهی"
+                  status="تکمیل ظرفیت"
+                  entryFee="۱۰۰,۰۰۰ تومن"
+                  prize="۱۰,۰۰۰,۰۰۰ تومن"
+                  currentPlayers={40}
+                  maxPlayers={40}
+                  isFull={true}
+                  isVip={false}
+                />
+              </Stack>
+            </AccordionDetails>
+          </Accordion>
 
-        {/* All Lobbies Accordion */}
-        <Accordion
-          expanded={allLobbiesExpanded}
-          onChange={(e, expanded) => setAllLobbiesExpanded(expanded)}
-          sx={{
-            bgcolor: 'transparent',
-            boxShadow: 'none',
-            '&:before': { display: 'none' },
-            '&.Mui-expanded': { margin: 0 },
-            '& .MuiAccordionDetails-root': {
-              px: 0,
-              pb: 0,
-            },
-            '& .MuiAccordionSummary-root': {
-              minHeight: 'auto',
-              px: 0,
-              py: 1,
-              bgcolor: theme.palette.custom.bg1,
-              position: 'sticky',
-              top: 56 + stickyHeaderHeight,
-              zIndex: 998,
-              '&.Mui-expanded': {
-                minHeight: 'auto',
-              },
-            },
-          }}
-        >
-          <AccordionSummary
-            expandIcon={false}
+          {/* All Lobbies Accordion */}
+          <Accordion
+            expanded={allLobbiesExpanded}
+            onChange={(e, expanded) => setAllLobbiesExpanded(expanded)}
             sx={{
-              '& .MuiAccordionSummary-content': {
-                margin: 0,
+              bgcolor: 'transparent',
+              boxShadow: 'none',
+              '&:before': { display: 'none' },
+              '&.Mui-expanded': { margin: 0 },
+              '& .MuiAccordionDetails-root': {
+                px: 0,
+                pb: 0,
+              },
+              '& .MuiAccordionSummary-root': {
+                minHeight: 'auto',
+                px: 0,
+                py: 1,
+                bgcolor: theme.palette.custom.bg1,
+                position: 'sticky',
+                top: 56 + stickyHeaderHeight,
+                zIndex: 998,
                 '&.Mui-expanded': {
-                  margin: 0,
+                  minHeight: 'auto',
                 },
               },
             }}
           >
-            <LobbyCardHeader
-              name="فهرست همه لابی‌ها"
-              title="۴ لابی"
-              expandIcon={
-                <IconButton
-                  size="small"
-                  sx={{
-                    color: 'text.secondary',
-                    transform: allLobbiesExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
-                    transition: 'transform 0.3s ease',
-                  }}
-                >
-                  <ChevronUpIcon />
-                </IconButton>
-              }
-            />
-          </AccordionSummary>
-          <AccordionDetails>
-            <Stack spacing={2}>
-              <LobbyCard
-                title="آیزولیتد ۴۰ نفره جایگاهی"
-                status="در حال برگزاری"
-                entryFee="۱۰۰,۰۰۰ تومن"
-                prize="۱۰,۰۰۰,۰۰۰ تومن"
-                currentPlayers={30}
-                maxPlayers={40}
-                isVip={true}
+            <AccordionSummary
+              expandIcon={false}
+              sx={{
+                '& .MuiAccordionSummary-content': {
+                  margin: 0,
+                  '&.Mui-expanded': {
+                    margin: 0,
+                  },
+                },
+              }}
+            >
+              <LobbyCardHeader
+                name="فهرست همه لابی‌ها"
+                title="۴ لابی"
+                expandIcon={
+                  <IconButton
+                    size="small"
+                    sx={{
+                      color: 'text.secondary',
+                      transform: allLobbiesExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
+                      transition: 'transform 0.3s ease',
+                    }}
+                  >
+                    <ChevronUpIcon />
+                  </IconButton>
+                }
               />
-              <LobbyCard
-                title="آیزولیتد ۴۰ نفره جایگاهی"
-                status="در حال برگزاری"
-                entryFee="۱۰۰,۰۰۰ تومن"
-                prize="۱۰,۰۰۰,۰۰۰ تومن"
-                currentPlayers={35}
-                maxPlayers={40}
-                isVip={false}
-              />
-              <LobbyCard
-                title="آیزولیتد ۴۰ نفره جایگاهی"
-                status="در حال برگزاری"
-                entryFee="۱۰۰,۰۰۰ تومن"
-                prize="۱۰,۰۰۰,۰۰۰ تومن"
-                currentPlayers={38}
-                maxPlayers={40}
-                isVip={false}
-              />
-              <LobbyCard
-                title="آیزولیتد ۴۰ نفره جایگاهی"
-                status="در حال برگزاری"
-                entryFee="۱۰۰,۰۰۰ تومن"
-                prize="۱۰,۰۰۰,۰۰۰ تومن"
-                currentPlayers={25}
-                maxPlayers={40}
-                isVip={true}
-              />
-            </Stack>
-          </AccordionDetails>
-        </Accordion>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Stack spacing={2}>
+                <LobbyCard
+                  title="آیزولیتد ۴۰ نفره جایگاهی"
+                  status="در حال برگزاری"
+                  entryFee="۱۰۰,۰۰۰ تومن"
+                  prize="۱۰,۰۰۰,۰۰۰ تومن"
+                  currentPlayers={30}
+                  maxPlayers={40}
+                  isVip={true}
+                />
+                <LobbyCard
+                  title="آیزولیتد ۴۰ نفره جایگاهی"
+                  status="در حال برگزاری"
+                  entryFee="۱۰۰,۰۰۰ تومن"
+                  prize="۱۰,۰۰۰,۰۰۰ تومن"
+                  currentPlayers={35}
+                  maxPlayers={40}
+                  isVip={false}
+                />
+                <LobbyCard
+                  title="آیزولیتد ۴۰ نفره جایگاهی"
+                  status="در حال برگزاری"
+                  entryFee="۱۰۰,۰۰۰ تومن"
+                  prize="۱۰,۰۰۰,۰۰۰ تومن"
+                  currentPlayers={38}
+                  maxPlayers={40}
+                  isVip={false}
+                />
+                <LobbyCard
+                  title="آیزولیتد ۴۰ نفره جایگاهی"
+                  status="در حال برگزاری"
+                  entryFee="۱۰۰,۰۰۰ تومن"
+                  prize="۱۰,۰۰۰,۰۰۰ تومن"
+                  currentPlayers={25}
+                  maxPlayers={40}
+                  isVip={true}
+                />
+              </Stack>
+            </AccordionDetails>
+          </Accordion>
+        </Box>
       </Stack>
 
       <BottomNav />

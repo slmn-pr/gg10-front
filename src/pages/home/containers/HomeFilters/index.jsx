@@ -279,7 +279,7 @@ export default function HomeFilters() {
         ref={containerRef}
         sx={{
           direction: 'rtl',
-          mb: 3,
+          // mb: 3,
           pb: 1,
           overflowX: 'auto',
           overflowY: 'hidden',
