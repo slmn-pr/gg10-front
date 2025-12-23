@@ -12,12 +12,11 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import { useEffect, useMemo, useState } from 'react';
+import { useState } from 'react';
 import TimeIcon from '@/components/icons/lobbie/TimeIcon';
 import CapacityIcon from '@/components/icons/CapacityIcon';
 import StatusIcon from '@/components/icons/lobby/StatusIcon';
 import EntryFreeIcon from '@/components/icons/lobbie/EntryFreeIcon';
-import { useSearchParams } from 'react-router-dom';
 import LobbySection from './containers/lobby_section';
 import ResultsSection from './containers/result_section';
 import RewardsSection from './containers/rewards_section';
@@ -32,9 +31,7 @@ const filterItems = [
 
 export default function LobbyPage() {
   const theme = useTheme();
-  const [searchParams, setSearchParams] = useSearchParams();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-
   const [activeFilter, setActiveFilter] = useState('rules');
 
   const lobbyData = {
