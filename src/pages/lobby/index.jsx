@@ -13,7 +13,7 @@ import {
   useTheme,
 } from '@mui/material';
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import TimeIcon from '@/components/icons/lobbie/TimeIcon';
 import CapacityIcon from '@/components/icons/CapacityIcon';
 import StatusIcon from '@/components/icons/lobby/StatusIcon';
@@ -33,11 +33,12 @@ const filterItems = [
 
 export default function LobbyPage() {
   const theme = useTheme();
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   // Get filter from search params, default to 'rules'
-  const activeFilter = searchParams.get('filter') || 'rules';
+  const activeFilter = searchParams.get('filter') || 'lobby';
 
   // Get lobbyId from search params
   const lobbyId = searchParams.get('lobbyId');
@@ -119,7 +120,7 @@ export default function LobbyPage() {
           }}
         >
           <Stack direction="row" alignItems="center">
-            <IconButton sx={{ marginInlineEnd: 0.5 }}>
+            <IconButton sx={{ marginInlineEnd: 0.5 }} onClick={() => navigate('/home')}>
               <ChevronForwardIcon color={theme.palette.custom.iconsWhite} />
             </IconButton>
 
