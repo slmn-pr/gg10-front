@@ -23,6 +23,8 @@ import ResultsSection from './containers/result_section';
 import RewardsSection from './containers/rewards_section';
 import RulesSection from './containers/rules_section';
 import { getLobbyById } from '@/pages/home/_mock.js';
+import { LobbyProvider, useLobby } from './contexts/LobbyContext';
+import { LOBBY_STATUS, LOBBY_STATUS_TEXT } from './constants/lobbyStatus';
 
 const filterItems = [
   { key: 'results', label: 'نتایج' },
@@ -31,52 +33,15 @@ const filterItems = [
   { key: 'lobby', label: 'لابی' },
 ];
 
-export default function LobbyPage() {
+function LobbyPageContent() {
   const theme = useTheme();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const { lobbyData } = useLobby();
 
   // Get filter from search params, default to 'rules'
   const activeFilter = searchParams.get('filter') || 'lobby';
-
-  // Get lobbyId from search params
-  const lobbyId = searchParams.get('lobbyId');
-
-  // Load lobby data based on ID
-  const [lobbyData, setLobbyData] = useState({
-    link: 'https://www.google.com',
-    name: 'آیزولیتد 40 نفره جایگاهی',
-    time: 'امشب 23:30',
-    entryFee: '100,000 تومان',
-    capacity: '30/40',
-    progress: 85,
-    status: 'در حال برگزاری',
-    gameMode: 'جایگاهی',
-    teamType: '4 نفره',
-    teamCapacity: 4,
-  });
-
-  // Load lobby data when lobbyId changes
-  useEffect(() => {
-    if (lobbyId) {
-      const loadedLobby = getLobbyById(lobbyId);
-      if (loadedLobby) {
-        setLobbyData({
-          link: loadedLobby.link,
-          name: loadedLobby.title,
-          time: loadedLobby.time,
-          entryFee: loadedLobby.entryFee,
-          capacity: loadedLobby.capacity,
-          progress: loadedLobby.progress,
-          status: loadedLobby.status,
-          gameMode: loadedLobby.gameMode,
-          teamType: loadedLobby.teamType,
-          teamCapacity: loadedLobby.teamCapacity,
-        });
-      }
-    }
-  }, [lobbyId]);
 
   // useEffect(() => {
   //   // clea all search params
@@ -279,5 +244,51 @@ export default function LobbyPage() {
         </Alert>
       </Snackbar>
     </Box>
+  );
+}
+
+export default function LobbyPage() {
+  const [searchParams] = useSearchParams();
+  const lobbyId = searchParams.get('lobbyId');
+
+  // Load lobby data based on ID
+  const [lobbyData, setLobbyData] = useState({
+    link: 'https://www.google.com',
+    name: 'آیزولیتد 40 نفره جایگاهی',
+    time: 'امشب 23:30',
+    entryFee: '100,000 تومان',
+    capacity: '30/40',
+    progress: 85,
+    status: LOBBY_STATUS_TEXT[LOBBY_STATUS.IN_PROGRESS],
+    gameMode: 'جایگاهی',
+    teamType: '4 نفره',
+    teamCapacity: 4,
+  });
+
+  // Load lobby data when lobbyId changes
+  useEffect(() => {
+    if (lobbyId) {
+      const loadedLobby = getLobbyById(lobbyId);
+      if (loadedLobby) {
+        setLobbyData({
+          link: loadedLobby.link,
+          name: loadedLobby.title,
+          time: loadedLobby.time,
+          entryFee: loadedLobby.entryFee,
+          capacity: loadedLobby.capacity,
+          progress: loadedLobby.progress,
+          status: loadedLobby.status,
+          gameMode: loadedLobby.gameMode,
+          teamType: loadedLobby.teamType,
+          teamCapacity: loadedLobby.teamCapacity,
+        });
+      }
+    }
+  }, [lobbyId]);
+
+  return (
+    <LobbyProvider key={lobbyId || 'default'} initialLobbyData={lobbyData}>
+      <LobbyPageContent />
+    </LobbyProvider>
   );
 }

@@ -13,6 +13,7 @@ export default function ErrorSnakBar({
   open = false,
   message,
   actionText = 'تلاش مجدد',
+  bottom = '16px',
   onAction = () => {},
   onClose = () => {},
 }) {
@@ -22,14 +23,14 @@ export default function ErrorSnakBar({
       open={open}
       // autoHideDuration={3_000}
       onClose={onClose}
-      sx={{ 
-        "&.MuiSnackbar-root ":{
-          bottom: '130px',
+      sx={{
+        '&.MuiSnackbar-root ': {
+          bottom: bottom,
           maxWidth: '344px',
           width: '100%',
           left: '50%',
           transform: 'translateX(-50%)',
-        }
+        },
       }}
       anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
     >

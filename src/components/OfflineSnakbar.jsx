@@ -14,6 +14,7 @@ export default function OfflineSnakbar() {
 
   return (
     <ErrorSnakBar
+      bottom="130px"
       open={isOpen}
       message="اتصال خود به اینترنت را بررسی و مجددا تلاش کنید."
       actionText="تلاش مجدد"
