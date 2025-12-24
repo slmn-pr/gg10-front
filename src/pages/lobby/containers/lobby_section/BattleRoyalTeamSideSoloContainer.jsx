@@ -56,7 +56,7 @@ const _mock = [
  */
 export default function BattleRoyalTeamSideSoloContainer({ teams = _mock }) {
   return (
-    <Box sx={{ width: '343px' }}>
+    <Box>
       <Stack
         // spacing="14px"
         columnGap="14px"

@@ -7,7 +7,7 @@ export default function MultiPLayerLayout({
   vsIconSlot = <LobbyVsIcon />,
 }) {
   return (
-    <Box>
+    <Box sx={{ width: '100%' }}>
       {/* Side 1 */}
       {side1Slot}
 

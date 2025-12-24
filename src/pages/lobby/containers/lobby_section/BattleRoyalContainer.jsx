@@ -12,13 +12,13 @@ export default function BattleRoyalContainer() {
     : 1;
 
   return (
-    <Box sx={{ width: '100%'   }}>
+    <Box sx={{ width: '100%' }}>
       {/* <BattleRoyalTeamsContainer /> */}
       {/* Solo mode */}
       {teamCapacity === 1 && <BattleRoyalTeamSideSoloContainer />}
 
       {/* Double mode */}
-      {teamCapacity === 2 && <BattleRoyalTeamSideDoubleContainer  />}
+      {teamCapacity === 2 && <BattleRoyalTeamSideDoubleContainer />}
       {/* TODO: Implement double mode */}
 
       {/* Multi mode */}

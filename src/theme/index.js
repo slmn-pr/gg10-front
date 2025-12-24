@@ -348,11 +348,24 @@ const theme = createTheme({
     },
 
     MuiSnackbar: {
+      defaultProps: {
+        anchorOrigin: {
+          vertical: 'bottom',
+          horizontal: 'center',
+        },
+      },
       styleOverrides: {
         root: {
           // direction: 'rtl',
           px: '16px',
           py: '6px',
+          width: '345px !important',
+          left: '50% !important',
+          right: 'auto !important',
+          bottom: '16px',
+          transform: 'translateX(-50%) !important',
+          marginLeft: '0 !important',
+          marginRight: '0 !important',
         },
       },
     },
@@ -364,8 +377,8 @@ const theme = createTheme({
       styleOverrides: {
         root: ({ theme }) => ({
           backgroundColor: theme.palette.custom.black,
-          paddingLeft: "16px",
-          paddingRight: "16px",
+          paddingLeft: '16px',
+          paddingRight: '16px',
           boxShadow: 'none',
           '&:before': { display: 'none' },
           '&.Mui-expanded': { margin: 0 },

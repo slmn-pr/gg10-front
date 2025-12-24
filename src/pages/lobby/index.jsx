@@ -235,7 +235,7 @@ export default function LobbyPage() {
         <Alert
           variant="filled"
           color="success"
-          sx={{ direction: 'rtl', width: '100%' }}
+          sx={{ direction: 'rtl', width: '345px' }}
           icon={false}
         >
           <Typography variant="sub1" color="custom.white">

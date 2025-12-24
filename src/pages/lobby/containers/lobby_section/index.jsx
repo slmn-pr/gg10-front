@@ -23,7 +23,7 @@ export default function LobbySection() {
   const teamType = useMultiplayerTeamTypeTranslate(searchedTeamType);
 
   return (
-    <Box style={{ marginTop: '32px', width: '344px' }}>
+    <Box style={{ marginTop: '32px', width: '100%' }}>
       {/* TEAM SIDES (Multiplayer version) */}
       {gameMode === 'multiplayer' && (
         <MultiPLayerLayout
