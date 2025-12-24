@@ -18,6 +18,7 @@ import ChevronUpIcon from '@/components/icons/ChevronUp.jsx';
 import LobbyCardHeader from './components/LobbyCardHeader.jsx';
 import { useTheme } from '@mui/material';
 import BottomNav from '@/components/layout/bottom-navigation.jsx';
+import { myLobbiesMockData, allLobbiesMockData } from './_mock.js';
 
 const SvgIcon = ({ src, sx, ...props }) => (
   <Box
@@ -153,7 +154,7 @@ const HomePage = () => {
             >
               <LobbyCardHeader
                 name="لابی های شما"
-                title="4 لابی"
+                title={`${myLobbiesMockData.length} لابی`}
                 expandIcon={
                   <IconButton
                     size="small"
@@ -170,26 +171,9 @@ const HomePage = () => {
             </AccordionSummary>
             <AccordionDetails>
               <Stack spacing={2}>
-                <LobbyCard
-                  title="آیزولیتد ۴۰ نفره جایگاهی"
-                  status="در حال ثبت نام"
-                  entryFee="۱۰۰,۰۰۰ تومن"
-                  prize="۱۰,۰۰۰,۰۰۰ تومن"
-                  currentPlayers={30}
-                  maxPlayers={40}
-                  isRegistered={true}
-                  isVip={true}
-                />
-                <LobbyCard
-                  title="آیزولیتد ۴۰ نفره جایگاهی"
-                  status="تکمیل ظرفیت"
-                  entryFee="۱۰۰,۰۰۰ تومن"
-                  prize="۱۰,۰۰۰,۰۰۰ تومن"
-                  currentPlayers={40}
-                  maxPlayers={40}
-                  isFull={true}
-                  isVip={false}
-                />
+                {myLobbiesMockData.map((lobby) => (
+                  <LobbyCard key={lobby.id} {...lobby} />
+                ))}
               </Stack>
             </AccordionDetails>
           </Accordion>
@@ -234,7 +218,7 @@ const HomePage = () => {
             >
               <LobbyCardHeader
                 name="فهرست همه لابی‌ها"
-                title="۴ لابی"
+                title={`${allLobbiesMockData.length} لابی`}
                 expandIcon={
                   <IconButton
                     size="small"
@@ -251,42 +235,9 @@ const HomePage = () => {
             </AccordionSummary>
             <AccordionDetails>
               <Stack spacing={2}>
-                <LobbyCard
-                  title="آیزولیتد ۴۰ نفره جایگاهی"
-                  status="در حال برگزاری"
-                  entryFee="۱۰۰,۰۰۰ تومن"
-                  prize="۱۰,۰۰۰,۰۰۰ تومن"
-                  currentPlayers={30}
-                  maxPlayers={40}
-                  isVip={true}
-                />
-                <LobbyCard
-                  title="آیزولیتد ۴۰ نفره جایگاهی"
-                  status="در حال برگزاری"
-                  entryFee="۱۰۰,۰۰۰ تومن"
-                  prize="۱۰,۰۰۰,۰۰۰ تومن"
-                  currentPlayers={35}
-                  maxPlayers={40}
-                  isVip={false}
-                />
-                <LobbyCard
-                  title="آیزولیتد ۴۰ نفره جایگاهی"
-                  status="در حال برگزاری"
-                  entryFee="۱۰۰,۰۰۰ تومن"
-                  prize="۱۰,۰۰۰,۰۰۰ تومن"
-                  currentPlayers={38}
-                  maxPlayers={40}
-                  isVip={false}
-                />
-                <LobbyCard
-                  title="آیزولیتد ۴۰ نفره جایگاهی"
-                  status="در حال برگزاری"
-                  entryFee="۱۰۰,۰۰۰ تومن"
-                  prize="۱۰,۰۰۰,۰۰۰ تومن"
-                  currentPlayers={25}
-                  maxPlayers={40}
-                  isVip={true}
-                />
+                {allLobbiesMockData.map((lobby) => (
+                  <LobbyCard key={lobby.id} {...lobby} />
+                ))}
               </Stack>
             </AccordionDetails>
           </Accordion>

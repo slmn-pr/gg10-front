@@ -43,6 +43,7 @@ const STATUS_COLOR_MAP = {
 };
 
 const LobbyCard = ({
+  id,
   title,
   status,
   entryFee,
@@ -100,15 +101,16 @@ const LobbyCard = ({
   };
 
   const handleCardClick = useCallback(() => {
+    if (!id) return;
+    
     const gameMode = searchParams.get('gameMode') || 'multiplayer';
     const teamType = searchParams.get('team_type') || 1;
-    // const
-    const newParams = new URLSearchParams(searchParams);
+    const newParams = new URLSearchParams();
+    newParams.set('lobbyId', id);
     newParams.set('gameMode', gameMode);
     newParams.set('team_type', teamType);
-    setSearchParams(newParams);
     navigate(`/lobby?${newParams.toString()}`);
-  }, [searchParams, setSearchParams, navigate]);
+  }, [id, searchParams, navigate]);
 
   return (
     <Card

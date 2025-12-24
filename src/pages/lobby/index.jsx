@@ -12,7 +12,8 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import TimeIcon from '@/components/icons/lobbie/TimeIcon';
 import CapacityIcon from '@/components/icons/CapacityIcon';
 import StatusIcon from '@/components/icons/lobby/StatusIcon';
@@ -21,6 +22,7 @@ import LobbySection from './containers/lobby_section';
 import ResultsSection from './containers/result_section';
 import RewardsSection from './containers/rewards_section';
 import RulesSection from './containers/rules_section';
+import { getLobbyById } from '@/pages/home/_mock.js';
 
 const filterItems = [
   { key: 'results', label: 'نتایج' },
@@ -31,12 +33,19 @@ const filterItems = [
 
 export default function LobbyPage() {
   const theme = useTheme();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [activeFilter, setActiveFilter] = useState('rules');
 
-  const lobbyData = {
+  // Get filter from search params, default to 'rules'
+  const activeFilter = searchParams.get('filter') || 'rules';
+
+  // Get lobbyId from search params
+  const lobbyId = searchParams.get('lobbyId');
+
+  // Load lobby data based on ID
+  const [lobbyData, setLobbyData] = useState({
     link: 'https://www.google.com',
-    name: 'Lobby name',
+    name: 'آیزولیتد 40 نفره جایگاهی',
     time: 'امشب 23:30',
     entryFee: '100,000 تومان',
     capacity: '30/40',
@@ -45,7 +54,28 @@ export default function LobbyPage() {
     gameMode: 'جایگاهی',
     teamType: '4 نفره',
     teamCapacity: 4,
-  };
+  });
+
+  // Load lobby data when lobbyId changes
+  useEffect(() => {
+    if (lobbyId) {
+      const loadedLobby = getLobbyById(lobbyId);
+      if (loadedLobby) {
+        setLobbyData({
+          link: loadedLobby.link,
+          name: loadedLobby.title,
+          time: loadedLobby.time,
+          entryFee: loadedLobby.entryFee,
+          capacity: loadedLobby.capacity,
+          progress: loadedLobby.progress,
+          status: loadedLobby.status,
+          gameMode: loadedLobby.gameMode,
+          teamType: loadedLobby.teamType,
+          teamCapacity: loadedLobby.teamCapacity,
+        });
+      }
+    }
+  }, [lobbyId]);
 
   // useEffect(() => {
   //   // clea all search params
@@ -94,7 +124,7 @@ export default function LobbyPage() {
             </IconButton>
 
             <Typography variant="title2" color="custom.whiteOnBg1">
-              آیزولیتد 40 نفره جایگاهی
+              {lobbyData.name}
             </Typography>
           </Stack>
 
@@ -132,13 +162,13 @@ export default function LobbyPage() {
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <StatusIcon color={theme.palette.custom.live} />
               <Typography variant="sub1" color="custom.live">
-                وضعیت: در حال برگزاری
+                وضعیت: {lobbyData.status}
               </Typography>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <TimeIcon color={theme.palette.custom.tint1} />
               <Typography variant="sub1" color="custom.tint1">
-                زمان: امشب 23:30
+                زمان: {lobbyData.time}
               </Typography>
             </Box>
           </Stack>
@@ -153,20 +183,20 @@ export default function LobbyPage() {
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <EntryFreeIcon color={theme.palette.custom.dollar} />
               <Typography variant="sub1" color="custom.dollar">
-                ورودی: 100,000 تومان
+                ورودی: {lobbyData.entryFee}
               </Typography>
             </Box>
 
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <CapacityIcon color={theme.palette.custom.greyOnBg1} />
               <Typography variant="sub1" color="custom.greyOnBg1">
-                ظرفیت: 30/40
+                ظرفیت: {lobbyData.capacity}
               </Typography>
             </Box>
           </Stack>
 
           <Box mt={0.25} mb={1.25}>
-            <CustomProgressBar progress={85} />
+            <CustomProgressBar progress={lobbyData.progress} />
           </Box>
         </Box>
 
@@ -183,7 +213,11 @@ export default function LobbyPage() {
             <Button
               fullWidth
               key={item.key}
-              onClick={() => setActiveFilter(item.key)}
+              onClick={() => {
+                const newParams = new URLSearchParams(searchParams);
+                newParams.set('filter', item.key);
+                setSearchParams(newParams);
+              }}
               sx={{
                 flex: 1,
                 backgroundColor:
