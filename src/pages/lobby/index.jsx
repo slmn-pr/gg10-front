@@ -297,7 +297,11 @@ function LobbyPageContent() {
       <Box sx={{ width: '100%', px: '16px' }}>
         {/* LOBBY SECTION  */}
         {activeFilter === 'lobby' && (
-          <LobbySection onSignupAttempt={handleSignupAttempt} />
+          <LobbySection
+            onSignupAttempt={handleSignupAttempt}
+            game_mode={lobbyData.game_mode}
+            team_type={lobbyData.team_type}
+          />
         )}
 
         {/* RESULTS SECTION */}
@@ -357,6 +361,8 @@ export default function LobbyPage() {
     gameMode: 'جایگاهی',
     teamType: '4 نفره',
     teamCapacity: 4,
+    game_mode: 'multiplayer',
+    team_type: 4,
     allowed_ranks: [
       { id: 4, name: 'آماتور', rank: 4 },
       { id: 3, name: 'پرو', rank: 3 },
@@ -382,6 +388,8 @@ export default function LobbyPage() {
           gameMode: loadedLobby.gameMode,
           teamType: loadedLobby.teamType,
           teamCapacity: loadedLobby.teamCapacity,
+          game_mode: loadedLobby.game_mode || 'multiplayer',
+          team_type: loadedLobby.team_type || 4,
           allowed_ranks: loadedLobby.allowed_ranks || [
             { id: 4, name: 'آماتور', rank: 4 },
             { id: 3, name: 'پرو', rank: 3 },

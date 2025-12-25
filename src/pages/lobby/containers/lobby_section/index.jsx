@@ -7,17 +7,18 @@ import { MULTIPLAYER_TEAM_SLOTS } from '../../_mock/multiplayer';
 import { useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-export default function LobbySection({ onSignupAttempt }) {
-  const [searchParams, setSearchParams] = useSearchParams();
+export default function LobbySection({ onSignupAttempt, game_mode, team_type }) {
+  const [searchParams] = useSearchParams();
 
+  // Use game_mode and team_type from props (API/mock data) or fallback to search params
   const gameMode = useMemo(
-    () => searchParams.get('game_mode') || 'multiplayer',
-    [searchParams],
+    () => game_mode || searchParams.get('game_mode') || 'multiplayer',
+    [game_mode, searchParams],
   );
 
   const searchedTeamType = useMemo(
-    () => searchParams.get('team_type') || 1,
-    [searchParams],
+    () => team_type || parseInt(searchParams.get('team_type')) || 1,
+    [team_type, searchParams],
   );
   const teamType = useMultiplayerTeamTypeTranslate(searchedTeamType);
 

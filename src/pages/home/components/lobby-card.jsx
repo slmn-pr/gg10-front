@@ -38,6 +38,8 @@ const LobbyCard = ({
   isVip = false,
   schedule = 'امروز ۱۷:۳۰',
   tags = ['اسکوادی', 'اتوریوایو', 'جایگاهی'],
+  game_mode,
+  team_type,
 }) => {
   const [searchParams] = useSearchParams();
   const theme = useTheme();
@@ -58,14 +60,15 @@ const LobbyCard = ({
   const handleCardClick = useCallback(() => {
     if (!id) return;
 
-    const gameMode = searchParams.get('game_mode') || 'multiplayer';
-    const teamType = searchParams.get('team_type') || 1;
+    // Use game_mode and team_type from lobby data (API/mock) or fallback to search params
+    const gameMode = game_mode || searchParams.get('game_mode') || 'multiplayer';
+    const teamType = team_type || parseInt(searchParams.get('team_type')) || 1;
     const newParams = new URLSearchParams();
     newParams.set('lobbyId', id);
     newParams.set('game_mode', gameMode);
-    newParams.set('team_type', teamType);
+    newParams.set('team_type', teamType.toString());
     navigate(`/lobby?${newParams.toString()}`);
-  }, [id, searchParams, navigate]);
+  }, [id, game_mode, team_type, searchParams, navigate]);
 
   return (
     <Card

@@ -1,4 +1,4 @@
-import { LOBBY_STATUS, LOBBY_STATUS_TEXT } from "../lobby/constants/lobbyStatus";
+import { LOBBY_STATUS, LOBBY_STATUS_TEXT } from '../lobby/constants/lobbyStatus';
 
 // Mock data for lobby cards
 export const lobbyCardsMockData = [
@@ -15,6 +15,8 @@ export const lobbyCardsMockData = [
     isVip: true,
     schedule: 'امروز ۱۷:۳۰',
     tags: ['اسکوادی', 'اتوریوایو', 'جایگاهی'],
+    game_mode: 'multiplayer',
+    team_type: 4, // 4V4
   },
   {
     id: '2',
@@ -29,6 +31,8 @@ export const lobbyCardsMockData = [
     isVip: false,
     schedule: 'امروز ۱۸:۰۰',
     tags: ['اسکوادی', 'اتوریوایو', 'جایگاهی'],
+    game_mode: 'multiplayer',
+    team_type: 3, // 3V3
   },
   {
     id: '3',
@@ -42,6 +46,8 @@ export const lobbyCardsMockData = [
     isVip: true,
     schedule: 'امروز ۱۹:۰۰',
     tags: ['اسکوادی', 'اتوریوایو', 'جایگاهی'],
+    game_mode: 'battle-royal',
+    team_type: 1, // Solo (1 player per team)
   },
   {
     id: '4',
@@ -55,6 +61,8 @@ export const lobbyCardsMockData = [
     isVip: false,
     schedule: 'امروز ۲۰:۰۰',
     tags: ['اسکوادی', 'اتوریوایو', 'جایگاهی'],
+    game_mode: 'multiplayer',
+    team_type: 5, // 5V5
   },
   {
     id: '5',
@@ -68,6 +76,8 @@ export const lobbyCardsMockData = [
     isVip: false,
     schedule: 'امروز ۲۱:۰۰',
     tags: ['اسکوادی', 'اتوریوایو', 'جایگاهی'],
+    game_mode: 'battle-royal',
+    team_type: 2, // Double (2 players per team)
   },
   {
     id: '6',
@@ -81,6 +91,8 @@ export const lobbyCardsMockData = [
     isVip: true,
     schedule: 'امروز ۲۲:۰۰',
     tags: ['اسکوادی', 'اتوریوایو', 'جایگاهی'],
+    game_mode: 'multiplayer',
+    team_type: 2, // 2V2
   },
 ];
 
@@ -101,6 +113,8 @@ export const getLobbyById = (id) => {
     gameMode: 'جایگاهی',
     teamType: '4 نفره',
     teamCapacity: 4,
+    game_mode: lobby.game_mode || 'multiplayer',
+    team_type: lobby.team_type || 4,
   };
 };
 
