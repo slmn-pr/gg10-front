@@ -93,7 +93,7 @@ const HomePage = () => {
         <Box mb={1} px={2}>
           <GameModeSelector />
         </Box>
-        
+
         {/* Sticky Header */}
         <Box
           ref={stickyHeaderRef}
@@ -156,16 +156,21 @@ const HomePage = () => {
                 name="لابی های شما"
                 title={`${myLobbiesMockData.length} لابی`}
                 expandIcon={
-                  <IconButton
-                    size="small"
+                  <Box
+                    component="span"
                     sx={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
                       color: 'text.secondary',
                       transform: myLobbiesExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
                       transition: 'transform 0.3s ease',
+                      width: 32,
+                      height: 32,
                     }}
                   >
                     <ChevronUpIcon />
-                  </IconButton>
+                  </Box>
                 }
               />
             </AccordionSummary>
@@ -220,16 +225,21 @@ const HomePage = () => {
                 name="فهرست همه لابی‌ها"
                 title={`${allLobbiesMockData.length} لابی`}
                 expandIcon={
-                  <IconButton
-                    size="small"
+                  <Box
+                    component="span"
                     sx={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
                       color: 'text.secondary',
                       transform: allLobbiesExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
                       transition: 'transform 0.3s ease',
+                      width: 32,
+                      height: 32,
                     }}
                   >
                     <ChevronUpIcon />
-                  </IconButton>
+                  </Box>
                 }
               />
             </AccordionSummary>

@@ -321,8 +321,8 @@ const LobbyCard = ({
             sx={{ justifyContent: 'flex-end' }}
             mb={0.25}
           >
-            {tags.slice(0, 3).map((tag) => (
-              <LobbyCardTag title={tag} icon={tagIcons[tag]} />
+            {tags.slice(0, 3).map((tag, index) => (
+              <LobbyCardTag key={`${tag}-${index}`} title={tag} icon={tagIcons[tag]} />
             ))}
           </Stack>
         </Box>
