@@ -73,6 +73,11 @@ export default function HomeFilters() {
   const x = useMotionValue(0);
   const isDraggingRef = useRef(false);
 
+  // Detect if device supports touch (disable drag on touch devices for native scrolling)
+  const isTouchDevice = useMemo(() => {
+    return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  }, []);
+
   const gameMode = useMemo(
     () => (searchParams.get('game_mode') ? searchParams.get('game_mode') : 'multiplayer'),
     [searchParams],
@@ -100,6 +105,7 @@ export default function HomeFilters() {
     (filter) => {
       const newParams = new URLSearchParams(searchParams);
       const has = newParams.has(filter.key);
+      const newValue = !has;
 
       if (has) {
         newParams.delete(filter.key);
@@ -107,10 +113,14 @@ export default function HomeFilters() {
         newParams.set(filter.key, 'true');
       }
 
-      setSearchParams(newParams, { replace: true });
+      // Update form value first to prevent sync effect from resetting
+      methods.setValue(filter.key, newValue, {
+        shouldValidate: false,
+        shouldDirty: false,
+      });
 
-      // Set to form values
-      methods.setValue(filter.key, !has);
+      // Update searchParams - this will trigger the sync effect, but form is already updated
+      setSearchParams(newParams, { replace: true });
     },
     [searchParams, setSearchParams, methods],
   );
@@ -150,14 +160,16 @@ export default function HomeFilters() {
     const currentParamsString = searchParams.toString();
     // Only sync if searchParams changed externally (not from our toggleFilter)
     if (prevSearchParamsRef.current !== currentParamsString) {
-      // Check if form values differ from searchParams
+      // Check if form values differ from searchParams for any filter
       const currentFormValues = methods.getValues();
       const needsSync = defaultValueNames.some((key) => {
         const searchParamValue = searchParams.get(key) === 'true';
-        return currentFormValues[key] !== searchParamValue;
+        const formValue = !!currentFormValues[key];
+        return formValue !== searchParamValue;
       });
 
       if (needsSync) {
+        // Reset form with current searchParams values
         methods.reset(defaultValues);
       }
       prevSearchParamsRef.current = currentParamsString;
@@ -200,6 +212,33 @@ export default function HomeFilters() {
     };
   }, []);
 
+  // Add mouse wheel support for horizontal scrolling on desktop
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleWheel = (e) => {
+      // Only handle horizontal wheel scrolling (Shift + wheel or horizontal trackpad)
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY) || e.shiftKey) {
+        e.preventDefault();
+        const isRtl = window.getComputedStyle(container).direction === 'rtl';
+        const scrollDelta = isRtl ? -e.deltaX : e.deltaX;
+
+        // Use smooth scrolling
+        container.scrollBy({
+          left: scrollDelta,
+          behavior: 'smooth',
+        });
+      }
+    };
+
+    container.addEventListener('wheel', handleWheel, { passive: false });
+
+    return () => {
+      container.removeEventListener('wheel', handleWheel);
+    };
+  }, []);
+
   // Helper to get normalized scroll position
   const getScrollPosition = useCallback(() => {
     if (!containerRef.current) return 0;
@@ -235,12 +274,18 @@ export default function HomeFilters() {
         component={motion.div}
         direction="row"
         gap={1}
-        drag="x"
-        dragElastic={0.2}
+        drag={isTouchDevice ? false : 'x'}
+        dragElastic={0}
         dragMomentum={false}
         dragPropagation={false}
+        // Only enable drag on desktop (mouse), not on touch devices
+        dragConstraints={false}
         style={{ x }}
         onDragStart={(event, info) => {
+          // Only handle mouse drag, let touch devices use native scroll
+          if (event.type === 'touchstart' || event.type === 'touchmove') {
+            return;
+          }
           if (containerRef.current) {
             const el = containerRef.current;
             isDraggingRef.current = true;
@@ -252,6 +297,10 @@ export default function HomeFilters() {
           }
         }}
         onDrag={(event, info) => {
+          // Skip touch events - let native scrolling handle them
+          if (event.type === 'touchstart' || event.type === 'touchmove') {
+            return;
+          }
           if (containerRef.current) {
             // Reset transform immediately to prevent visual movement
             x.set(0);
@@ -266,13 +315,17 @@ export default function HomeFilters() {
           }
         }}
         onDragEnd={(event, info) => {
+          // Skip touch events
+          if (event.type === 'touchend' || event.type === 'touchcancel') {
+            return;
+          }
           if (containerRef.current) {
             isDraggingRef.current = false;
             // Ensure transform is reset
             x.set(0);
             containerRef.current.style.scrollBehavior = 'smooth';
 
-            // Apply momentum scrolling based on velocity
+            // Apply momentum scrolling based on velocity (only for mouse drag)
             const velocity = info.velocity.x;
             if (Math.abs(velocity) > 100) {
               const currentScroll = getScrollPosition();
@@ -297,22 +350,29 @@ export default function HomeFilters() {
 
                 if (progress < 1) {
                   requestAnimationFrame(animateScroll);
+                } else {
+                  // Restore smooth scroll behavior after animation
+                  if (containerRef.current) {
+                    containerRef.current.style.scrollBehavior = 'smooth';
+                  }
                 }
               };
               requestAnimationFrame(animateScroll);
+            } else {
+              // Restore smooth scroll behavior immediately if no momentum
+              containerRef.current.style.scrollBehavior = 'smooth';
             }
           }
         }}
-        whileDrag={{ cursor: 'grabbing' }}
+        whileDrag={isTouchDevice ? {} : { cursor: 'grabbing' }}
         ref={containerRef}
         sx={{
           direction: 'rtl',
-          // mb: 3,
           pb: 1,
           overflowX: 'auto',
           overflowY: 'hidden',
           whiteSpace: 'nowrap',
-          cursor: 'grab',
+          cursor: isTouchDevice ? 'default' : 'grab',
           userSelect: 'none',
           scrollSnapType: 'x mandatory',
           '& > *': {
@@ -320,8 +380,15 @@ export default function HomeFilters() {
           },
           scrollbarWidth: 'none',
           '&::-webkit-scrollbar': { display: 'none' },
-          WebkitOverflowScrolling: 'touch',
-          scrollBehavior: 'smooth',
+          // Enhanced smooth scrolling for mobile and desktop
+          WebkitOverflowScrolling: 'touch', // iOS smooth scrolling
+          scrollBehavior: 'smooth', // CSS smooth scrolling
+          // Enable momentum scrolling on iOS
+          '-webkit-overflow-scrolling': 'touch',
+          // Prevent scroll chaining
+          overscrollBehaviorX: 'contain',
+          // Smooth scrolling for Firefox
+          scrollPadding: 0,
         }}
       >
         {/* Filters Drawer */}

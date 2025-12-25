@@ -15,7 +15,16 @@ export default function MultiplayerFilterForm() {
               control={control}
               render={({ field }) => (
                 <FormControlLabel
-                  control={<Checkbox {...field} checked={field.value} />}
+                  control={
+                    <Checkbox
+                      name={field.name}
+                      inputRef={field.ref}
+                      checked={!!field.value}
+                      onChange={(_event, checked) => field.onChange(checked)}
+                      onBlur={field.onBlur}
+                      color="primary"
+                    />
+                  }
                   label={'سرچ اند دیستروی'}
                 />
               )}
@@ -26,7 +35,19 @@ export default function MultiplayerFilterForm() {
               name="hardpoint"
               control={control}
               render={({ field }) => (
-                <FormControlLabel control={<Checkbox {...field} />} label="هاردپوینت" />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      name={field.name}
+                      inputRef={field.ref}
+                      checked={!!field.value}
+                      onChange={(_event, checked) => field.onChange(checked)}
+                      onBlur={field.onBlur}
+                      color="primary"
+                    />
+                  }
+                  label="هاردپوینت"
+                />
               )}
             />
           </Grid>

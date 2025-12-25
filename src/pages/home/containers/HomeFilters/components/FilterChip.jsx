@@ -17,8 +17,19 @@ export default function FilterChip({ onClick, label, icon, active = false }) {
         p: 1,
         '& .MuiChip-icon': { color: '#fff' },
         backgroundColor: active ? 'custom.tint1' : 'transparent',
+        // Prevent drag from interfering with button clicks
+        touchAction: 'manipulation',
+        // Ensure button is clickable
+        pointerEvents: 'auto',
       }}
       onClick={onClick}
+      // Prevent drag propagation to parent
+      onMouseDown={(e) => {
+        e.stopPropagation();
+      }}
+      onTouchStart={(e) => {
+        e.stopPropagation();
+      }}
     >
       <Typography variant="subtitle2" color={active ? 'custom.blackOnPrimary' : 'white'}>
         {label}
