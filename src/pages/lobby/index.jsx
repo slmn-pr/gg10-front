@@ -232,12 +232,7 @@ function LobbyPageContent() {
           }
         }
       >
-        <Alert
-          variant="filled"
-          color="success"
-          sx={{ direction: 'rtl', width: '345px' }}
-          icon={false}
-        >
+        <Alert color="success" sx={{ direction: 'rtl', width: '345px' }} icon={false}>
           <Typography variant="sub1" color="custom.white">
             لینک لابی کپی شد
           </Typography>
