@@ -112,13 +112,13 @@ const theme = createTheme({
       lineHeight: '20px',
     },
     eng_numbers_bold: {
-      fontFamily: `'Estedad-FD', sans-serif`,
+      fontFamily: `'Estedad-VF', sans-serif`,
       fontWeight: 700,
       fontSize: '18px',
       lineHeight: '32px',
     },
     eng_numbers_regular: {
-      fontFamily: `'Estedad-FD', sans-serif`,
+      fontFamily: `'Estedad-VF', sans-serif`,
       fontWeight: 400,
       fontSize: '18px',
       lineHeight: '32px',

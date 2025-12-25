@@ -53,3 +53,11 @@
   font-style: normal;
   font-display: swap;
 }
+
+@font-face {
+  font-family: 'Estedad-VF';
+  src: url('/fonts/Estedad-VF.ttf') format('ttf');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}

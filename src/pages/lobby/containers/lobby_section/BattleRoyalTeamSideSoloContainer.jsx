@@ -54,7 +54,10 @@ const _mock = [
  * @param {Array} teams - The teams array.
  *
  */
-export default function BattleRoyalTeamSideSoloContainer({ teams = _mock, onSignupAttempt }) {
+export default function BattleRoyalTeamSideSoloContainer({
+  teams = _mock,
+  onSignupAttempt,
+}) {
   return (
     <Box>
       <Stack
@@ -70,16 +73,15 @@ export default function BattleRoyalTeamSideSoloContainer({ teams = _mock, onSign
           <Box key={index} sx={{ position: 'relative' }}>
             {/* Shows the team index in english number */}
             <Typography
-              variant="sub2"
+              variant="eng_numbers_bold"
               color="white"
               sx={{
                 position: 'absolute',
-                top: '-14px',
+                top: '-10px',
                 // transform: 'translateY(50%)',
                 left: 0,
                 zIndex: 99,
-                fontSize: '18px',
-                lineHeight: '32px',
+                fontSize: '32px',
               }}
             >
               {index + 1}
