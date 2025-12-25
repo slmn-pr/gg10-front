@@ -21,7 +21,7 @@ import { useMemo } from 'react';
  * @param {string} teamType - The type of team slot.
  * @param {Array} players - The players array.
  */
-export default function MultiplayerTeamSideContainer({ players = [] }) {
+export default function MultiplayerTeamSideContainer({ players = [], onSignupAttempt }) {
   const playersCount = useMemo(() => players.length, [players]);
 
   // slice the player in rows of 4 records
@@ -55,6 +55,7 @@ export default function MultiplayerTeamSideContainer({ players = [] }) {
                 playerName={player.name}
                 isLeader={player.isLeader}
                 freeSlot={player.freeSlot}
+                onSignupAttempt={onSignupAttempt}
               />
             ))}
           </Stack>

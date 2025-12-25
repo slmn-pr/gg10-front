@@ -25,6 +25,8 @@ import RulesSection from './containers/rules_section';
 import { getLobbyById } from '@/pages/home/_mock.js';
 import { LobbyProvider, useLobby } from './contexts/LobbyContext';
 import { LOBBY_STATUS, LOBBY_STATUS_TEXT } from './constants/lobbyStatus';
+import useAuthStore from '@/store/auth-store';
+import LoginModal from '@/components/modal/LoginModal';
 
 const filterItems = [
   { key: 'results', label: 'نتایج' },
@@ -39,6 +41,22 @@ function LobbyPageContent() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const { lobbyData } = useLobby();
+
+  const isAuthenticated = useAuthStore(
+    (state) => state.logged_in && !!state.access_token,
+  );
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
+  // Handler for when user tries to sign up in lobby
+  const handleSignupAttempt = () => {
+    if (!isAuthenticated) {
+      setShowLoginModal(true);
+    } else {
+      // User is logged in, proceed with signup logic
+      console.log('User is authenticated, proceed with signup');
+      // TODO: Add actual signup logic here
+    }
+  };
 
   // Get filter from search params, default to 'rules'
   const activeFilter = searchParams.get('filter') || 'lobby';
@@ -209,7 +227,9 @@ function LobbyPageContent() {
 
       <Box sx={{ width: '100%', px: '16px' }}>
         {/* LOBBY SECTION  */}
-        {activeFilter === 'lobby' && <LobbySection />}
+        {activeFilter === 'lobby' && (
+          <LobbySection onSignupAttempt={handleSignupAttempt} />
+        )}
 
         {/* RESULTS SECTION */}
         {activeFilter === 'results' && <ResultsSection />}
@@ -238,6 +258,9 @@ function LobbyPageContent() {
           </Typography>
         </Alert>
       </Snackbar>
+
+      {/* Login modal */}
+      <LoginModal open={showLoginModal} onClose={() => setShowLoginModal(false)} />
     </Box>
   );
 }

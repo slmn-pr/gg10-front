@@ -7,6 +7,7 @@ export default function PlayerCard({
   playerName = 'amir_gamer',
   isLeader = false,
   freeSlot = false,
+  onSignupAttempt,
 }) {
   const rankData = RANK_CODE_MAP[rank];
   const rankTitle = rankData?.title;
@@ -51,7 +52,7 @@ export default function PlayerCard({
           </Box>
         </Box>
       ) : (
-        <PlayerEmptyCard />
+        <PlayerEmptyCard onSignupAttempt={onSignupAttempt} />
       )}
 
       {/* Player name */}

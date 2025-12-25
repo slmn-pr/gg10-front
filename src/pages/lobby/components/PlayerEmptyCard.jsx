@@ -3,7 +3,7 @@ import { Button } from '@mui/material';
 import { useLobby } from '../contexts/LobbyContext';
 import { useLobbyStatus } from '../hooks/useLobbyStatus';
 
-export default function PlayerEmptyCard() {
+export default function PlayerEmptyCard({ onSignupAttempt }) {
   const { showErrorIfNotRegisterable, lobbyData } = useLobby();
   const { isNotRegisterable } = useLobbyStatus(lobbyData.status);
 
@@ -12,7 +12,12 @@ export default function PlayerEmptyCard() {
       showErrorIfNotRegisterable();
       return;
     }
-    console.log('click');
+    // Call the signup attempt handler (which will check auth and show modal if needed)
+    if (onSignupAttempt) {
+      onSignupAttempt();
+    } else {
+      console.log('click');
+    }
   };
 
   return (

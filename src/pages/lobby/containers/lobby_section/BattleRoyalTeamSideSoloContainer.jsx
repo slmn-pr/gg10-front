@@ -54,7 +54,7 @@ const _mock = [
  * @param {Array} teams - The teams array.
  *
  */
-export default function BattleRoyalTeamSideSoloContainer({ teams = _mock }) {
+export default function BattleRoyalTeamSideSoloContainer({ teams = _mock, onSignupAttempt }) {
   return (
     <Box>
       <Stack
@@ -86,7 +86,7 @@ export default function BattleRoyalTeamSideSoloContainer({ teams = _mock }) {
             </Typography>
 
             {/* Shows the player card */}
-            <PlayerEmptyCard key={team.label} />
+            <PlayerEmptyCard key={team.label} onSignupAttempt={onSignupAttempt} />
           </Box>
         ))}
       </Stack>

@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import PlayerEmptyCard from '../../components/PlayerEmptyCard';
 import { generateFakeBattleRoyalData } from '../../_mock/battle_royal';
 
-export default function BattleRoyalTeamsContainer({ teamCapacity = 3 }) {
+export default function BattleRoyalTeamsContainer({ teamCapacity = 3, onSignupAttempt }) {
   const teamsMock = generateFakeBattleRoyalData(3, teamCapacity);
 
   console.log(teamsMock);
@@ -17,7 +17,7 @@ export default function BattleRoyalTeamsContainer({ teamCapacity = 3 }) {
           </Typography>
           <Stack direction="row" spacing={2} justifyContent="center">
             {team.players.map((player, index) => (
-              <PlayerEmptyCard key={index} />
+              <PlayerEmptyCard key={index} onSignupAttempt={onSignupAttempt} />
             ))}
           </Stack>
         </Box>

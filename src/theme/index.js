@@ -390,6 +390,22 @@ const theme = createTheme({
         }),
       },
     },
+
+    MuiModal: {
+      styleOverrides: {
+        root: {
+          '& .MuiBackdrop-root': {
+            backdropFilter: 'blur(2px)',
+          },
+
+          '& .MuiBox-root': ({ theme }) => ({
+            borderRadius: '8px',
+            backgroundColor: theme.palette.custom.secondaryBg,
+            border: 'none',
+          }),
+        },
+      },
+    },
   },
 });
 

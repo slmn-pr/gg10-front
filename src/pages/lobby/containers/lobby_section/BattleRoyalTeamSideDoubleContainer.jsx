@@ -35,7 +35,7 @@ const _mock = [
 ];
 
 /** In each row must contain two teams with 32px gap between them */
-export default function BattleRoyalTeamSideDoubleContainer() {
+export default function BattleRoyalTeamSideDoubleContainer({ onSignupAttempt }) {
   const rows = useMemo(() => {
     return _mock.reduce((acc, team, index) => {
       const rowIndex = Math.floor(index / 2);
@@ -61,7 +61,7 @@ export default function BattleRoyalTeamSideDoubleContainer() {
                   {team.players.map((player, index) => (
                     <>
                       {player.freeSlot ? (
-                        <PlayerEmptyCard key={index} />
+                        <PlayerEmptyCard key={index} onSignupAttempt={onSignupAttempt} />
                       ) : (
                         <PlayerCard
                           key={index}

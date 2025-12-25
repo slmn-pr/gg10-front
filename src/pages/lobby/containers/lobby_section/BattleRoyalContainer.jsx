@@ -4,7 +4,7 @@ import BattleRoyalTeamsContainer from './BattleRoyalTeamsContainer';
 import { Box } from '@mui/material';
 import BattleRoyalTeamSideDoubleContainer from './BattleRoyalTeamSideDoubleContainer';
 
-export default function BattleRoyalContainer() {
+export default function BattleRoyalContainer({ onSignupAttempt }) {
   const [searchParams] = useSearchParams();
 
   const teamCapacity = searchParams.get('team_capacity')
@@ -15,14 +15,14 @@ export default function BattleRoyalContainer() {
     <Box sx={{ width: '100%' }}>
       {/* <BattleRoyalTeamsContainer /> */}
       {/* Solo mode */}
-      {teamCapacity === 1 && <BattleRoyalTeamSideSoloContainer />}
+      {teamCapacity === 1 && <BattleRoyalTeamSideSoloContainer onSignupAttempt={onSignupAttempt} />}
 
       {/* Double mode */}
-      {teamCapacity === 2 && <BattleRoyalTeamSideDoubleContainer />}
+      {teamCapacity === 2 && <BattleRoyalTeamSideDoubleContainer onSignupAttempt={onSignupAttempt} />}
       {/* TODO: Implement double mode */}
 
       {/* Multi mode */}
-      {teamCapacity > 2 && <BattleRoyalTeamsContainer teamCapacity={teamCapacity} />}
+      {teamCapacity > 2 && <BattleRoyalTeamsContainer teamCapacity={teamCapacity} onSignupAttempt={onSignupAttempt} />}
     </Box>
   );
 }
