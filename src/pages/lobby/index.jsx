@@ -29,6 +29,7 @@ import useAuthStore from '@/store/auth-store';
 import LoginModal from '@/components/modal/LoginModal';
 import NotAllowedModal from './components/NotAllowedModal';
 import ShowLobbyIdModal from './components/ShowLobbyIdModal';
+import { getStatusPalette } from '../home/utils';
 
 const filterItems = [
   { key: 'results', label: 'نتایج' },
@@ -195,7 +196,7 @@ function LobbyPageContent() {
       </Box>
 
       {/* BUtton & lobby details section */}
-      <Box sx={{ width: '100%', px: '16px' }}>
+      <Box sx={{ width: '100%', px: '16px', mt: '12px' }}>
         {/* Show lobby id and password modal */}
         <ShowLobbyIdModal lobbyStatus={lobbyData?.status} />
 
@@ -209,9 +210,12 @@ function LobbyPageContent() {
             sx={{ direction: 'rtl' }}
           >
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <StatusIcon color={theme.palette.custom.live} />
-              <Typography variant="sub1" color="custom.live">
-                وضعیت: {lobbyData.status}
+              <StatusIcon color={getStatusPalette(lobbyData.status).hexColor} />
+              <Typography
+                variant="sub1"
+                sx={{ color: getStatusPalette(lobbyData.status).color }}
+              >
+                وضعیت: {LOBBY_STATUS_TEXT[lobbyData.status]}
               </Typography>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
