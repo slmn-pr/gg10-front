@@ -97,9 +97,9 @@ export default function MultiplayerFilterForm() {
             )}
           />
 
-          {/* rank only lobby */}
+          {/* my rank lobbies */}
           <Controller
-            name="rankOnlyLobby"
+            name="myRankLobbies"
             control={control}
             render={({ field }) => (
               <FormControlLabel

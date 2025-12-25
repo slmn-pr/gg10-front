@@ -76,25 +76,14 @@ export default function BattleRoyalFilterForm() {
                 name={checkbox.name}
                 control={control}
                 render={({ field }) => {
-                  console.log(
-                    `[BattleRoyalFilterForm] [FIRST ROW] ${checkbox.name}`,
-                    field,
-                  );
-
                   return (
                     <FormControlLabel
                       sx={{ margin: 0 }}
                       control={
                         <Checkbox
-                          defaultChecked={formValues[checkbox.name]}
                           name={field.name}
-                          slotProps={{
-                            input: {
-                              ref: field.ref,
-                            },
-                          }}
-                          // inputRef={field.ref}
-                          // checked={!!field.value}
+                          inputRef={field.ref}
+                          checked={!!field.value}
                           onChange={(_event, checked) => field.onChange(checked)}
                           onBlur={field.onBlur}
                           color="primary"

@@ -5,6 +5,7 @@ export const MULTIPLAYER_DEFAULT_VALUES = {
   duo: false,
   freeLobby: false,
   rankOnlyLobby: false,
+  myRankLobbies: false,
 };
 
 export const BATTLE_ROYAL_DEFAULT_VALUES = {

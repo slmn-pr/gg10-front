@@ -18,13 +18,8 @@ export default function FiltersDrawer({ children }) {
   const { watch } = useFormContext();
   const formValues = watch();
   const activeFilters = useMemo(() => {
-    console.log('[HomeFilters] formValues', formValues);
     return Object.keys(formValues).filter((key) => formValues[key]);
-  }, [formValues, searchParams]);
-
-  useEffect(() => {
-    console.log('[FiltersDrawer] activeFilters', activeFilters);
-  }, [activeFilters]);
+  }, [formValues]);
 
   const resetFilters = useCallback(() => {
     const currentParams = new URLSearchParams(searchParams);
@@ -57,8 +52,10 @@ export default function FiltersDrawer({ children }) {
     });
 
     // اضافه‌کردن فقط فیلترهای فعال (true)
+    // Include all form values that are true, not just those in baseDefaults
+    // This ensures suggested filters like myRankLobbies are included
     Object.entries(formValues).forEach(([key, value]) => {
-      if (value === true && baseDefaults.hasOwnProperty(key)) {
+      if (value === true) {
         currentParams.set(key, 'true');
       }
     });
@@ -71,17 +68,16 @@ export default function FiltersDrawer({ children }) {
 
   // Clean up old filter params when gameMode changes
   useEffect(() => {
-    let sources =
+    const sources =
       gameMode === 'multiplayer'
         ? BATTLE_ROYAL_DEFAULT_VALUES
         : MULTIPLAYER_DEFAULT_VALUES;
+    const newParams = new URLSearchParams(searchParams);
     Object.keys(sources).forEach((key) => {
-      searchParams.delete(key);
+      newParams.delete(key);
     });
-    setSearchParams(searchParams, { replace: true });
-
-    // methods.reset(sources);
-  }, [gameMode]);
+    setSearchParams(newParams, { replace: true });
+  }, [gameMode, searchParams, setSearchParams]);
 
   return (
     <>

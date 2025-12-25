@@ -132,9 +132,37 @@ export default function HomeFilters() {
     return result;
   }, [searchParams, gameMode, defaultValueNames]);
 
+  // Only reset form when gameMode changes
+  // This prevents race conditions when toggling filters
+  const prevGameModeRef = useRef(gameMode);
   useEffect(() => {
-    methods.reset(defaultValues);
-  }, [defaultValues, methods]);
+    // Reset form when gameMode changes
+    if (prevGameModeRef.current !== gameMode) {
+      methods.reset(defaultValues);
+      prevGameModeRef.current = gameMode;
+    }
+  }, [gameMode, defaultValues, methods]);
+
+  // Sync form with searchParams when they change externally (e.g., browser back button)
+  // Only sync if searchParams changed but form wasn't updated via toggleFilter
+  const prevSearchParamsRef = useRef(searchParams.toString());
+  useEffect(() => {
+    const currentParamsString = searchParams.toString();
+    // Only sync if searchParams changed externally (not from our toggleFilter)
+    if (prevSearchParamsRef.current !== currentParamsString) {
+      // Check if form values differ from searchParams
+      const currentFormValues = methods.getValues();
+      const needsSync = defaultValueNames.some((key) => {
+        const searchParamValue = searchParams.get(key) === 'true';
+        return currentFormValues[key] !== searchParamValue;
+      });
+
+      if (needsSync) {
+        methods.reset(defaultValues);
+      }
+      prevSearchParamsRef.current = currentParamsString;
+    }
+  }, [searchParams, defaultValueNames, methods, defaultValues]);
 
   // Reset transform to prevent visual movement during drag
   useLayoutEffect(() => {
