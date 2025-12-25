@@ -1,4 +1,11 @@
-import { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useEffect,
+  useMemo,
+} from 'react';
 import { useLobbyStatus } from '../hooks/useLobbyStatus';
 import ErrorSnakBar from '@/components/snackbar/ErrorSnakBar';
 
@@ -17,11 +24,9 @@ export const LobbyProvider = ({ children, initialLobbyData }) => {
   const [errorSnackbarOpen, setErrorSnackbarOpen] = useState(false);
 
   // Use the lobby status hook
-  const {
-    isRegisterable,
-    isNotRegisterable,
-    getErrorMessage,
-  } = useLobbyStatus(lobbyData?.status);
+  const { isRegisterable, isNotRegisterable, getErrorMessage } = useLobbyStatus(
+    lobbyData?.status,
+  );
 
   // Update lobby data
   const updateLobbyData = useCallback((newData) => {
@@ -46,23 +51,44 @@ export const LobbyProvider = ({ children, initialLobbyData }) => {
     }
   }, [lobbyData?.status, isNotRegisterable]);
 
-  // Update lobby data when initialLobbyData changes
+  // Update lobby data when initialLobbyData changes - defer to avoid blocking
   useEffect(() => {
     if (initialLobbyData) {
-      setLobbyData(initialLobbyData);
+      // Use requestAnimationFrame to defer state update
+      let rafId = requestAnimationFrame(() => {
+        setLobbyData(initialLobbyData);
+      });
+
+      // Cleanup: cancel the animation frame if component unmounts
+      return () => {
+        cancelAnimationFrame(rafId);
+      };
     }
   }, [initialLobbyData]);
 
-  const value = {
-    lobbyData,
-    updateLobbyData,
-    errorSnackbarOpen,
-    getErrorMessage,
-    showErrorIfNotRegisterable,
-    closeErrorSnackbar,
-    isRegisterable,
-    isNotRegisterable,
-  };
+  // Memoize context value to prevent unnecessary re-renders
+  const value = useMemo(
+    () => ({
+      lobbyData,
+      updateLobbyData,
+      errorSnackbarOpen,
+      getErrorMessage,
+      showErrorIfNotRegisterable,
+      closeErrorSnackbar,
+      isRegisterable,
+      isNotRegisterable,
+    }),
+    [
+      lobbyData,
+      updateLobbyData,
+      errorSnackbarOpen,
+      getErrorMessage,
+      showErrorIfNotRegisterable,
+      closeErrorSnackbar,
+      isRegisterable,
+      isNotRegisterable,
+    ],
+  );
 
   return (
     <LobbyContext.Provider value={value}>
@@ -80,4 +106,3 @@ export const LobbyProvider = ({ children, initialLobbyData }) => {
     </LobbyContext.Provider>
   );
 };
-

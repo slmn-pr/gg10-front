@@ -12,7 +12,7 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import TimeIcon from '@/components/icons/lobbie/TimeIcon';
 import CapacityIcon from '@/components/icons/CapacityIcon';
@@ -143,10 +143,19 @@ function LobbyPageContent() {
   // }, [activeFilter]);
 
   // when called copy lobby link in clipboard and show success mui snackbar
-  const handleShare = () => {
+  const handleShare = useCallback(() => {
     navigator.clipboard.writeText(lobbyData.link);
     setSnackbarOpen(true);
-  };
+  }, [lobbyData.link]);
+
+  // Memoize navigation handler to prevent re-renders
+  const handleNavigateBack = useCallback(() => {
+    // Use setTimeout to defer navigation and prevent blocking
+    // This allows the current render cycle to complete
+    setTimeout(() => {
+      navigate('/home');
+    }, 0);
+  }, [navigate]);
 
   return (
     <Box
@@ -179,7 +188,7 @@ function LobbyPageContent() {
           }}
         >
           <Stack direction="row" alignItems="center">
-            <IconButton sx={{ marginInlineEnd: 0.5 }} onClick={() => navigate('/home')}>
+            <IconButton sx={{ marginInlineEnd: 0.5 }} onClick={handleNavigateBack}>
               <ChevronForwardIcon color={theme.palette.custom.iconsWhite} />
             </IconButton>
 
@@ -374,30 +383,34 @@ export default function LobbyPage() {
   // Load lobby data when lobbyId changes
   useEffect(() => {
     if (lobbyId) {
-      const loadedLobby = getLobbyById(lobbyId);
-      if (loadedLobby) {
-        setLobbyData({
-          link: loadedLobby.link,
-          name: loadedLobby.title,
-          time: loadedLobby.time,
-          entryFee: loadedLobby.entryFee,
-          capacity: loadedLobby.capacity,
-          progress: loadedLobby.progress,
-          status: loadedLobby.status,
-          statusText: LOBBY_STATUS_TEXT[loadedLobby.status],
-          gameMode: loadedLobby.gameMode,
-          teamType: loadedLobby.teamType,
-          teamCapacity: loadedLobby.teamCapacity,
-          game_mode: loadedLobby.game_mode || 'multiplayer',
-          team_type: loadedLobby.team_type || 4,
-          allowed_ranks: loadedLobby.allowed_ranks || [
-            { id: 4, name: 'آماتور', rank: 4 },
-            { id: 3, name: 'پرو', rank: 3 },
-            { id: 2, name: 'مستر', rank: 2 },
-            { id: 1, name: 'لجند', rank: 1 },
-          ],
-        });
-      }
+      // Use requestAnimationFrame to defer heavy state updates
+      // This prevents blocking the navigation
+      requestAnimationFrame(() => {
+        const loadedLobby = getLobbyById(lobbyId);
+        if (loadedLobby) {
+          setLobbyData({
+            link: loadedLobby.link,
+            name: loadedLobby.title,
+            time: loadedLobby.time,
+            entryFee: loadedLobby.entryFee,
+            capacity: loadedLobby.capacity,
+            progress: loadedLobby.progress,
+            status: loadedLobby.status,
+            statusText: LOBBY_STATUS_TEXT[loadedLobby.status],
+            gameMode: loadedLobby.gameMode,
+            teamType: loadedLobby.teamType,
+            teamCapacity: loadedLobby.teamCapacity,
+            game_mode: loadedLobby.game_mode || 'multiplayer',
+            team_type: loadedLobby.team_type || 4,
+            allowed_ranks: loadedLobby.allowed_ranks || [
+              { id: 4, name: 'آماتور', rank: 4 },
+              { id: 3, name: 'پرو', rank: 3 },
+              { id: 2, name: 'مستر', rank: 2 },
+              { id: 1, name: 'لجند', rank: 1 },
+            ],
+          });
+        }
+      });
     }
   }, [lobbyId]);
 

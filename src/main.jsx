@@ -1,4 +1,3 @@
-import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
@@ -9,16 +8,14 @@ import RTLProvider from '@/app/providers/rtl-provider.jsx';
 import MUIThemeProvider from '@/app/providers/mui-theme-provider.jsx';
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <FontProvider>
-      <RTLProvider>
-        <MUIThemeProvider>
-          <BrowserRouter>
-            <App />
-            <Toaster position="bottom-center" />
-          </BrowserRouter>
-        </MUIThemeProvider>
-      </RTLProvider>
-    </FontProvider>
-  </StrictMode>,
+  <FontProvider>
+    <RTLProvider>
+      <MUIThemeProvider>
+        <BrowserRouter>
+          <App />
+          <Toaster position="bottom-center" />
+        </BrowserRouter>
+      </MUIThemeProvider>
+    </RTLProvider>
+  </FontProvider>,
 );
