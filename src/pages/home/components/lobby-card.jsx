@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
@@ -23,40 +23,23 @@ import PlacementSmallIcon from './icons/PlacementSmallIcon';
 import SquadSmallIcon from './icons/SquadSmallIcon';
 import CustomProgressBar from '@/components/CustomProgressBar';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-
-const STATUS_COLOR_MAP = {
-  'تکمیل ظرفیت': {
-    backgroundColor: 'rgba(255, 187, 96, 0.9)',
-    color: 'custom.full',
-    dot: '#3E2E1C',
-  },
-  'در حال برگزاری': {
-    backgroundColor: 'rgba(255, 105, 105, 0.9)',
-    color: 'custom.live',
-    dot: '#3E1C1C',
-  },
-  'در حال ثبت نام': {
-    backgroundColor: 'rgba(116, 247, 240, 0.9)',
-    color: 'custom.registering',
-    dot: '#1C3E3B',
-  },
-};
+import { LOBBY_STATUS } from '@/pages/lobby/constants/lobbyStatus';
+import { getStatusPalette } from '../utils';
 
 const LobbyCard = ({
   id,
   title,
   status,
+  statusText,
   entryFee,
   prize,
   currentPlayers,
   maxPlayers,
-  isRegistered,
-  isFull,
   isVip = false,
   schedule = 'امروز ۱۷:۳۰',
   tags = ['اسکوادی', 'اتوریوایو', 'جایگاهی'],
 }) => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const theme = useTheme();
   const progress = maxPlayers
     ? Math.min(100, Math.round((currentPlayers / maxPlayers) * 100))
@@ -64,35 +47,7 @@ const LobbyCard = ({
 
   const navigate = useNavigate();
 
-  const statusPalette = React.useMemo(() => {
-    if (status?.includes('تکمیل') || isFull) {
-      return {
-        backgroundColor: 'rgba(255, 187, 96, 0.9)',
-        color: '#3E2E1C',
-        dot: '#3E2E1C',
-      };
-    }
-    if (status?.includes('برگزاری')) {
-      return {
-        backgroundColor: 'rgba(255, 105, 105, 0.9)',
-        color: '#3E1C1C',
-        dot: '#3E1C1C',
-      };
-    }
-    if (status?.includes('ثبت') || isRegistered) {
-      return {
-        backgroundColor: 'rgba(116, 247, 240, 0.9)',
-        color: '#1C3E3B',
-        dot: '#1C3E3B',
-      };
-    }
-    return {
-      backgroundColor: 'rgba(255, 126, 186, 0.9)',
-      color: '#3E1C2D',
-      dot: '#3E1C2D',
-    };
-  }, [status, isRegistered, isFull]);
-
+  const statusPalette = getStatusPalette(status);
   const tagIcons = {
     اسکوادی: <SquadSmallIcon />,
     اسکواڈی: <AutoReviveChipIcon />,
@@ -102,7 +57,7 @@ const LobbyCard = ({
 
   const handleCardClick = useCallback(() => {
     if (!id) return;
-    
+
     const gameMode = searchParams.get('gameMode') || 'multiplayer';
     const teamType = searchParams.get('team_type') || 1;
     const newParams = new URLSearchParams();
@@ -128,7 +83,10 @@ const LobbyCard = ({
         minHeight: '112px',
       }}
     >
-      <CardActionArea sx={{ display: 'flex', flexDirection: 'row-reverse' }} onClick={handleCardClick}>
+      <CardActionArea
+        sx={{ display: 'flex', flexDirection: 'row-reverse' }}
+        onClick={handleCardClick}
+      >
         {/* Image Section - RIGHT SIDE */}
         <Box
           sx={{
@@ -173,25 +131,24 @@ const LobbyCard = ({
               display: 'inline-flex',
               alignItems: 'center',
 
-              color: statusPalette.color,
               boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
             }}
           >
-            {status === 'در حال برگزاری' ? (
+            {status === LOBBY_STATUS.IN_PROGRESS ? (
               <Box
-                bgcolor={STATUS_COLOR_MAP[status]?.color}
+                bgcolor={statusPalette.backgroundColor}
                 sx={{
                   width: 4,
                   height: 4,
                   borderRadius: '50%',
-                  // backgroundColor: STATUS_COLOR_MAP[status]?.color,
+                  backgroundColor: statusPalette.dot,
                 }}
               ></Box>
             ) : (
               <></>
             )}
-            <Typography variant="sub3" color={STATUS_COLOR_MAP[status]?.color}>
-              {status}
+            <Typography variant="sub3" sx={{ color: statusPalette.color }}>
+              {statusText}
             </Typography>
           </Box>
 

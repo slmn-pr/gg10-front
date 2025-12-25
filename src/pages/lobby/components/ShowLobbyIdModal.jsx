@@ -1,13 +1,64 @@
-import { Box, Button, IconButton, Modal, Stack, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  IconButton,
+  Modal,
+  Stack,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import { useLobbyStatus } from '../hooks/useLobbyStatus';
 import { useCallback, useState } from 'react';
 import CloseIcon from '@/components/icons/general/CloseIcon';
 import CopyIcon from '@/components/icons/CopyIcon';
+import toast, { Toaster } from 'react-hot-toast';
+import { LOBBY_STATUS } from '../constants/lobbyStatus';
+
+// Custom toast component with close button on the left
+const CustomToast = ({ t, message, theme }) => (
+  <Box
+    sx={{
+      display: 'flex',
+      alignItems: 'center',
+      direction: 'rtl',
+      backgroundColor: theme.palette.success.main,
+      borderRadius: '8px',
+      padding: '12px 16px',
+      gap: '8px',
+      minWidth: '344px',
+      maxWidth: '344px',
+    }}
+  >
+    {/* Message */}
+    <Typography variant="sub1" color="custom.white" sx={{ flex: 1 }}>
+      {message}
+    </Typography>
+
+    {/* Close button on the left */}
+    <IconButton
+      onClick={() => toast.dismiss(t.id)}
+      sx={{
+        padding: '4px',
+        color: theme.palette.custom.white,
+        '&:hover': {
+          backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        },
+      }}
+    >
+      <CloseIcon color={theme.palette.custom.white} />
+    </IconButton>
+  </Box>
+);
 
 const RoomSection = ({ title, value }) => {
+  const theme = useTheme();
   const copyValue = useCallback(() => {
     navigator.clipboard.writeText(value);
-  }, [value]);
+    toast.custom((t) => <CustomToast t={t} message={`${title} کپی شد`} theme={theme} />, {
+      position: 'bottom-center',
+      duration: 3000,
+    });
+  }, [value, title, theme]);
   return (
     <Stack
       direction="row"
@@ -40,7 +91,11 @@ export default function ShowLobbyIdModal({ lobbyStatus }) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const isInProgress = useLobbyStatus(lobbyStatus);
+  console.log('lobbyStatus', lobbyStatus);
+
+  //   const { isInProgress } = useLobbyStatus(lobbyStatus);
+  // Check if lobby status is in_progress
+  const isInProgress = lobbyStatus === LOBBY_STATUS.IN_PROGRESS;
 
   if (!isInProgress) {
     return <></>;

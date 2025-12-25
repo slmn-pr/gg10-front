@@ -1,9 +1,12 @@
+import { LOBBY_STATUS, LOBBY_STATUS_TEXT } from "../lobby/constants/lobbyStatus";
+
 // Mock data for lobby cards
 export const lobbyCardsMockData = [
   {
     id: '1',
     title: 'آیزولیتد ۴۰ نفره جایگاهی',
-    status: 'در حال ثبت نام',
+    status: LOBBY_STATUS.REGISTERING,
+    statusText: LOBBY_STATUS_TEXT[LOBBY_STATUS.REGISTERING],
     entryFee: '۱۰۰,۰۰۰ تومن',
     prize: '۱۰,۰۰۰,۰۰۰ تومن',
     currentPlayers: 30,
@@ -16,7 +19,8 @@ export const lobbyCardsMockData = [
   {
     id: '2',
     title: 'آیزولیتد ۴۰ نفره جایگاهی',
-    status: 'تکمیل ظرفیت',
+    status: LOBBY_STATUS.FULL,
+    statusText: LOBBY_STATUS_TEXT[LOBBY_STATUS.FULL],
     entryFee: '۱۰۰,۰۰۰ تومن',
     prize: '۱۰,۰۰۰,۰۰۰ تومن',
     currentPlayers: 40,
@@ -29,7 +33,8 @@ export const lobbyCardsMockData = [
   {
     id: '3',
     title: 'آیزولیتد ۴۰ نفره جایگاهی',
-    status: 'در حال برگزاری',
+    status: LOBBY_STATUS.IN_PROGRESS,
+    statusText: LOBBY_STATUS_TEXT[LOBBY_STATUS.IN_PROGRESS],
     entryFee: '۱۰۰,۰۰۰ تومن',
     prize: '۱۰,۰۰۰,۰۰۰ تومن',
     currentPlayers: 30,
@@ -41,7 +46,8 @@ export const lobbyCardsMockData = [
   {
     id: '4',
     title: 'آیزولیتد ۴۰ نفره جایگاهی',
-    status: 'در حال برگزاری',
+    status: LOBBY_STATUS.IN_PROGRESS,
+    statusText: LOBBY_STATUS_TEXT[LOBBY_STATUS.IN_PROGRESS],
     entryFee: '۱۰۰,۰۰۰ تومن',
     prize: '۱۰,۰۰۰,۰۰۰ تومن',
     currentPlayers: 35,
@@ -53,7 +59,8 @@ export const lobbyCardsMockData = [
   {
     id: '5',
     title: 'آیزولیتد ۴۰ نفره جایگاهی',
-    status: 'در حال برگزاری',
+    status: LOBBY_STATUS.IN_PROGRESS,
+    statusText: LOBBY_STATUS_TEXT[LOBBY_STATUS.IN_PROGRESS],
     entryFee: '۱۰۰,۰۰۰ تومن',
     prize: '۱۰,۰۰۰,۰۰۰ تومن',
     currentPlayers: 38,
@@ -65,7 +72,8 @@ export const lobbyCardsMockData = [
   {
     id: '6',
     title: 'آیزولیتد ۴۰ نفره جایگاهی',
-    status: 'در حال برگزاری',
+    status: LOBBY_STATUS.IN_PROGRESS,
+    statusText: LOBBY_STATUS_TEXT[LOBBY_STATUS.IN_PROGRESS],
     entryFee: '۱۰۰,۰۰۰ تومن',
     prize: '۱۰,۰۰۰,۰۰۰ تومن',
     currentPlayers: 25,
