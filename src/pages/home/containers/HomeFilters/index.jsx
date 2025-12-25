@@ -74,7 +74,7 @@ export default function HomeFilters() {
   const isDraggingRef = useRef(false);
 
   const gameMode = useMemo(
-    () => (searchParams.get('gameMode') ? searchParams.get('gameMode') : 'multiplayer'),
+    () => (searchParams.get('game_mode') ? searchParams.get('game_mode') : 'multiplayer'),
     [searchParams],
   );
 

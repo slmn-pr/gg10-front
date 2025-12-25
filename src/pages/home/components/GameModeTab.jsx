@@ -21,8 +21,8 @@ export default function GameModeSelector() {
 
   const isMultiplayerSelected = useMemo(
     () =>
-      searchParams.get('gameMode')
-        ? searchParams.get('gameMode') === 'multiplayer'
+      searchParams.get('game_mode')
+        ? searchParams.get('game_mode') === 'multiplayer'
         : true,
     [searchParams],
   );
@@ -31,7 +31,7 @@ export default function GameModeSelector() {
     if (!gameMode) {
       return;
     } else {
-      searchParams.set('gameMode', gameMode);
+      searchParams.set('game_mode', gameMode);
       setSearchParams(searchParams);
     }
   };
@@ -40,7 +40,7 @@ export default function GameModeSelector() {
     <ToggleButtonGroup
       color="primary"
       exclusive
-      value={searchParams.get('gameMode') || 'multiplayer'}
+      value={searchParams.get('game_mode') || 'multiplayer'}
       onChange={handleGameModeChange}
       aria-label="Platform"
       sx={{

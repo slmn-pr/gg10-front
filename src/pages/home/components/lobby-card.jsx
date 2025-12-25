@@ -58,11 +58,11 @@ const LobbyCard = ({
   const handleCardClick = useCallback(() => {
     if (!id) return;
 
-    const gameMode = searchParams.get('gameMode') || 'multiplayer';
+    const gameMode = searchParams.get('game_mode') || 'multiplayer';
     const teamType = searchParams.get('team_type') || 1;
     const newParams = new URLSearchParams();
     newParams.set('lobbyId', id);
-    newParams.set('gameMode', gameMode);
+    newParams.set('game_mode', gameMode);
     newParams.set('team_type', teamType);
     navigate(`/lobby?${newParams.toString()}`);
   }, [id, searchParams, navigate]);

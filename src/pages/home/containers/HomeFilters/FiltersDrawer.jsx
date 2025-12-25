@@ -13,7 +13,7 @@ export default function FiltersDrawer({ children }) {
   const [open, setOpen] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const theme = useTheme();
-  const gameMode = searchParams.get('gameMode') || 'multiplayer';
+  const gameMode = searchParams.get('game_mode') || 'multiplayer';
 
   const { watch } = useFormContext();
   const formValues = watch();

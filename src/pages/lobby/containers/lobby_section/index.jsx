@@ -10,12 +10,10 @@ import { useSearchParams } from 'react-router-dom';
 export default function LobbySection({ onSignupAttempt }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // const gameMode = useMemo(
-  //   () => searchParams.get('gameMode') || 'multiplayer',
-  //   [searchParams],
-  // );
-
-  const gameMode = 'battle-royal';
+  const gameMode = useMemo(
+    () => searchParams.get('game_mode') || 'multiplayer',
+    [searchParams],
+  );
 
   const searchedTeamType = useMemo(
     () => searchParams.get('team_type') || 1,
