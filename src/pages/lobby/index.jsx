@@ -27,6 +27,8 @@ import { LobbyProvider, useLobby } from './contexts/LobbyContext';
 import { LOBBY_STATUS, LOBBY_STATUS_TEXT } from './constants/lobbyStatus';
 import useAuthStore from '@/store/auth-store';
 import LoginModal from '@/components/modal/LoginModal';
+import NotAllowedModal from './components/NotAllowedModal';
+import ShowLobbyIdModal from './components/ShowLobbyIdModal';
 
 const filterItems = [
   { key: 'results', label: 'نتایج' },
@@ -45,17 +47,90 @@ function LobbyPageContent() {
   const isAuthenticated = useAuthStore(
     (state) => state.logged_in && !!state.access_token,
   );
+  const playerRank = useAuthStore((state) => state.player_rank);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showNotAllowedModal, setShowNotAllowedModal] = useState(false);
+
+  /**
+   * Validation result types
+   */
+  const VALIDATION_RESULT = {
+    SUCCESS: 'success',
+    NOT_LOGGED_IN: 'not_logged_in',
+    RANK_NOT_ALLOWED: 'rank_not_allowed',
+    INSUFFICIENT_CREDIT: 'insufficient_credit', // For future use
+  };
+
+  /**
+   * Validate if user can sign up for the lobby
+   * @returns {Object} - { valid: boolean, reason: string }
+   */
+  const validateSignup = () => {
+    // 1. Check if user is logged in
+    if (!isAuthenticated) {
+      return {
+        valid: false,
+        reason: VALIDATION_RESULT.NOT_LOGGED_IN,
+      };
+    }
+
+    // 2. Check if player rank is allowed
+    const allowedRanks = lobbyData?.allowed_ranks || [];
+    if (allowedRanks.length > 0 && playerRank !== null) {
+      // Check if player rank is in allowed ranks
+      const rankAllowed = allowedRanks.some(
+        (allowedRank) => allowedRank.rank === playerRank,
+      );
+      if (!rankAllowed) {
+        return {
+          valid: false,
+          reason: VALIDATION_RESULT.RANK_NOT_ALLOWED,
+        };
+      }
+    }
+
+    // 3. Check user credit (placeholder for future implementation)
+    // const userCredit = useAuthStore((state) => state.user_credit);
+    // const entryFee = parseEntryFee(lobbyData?.entryFee);
+    // if (userCredit < entryFee) {
+    //   return {
+    //     valid: false,
+    //     reason: VALIDATION_RESULT.INSUFFICIENT_CREDIT,
+    //   };
+    // }
+
+    // All validations passed
+    return {
+      valid: true,
+      reason: VALIDATION_RESULT.SUCCESS,
+    };
+  };
 
   // Handler for when user tries to sign up in lobby
   const handleSignupAttempt = () => {
-    if (!isAuthenticated) {
-      setShowLoginModal(true);
-    } else {
-      // User is logged in, proceed with signup logic
-      console.log('User is authenticated, proceed with signup');
-      // TODO: Add actual signup logic here
+    const validation = validateSignup();
+
+    if (!validation.valid) {
+      switch (validation.reason) {
+        case VALIDATION_RESULT.NOT_LOGGED_IN:
+          setShowLoginModal(true);
+          break;
+        case VALIDATION_RESULT.RANK_NOT_ALLOWED:
+          setShowNotAllowedModal(true);
+          break;
+        case VALIDATION_RESULT.INSUFFICIENT_CREDIT:
+          // TODO: Show insufficient credit modal/message
+          console.log('Insufficient credit');
+          break;
+        default:
+          console.log('Unknown validation error');
+      }
+      return;
     }
+
+    // All validations passed, proceed with signup
+    console.log('User can sign up, proceed with signup logic');
+    // TODO: Add actual signup logic here
   };
 
   // Get filter from search params, default to 'rules'
@@ -121,18 +196,8 @@ function LobbyPageContent() {
 
       {/* BUtton & lobby details section */}
       <Box sx={{ width: '100%', px: '16px' }}>
-        {/* Button */}
-        <Stack justifyContent="center">
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{ mt: '12px', mx: 'auto', px: '66px', py: '4px' }}
-          >
-            <Typography variant="button1" color="custom.whiteOnBg2">
-              نمایش آیدی و پسورد روم
-            </Typography>
-          </Button>
-        </Stack>
+        {/* Show lobby id and password modal */}
+        <ShowLobbyIdModal lobbyStatus={lobbyData?.status} />
 
         {/* Status section (Status & Time & Entry Fee & capacity) */}
         <Box>
@@ -261,6 +326,12 @@ function LobbyPageContent() {
 
       {/* Login modal */}
       <LoginModal open={showLoginModal} onClose={() => setShowLoginModal(false)} />
+
+      {/* Not Allowed modal */}
+      <NotAllowedModal
+        open={showNotAllowedModal}
+        onClose={() => setShowNotAllowedModal(false)}
+      />
     </Box>
   );
 }
@@ -281,6 +352,12 @@ export default function LobbyPage() {
     gameMode: 'جایگاهی',
     teamType: '4 نفره',
     teamCapacity: 4,
+    allowed_ranks: [
+      { id: 4, name: 'آماتور', rank: 4 },
+      { id: 3, name: 'پرو', rank: 3 },
+      { id: 2, name: 'مستر', rank: 2 },
+      { id: 1, name: 'لجند', rank: 1 },
+    ],
   });
 
   // Load lobby data when lobbyId changes
@@ -299,6 +376,12 @@ export default function LobbyPage() {
           gameMode: loadedLobby.gameMode,
           teamType: loadedLobby.teamType,
           teamCapacity: loadedLobby.teamCapacity,
+          allowed_ranks: loadedLobby.allowed_ranks || [
+            { id: 4, name: 'آماتور', rank: 4 },
+            { id: 3, name: 'پرو', rank: 3 },
+            { id: 2, name: 'مستر', rank: 2 },
+            { id: 1, name: 'لجند', rank: 1 },
+          ],
         });
       }
     }
