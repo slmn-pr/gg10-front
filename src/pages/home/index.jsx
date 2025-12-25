@@ -89,6 +89,11 @@ const HomePage = () => {
         spacing={1}
         sx={{ width: '100%' }}
       >
+        {/* Game Mode */}
+        <Box mb={1} px={2}>
+          <GameModeSelector />
+        </Box>
+        
         {/* Sticky Header */}
         <Box
           ref={stickyHeaderRef}
@@ -102,11 +107,6 @@ const HomePage = () => {
             width: '100%',
           }}
         >
-          {/* Game Mode */}
-          <Box mb={1} px={2}>
-            <GameModeSelector />
-          </Box>
-
           {/* Filters */}
           <Box>
             <HomeFilters />
