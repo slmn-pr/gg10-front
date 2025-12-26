@@ -1,102 +1,111 @@
-import { Stack } from '@mui/material';
+import { Stack, useTheme } from '@mui/material';
 import FilterChip from './components/FilterChip';
 import KillChipIcon from '@/components/icons/KillChipIcon';
 import AutoReviveChipIcon from '@/components/icons/AutoReviveChipIcon';
 import SquadChipIcon from '@/components/icons/SquadChipIcon';
 import FiltersDrawer from './FiltersDrawer';
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef } from 'react';
+import { useCallback, useMemo } from 'react';
 import BattleRoyalFilterForm from './BattleRoyalFilterForm';
 import { useSearchParams } from 'react-router-dom';
 import MultiplayerFilterForm from './MultiplayerFilterForm';
-import { BATTLE_ROYAL_DEFAULT_VALUES, MULTIPLAYER_DEFAULT_VALUES } from './conts';
-import { useTheme } from '@mui/material/styles';
 import SearchAndDestroyIcon from '@/components/icons/chip/SearchAndDestroyIcon';
 import { FormProvider, useForm } from 'react-hook-form';
-import { motion, useMotionValue } from 'framer-motion';
+import { motion } from 'framer-motion';
 import HardPointIcon from '@/components/icons/HardPointIcon';
 import MyLobbiesRankIcon from '@/components/icons/MyLobbiesRankIcon';
+import getDefaultValueNames from './utils';
+import useSmoothHorizentalScroll from './hooks/useSmoothHorizentalScroll';
 
-// Complete filter map organized by game mode
-const filterMap = {
-  'battle-royal': {
-    solo: 'سولو',
-    double: 'دابل',
-    trios: 'تریو',
-    squad: 'اسکوادی',
-    killie: 'کیلی',
-    ranked: 'جایگاهی',
-    tagie: 'تگی',
-    autoRevive: 'اتو ریوایو',
-    freeLobby: 'لابی های رایگان',
-    rankOnlyLobby: 'لابی های با رنک مجاز من',
-  },
-  multiplayer: {
-    searchAndDistro: 'سرچ اند دیستروی',
-    hardpoint: 'هاردپوینت',
-    freeForAll: 'فری فور آل',
-    duo: 'دوئل',
-    freeLobby: 'لابی های رایگان',
-    rankOnlyLobby: 'لابی های با رنک مجاز من',
-    myRankLobbies: 'لابی های رنک من',
-  },
-};
-
-// Legacy map for backward compatibility (can be removed if not used elsewhere)
-const selectedFIlterMap = {
-  ...filterMap['battle-royal'],
-  ...filterMap['multiplayer'],
-};
+// Placeholder icons for filters that don't have icons yet
+// TODO: Replace with actual icons when available
+const SoloChipIcon = SquadChipIcon;
+const DoubleChipIcon = SquadChipIcon;
+const TriosChipIcon = SquadChipIcon;
+const RankedChipIcon = KillChipIcon;
+const TagieChipIcon = AutoReviveChipIcon;
+const FreeLobbyChipIcon = KillChipIcon;
+const RankOnlyLobbyChipIcon = MyLobbiesRankIcon;
+const FreeForAllChipIcon = HardPointIcon;
+const DuoChipIcon = SquadChipIcon;
 
 const suggestedFilters = {
-  'battle-royal': [
-    { label: 'کیلی', icon: KillChipIcon, key: 'killie' },
-    { label: 'اتوریوایو', icon: AutoReviveChipIcon, key: 'autoRevive' },
-    { label: 'اسکوادی', icon: SquadChipIcon, key: 'squad' },
-  ],
-  multiplayer: [
-    {
-      label: 'سرچ اند دیستروی',
-      icon: SearchAndDestroyIcon,
-      key: 'searchAndDistro',
-    },
-    { label: 'هاردپوینت', icon: HardPointIcon, key: 'hardpoint' },
-    { label: 'لابی های رنک من', icon: MyLobbiesRankIcon, key: 'myRankLobbies' },
-  ],
+  'battle-royal': {
+    suggested: [
+      { label: 'کیلی', icon: KillChipIcon, key: 'killie' },
+      { label: 'اتوریوایو', icon: AutoReviveChipIcon, key: 'autoRevive' },
+      { label: 'اسکوادی', icon: SquadChipIcon, key: 'squad' },
+    ],
+    all: [
+      { label: 'سولو', icon: SoloChipIcon, key: 'solo' },
+      { label: 'دابل', icon: DoubleChipIcon, key: 'double' },
+      { label: 'تریو', icon: TriosChipIcon, key: 'trios' },
+      { label: 'اسکوادی', icon: SquadChipIcon, key: 'squad' },
+      { label: 'کیلی', icon: KillChipIcon, key: 'killie' },
+      { label: 'جایگاهی', icon: RankedChipIcon, key: 'ranked' },
+      { label: 'تگی', icon: TagieChipIcon, key: 'tagie' },
+      { label: 'اتو ریوایو', icon: AutoReviveChipIcon, key: 'autoRevive' },
+      { label: 'لابی های رایگان', icon: FreeLobbyChipIcon, key: 'freeLobby' },
+      {
+        label: 'لابی های با رنک مجاز من',
+        icon: RankOnlyLobbyChipIcon,
+        key: 'rankOnlyLobby',
+      },
+    ],
+  },
+  multiplayer: {
+    suggested: [
+      {
+        label: 'سرچ اند دیستروی',
+        icon: SearchAndDestroyIcon,
+        key: 'searchAndDistro',
+      },
+      { label: 'هاردپوینت', icon: HardPointIcon, key: 'hardpoint' },
+      { label: 'لابی های رنک من', icon: MyLobbiesRankIcon, key: 'myRankLobbies' },
+    ],
+    all: [
+      { label: 'سرچ اند دیستروی', icon: SearchAndDestroyIcon, key: 'searchAndDistro' },
+      { label: 'هاردپوینت', icon: HardPointIcon, key: 'hardpoint' },
+      { label: 'فری فور آل', icon: FreeForAllChipIcon, key: 'freeForAll' },
+      { label: 'دوئل', icon: DuoChipIcon, key: 'duo' },
+      { label: 'لابی های رایگان', icon: FreeLobbyChipIcon, key: 'freeLobby' },
+      {
+        label: 'لابی های با رنک مجاز من',
+        icon: RankOnlyLobbyChipIcon,
+        key: 'rankOnlyLobby',
+      },
+      { label: 'لابی های رنک من', icon: MyLobbiesRankIcon, key: 'myRankLobbies' },
+    ],
+  },
+};
+
+/**
+ * Get filter info by key from the all filters array
+ */
+const getFilterByKey = (gameMode, key) => {
+  return suggestedFilters[gameMode]?.all.find((filter) => filter.key === key);
 };
 
 export default function HomeFilters() {
-  const containerRef = useRef(null);
   const theme = useTheme();
   const [searchParams, setSearchParams] = useSearchParams();
-  const startScrollRef = useRef(0);
-  const startXRef = useRef(0);
-  const x = useMotionValue(0);
-  const isDraggingRef = useRef(false);
 
-  // Detect if device supports touch (disable drag on touch devices for native scrolling)
-  const isTouchDevice = useMemo(() => {
-    return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-  }, []);
+  // Use custom hook for horizontal scroll logic
+  const { containerRef, motionProps, scrollStyles } = useSmoothHorizentalScroll();
 
   const gameMode = useMemo(
-    () => (searchParams.get('game_mode') ? searchParams.get('game_mode') : 'multiplayer'),
+    () => searchParams.get('game_mode') || 'multiplayer',
     [searchParams],
   );
 
-  const defaultValueNames = useMemo(() => {
-    return gameMode === 'multiplayer'
-      ? Object.keys(MULTIPLAYER_DEFAULT_VALUES)
-      : Object.keys(BATTLE_ROYAL_DEFAULT_VALUES);
-  }, [gameMode]);
+  const defaultValueNames = useMemo(() => getDefaultValueNames(gameMode), [gameMode]);
 
-  // console.log('[HomeFilters] defaultValues', defaultValues);
-
+  // Load filter values from search params
   const defaultValues = useMemo(() => {
-    const defaultValues = {};
+    const values = {};
     defaultValueNames.forEach((name) => {
-      defaultValues[name] = searchParams.get(name) === 'true';
+      values[name] = searchParams.get(name) === 'true';
     });
-    return defaultValues;
+    return values;
   }, [defaultValueNames, searchParams]);
 
   const methods = useForm({ defaultValues, mode: 'onChange' });
@@ -104,335 +113,98 @@ export default function HomeFilters() {
   const toggleFilter = useCallback(
     (filter) => {
       const newParams = new URLSearchParams(searchParams);
-      const has = newParams.has(filter.key);
-      const newValue = !has;
+      const isActive = newParams.get(filter.key) === 'true';
 
-      if (has) {
+      if (isActive) {
         newParams.delete(filter.key);
       } else {
         newParams.set(filter.key, 'true');
       }
 
-      // Update form value first to prevent sync effect from resetting
-      methods.setValue(filter.key, newValue, {
+      // Update form value to keep it in sync
+      methods.setValue(filter.key, !isActive, {
         shouldValidate: false,
         shouldDirty: false,
       });
 
-      // Update searchParams - this will trigger the sync effect, but form is already updated
       setSearchParams(newParams, { replace: true });
     },
     [searchParams, setSearchParams, methods],
   );
 
-  const selectedFiltersExceptSuggested = useMemo(() => {
-    const result = [];
-    const suggestedKeys = suggestedFilters[gameMode]?.map((filter) => filter.key) || [];
+  // Get active filters that are not in suggested list
+  const activeNonSuggestedFilters = useMemo(() => {
+    const suggestedKeys = suggestedFilters[gameMode]?.suggested.map((f) => f.key) || [];
+    const allFilters = suggestedFilters[gameMode]?.all || [];
 
-    // Get all active filter keys from searchParams
-    defaultValueNames.forEach((key) => {
-      const isActive = searchParams.get(key) === 'true';
-      const isNotSuggested = !suggestedKeys.includes(key);
+    // Get all active filter keys from search params
+    const activeKeys = defaultValueNames.filter(
+      (key) => searchParams.get(key) === 'true' && !suggestedKeys.includes(key),
+    );
 
-      if (isActive && isNotSuggested) {
-        result.push(key);
-      }
-    });
-
-    return result;
+    // Map to filter objects from the all array
+    return activeKeys
+      .map((key) => allFilters.find((filter) => filter.key === key))
+      .filter(Boolean); // Remove undefined entries
   }, [searchParams, gameMode, defaultValueNames]);
 
-  // Only reset form when gameMode changes
-  // This prevents race conditions when toggling filters
-  const prevGameModeRef = useRef(gameMode);
-  useEffect(() => {
-    // Reset form when gameMode changes
-    if (prevGameModeRef.current !== gameMode) {
-      methods.reset(defaultValues);
-      prevGameModeRef.current = gameMode;
-    }
-  }, [gameMode, defaultValues, methods]);
-
-  // Sync form with searchParams when they change externally (e.g., browser back button)
-  // Only sync if searchParams changed but form wasn't updated via toggleFilter
-  const prevSearchParamsRef = useRef(searchParams.toString());
-  useEffect(() => {
-    const currentParamsString = searchParams.toString();
-    // Only sync if searchParams changed externally (not from our toggleFilter)
-    if (prevSearchParamsRef.current !== currentParamsString) {
-      // Check if form values differ from searchParams for any filter
-      const currentFormValues = methods.getValues();
-      const needsSync = defaultValueNames.some((key) => {
-        const searchParamValue = searchParams.get(key) === 'true';
-        const formValue = !!currentFormValues[key];
-        return formValue !== searchParamValue;
-      });
-
-      if (needsSync) {
-        // Reset form with current searchParams values
-        methods.reset(defaultValues);
-      }
-      prevSearchParamsRef.current = currentParamsString;
-    }
-  }, [searchParams, defaultValueNames, methods, defaultValues]);
-
-  // Reset transform to prevent visual movement during drag
-  useLayoutEffect(() => {
-    if (!containerRef.current) return;
-
-    let rafId;
-    const resetTransform = () => {
-      if (containerRef.current && isDraggingRef.current) {
-        // Reset any transform applied by Framer Motion
-        const transform = containerRef.current.style.transform;
-        if (transform && transform !== 'translateX(0px) translateZ(0px)') {
-          containerRef.current.style.transform = 'translateX(0px) translateZ(0px)';
-        }
-      }
-      if (isDraggingRef.current) {
-        rafId = requestAnimationFrame(resetTransform);
-      }
-    };
-
-    // Only start the loop when dragging starts
-    const checkDrag = () => {
-      if (isDraggingRef.current) {
-        rafId = requestAnimationFrame(resetTransform);
-      }
-    };
-
-    // Check periodically if dragging started
-    const intervalId = setInterval(checkDrag, 16);
-
-    return () => {
-      if (rafId) {
-        cancelAnimationFrame(rafId);
-      }
-      clearInterval(intervalId);
-    };
-  }, []);
-
-  // Add mouse wheel support for horizontal scrolling on desktop
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const handleWheel = (e) => {
-      // Only handle horizontal wheel scrolling (Shift + wheel or horizontal trackpad)
-      if (Math.abs(e.deltaX) > Math.abs(e.deltaY) || e.shiftKey) {
-        e.preventDefault();
-        const isRtl = window.getComputedStyle(container).direction === 'rtl';
-        const scrollDelta = isRtl ? -e.deltaX : e.deltaX;
-
-        // Use smooth scrolling
-        container.scrollBy({
-          left: scrollDelta,
-          behavior: 'smooth',
-        });
-      }
-    };
-
-    container.addEventListener('wheel', handleWheel, { passive: false });
-
-    return () => {
-      container.removeEventListener('wheel', handleWheel);
-    };
-  }, []);
-
-  // Helper to get normalized scroll position
-  const getScrollPosition = useCallback(() => {
-    if (!containerRef.current) return 0;
-    const el = containerRef.current;
-    const isRtl = window.getComputedStyle(el).direction === 'rtl';
-    const maxScroll = Math.max(0, el.scrollWidth - el.clientWidth);
-
-    if (isRtl) {
-      // In RTL, scrollLeft can be negative
-      return el.scrollLeft <= 0 ? Math.abs(el.scrollLeft) : maxScroll - el.scrollLeft;
-    }
-    return el.scrollLeft || 0;
-  }, []);
-
-  // Helper to set scroll position
-  const setScrollPosition = useCallback((position) => {
-    if (!containerRef.current) return;
-    const el = containerRef.current;
-    const isRtl = window.getComputedStyle(el).direction === 'rtl';
-    const maxScroll = Math.max(0, el.scrollWidth - el.clientWidth);
-    const boundedPos = Math.max(0, Math.min(maxScroll, position));
-
-    if (isRtl) {
-      el.scrollLeft = -boundedPos;
-    } else {
-      el.scrollLeft = boundedPos;
-    }
-  }, []);
+  // Get suggested filters for current game mode
+  const suggestedFiltersList = useMemo(
+    () => suggestedFilters[gameMode]?.suggested || [],
+    [gameMode],
+  );
 
   return (
-    <>
-      <Stack
-        component={motion.div}
-        direction="row"
-        gap={1}
-        drag={isTouchDevice ? false : 'x'}
-        dragElastic={0}
-        dragMomentum={false}
-        dragPropagation={false}
-        // Only enable drag on desktop (mouse), not on touch devices
-        dragConstraints={false}
-        style={{ x }}
-        onDragStart={(event, info) => {
-          // Only handle mouse drag, let touch devices use native scroll
-          if (event.type === 'touchstart' || event.type === 'touchmove') {
-            return;
-          }
-          if (containerRef.current) {
-            const el = containerRef.current;
-            isDraggingRef.current = true;
-            startScrollRef.current = getScrollPosition();
-            startXRef.current = info.point.x;
-            el.style.scrollBehavior = 'auto';
-            // Reset transform to prevent visual movement
-            x.set(0);
-          }
-        }}
-        onDrag={(event, info) => {
-          // Skip touch events - let native scrolling handle them
-          if (event.type === 'touchstart' || event.type === 'touchmove') {
-            return;
-          }
-          if (containerRef.current) {
-            // Reset transform immediately to prevent visual movement
-            x.set(0);
+    <Stack
+      component={motion.div}
+      direction="row"
+      gap={1}
+      ref={containerRef}
+      {...motionProps}
+      sx={scrollStyles}
+    >
+      {/* Filters Drawer */}
+      <FormProvider {...methods}>
+        <FiltersDrawer>
+          {gameMode === 'multiplayer' ? (
+            <MultiplayerFilterForm />
+          ) : (
+            <BattleRoyalFilterForm />
+          )}
+        </FiltersDrawer>
+      </FormProvider>
 
-            const deltaX = info.point.x - startXRef.current;
-            const isRtl =
-              window.getComputedStyle(containerRef.current).direction === 'rtl';
-            // Invert direction for RTL
-            const scrollDelta = isRtl ? deltaX : -deltaX;
-            const newScroll = startScrollRef.current + scrollDelta;
-            setScrollPosition(newScroll);
-          }
-        }}
-        onDragEnd={(event, info) => {
-          // Skip touch events
-          if (event.type === 'touchend' || event.type === 'touchcancel') {
-            return;
-          }
-          if (containerRef.current) {
-            isDraggingRef.current = false;
-            // Ensure transform is reset
-            x.set(0);
-            containerRef.current.style.scrollBehavior = 'smooth';
+      {/* Active filters that are not suggested */}
+      {activeNonSuggestedFilters.map((filter) => {
+        const active = searchParams.get(filter.key) === 'true';
+        const iconColor = active ? theme.palette.custom.blackOnPrimary : 'white';
 
-            // Apply momentum scrolling based on velocity (only for mouse drag)
-            const velocity = info.velocity.x;
-            if (Math.abs(velocity) > 100) {
-              const currentScroll = getScrollPosition();
-              const isRtl =
-                window.getComputedStyle(containerRef.current).direction === 'rtl';
-              // Convert velocity to scroll delta (invert for RTL)
-              const velocityDelta = isRtl ? velocity * 0.3 : -velocity * 0.3;
-              const targetScroll = currentScroll + velocityDelta;
+        return (
+          <FilterChip
+            key={filter.key}
+            active={active}
+            icon={filter.icon && <filter.icon color={iconColor} />}
+            label={filter.label}
+            onClick={() => toggleFilter(filter)}
+          />
+        );
+      })}
 
-              // Animate to target scroll position
-              const startPos = currentScroll;
-              const endPos = targetScroll;
-              const duration = Math.min(0.5, Math.abs(velocityDelta) / 1000);
+      {/* Suggested filters */}
+      {suggestedFiltersList.map((filter) => {
+        const active = searchParams.get(filter.key) === 'true';
+        const iconColor = active ? theme.palette.custom.blackOnPrimary : 'white';
 
-              let startTime = null;
-              const animateScroll = (timestamp) => {
-                if (!startTime) startTime = timestamp;
-                const progress = Math.min((timestamp - startTime) / (duration * 1000), 1);
-                const easeProgress = 1 - Math.pow(1 - progress, 3); // easeOut cubic
-                const currentPos = startPos + (endPos - startPos) * easeProgress;
-                setScrollPosition(currentPos);
-
-                if (progress < 1) {
-                  requestAnimationFrame(animateScroll);
-                } else {
-                  // Restore smooth scroll behavior after animation
-                  if (containerRef.current) {
-                    containerRef.current.style.scrollBehavior = 'smooth';
-                  }
-                }
-              };
-              requestAnimationFrame(animateScroll);
-            } else {
-              // Restore smooth scroll behavior immediately if no momentum
-              containerRef.current.style.scrollBehavior = 'smooth';
-            }
-          }
-        }}
-        whileDrag={isTouchDevice ? {} : { cursor: 'grabbing' }}
-        ref={containerRef}
-        sx={{
-          direction: 'rtl',
-          pb: 1,
-          overflowX: 'auto',
-          overflowY: 'hidden',
-          whiteSpace: 'nowrap',
-          cursor: isTouchDevice ? 'default' : 'grab',
-          userSelect: 'none',
-          scrollSnapType: 'x mandatory',
-          '& > *': {
-            scrollSnapAlign: 'center',
-          },
-          scrollbarWidth: 'none',
-          '&::-webkit-scrollbar': { display: 'none' },
-          // Enhanced smooth scrolling for mobile and desktop
-          WebkitOverflowScrolling: 'touch', // iOS smooth scrolling
-          scrollBehavior: 'smooth', // CSS smooth scrolling
-          // Enable momentum scrolling on iOS
-          '-webkit-overflow-scrolling': 'touch',
-          // Prevent scroll chaining
-          overscrollBehaviorX: 'contain',
-          // Smooth scrolling for Firefox
-          scrollPadding: 0,
-        }}
-      >
-        {/* Filters Drawer */}
-        <FormProvider {...methods}>
-          <FiltersDrawer>
-            {gameMode === 'multiplayer' ? (
-              <MultiplayerFilterForm />
-            ) : (
-              <BattleRoyalFilterForm />
-            )}
-          </FiltersDrawer>
-        </FormProvider>
-
-        {/* Also render selected filters except suggested filters */}
-        {selectedFiltersExceptSuggested.map((key) => {
-          const active = searchParams.get(key) === 'true';
-          const label = filterMap[gameMode]?.[key] || selectedFIlterMap[key] || key;
-
-          return (
-            <FilterChip
-              active={active}
-              key={key}
-              label={label}
-              onClick={() => toggleFilter({ key })}
-            />
-          );
-        })}
-
-        {/* Filters Chips */}
-        {suggestedFilters[gameMode]?.map((filter) => {
-          const active = searchParams.get(filter.key) === 'true';
-          const iconColor = active ? theme.palette.custom.blackOnPrimary : 'white';
-
-          return (
-            <FilterChip
-              active={active}
-              key={filter.label}
-              icon={<filter.icon color={iconColor} />}
-              label={filter.label}
-              onClick={() => toggleFilter(filter)}
-            />
-          );
-        })}
-      </Stack>
-    </>
+        return (
+          <FilterChip
+            key={filter.key}
+            active={active}
+            icon={<filter.icon color={iconColor} />}
+            label={filter.label}
+            onClick={() => toggleFilter(filter)}
+          />
+        );
+      })}
+    </Stack>
   );
 }

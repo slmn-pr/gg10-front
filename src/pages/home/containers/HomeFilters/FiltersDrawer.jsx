@@ -1,7 +1,7 @@
 import { Drawer, Typography, Box, Stack, Button, IconButton } from '@mui/material';
 import FilterChip from './components/FilterChip';
 import FilterChipIcon from '@/components/icons/FilterChipIcon';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import CloseIcon from '@/components/icons/general/CloseIcon';
 import { useSearchParams } from 'react-router-dom';
 import { BATTLE_ROYAL_DEFAULT_VALUES, MULTIPLAYER_DEFAULT_VALUES } from './conts';
@@ -67,17 +67,34 @@ export default function FiltersDrawer({ children }) {
   const isDiabled = Object.values(formValues).every((value) => value === false);
 
   // Clean up old filter params when gameMode changes
+  // Only remove filters from the PREVIOUS game mode, not the current one
+  const prevGameModeRef = useRef(gameMode);
   useEffect(() => {
-    const sources =
-      gameMode === 'multiplayer'
+    // Only run when gameMode actually changes
+    if (prevGameModeRef.current === gameMode) {
+      return;
+    }
+
+    const previousGameMode = prevGameModeRef.current;
+
+    // Get filters from the PREVIOUS game mode to remove
+    const filtersToRemove =
+      previousGameMode === 'multiplayer'
         ? BATTLE_ROYAL_DEFAULT_VALUES
         : MULTIPLAYER_DEFAULT_VALUES;
-    const newParams = new URLSearchParams(searchParams);
-    Object.keys(sources).forEach((key) => {
-      newParams.delete(key);
+
+    // Remove only filters from the previous game mode
+    setSearchParams((prevParams) => {
+      const newParams = new URLSearchParams(prevParams);
+      Object.keys(filtersToRemove).forEach((key) => {
+        newParams.delete(key);
+      });
+      return newParams;
     });
-    setSearchParams(newParams, { replace: true });
-  }, [gameMode, searchParams, setSearchParams]);
+
+    // Update the ref to current gameMode
+    prevGameModeRef.current = gameMode;
+  }, [gameMode, setSearchParams]);
 
   return (
     <>

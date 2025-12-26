@@ -1,13 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-
-import ExpandChevronIcon from '@/assets/icons/general/chevron-back.svg';
+import { useEffect, useRef, useState } from 'react';
+import {
+  Box,
+  Stack,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  useTheme,
+} from '@mui/material';
 
 import LobbyCard from './components/lobby-card.jsx';
 import UserStats from './containers/UserStats.jsx';
@@ -16,24 +15,8 @@ import GameModeSelector from './components/GameModeTab.jsx';
 import HomeFilters from './containers/HomeFilters/index.jsx';
 import ChevronUpIcon from '@/components/icons/ChevronUp.jsx';
 import LobbyCardHeader from './components/LobbyCardHeader.jsx';
-import { useTheme } from '@mui/material';
 import BottomNav from '@/components/layout/bottom-navigation.jsx';
 import { myLobbiesMockData, allLobbiesMockData } from './_mock.js';
-
-const SvgIcon = ({ src, sx, ...props }) => (
-  <Box
-    component="img"
-    src={src}
-    sx={{
-      width: '1em',
-      height: '1em',
-      display: 'inline-block',
-      verticalAlign: 'middle',
-      ...sx,
-    }}
-    {...props}
-  />
-);
 
 const HomePage = () => {
   const [myLobbiesExpanded, setMyLobbiesExpanded] = useState(true);
@@ -103,14 +86,10 @@ const HomePage = () => {
             top: 56,
             zIndex: 999,
             pt: 1,
-            // px: 2,
             width: '100%',
           }}
         >
-          {/* Filters */}
-          <Box>
-            <HomeFilters />
-          </Box>
+          <HomeFilters />
         </Box>
 
         <Box>
