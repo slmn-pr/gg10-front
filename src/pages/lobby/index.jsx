@@ -30,6 +30,9 @@ import LoginModal from '@/components/modal/LoginModal';
 import NotAllowedModal from './components/NotAllowedModal';
 import ShowLobbyIdModal from './components/ShowLobbyIdModal';
 import { getStatusPalette } from '../home/utils';
+import toast from 'react-hot-toast';
+import CloseIcon from '@/components/icons/general/CloseIcon';
+import CustomToast from '@/components/toast/CustomToast';
 
 const filterItems = [
   { key: 'results', label: 'نتایج' },
@@ -145,7 +148,11 @@ function LobbyPageContent() {
   // when called copy lobby link in clipboard and show success mui snackbar
   const handleShare = useCallback(() => {
     navigator.clipboard.writeText(lobbyData.link);
-    setSnackbarOpen(true);
+    toast.custom((t) => <CustomToast t={t} message="لینک لابی کپی شد" theme={theme} />, {
+      position: 'bottom-center',
+      duration: 3000,
+    });
+    // setSnackbarOpen(true);
   }, [lobbyData.link]);
 
   // Memoize navigation handler to prevent re-renders

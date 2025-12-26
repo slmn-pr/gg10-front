@@ -1,3 +1,10 @@
+import AutoReviveChipIcon from '@/components/icons/AutoReviveChipIcon';
+import SearchAndDestroyIcon from '@/components/icons/chip/SearchAndDestroyIcon';
+import HardPointIcon from '@/components/icons/HardPointIcon';
+import KillChipIcon from '@/components/icons/KillChipIcon';
+import MyLobbiesRankIcon from '@/components/icons/MyLobbiesRankIcon';
+import SquadChipIcon from '@/components/icons/SquadChipIcon';
+
 export const MULTIPLAYER_DEFAULT_VALUES = {
   searchAndDistro: false,
   hardpoint: false,

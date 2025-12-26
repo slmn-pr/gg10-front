@@ -13,7 +13,6 @@ createRoot(document.getElementById('root')).render(
       <MUIThemeProvider>
         <BrowserRouter>
           <App />
-          <Toaster position="bottom-center" />
         </BrowserRouter>
       </MUIThemeProvider>
     </RTLProvider>

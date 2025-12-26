@@ -1,13 +1,11 @@
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import TopBar from './top-bar';
-import BottomNav from './bottom-navigation';
 import { Outlet } from 'react-router-dom';
 import mainTheme from '@/theme/index.js';
-import { Alert, CssBaseline, Snackbar, ThemeProvider, Typography } from '@mui/material';
-import useOnlineStatus from '@/hooks/useOnlineStatus';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 import OfflineSnakbar from '../OfflineSnakbar';
-import ErrorSnakBar from '../snackbar/ErrorSnakBar';
+import { Toaster } from 'react-hot-toast';
 
 const MainLayout = () => {
   return (
@@ -58,6 +56,8 @@ const MainLayout = () => {
           </Box>
         </Container>
       </Box>
+
+      <Toaster position="bottom-center" />
     </ThemeProvider>
   );
 };
