@@ -1,30 +1,7 @@
 import { Box, Stack, Typography } from '@mui/material';
 import { useState } from 'react';
 import NoResultIcon from './NoResultIcon';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination } from 'swiper/modules';
 import ResultSlider from './ResultSlider';
-
-const sliderItems = [
-  {
-    id: 1,
-    image: 'https://m.media-amazon.com/images/I/71P-hM1d7XL._SX679_.jpg',
-    title: 'Item 1',
-  },
-
-  {
-    id: 2,
-    image: 'https://m.media-amazon.com/images/I/71P-hM1d7XL._SX679_.jpg',
-    title: 'Item 2',
-  },
-
-  {
-    id: 3,
-    image:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYWJgwzbZmDbken0mXjc4idbPF-3HRilVQvw&s',
-    title: 'Item 3',
-  },
-];
 
 export default function ResultsSection() {
   const [content, setContent] = useState('Hello');
@@ -46,7 +23,7 @@ export default function ResultsSection() {
       )}
 
       {content && (
-        <Stack spacing={2} sx={{zIndex: 1000}}>
+        <Stack spacing={2} sx={{ zIndex: 1000 }}>
           <Typography
             component="p"
             variant="title3"
