@@ -60,7 +60,7 @@ export default function ResultSlider() {
 
   return (
     <>
-      <Box sx={{ width: '344px' }}>
+      <Box sx={{ width: '100%' }}>
         <SliderWrapper>
           {sliderItems.map((item, index) => (
             <SwiperSlide
@@ -147,6 +147,8 @@ export default function ResultSlider() {
           <Box
             sx={{
               width: '100%',
+              mt: 8,
+              mb: 12,
               flex: 1,
               display: 'flex',
               alignItems: 'center',
@@ -161,7 +163,7 @@ export default function ResultSlider() {
               <>
                 <Box sx={{ position: 'relative', width: '100%' }}>
                   {/* Selected Image */}
-                  <Box sx={{ position: 'relative' }}>
+                  <Box sx={{ position: 'relative', p: 0.5 }}>
                     <img
                       src={selectedImage.image}
                       alt={selectedImage.title}
@@ -195,6 +197,7 @@ export default function ResultSlider() {
                         onClick={handlePrev}
                         sx={{
                           borderRadius: '4px',
+                          transform: 'translateX(10px)',
                           padding: '0',
                           backgroundColor: theme.palette.custom.gray1,
                           hover: {
@@ -213,6 +216,7 @@ export default function ResultSlider() {
                         onClick={handleNext}
                         sx={{
                           borderRadius: '4px',
+                          transform: 'translateX(-10px)',
                           padding: '0',
                           backgroundColor: theme.palette.custom.gray1,
                           hover: {
