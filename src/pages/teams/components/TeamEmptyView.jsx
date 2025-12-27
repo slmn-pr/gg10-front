@@ -1,6 +1,13 @@
 import { Box, Button, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 export default function TeamEmptyView() {
+  const navigate = useNavigate();
+
+  const handleCreateTeam = () => {
+    navigate('/teams/create');
+  };
+
   return (
     <Box
       sx={{ mx: '14px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
@@ -21,6 +28,7 @@ export default function TeamEmptyView() {
         variant="contained"
         color="primary"
         sx={{ width: '252px', height: '40px', mt: '12px' }}
+        onClick={handleCreateTeam}
       >
         <Typography variant="button1">+ ساخت تیم جدید </Typography>
       </Button>

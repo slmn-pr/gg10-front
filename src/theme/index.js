@@ -336,7 +336,13 @@ const theme = createTheme({
         dir: 'rtl',
       },
       styleOverrides: {
-        root: { borderRadius: '8px' },
+        root: ({ theme }) => ({
+          borderRadius: '8px',
+          '&.Mui-disabled': {
+            backgroundColor: theme.palette.custom.grey2,
+            color: theme.palette.custom.white,
+          },
+        }),
         startIcon: {
           marginRight: -4, // -4px
           marginLeft: '8px',
@@ -413,6 +419,44 @@ const theme = createTheme({
             outline: 'none',
           },
         },
+      },
+    },
+
+    MuiFormControl: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          width: '100%',
+          '& .MuiFormHelperText-root': {
+            textAlign: 'right',
+            display: 'block',
+            mt: '4px',
+            mx: '16px',
+            color: 'white',
+            fontSize: theme.typography.sub2.fontSize,
+            lineHeight: theme.typography.sub2.lineHeight,
+            fontWeight: theme.typography.sub2.fontWeight,
+          },
+        }),
+      },
+    },
+
+    MuiTextField: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          direction: 'rtl',
+          textAlign: 'right',
+          // backgroundColor: 'white',
+          color: theme.palette.custom.grey3,
+          '& .MuiInputBase-root': {
+            backgroundColor: 'white',
+            color: theme.palette.custom.grey3,
+
+            // font variant -> title3
+            fontSize: theme.typography.title3.fontSize,
+            lineHeight: theme.typography.title3.lineHeight,
+            fontWeight: theme.typography.title3.fontWeight,
+          },
+        }),
       },
     },
   },

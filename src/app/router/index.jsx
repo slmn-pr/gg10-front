@@ -8,6 +8,7 @@ import MainLayout from '@/components/layout/main-layout.jsx';
 import NotificationsPage from '@/pages/notifications/index.jsx';
 import LobbyPage from '@/pages/lobby/index.jsx';
 import TeamsPage from '@/pages/teams/index.jsx';
+import CreateTeamPage from '@/pages/create_team/index.jsx';
 import useScrollTop from '@/hooks/useScrollTop.js';
 import { Box } from '@mui/material';
 
@@ -19,7 +20,12 @@ const AppRouter = () => {
         <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/lobby" element={<LobbyPage />} />
-        <Route path="/teams" element={<TeamsPage />} />
+        {/* TEAMS ROUTES */}
+        <Route path="/teams">
+          <Route index element={<TeamsPage />} />
+          <Route path="create" element={<CreateTeamPage />} />
+        </Route>
+
         <Route path="/notifications" element={<NotificationsPage />} />
         <Route path="/user/profile" element={<UserProfilePage />} />
         <Route
