@@ -30,6 +30,7 @@ export default function LoginModal({ open, onClose }) {
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
+            border: 'none',
           }}
         >
           <AuthIcon />

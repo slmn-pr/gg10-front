@@ -93,10 +93,20 @@ const theme = createTheme({
     },
     body1: {
       fontFamily: `'Estedad-FD', sans-serif`,
+      fontSize: '20px',
+      lineHeight: '40px',
       fontWeight: 400,
     },
     body2: {
       fontFamily: `'Estedad-FD', sans-serif`,
+      fontSize: '16px',
+      lineHeight: '32px',
+      fontWeight: 400,
+    },
+    body3: {
+      fontFamily: `'Estedad-FD', sans-serif`,
+      fontSize: '14px',
+      lineHeight: '28px',
       fontWeight: 400,
     },
     caption1: {
@@ -343,6 +353,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           direction: 'rtl',
+          textAlign: 'right',
         },
       },
     },
@@ -396,6 +407,10 @@ const theme = createTheme({
         root: {
           '& .MuiBackdrop-root': {
             backdropFilter: 'blur(2px)',
+          },
+          '& > .MuiBox-root': {
+            border: 'none',
+            outline: 'none',
           },
         },
       },

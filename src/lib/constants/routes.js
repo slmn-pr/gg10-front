@@ -3,4 +3,5 @@ export const ROUTES = {
   profile: '/user/profile',
   admin: '/admin',
   login: '/auth/login',
+  teams: '/teams',
 };
