@@ -15,7 +15,7 @@ export const useStep = () => {
 };
 
 export default function AuthPage() {
-  const [step, setStep] = useState(STEP_TYPES.PHONE_NUMBER);
+  const [step, setStep] = useState(STEP_TYPES.OTP_VERIFICATION);
 
   return (
     <Box>
