@@ -1,53 +1,6 @@
-import { Box, FormControl, Stack, TextField, Typography, useTheme } from '@mui/material';
+import { FormControl, TextField, Typography } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
-import { useEffect, useState } from 'react';
-
-const FieldLoading = () => {
-  const theme = useTheme();
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((prevIndex) => (prevIndex + 1) % 3);
-    }, 500);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <Stack direction="row" alignItems="center" justifyContent="center" gap="6px">
-      <Box
-        sx={{
-          width: '8px',
-          height: '8px',
-          borderRadius: '50%',
-          backgroundColor:
-            activeIndex === 0 ? theme.palette.primary.main : theme.palette.custom.grey1,
-        }}
-      ></Box>
-
-      <Box
-        sx={{
-          width: '8px',
-          height: '8px',
-          borderRadius: '50%',
-          backgroundColor:
-            activeIndex === 1 ? theme.palette.primary.main : theme.palette.custom.grey1,
-        }}
-      ></Box>
-
-      <Box
-        sx={{
-          width: '8px',
-          height: '8px',
-          borderRadius: '50%',
-          backgroundColor:
-            activeIndex === 2 ? theme.palette.primary.main : theme.palette.custom.grey1,
-        }}
-      ></Box>
-    </Stack>
-  );
-};
+import InputLoading from './InputLoading';
 
 export default function FormField({
   name,
@@ -84,7 +37,7 @@ export default function FormField({
             error={!!error}
             helperText={errorMessage || helperText}
             InputProps={{
-              endAdornment: showLoading ? <FieldLoading /> : null,
+              endAdornment: showLoading ? <InputLoading /> : null,
               ...textFieldProps.InputProps,
             }}
           />
