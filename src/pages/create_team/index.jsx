@@ -1,4 +1,3 @@
-import ChevronForwardIcon from '@/components/icons/ChevronForward';
 import { Box, Button, Typography, useTheme } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -6,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import FormFieldAutocomplete from '@/components/form/FormFieldAutocomplete';
 import { createTeamSchema } from './schema';
 import TeamNameInput from './components/TeamNameInput';
+import BackwardButton from '@/components/layout/BackwardButton';
 
 export default function CreateTeamPage() {
   const theme = useTheme();
@@ -46,11 +46,7 @@ export default function CreateTeamPage() {
           borderBottom: `1px solid black`,
         }}
       >
-        <Button startIcon={<ChevronForwardIcon color="white" />}>
-          <Typography variant="title2" color="white">
-            ساخت تیم جدید
-          </Typography>
-        </Button>
+        <BackwardButton>ساخت تیم جدید</BackwardButton>
       </Box>
       {/* Content */}
 

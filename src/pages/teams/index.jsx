@@ -7,6 +7,7 @@ import ChevronForwardIcon from '@/components/icons/ChevronForward';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import CustomToast from '@/components/toast/CustomToast';
+import BackwardButton from '@/components/layout/BackwardButton';
 
 export default function TeamsPage() {
   const theme = useTheme();
@@ -22,7 +23,15 @@ export default function TeamsPage() {
 
   useEffect(() => {
     if (state && state.message) {
-      toast.custom((t) => <CustomToast t={t} message={state.message} />);
+      toast.custom((t) => (
+        <CustomToast
+          t={t}
+          message={state.message}
+          onClose={() => {
+            navigate(location.pathname, { replace: true });
+          }}
+        />
+      ));
 
       // append to userTeams
       setUserTeams([
@@ -72,15 +81,10 @@ export default function TeamsPage() {
           borderBottom: `1px solid black`,
         }}
       >
-        <Button startIcon={<ChevronForwardIcon color="white" />}>
-          <Typography variant="button1" color="white">
-            تیم ها
-          </Typography>
-        </Button>
+        <BackwardButton>تیم ها</BackwardButton>
       </Box>
 
       {/* Content */}
-
       <Box sx={{ mt: '60px' }}>{userTeams.length === 0 ? <TeamEmptyView /> : <></>}</Box>
     </Box>
   );
