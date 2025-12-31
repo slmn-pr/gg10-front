@@ -16,6 +16,7 @@ const AppRouter = () => {
   useScrollTop();
   return (
     <Routes>
+      <Route path="/login" element={<LoginPage />} />
       <Route element={<MainLayout />}>
         <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path="/home" element={<HomePage />} />
