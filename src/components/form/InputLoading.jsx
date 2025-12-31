@@ -14,7 +14,7 @@ export default function InputLoading() {
   }, []);
 
   return (
-    <Stack direction="row" alignItems="center" justifyContent="center" gap="6px">
+    <Stack direction="row" alignItems="center" justifyContent="center" gap="6px" p="8px">
       <Box
         sx={{
           width: '8px',

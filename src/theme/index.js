@@ -436,6 +436,14 @@ const theme = createTheme({
             lineHeight: theme.typography.sub2.lineHeight,
             fontWeight: theme.typography.sub2.fontWeight,
           },
+
+          '& .MuiInputBase-root': {
+            paddingLeft: '8px',
+          },
+
+          "& input[aria-invalid='false']": {
+            borderColor: 'green',
+          },
         }),
       },
     },

@@ -8,7 +8,9 @@ export default function FormField({
   placeholder,
   helperText,
   required = false,
-  showLoading = false,
+  endIcon = null,
+  startIcon = null,
+  isLoading = false,
   ...textFieldProps
 }) {
   const { control, formState } = useFormContext();
@@ -36,9 +38,12 @@ export default function FormField({
             sx={{ mt: '8px' }}
             error={!!error}
             helperText={errorMessage || helperText}
-            InputProps={{
-              endAdornment: showLoading ? <InputLoading /> : null,
-              ...textFieldProps.InputProps,
+            slotProps={{
+              input: {
+                endAdornment: endIcon ? endIcon : isLoading ? <InputLoading /> : null,
+                startAdornment: startIcon ? startIcon : null,
+                ...textFieldProps.inputProps,
+              },
             }}
           />
         )}
