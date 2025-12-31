@@ -26,7 +26,13 @@ export default function CreateTeamPage() {
   const onSubmit = (data) => {
     console.log('Form submitted:', data);
     // Navigate to teams page on successful submission
-    navigate('/teams');
+    navigate('/teams', {
+      state: {
+        teamName: data.teamName,
+        teamMembers: data.teamMembers,
+        message: `تیم "${data.teamName}" با موفقیت ساخته شد`,
+      },
+    });
   };
 
   return (
@@ -65,9 +71,8 @@ export default function CreateTeamPage() {
             onSubmit={handleSubmit(onSubmit)}
             sx={{ width: '343px', display: 'flex', flexDirection: 'column', gap: '64px' }}
           >
+            <TeamNameInput />
 
-<TeamNameInput />
-            
             {/* Team members field, take members mobile numbers */}
             <FormFieldAutocomplete
               name="teamMembers"
