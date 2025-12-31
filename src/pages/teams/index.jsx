@@ -1,10 +1,8 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import useAuthStore from '@/store/auth-store';
-import LoginModal from '@/components/modal/LoginModal';
 import { Box, Button, Typography, useTheme } from '@mui/material';
 import TeamEmptyView from './components/TeamEmptyView';
-import ChevronBackward from '@/components/icons/ChevronBackward';
 import ChevronForwardIcon from '@/components/icons/ChevronForward';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -16,7 +14,7 @@ export default function TeamsPage() {
     (state) => state.logged_in && !!state.access_token,
   );
 
-  const [userTeams, setUserTeams] = useState(null);
+  const [userTeams, setUserTeams] = useState([]);
 
   const navigate = useNavigate();
 
@@ -25,6 +23,15 @@ export default function TeamsPage() {
   useEffect(() => {
     if (state && state.message) {
       toast.custom((t) => <CustomToast t={t} message={state.message} />);
+
+      // append to userTeams
+      setUserTeams([
+        ...userTeams,
+        {
+          name: state.teamName,
+          members: state.teamMembers,
+        },
+      ]);
 
       // Clear the state
       navigate(location.pathname, { replace: true });
@@ -74,7 +81,7 @@ export default function TeamsPage() {
 
       {/* Content */}
 
-      <Box sx={{ mt: '60px' }}>{!userTeams ? <TeamEmptyView /> : <></>}</Box>
+      <Box sx={{ mt: '60px' }}>{userTeams.length === 0 ? <TeamEmptyView /> : <></>}</Box>
     </Box>
   );
 }
