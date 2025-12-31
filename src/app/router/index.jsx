@@ -3,7 +3,7 @@ import ProtectedRoute from './protected-route.jsx';
 import HomePage from '@/pages/home/index.jsx';
 import UserProfilePage from '@/pages/user/pages/user-profile-page.jsx';
 import AdminDashboardPage from '@/pages/admin/pages/admin-dashboard-page.jsx';
-import LoginPage from '@/pages/auth/pages/login-page.jsx';
+import LoginPage from '@/pages/auth/login-page.jsx';
 import MainLayout from '@/components/layout/main-layout.jsx';
 import NotificationsPage from '@/pages/notifications/index.jsx';
 import LobbyPage from '@/pages/lobby/index.jsx';
@@ -11,12 +11,13 @@ import TeamsPage from '@/pages/teams/index.jsx';
 import CreateTeamPage from '@/pages/create_team/index.jsx';
 import useScrollTop from '@/hooks/useScrollTop.js';
 import { Box } from '@mui/material';
+import AuthPage from '@/pages/auth/index.jsx';
 
 const AppRouter = () => {
   useScrollTop();
   return (
     <Routes>
-      <Route path="/login" element={<LoginPage />} />
+      <Route path="/login" element={<AuthPage />} />
       <Route element={<MainLayout />}>
         <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path="/home" element={<HomePage />} />
