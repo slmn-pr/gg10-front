@@ -13,9 +13,13 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
+import OtpInput from '../components/OtpInput';
 
 export default function OtpVerificationSection({ phoneNumber = '09123456789' }) {
   const [activeStep, setActiveStep] = useState(0);
+  const [otpValue, setOtpValue] = useState('');
+  const [isValid, setIsValid] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   return (
     <Container
@@ -64,16 +68,21 @@ export default function OtpVerificationSection({ phoneNumber = '09123456789' }) 
       </Box>
 
       {/* Otp section */}
-      <Stack>
+      <Stack mt="60px">
         <Typography component="p" variant="title3">
           کد تایید را وارد کنید
         </Typography>
 
         {/* Change number  */}
         <Box
-          sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            mb: '8px',
+          }}
         >
-          <Button variant="text" color="primary">
+          <Button variant="text" color="primary" size="small">
             <Typography variant="sub1" component="p" color="primary.main">
               تغییر شماره
             </Typography>
@@ -85,10 +94,31 @@ export default function OtpVerificationSection({ phoneNumber = '09123456789' }) 
         </Box>
 
         {/* Otp input */}
-        <Box>{/* <OtpInput /> */}</Box>
+        <Box>
+          <OtpInput
+            value={otpValue}
+            onChange={(value) => {
+              setOtpValue(value);
+              // Reset validation states when user types
+              if (isValid || isError) {
+                setIsValid(false);
+                setIsError(false);
+              }
+            }}
+            onComplete={(value) => {
+              console.log('OTP completed:', value);
+              // TODO: Validate OTP with API
+              // For now, you can set validation states here:
+              // setIsValid(true); // if OTP is correct
+              // setIsError(true); // if OTP is incorrect
+            }}
+            isValid={isValid}
+            isError={isError}
+          />
+        </Box>
 
         {/* Countdown */}
-        <Box>
+        <Box sx={{ mt: '10px' }}>
           <Typography variant="sub3" component="p" color="custom.grey0">
             01:30 تا درخواست مجدد ارسال کد
           </Typography>
@@ -99,7 +129,7 @@ export default function OtpVerificationSection({ phoneNumber = '09123456789' }) 
           variant="contained"
           color="primary"
           sx={{ width: '252px', mx: 'auto', mt: '100px' }}
-          disabled={true}
+          disabled={otpValue.length !== 5}
         >
           <Typography variant="button1" component="p" color="white">
             تایید و ادامه
