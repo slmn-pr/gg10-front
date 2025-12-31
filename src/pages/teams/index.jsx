@@ -1,13 +1,14 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import useAuthStore from '@/store/auth-store';
-import { Box, Button, Typography, useTheme } from '@mui/material';
+import { Box, Button, useTheme } from '@mui/material';
 import TeamEmptyView from './components/TeamEmptyView';
-import ChevronForwardIcon from '@/components/icons/ChevronForward';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import CustomToast from '@/components/toast/CustomToast';
 import BackwardButton from '@/components/layout/BackwardButton';
+import { TEAMS_MOCK } from './_mock';
+import InvitesButton from './components/InvitesButton';
 
 export default function TeamsPage() {
   const theme = useTheme();
@@ -15,7 +16,7 @@ export default function TeamsPage() {
     (state) => state.logged_in && !!state.access_token,
   );
 
-  const [userTeams, setUserTeams] = useState([]);
+  const [userTeams, setUserTeams] = useState(TEAMS_MOCK);
 
   const navigate = useNavigate();
 
@@ -75,13 +76,16 @@ export default function TeamsPage() {
       <Box
         sx={{
           display: 'flex',
+          flexDirection: 'column',
           justifyContent: 'flex-end',
-          pb: '12px',
+          alignItems: 'flex-end',
+          mb: '12px',
           borderTop: `1px solid black`,
           borderBottom: `1px solid black`,
         }}
       >
         <BackwardButton>تیم ها</BackwardButton>
+        <InvitesButton />
       </Box>
 
       {/* Content */}
