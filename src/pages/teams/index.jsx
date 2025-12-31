@@ -9,6 +9,7 @@ import CustomToast from '@/components/toast/CustomToast';
 import BackwardButton from '@/components/layout/BackwardButton';
 import { TEAMS_MOCK } from './_mock';
 import InvitesButton from './components/InvitesButton';
+import TeamsView from './components/TeamsView';
 
 export default function TeamsPage() {
   const theme = useTheme();
@@ -89,7 +90,17 @@ export default function TeamsPage() {
       </Box>
 
       {/* Content */}
-      <Box sx={{ mt: '60px' }}>{userTeams.length === 0 ? <TeamEmptyView /> : <></>}</Box>
+      <Box>
+        {userTeams.length === 0 ? (
+          <Box sx={{ mt: '60px' }}>
+            <TeamEmptyView />
+          </Box>
+        ) : (
+          <Box sx={{ mt: '16px' }}>
+            <TeamsView />
+          </Box>
+        )}
+      </Box>
     </Box>
   );
 }
