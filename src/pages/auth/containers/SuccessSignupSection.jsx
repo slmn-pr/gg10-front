@@ -51,14 +51,19 @@ export default function SuccessSignupSection() {
       </Box>
 
       {/* Invite code section */}
-      <Stack mt="60px" sx={{ width: '343px', mx: 'auto' }}>
+      <Stack mt="60px" sx={{ width: '343px', mx: 'auto', display: 'flex' }}>
         {/* Label */}
         <Typography variant="sub2" color="custom.grey2" component="p" mb={2}>
           در صورتی که کد دعوت دارید در این بخش وارد کنید (اختیاری)
         </Typography>
 
         {/* Input */}
-        <Stack direction="row" sx={{ direction: 'rtl' }} gap={2} justifyContent="center">
+        <Stack
+          direction="row"
+          sx={{ direction: 'rtl', mx: 'auto' }}
+          gap={2}
+          justifyContent="center"
+        >
           <TextField
             placeholder="کد دعوت (اختیاری)"
             sx={{
