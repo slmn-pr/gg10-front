@@ -1,5 +1,4 @@
 import { createContext, useContext, useMemo, useState } from 'react';
-import OtpVerificationSection from './containers/OtpVerificationSection';
 import PhoneNumberSection from './containers/PhoneNumberSection';
 import { Box } from '@mui/material';
 import { STEP_TYPES } from './const';
@@ -16,7 +15,7 @@ export const useStep = () => {
 };
 
 export default function AuthPage() {
-  const [step, setStep] = useState(STEP_TYPES.GAME_NAME);
+  const [step, setStep] = useState(STEP_TYPES.SUCCESS_SIGNUP);
 
   const isSignupStep = useMemo(
     () =>

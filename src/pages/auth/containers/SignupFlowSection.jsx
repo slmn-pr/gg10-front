@@ -5,6 +5,7 @@ import OtpVerificationSection from './OtpVerificationSection';
 import GameNameSection from './GameNameSection';
 import BackwardButton from '@/components/layout/BackwardButton';
 import CloseIcon from '@/components/icons/general/CloseIcon';
+import SuccessSignupSection from './SuccessSignupSection';
 
 export default function SignupFlowSection() {
   const { step } = useStep();
@@ -49,7 +50,7 @@ export default function SignupFlowSection() {
       {/* Steps */}
       {step === STEP_TYPES.OTP_VERIFICATION && <OtpVerificationSection />}
       {step === STEP_TYPES.GAME_NAME && <GameNameSection />}
-      {/* {step === STEP_TYPES.SUCCESS_SIGNUP && <SuccessSignupSection />} */}
+      {step === STEP_TYPES.SUCCESS_SIGNUP && <SuccessSignupSection />}
     </Container>
   );
 }
