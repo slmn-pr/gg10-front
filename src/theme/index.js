@@ -183,6 +183,7 @@ const theme = createTheme({
       warning: '#FFC225',
       onWarning: '#020202',
       deleteOnModal: '#FF3333',
+      linkBlue: '#7E9CFF',
       // Stroke colors
       primaryStroke: '#DD6161',
       blackStroke: '#000000',
@@ -489,6 +490,14 @@ const theme = createTheme({
             lineHeight: theme.typography.sub2.lineHeight,
             fontWeight: theme.typography.sub2.fontWeight,
           },
+        }),
+      },
+    },
+
+    MuiLink: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          color: theme.palette.custom.linkBlue,
         }),
       },
     },
