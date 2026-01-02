@@ -16,7 +16,7 @@ export const useStep = () => {
 };
 
 export default function AuthPage() {
-  const [step, setStep] = useState(STEP_TYPES.OTP_VERIFICATION);
+  const [step, setStep] = useState(STEP_TYPES.GAME_NAME);
 
   const isSignupStep = useMemo(
     () =>

@@ -467,6 +467,31 @@ const theme = createTheme({
         }),
       },
     },
+
+    MuiListItem: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          direction: 'rtl',
+          padding: 0,
+          paddingRight: '20px',
+        }),
+      },
+    },
+
+    MuiListItemText: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          direction: 'rtl',
+          display: 'list-item',
+
+          '& .MuiTypography-root': {
+            fontSize: theme.typography.sub2.fontSize,
+            lineHeight: theme.typography.sub2.lineHeight,
+            fontWeight: theme.typography.sub2.fontWeight,
+          },
+        }),
+      },
+    },
   },
 });
 

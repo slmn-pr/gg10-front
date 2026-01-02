@@ -29,7 +29,7 @@ export default function SignupFlowSection() {
         <BackwardButton>ساخت حساب کاربری</BackwardButton>
       </Box>
 
-      {/* SHow stepper */}
+      {/* Stepper */}
       <Stepper activeStep={STEP_PROGRESS[step]} alternativeLabel sx={{ width: '100%' }}>
         <Step>
           <StepLabel></StepLabel>
@@ -42,6 +42,7 @@ export default function SignupFlowSection() {
         </Step>
       </Stepper>
 
+      {/* Steps */}
       {step === STEP_TYPES.OTP_VERIFICATION && <OtpVerificationSection />}
       {step === STEP_TYPES.GAME_NAME && <GameNameSection />}
       {/* {step === STEP_TYPES.SUCCESS_SIGNUP && <SuccessSignupSection />} */}
