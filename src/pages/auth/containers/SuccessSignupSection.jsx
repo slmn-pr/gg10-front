@@ -86,6 +86,11 @@ export default function SuccessSignupSection() {
             </Typography>
           </Button>
         </Stack>
+
+        {/* Error message */}
+        <Typography variant="sub2" color="custom.errorOnPrimaryBg" sx={{ mt: 0.5 }}>
+          کد وارد شده صحیح نیست
+        </Typography>
       </Stack>
 
       {/* Button */}

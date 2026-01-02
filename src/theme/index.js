@@ -178,7 +178,7 @@ const theme = createTheme({
       onError: '#FFFFFF',
       info: '#FFDFEB',
       onInfo: '#020202',
-      success: '#02C28B',
+      success: '#119859',
       onSuccess: '#020202',
       warning: '#FFC225',
       onWarning: '#020202',
@@ -211,7 +211,6 @@ const theme = createTheme({
       errorOnPrimaryBg: '#FE3A3A',
       errorOnSecondaryBg: '#FF4242',
       errorOnTertiaryBg: '#B10A0A',
-      success: '#146C43',
       warning: '#FFC225',
       info: '#FFDFEB',
 
