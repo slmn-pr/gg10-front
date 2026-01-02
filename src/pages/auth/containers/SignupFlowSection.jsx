@@ -16,7 +16,7 @@ import CloseIcon from '@/components/icons/general/CloseIcon';
 import SuccessSignupSection from './SuccessSignupSection';
 import SupportFooter from '../components/SupportFooter';
 
-export default function SignupFlowSection() {
+export default function SignupFlow() {
   const theme = useTheme();
   const { step } = useStep();
   return (
@@ -58,7 +58,7 @@ export default function SignupFlowSection() {
         </Stepper>
 
         {/* Steps */}
-        {step === STEP_TYPES.OTP_VERIFICATION && <OtpVerificationSection />}
+        {step === STEP_TYPES.SIGNUP_OTP_VERIFICATION && <OtpVerificationSection />}
         {step === STEP_TYPES.GAME_NAME && <GameNameSection />}
         {step === STEP_TYPES.SUCCESS_SIGNUP && <SuccessSignupSection />}
       </Box>

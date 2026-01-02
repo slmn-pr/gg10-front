@@ -15,6 +15,8 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import SupportFooter from '../components/SupportFooter';
+import KeyIcon from '@/components/icons/KeyIcon';
+import ChevronBackward from '@/components/icons/ChevronBackward';
 
 export default function PasswordLoginSection() {
   const theme = useTheme();
@@ -87,16 +89,34 @@ export default function PasswordLoginSection() {
               },
             }}
           />
+
+          {/* Error message */}
+          <Typography
+            variant="sub2"
+            color="custom.errorOnPrimaryBg"
+            sx={{ mt: 0.5 }}
+            component="p"
+            textAlign="right"
+          >
+            رمز عبور وارد شده صحیح نیست
+          </Typography>
         </Box>
 
         {/* Buttons  */}
         <Stack gap={1} mt="100px" sx={{ width: '252px', mx: 'auto' }}>
+          {/* Login using password */}
           <Button variant="contained" color="primary" disabled>
             <Typography variant="button1">تایید و ورود به حساب</Typography>
           </Button>
 
+          {/* Login using OTP */}
+          {/* Click on this get to OTP Verifications */}
           <Button variant="outlined" color="white">
-            <Typography variant="button1">ورود با کد پیامکی</Typography>
+            <Stack direction="row" alignItems="center" gap={1}>
+              <KeyIcon />
+              <Typography variant="button1">ورود با کد پیامکی</Typography>
+              <ChevronBackward />
+            </Stack>
           </Button>
         </Stack>
       </Box>

@@ -4,6 +4,7 @@ import { Box } from '@mui/material';
 import { STEP_PROGRESS, STEP_TYPES } from './const';
 import SignupFlowSection from './containers/SignupFlowSection';
 import PasswordLoginSection from './containers/PasswordLoginSection';
+import LoginOtpVerificationSection from './containers/LoginOtpVerificationSection';
 
 const StepContext = createContext(null);
 
@@ -16,7 +17,7 @@ export const useStep = () => {
 };
 
 export default function AuthPage() {
-  const [step, setStep] = useState(STEP_TYPES.PASSWORD_LOGIN);
+  const [step, setStep] = useState(STEP_TYPES.SIGNUP_OTP_VERIFICATION);
 
   const isSignupStep = useMemo(() => {
     const keys = Object.keys(STEP_PROGRESS);
@@ -35,6 +36,7 @@ export default function AuthPage() {
 
         {/* Login steps */}
         {step === STEP_TYPES.PASSWORD_LOGIN && <PasswordLoginSection />}
+        {step === STEP_TYPES.LOGIN_OTP_VERIFICATION && <LoginOtpVerificationSection />}
       </StepContext>
     </Box>
   );
