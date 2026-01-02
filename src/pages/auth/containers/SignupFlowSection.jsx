@@ -6,7 +6,6 @@ import {
   StepLabel,
   Stepper,
   useTheme,
-  Link,
 } from '@mui/material';
 import { useStep } from '..';
 import { STEP_PROGRESS, STEP_TYPES } from '../const';
@@ -15,6 +14,7 @@ import GameNameSection from './GameNameSection';
 import BackwardButton from '@/components/layout/BackwardButton';
 import CloseIcon from '@/components/icons/general/CloseIcon';
 import SuccessSignupSection from './SuccessSignupSection';
+import SupportFooter from '../components/SupportFooter';
 
 export default function SignupFlowSection() {
   const theme = useTheme();
@@ -64,18 +64,7 @@ export default function SignupFlowSection() {
       </Box>
 
       {/* Footer */}
-      <Box
-        sx={{
-          mt: '10px',
-          height: '60px',
-          borderTop: `1px solid #000`,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <Link variant="caption1">تماس با پشتیبانی</Link>
-      </Box>
+      <SupportFooter />
     </Container>
   );
 }
