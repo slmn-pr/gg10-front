@@ -30,7 +30,11 @@ export default function SignupFlowSection() {
       </Box>
 
       {/* Stepper */}
-      <Stepper activeStep={STEP_PROGRESS[step]} alternativeLabel sx={{ width: '100%' }}>
+      <Stepper
+        activeStep={STEP_PROGRESS[step]}
+        alternativeLabel
+        sx={{ width: '100%', mt: '30px' }}
+      >
         <Step>
           <StepLabel></StepLabel>
         </Step>
