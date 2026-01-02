@@ -1,67 +1,41 @@
-import CloseIcon from '@/components/icons/general/CloseIcon';
-import Logo from '@/components/icons/Logo';
-import BackwardButton from '@/components/layout/BackwardButton';
-import {
-  Box,
-  Button,
-  Container,
-  IconButton,
-  Stack,
-  Step,
-  StepLabel,
-  Stepper,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Stack, Typography } from '@mui/material';
 import { useState } from 'react';
 import OtpInput from '../components/OtpInput';
+import useAuthorizeOTPCode from '../hooks/useAuthorizeOTPCode';
+import ButtonLoading from '@/components/form/ButtonLoading';
+import { useStep } from '..';
+import { STEP_TYPES } from '../const';
 
 export default function OtpVerificationSection({ phoneNumber = '09123456789' }) {
-  const [activeStep, setActiveStep] = useState(0);
   const [otpValue, setOtpValue] = useState('');
   const [isValid, setIsValid] = useState(false);
   const [isError, setIsError] = useState(false);
 
+  const { setStep } = useStep();
+  const { mutateAsync: authorizeOTPCode, isPending } = useAuthorizeOTPCode();
+
+  const onAuthorizeOTPCode = async (otpCode) => {
+    if (isPending) return;
+
+    const isAuthorized = await authorizeOTPCode(otpCode);
+    if (isAuthorized) {
+      setIsValid(true);
+      setIsError(false);
+    } else {
+      setIsValid(false);
+      setIsError(true);
+    }
+  };
+
+  const onNextStep = () => {
+    if (isPending || !isValid || isError) return;
+    setStep(STEP_TYPES.GAME_NAME);
+  };
+
+  const isDisabled = otpValue.length !== 5;
+
   return (
-    <Container
-      maxWidth="sm"
-      sx={{
-        minHeight: '100vh',
-        backgroundColor: 'background.default',
-        px: { xs: '16px' },
-        pt: { xs: '16px' },
-      }}
-    >
-      {/* Header */}
-      <Box
-        sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
-      >
-        <IconButton>
-          <CloseIcon />
-        </IconButton>
-
-        <BackwardButton>ساخت حساب کاربری</BackwardButton>
-      </Box>
-
-      {/* Step progress */}
-      <Stepper activeStep={activeStep} alternativeLabel sx={{ width: '100%' }}>
-        <Step>
-          <StepLabel>
-            {/* <Typography variant="title1">تایید و دریافت کد</Typography> */}
-          </StepLabel>
-        </Step>
-        <Step>
-          <StepLabel>
-            {/* <Typography variant="title1">تایید و دریافت کد</Typography> */}
-          </StepLabel>
-        </Step>
-
-        <Step>
-          <StepLabel>
-            {/* <Typography variant="title1">تایید و دریافت کد</Typography> */}
-          </StepLabel>
-        </Step>
-      </Stepper>
-
+    <>
       {/* LOgo */}
       <Box sx={{ mt: '100px', display: 'flex', justifyContent: 'center' }}>
         <img src="/images/logo.png" alt="logo" style={{ height: '38px' }} />
@@ -107,10 +81,7 @@ export default function OtpVerificationSection({ phoneNumber = '09123456789' }) 
             }}
             onComplete={(value) => {
               console.log('OTP completed:', value);
-              // TODO: Validate OTP with API
-              // For now, you can set validation states here:
-              // setIsValid(true); // if OTP is correct
-              // setIsError(true); // if OTP is incorrect
+              onAuthorizeOTPCode(value);
             }}
             isValid={isValid}
             isError={isError}
@@ -128,14 +99,19 @@ export default function OtpVerificationSection({ phoneNumber = '09123456789' }) 
         <Button
           variant="contained"
           color="primary"
-          sx={{ width: '252px', mx: 'auto', mt: '100px' }}
-          disabled={otpValue.length !== 5}
+          sx={{ width: '252px', height: '40px', mx: 'auto', mt: '100px' }}
+          disabled={isDisabled}
+          onClick={onNextStep}
         >
-          <Typography variant="button1" component="p" color="white">
-            تایید و ادامه
-          </Typography>
+          {!isPending ? (
+            <Typography variant="button1" component="p" color="white">
+              تایید و ادامه
+            </Typography>
+          ) : (
+            <ButtonLoading />
+          )}
         </Button>
       </Stack>
-    </Container>
+    </>
   );
 }

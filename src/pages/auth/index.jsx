@@ -1,8 +1,9 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
 import OtpVerificationSection from './containers/OtpVerificationSection';
 import PhoneNumberSection from './containers/PhoneNumberSection';
 import { Box } from '@mui/material';
 import { STEP_TYPES } from './const';
+import SignupFlowSection from './containers/SignupFlowSection';
 
 const StepContext = createContext(null);
 
@@ -17,12 +18,26 @@ export const useStep = () => {
 export default function AuthPage() {
   const [step, setStep] = useState(STEP_TYPES.OTP_VERIFICATION);
 
+  const isSignupStep = useMemo(
+    () =>
+      step === STEP_TYPES.OTP_VERIFICATION ||
+      step === STEP_TYPES.GAME_NAME ||
+      step === STEP_TYPES.SUCCESS_SIGNUP,
+    [step],
+  );
+
   return (
     <Box>
       {/* Step provider */}
       <StepContext value={{ step, setStep }}>
+        {/* General */}
         {step === STEP_TYPES.PHONE_NUMBER && <PhoneNumberSection />}
-        {step === STEP_TYPES.OTP_VERIFICATION && <OtpVerificationSection />}
+
+        {/* Signup steps */}
+        {isSignupStep && <SignupFlowSection />}
+
+        {/* Login steps */}
+        {/* {step === STEP_TYPES.PASSWORD_LOGIN && <PasswordLoginSection />} */}
       </StepContext>
     </Box>
   );

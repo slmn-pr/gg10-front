@@ -1,5 +1,17 @@
 export const STEP_TYPES = {
   PHONE_NUMBER: 'phone_number',
+
+  // Signup steps
   OTP_VERIFICATION: 'otp_verification',
+  GAME_NAME: 'game_name',
+  SUCCESS_SIGNUP: 'success_signup',
+
+  // Login
   PASSWORD_LOGIN: 'password_login',
+};
+
+export const STEP_PROGRESS = {
+  [STEP_TYPES.OTP_VERIFICATION]: 0,
+  [STEP_TYPES.GAME_NAME]: 1,
+  [STEP_TYPES.SUCCESS_SIGNUP]: 2,
 };
