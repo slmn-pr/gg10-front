@@ -1,11 +1,14 @@
 import {
   Box,
   Button,
+  Drawer,
+  IconButton,
   InputAdornment,
   Link,
   List,
   ListItem,
   ListItemText,
+  Stack,
   TextField,
   Typography,
   useTheme,
@@ -14,12 +17,14 @@ import { useEffect, useRef, useState } from 'react';
 import InputLoading from '../../../components/form/InputLoading';
 import CircleCheckIcon from '../../../components/icons/CircleCheckIcon';
 import useCheckGameNameExists from '../hooks/useCheckGameNameExists';
+import CloseIcon from '@/components/icons/general/CloseIcon';
 
 export default function GameNameSection() {
   const theme = useTheme();
   const [gameName, setGameName] = useState('');
   const [debouncedGameName, setDebouncedGameName] = useState('');
   const debounceTimerRef = useRef(null);
+  const [openHelp, setOpenHelp] = useState(true);
 
   // Debounce: Update debouncedGameName after 2 seconds when user finishes typing
   useEffect(() => {
@@ -49,6 +54,10 @@ export default function GameNameSection() {
   const isNameAvailable = hasChecked && !nameExists;
   const isNameUnavailable = hasChecked && nameExists;
 
+  const handleOpenHelpModal = () => {
+    setOpenHelp(true);
+  };
+
   return (
     <Box>
       {/* LOgo */}
@@ -56,11 +65,7 @@ export default function GameNameSection() {
         <img src="/images/logo.png" alt="logo" style={{ height: '38px' }} />
       </Box>
 
-      {/* Labels
-      Title
-      Description
-      Link
-      */}
+      {/* Labels Title, Description, Link */}
       <Box sx={{ mt: '60px', mb: '8px' }}>
         <Typography variant="title3" color="white" component="p">
           اسم گیم خود را ثبت کنید
@@ -79,7 +84,7 @@ export default function GameNameSection() {
         >
           <span>اسم شما باید دقیقا منطبق با نام شما در گیم باشد</span>
 
-          <Link>راهنما</Link>
+          <Link onClick={handleOpenHelpModal}>راهنما</Link>
         </Typography>
       </Box>
 
@@ -190,6 +195,40 @@ export default function GameNameSection() {
           تایید و ثبت
         </Button>
       </Box>
+
+      {/* Help Modal */}
+      <Drawer open={openHelp} onClose={() => setOpenHelp(false)} anchor="bottom">
+        <Box
+          sx={{
+            backgroundColor: theme.palette.custom.grey7,
+            height: '235px',
+          }}
+        >
+          {/* Header */}
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="flex-start"
+            sx={{ direction: 'rtl', width: '100%', mb: '12px' }}
+          >
+            <Typography variant="title3" color="white" component="p">
+              راهنما
+            </Typography>
+            <IconButton onClick={() => setOpenHelp(false)}>
+              <CloseIcon />
+            </IconButton>
+          </Stack>
+
+          {/* Body */}
+          <Box>
+            <Typography variant="sub1" color="white" component="p" mb="28px">
+              منظور از نام شما در گیم، قسمت مشخص‌شده در تصویر زیر است:
+            </Typography>
+
+            <img src="/images/help_game_name.png" alt="help-modal" />
+          </Box>
+        </Box>
+      </Drawer>
     </Box>
   );
 }
