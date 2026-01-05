@@ -2,13 +2,17 @@ import CloseIcon from '@/components/icons/general/CloseIcon';
 import BackwardButton from '@/components/layout/BackwardButton';
 import { Box, Button, Container, IconButton, Stack, Typography } from '@mui/material';
 import OtpInput from '../components/OtpInput';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import OtpSection from './OtpSection';
+import useVerifyOTPCode from '../hooks/useVerifyOTPCode';
+import { useStep } from '..';
 
-export default function LoginOtpVerificationSection({ phoneNumber = '09123456789' }) {
-  const [otpValue, setOtpValue] = useState('');
-  const [isValid, setIsValid] = useState(false);
-  const [isError, setIsError] = useState(false);
+export default function LoginOtpVerificationSection() {
+  const { phoneNumber } = useStep();
+  const { mutate, isPending } = useVerifyOTPCode();
+
+  const otpValue = useRef('');
+
   return (
     <Container maxWidth="sm" sx={{ p: 0 }}>
       <Box
@@ -35,8 +39,20 @@ export default function LoginOtpVerificationSection({ phoneNumber = '09123456789
         <Stack mt="60px">
           <OtpSection
             phoneNumber={phoneNumber}
-            onComplete={() => {
-              console.log('OTP completed');
+            onComplete={(otpCode) => {
+              otpValue.current = otpCode;
+              mutate(
+                { phone_number: phoneNumber, code: otpCode },
+                {
+                  onSuccess: () => {
+                    console.log('OTP verified');
+                    otpValue.current = '';
+                  },
+                  onError: (error) => {
+                    console.error('OTP verification failed', error);
+                  },
+                },
+              );
             }}
           />
 
@@ -45,7 +61,9 @@ export default function LoginOtpVerificationSection({ phoneNumber = '09123456789
             variant="contained"
             color="primary"
             sx={{ width: '252px', height: '40px', mx: 'auto', mt: '100px' }}
-            // disabled={isDisabled}
+            disabled={isPending}
+            onClick={() => mutate({ phone_number: phoneNumber, code: otpValue.current })}
+            loading={isPending}
           >
             <Typography variant="button1" component="p" color="white">
               تایید و ادامه

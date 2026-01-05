@@ -18,6 +18,7 @@ export const useStep = () => {
 
 export default function AuthPage() {
   const [step, setStep] = useState(STEP_TYPES.PHONE_NUMBER);
+  const [phoneNumber, setPhoneNumber] = useState('');
 
   const isSignupStep = useMemo(() => {
     const keys = Object.keys(STEP_PROGRESS);
@@ -27,8 +28,8 @@ export default function AuthPage() {
   return (
     <Box>
       {/* Step provider */}
-      <StepContext value={{ step, setStep }}>
-        {/* General */}
+      <StepContext value={{ step, setStep, phoneNumber, setPhoneNumber }}>
+        {/* 1 -> General */}
         {step === STEP_TYPES.PHONE_NUMBER && <PhoneNumberSection />}
 
         {/* Signup steps */}

@@ -9,41 +9,59 @@ import useCheckPhoneNumberExist from '../hooks/useCheckPhoneNumberExist';
 import PhoneNumberInput from '../components/PhoneNumberInput';
 import { useStep } from '../index';
 import { STEP_TYPES } from '../const';
+import useRequestOTPCode from '../hooks/useRequestOtpCode';
+import toast from 'react-hot-toast';
+import { useMemo } from 'react';
 
 export default function PhoneNumberSection() {
-  const { setStep } = useStep();
+  const { setStep, setPhoneNumber } = useStep();
   const theme = useTheme();
   const methods = useForm({
     defaultValues: {
       phoneNumber: '',
+      purpose: 'login',
     },
     resolver: zodResolver(loginSchema),
-    mode: 'all',
+    mode: 'onChange',
   });
 
-  const {
-    watch,
-    formState,
-    setError,
-    formState: { isSubmitting },
-  } = methods;
+  const { watch, formState, setError } = methods;
   const { errors } = formState;
+
+  const { mutate, isPending } = useRequestOTPCode();
 
   const checkPhoneNumberExist = useCheckPhoneNumberExist();
 
-  const onSubmit = async () => {
-    const isPhoneNumberExist = await checkPhoneNumberExist(watch('phoneNumber'));
-    if (isPhoneNumberExist) {
-      // Navigate to password login flow
-      console.log('Navigate to password login flow');
-      setStep(STEP_TYPES.PASSWORD_LOGIN);
-    } else {
-      // Navigate to OTP signup flow
-      console.log('Navigate to OTP signup flow');
-      setStep(STEP_TYPES.OTP_VERIFICATION);
+  const onSuccessOTP = (data) => {
+    setStep(STEP_TYPES.LOGIN_OTP_VERIFICATION);
 
-      // show OTP input to API
+    // set in context
+    setPhoneNumber(data?.phone_number);
+  };
+
+  const onSubmit = async () => {
+    // 1- Send phone number and "purpose": "login" to /otp request
+
+    if (!watch('phoneNumber')) {
+      return toast.error('شماره معتبر نیست');
     }
+
+    const phoneNumber = watch('phoneNumber');
+    mutate(phoneNumber, {
+      onSuccess: onSuccessOTP,
+    });
+
+    // const isPhoneNumberExist = await checkPhoneNumberExist(watch('phoneNumber'));
+    // if (isPhoneNumberExist) {
+    //   // Navigate to password login flow
+    //   console.log('Navigate to password login flow');
+    //   setStep(STEP_TYPES.PASSWORD_LOGIN);
+    // } else {
+    //   // Navigate to OTP signup flow
+    //   console.log('Navigate to OTP signup flow');
+    //   setStep(STEP_TYPES.OTP_VERIFICATION);
+    //   // show OTP input to API
+    // }
   };
 
   return (
@@ -113,11 +131,10 @@ export default function PhoneNumberSection() {
             <Button
               sx={{ mt: 10, width: '252px', mx: 'auto' }}
               variant="contained"
-              disabled={isSubmitting || errors.phoneNumber || watch('phoneNumber') === ''}
-              // loading={isSubmitting}
+              disabled={isPending || errors.phoneNumber || watch('phoneNumber') === ''}
               type="submit"
             >
-              {isSubmitting ? 'در حال بررسی...' : 'تایید و دریافت کد'}
+              {isPending ? 'در حال بررسی...' : 'تایید و دریافت کد'}
             </Button>
           </form>
         </Box>

@@ -10,7 +10,7 @@ import apiClient from './config';
  * @param {Object} payload - { phone_number: string, purpose?: 'login' | 'register' | 'password_reset' }
  * @returns {Promise} OTPRequestResponse
  */
-export const requestOTP = async (payload) => {
+export const requestOTPReq = async (payload) => {
   const response = await apiClient.post('auth/otp/request', payload);
   return response.data;
 };
@@ -20,7 +20,7 @@ export const requestOTP = async (payload) => {
  * @param {Object} payload - { phone_number: string, code: string, purpose?: 'login' | 'register' | 'password_reset' }
  * @returns {Promise} OTPVerifyResponse
  */
-export const verifyOTP = async (payload) => {
+export const verifyOTPReq = async (payload) => {
   const response = await apiClient.post('auth/otp/verify', payload);
   return response.data;
 };
@@ -30,13 +30,13 @@ export const verifyOTP = async (payload) => {
  * @param {Object} payload - { phone_number: string, username: string, password?: string }
  * @returns {Promise} CreateUserResponse
  */
-export const createUser = async (payload) => {
+export const createUserReq = async (payload) => {
   const response = await apiClient.post('auth/create-user', payload);
   return response.data;
 };
 
 export default {
-  requestOTP,
-  verifyOTP,
-  createUser,
+  requestOTPReq,
+  verifyOTPReq,
+  createUserReq,
 };
