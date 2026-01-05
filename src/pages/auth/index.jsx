@@ -17,7 +17,7 @@ export const useStep = () => {
 };
 
 export default function AuthPage() {
-  const [step, setStep] = useState(STEP_TYPES.SIGNUP_OTP_VERIFICATION);
+  const [step, setStep] = useState(STEP_TYPES.PHONE_NUMBER);
 
   const isSignupStep = useMemo(() => {
     const keys = Object.keys(STEP_PROGRESS);
