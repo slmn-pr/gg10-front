@@ -56,8 +56,6 @@ const MainLayout = () => {
           </Box>
         </Container>
       </Box>
-
-      <Toaster position="bottom-center" />
     </ThemeProvider>
   );
 };

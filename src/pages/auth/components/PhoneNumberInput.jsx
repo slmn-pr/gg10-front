@@ -10,8 +10,6 @@ export default function PhoneNumberInput() {
   const { errors } = formState;
 
   const isValid = PERSIAN_PHONE_NUMBER_SCHEMA.safeParse(watch('phoneNumber')).success;
-  const errorMessage = errors.phoneNumber?.message;
-  const errorColor = isValid ? 'success' : 'error';
 
   return (
     <Box>
@@ -31,12 +29,14 @@ export default function PhoneNumberInput() {
         {...register('phoneNumber')}
         error={!!errors.phoneNumber}
         helperText={
-          <Typography
-            variant="sub2"
-            color={!isValid ? 'custom.errorOnPrimaryBg' : 'custom.successOnPrimaryBg'}
-          >
-            {!isValid ? errors.phoneNumber?.message : 'شماره موبایل معتبر است'}
-          </Typography>
+          !isValid && (
+            <Typography
+              variant="sub2"
+              color={!isValid ? 'custom.errorOnPrimaryBg' : 'custom.successOnPrimaryBg'}
+            >
+              {errors.phoneNumber?.message}
+            </Typography>
+          )
         }
       />
     </Box>

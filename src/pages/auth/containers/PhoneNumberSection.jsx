@@ -1,7 +1,4 @@
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
-import { Box, Link, useTheme } from '@mui/material';
+import { Box, Link, useTheme, Typography, Stack, Button } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema } from '../schema';
@@ -9,9 +6,8 @@ import useCheckPhoneNumberExist from '../hooks/useCheckPhoneNumberExist';
 import PhoneNumberInput from '../components/PhoneNumberInput';
 import { useStep } from '../index';
 import { STEP_TYPES } from '../const';
-import useRequestOTPCode from '../hooks/useRequestOtpCode';
+import useRequestOTPCode from '../hooks/useRequestOTPCode';
 import toast from 'react-hot-toast';
-import { useMemo } from 'react';
 
 export default function PhoneNumberSection() {
   const { setStep, setPhoneNumber } = useStep();
@@ -25,7 +21,7 @@ export default function PhoneNumberSection() {
     mode: 'onChange',
   });
 
-  const { watch, formState, setError } = methods;
+  const { watch, formState } = methods;
   const { errors } = formState;
 
   const { mutate, isPending } = useRequestOTPCode();
@@ -39,29 +35,22 @@ export default function PhoneNumberSection() {
     setPhoneNumber(data?.phone_number);
   };
 
-  const onSubmit = async () => {
-    // 1- Send phone number and "purpose": "login" to /otp request
+  const onSubmit = () => {
+    const phoneNumber = watch('phoneNumber');
 
-    if (!watch('phoneNumber')) {
-      return toast.error('شماره معتبر نیست');
+    if (!phoneNumber) {
+      toast.error('شماره معتبر نیست');
+      return;
     }
 
-    const phoneNumber = watch('phoneNumber');
     mutate(phoneNumber, {
       onSuccess: onSuccessOTP,
-    });
+      onError: (error) => {
+        console.log('SHOW ERROR <<<<', error);
 
-    // const isPhoneNumberExist = await checkPhoneNumberExist(watch('phoneNumber'));
-    // if (isPhoneNumberExist) {
-    //   // Navigate to password login flow
-    //   console.log('Navigate to password login flow');
-    //   setStep(STEP_TYPES.PASSWORD_LOGIN);
-    // } else {
-    //   // Navigate to OTP signup flow
-    //   console.log('Navigate to OTP signup flow');
-    //   setStep(STEP_TYPES.OTP_VERIFICATION);
-    //   // show OTP input to API
-    // }
+        toast.error(error.message);
+      },
+    });
   };
 
   return (

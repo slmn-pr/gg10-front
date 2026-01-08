@@ -1,11 +1,20 @@
 import { Box, Button, Stack, Typography } from '@mui/material';
 import OtpInput from '../components/OtpInput';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
+import { useStep } from '..';
+import { STEP_TYPES } from '../const';
 
 export default function OtpSection({ phoneNumber = '09123456789', onComplete }) {
   const [otpValue, setOtpValue] = useState('');
   const [isValid, setIsValid] = useState(false);
   const [isError, setIsError] = useState(false);
+
+  const { setStep } = useStep();
+
+  const handleChangeNumber = useCallback(() => {
+    setStep(STEP_TYPES.PHONE_NUMBER);
+  }, []);
+
   return (
     <Stack>
       <Typography component="p" variant="title3">
@@ -21,7 +30,7 @@ export default function OtpSection({ phoneNumber = '09123456789', onComplete }) 
           mb: '8px',
         }}
       >
-        <Button variant="text" color="primary" size="small">
+        <Button variant="text" color="primary" size="small" onClick={handleChangeNumber}>
           <Typography variant="sub1" component="p" color="primary.main">
             تغییر شماره
           </Typography>

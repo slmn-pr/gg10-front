@@ -37,46 +37,13 @@ apiClient.interceptors.request.use(
   },
 );
 
-/**
- * Response Interceptor
- * مدیریت خطاها و refresh token
- */
 apiClient.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
   async (error) => {
-    const originalRequest = error.config;
+    const status = error?.response?.status;
 
-    // اگر خطای 401 دریافت شد و قبلاً refresh نکرده‌ایم
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-
-      try {
-        const refreshToken = useAuthStore.getState().getRefreshToken();
-
-        // TODO: پیاده‌سازی refresh token endpoint
-        // اگر endpoint refresh token دارید، اینجا فراخوانی کنید
-        // const response = await axios.post(`${BASE_URL}auth/refresh`, {
-        //   refresh_token: refreshToken,
-        // });
-        //
-        // const { access_token, refresh_token } = response.data;
-        // useAuthStore.getState().setAuth(access_token, refresh_token);
-        //
-        // originalRequest.headers.Authorization = `Bearer ${access_token}`;
-        // return apiClient(originalRequest);
-
-        // اگر refresh token نداریم، کاربر را logout کنیم
-        useAuthStore.getState().clearAuth();
-        window.location.href = '/auth';
-
-        return Promise.reject(error);
-      } catch (refreshError) {
-        useAuthStore.getState().clearAuth();
-        window.location.href = '/auth';
-        return Promise.reject(refreshError);
-      }
+    if (status === 401) {
+      useAuthStore.getState().clearAuth();
     }
 
     return Promise.reject(error);
