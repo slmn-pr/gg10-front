@@ -7,6 +7,7 @@ export default function OfflineSnakbar() {
   const isOnline = useOnlineStatus();
 
   const [isOpen, setIsOpen] = useState(!isOnline);
+  // const [isOpen, setIsOpen] = useState(true);
 
   function handleAction() {
     window.location.reload();
@@ -14,7 +15,7 @@ export default function OfflineSnakbar() {
 
   return (
     <ErrorSnakBar
-      bottom="130px"
+      bottom="10px"
       open={isOpen}
       message="اتصال خود به اینترنت را بررسی و مجددا تلاش کنید."
       actionText="تلاش مجدد"

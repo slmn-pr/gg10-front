@@ -38,15 +38,15 @@ export default function ErrorSnakBar({
         closeText="close"
         severity="error"
         icon={
-          <Stack direction="row" spacing={1} alignItems="center">
+          <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-between">
             <IconButton sx={{ p: 0 }} size="small" onClick={onClose}>
               <CloseIcon />
             </IconButton>
-            <Button sx={{ p: 0 }} color="primary" variant="text" onClick={onAction}>
+           {actionText && <Button sx={{ p: 0 }} color="primary" variant="text" onClick={onAction}>
               <Typography variant="sub1" color="white">
                 {actionText}
               </Typography>
-            </Button>
+            </Button>}
           </Stack>
         }
         sx={{
@@ -62,7 +62,7 @@ export default function ErrorSnakBar({
             py: 0,
             display: 'inline-block',
             direction: 'rtl',
-            width: '204px',
+            // width: '204px',
           },
 
           '& .MuiAlert-icon ': {
@@ -71,7 +71,7 @@ export default function ErrorSnakBar({
           },
         }}
       >
-        <Typography variant="sub1" color="white" textAlign="right" width="204px">
+        <Typography variant="sub1" color="white" textAlign="right" component="p">
           {message}
         </Typography>
       </Alert>

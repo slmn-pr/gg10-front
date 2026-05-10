@@ -52,7 +52,7 @@ function LobbyPageContent() {
     (state) => state.logged_in && !!state.access_token,
   );
   const playerRank = useAuthStore((state) => state.player_rank);
-  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false); 
   const [showNotAllowedModal, setShowNotAllowedModal] = useState(false);
 
   /**
@@ -102,6 +102,11 @@ function LobbyPageContent() {
     //     reason: VALIDATION_RESULT.INSUFFICIENT_CREDIT,
     //   };
     // }
+
+    // Check lobby status
+    
+
+
 
     // All validations passed
     return {
@@ -211,7 +216,7 @@ function LobbyPageContent() {
         </Stack>
       </Box>
 
-      {/* BUtton & lobby details section */}
+      {/* Button & lobby details section */}
       <Box sx={{ width: '100%', px: '16px', mt: '12px' }}>
         {/* Show lobby id and password modal */}
         <ShowLobbyIdModal lobbyStatus={lobbyData?.status} />

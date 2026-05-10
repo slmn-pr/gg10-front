@@ -1,5 +1,4 @@
 import { Box, IconButton, Typography, useTheme } from '@mui/material';
-import toast from 'react-hot-toast';
 import CloseIcon from '../icons/general/CloseIcon';
 
 /**

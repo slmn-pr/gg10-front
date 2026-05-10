@@ -33,7 +33,7 @@ const theme = createTheme({
     },
     sub1: {
       fontFamily: `'Estedad-FD', sans-serif`,
-      fontWeight: 500,
+      fontWeight: 400,
       fontSize: '14px',
       lineHeight: '28px',
     },
