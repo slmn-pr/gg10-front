@@ -1,22 +1,24 @@
 import { Box, TextField } from '@mui/material';
-import { useRef, useState, useEffect } from 'react';
+import { useMemo, useRef, useState } from 'react';
 
-export default function OtpInput({ value = '', onChange, onComplete, isValid, isError }) {
+const getOtpDigits = (value = '') => {
+  const nextOtp = ['', '', '', '', ''];
+  value
+    .split('')
+    .slice(0, 5)
+    .forEach((digit, index) => {
+      nextOtp[index] = digit;
+    });
+  return nextOtp;
+};
+
+export default function OtpInput({ value, onChange, onComplete, isValid, isError }) {
   const [otp, setOtp] = useState(['', '', '', '', '']);
   const inputRefs = useRef([]);
-
-  useEffect(() => {
-    if (value && value.length <= 5) {
-      const digits = value.split('').slice(0, 5);
-      const newOtp = ['', '', '', '', ''];
-      digits.forEach((digit, index) => {
-        newOtp[index] = digit;
-      });
-      setOtp(newOtp);
-    } else if (!value) {
-      setOtp(['', '', '', '', '']);
-    }
-  }, [value]);
+  const displayOtp = useMemo(
+    () => (value === undefined ? otp : getOtpDigits(value)),
+    [otp, value],
+  );
 
   const handleChange = (index, newValue) => {
     // Only allow single digit
@@ -29,9 +31,11 @@ export default function OtpInput({ value = '', onChange, onComplete, isValid, is
       return;
     }
 
-    const newOtp = [...otp];
+    const newOtp = [...displayOtp];
     newOtp[index] = newValue;
-    setOtp(newOtp);
+    if (value === undefined) {
+      setOtp(newOtp);
+    }
 
     const otpValue = newOtp.join('');
     onChange?.(otpValue);
@@ -58,13 +62,15 @@ export default function OtpInput({ value = '', onChange, onComplete, isValid, is
     e.preventDefault();
     const pastedData = e.clipboardData.getData('text').slice(0, 5);
     if (/^\d+$/.test(pastedData)) {
-      const newOtp = [...otp];
+      const newOtp = [...displayOtp];
       pastedData.split('').forEach((digit, index) => {
         if (index < 5) {
           newOtp[index] = digit;
         }
       });
-      setOtp(newOtp);
+      if (value === undefined) {
+        setOtp(newOtp);
+      }
       const otpValue = newOtp.join('');
       onChange?.(otpValue);
       if (newOtp.every((digit) => digit !== '') && onComplete) {
@@ -84,7 +90,7 @@ export default function OtpInput({ value = '', onChange, onComplete, isValid, is
         justifyContent: 'center',
       }}
     >
-      {otp.map((digit, index) => (
+      {displayOtp.map((digit, index) => (
         <TextField
           key={index}
           inputRef={(el) => (inputRefs.current[index] = el)}

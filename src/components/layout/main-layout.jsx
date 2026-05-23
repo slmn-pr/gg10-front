@@ -36,6 +36,7 @@ const MainLayout = () => {
         }}
       >
         <Container
+          disableGutters
           maxWidth="sm"
           sx={{
             paddingLeft: { xs: 0 },

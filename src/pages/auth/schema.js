@@ -1,10 +1,18 @@
 import z from 'zod';
 
 const ERROR_MESSAGE = 'شماره موبایل باید 11 رقمی و همچنین با پیش‌شماره 09 باشد';
+const PERSIAN_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
+const ARABIC_DIGITS = '٠١٢٣٤٥٦٧٨٩';
+
+export const normalizePhoneNumber = (value = '') =>
+  value
+    .trim()
+    .replace(/[۰-۹]/g, (digit) => String(PERSIAN_DIGITS.indexOf(digit)))
+    .replace(/[٠-٩]/g, (digit) => String(ARABIC_DIGITS.indexOf(digit)));
 
 export const PERSIAN_PHONE_NUMBER_SCHEMA = z
   .string()
-  .regex(/(\+98|0|98)9(0[1-5]|[1 3]\d|2[0-2]|98)\d{7}/, ERROR_MESSAGE);
+  .refine((value) => /^09\d{9}$/.test(normalizePhoneNumber(value)), ERROR_MESSAGE);
 
 export const gameNameSchema = z
   .string()

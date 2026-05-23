@@ -1,8 +1,9 @@
-import CircleCheckIcon from '@/components/icons/CircleCheckIcon';
 import { Box, Button, Stack, TextField, Typography, useTheme } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 export default function SuccessSignupSection() {
   const theme = useTheme();
+  const navigate = useNavigate();
   return (
     <Box>
       {/* Image */}
@@ -103,6 +104,7 @@ export default function SuccessSignupSection() {
         <Button
           variant="contained"
           sx={{ width: '252px', height: '40px', mx: 'auto', mt: '100px' }}
+          onClick={() => navigate('/home', { replace: true })}
         >
           ورود
         </Button>

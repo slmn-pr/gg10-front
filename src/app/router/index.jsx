@@ -1,7 +1,16 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './protected-route.jsx';
 import HomePage from '@/pages/home/index.jsx';
+import LeaderboardPage from '@/pages/leaderboard/index.jsx';
 import UserProfilePage from '@/pages/user/pages/user-profile-page.jsx';
+import {
+  AccountEditProfilePage,
+  AccountLobbiesHistoryPage,
+  AccountReferralPage,
+  AccountRulesPage,
+  AccountSecuritySettingsPage,
+  AccountSupportPage,
+} from '@/pages/user/pages/account-pages.jsx';
 import AdminDashboardPage from '@/pages/admin/pages/admin-dashboard-page.jsx';
 import MainLayout from '@/components/layout/main-layout.jsx';
 import NotificationsPage from '@/pages/notifications/index.jsx';
@@ -20,6 +29,7 @@ const AppRouter = () => {
       <Route element={<MainLayout />}>
         <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path="/home" element={<HomePage />} />
+        <Route path="/leaderboard" element={<LeaderboardPage />} />
         <Route path="/lobby" element={<LobbyPage />} />
         {/* TEAMS ROUTES */}
         <Route path="/teams">
@@ -29,6 +39,18 @@ const AppRouter = () => {
 
         <Route path="/notifications" element={<NotificationsPage />} />
         <Route path="/user/profile" element={<UserProfilePage />} />
+        <Route path="/user/profile/edit" element={<AccountEditProfilePage />} />
+        <Route path="/user/profile/lobbies-history" element={<AccountLobbiesHistoryPage />} />
+        <Route path="/user/profile/security" element={<AccountSecuritySettingsPage />} />
+        <Route path="/user/profile/referral" element={<AccountReferralPage />} />
+        <Route path="/user/profile/support" element={<AccountSupportPage />} />
+        <Route path="/user/profile/rules" element={<AccountRulesPage />} />
+        <Route path="/profile/edit" element={<AccountEditProfilePage />} />
+        <Route path="/profile/lobbies-history" element={<AccountLobbiesHistoryPage />} />
+        <Route path="/profile/security" element={<AccountSecuritySettingsPage />} />
+        <Route path="/profile/referral" element={<AccountReferralPage />} />
+        <Route path="/profile/support" element={<AccountSupportPage />} />
+        <Route path="/profile/rules" element={<AccountRulesPage />} />
         <Route
           path="/admin"
           element={

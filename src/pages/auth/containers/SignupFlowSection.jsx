@@ -5,7 +5,6 @@ import {
   Step,
   StepLabel,
   Stepper,
-  useTheme,
 } from '@mui/material';
 import { useStep } from '..';
 import { STEP_PROGRESS, STEP_TYPES } from '../const';
@@ -17,7 +16,6 @@ import SuccessSignupSection from './SuccessSignupSection';
 import SupportFooter from '../components/SupportFooter';
 
 export default function SignupFlow() {
-  const theme = useTheme();
   const { step } = useStep();
   return (
     <Container
