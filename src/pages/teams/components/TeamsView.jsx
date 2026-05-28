@@ -1,137 +1,129 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  ButtonGroup,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Stack,
-  Typography,
-} from '@mui/material';
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
-import useSmoothHorizentalScroll from '@/pages/home/containers/HomeFilters/hooks/useSmoothHorizentalScroll';
+import { Avatar, Box, Button, Stack, Typography } from '@mui/material';
 
-export default function TeamsView() {
-  const [selectedTeam, setSelectedTeam] = useState(null);
+function TeamTab({ team, active, onClick }) {
+  return (
+    <Button
+      onClick={onClick}
+      sx={{
+        height: 40,
+        minWidth: 'fit-content',
+        px: 2,
+        borderRadius: '8px',
+        border: '1px solid',
+        borderColor: 'rgba(255,255,255,0.75)',
+        bgcolor: active ? '#F6BFC3' : 'transparent',
+        color: active ? '#0C0C0C' : 'custom.white',
+        whiteSpace: 'nowrap',
+        '&:hover': { bgcolor: active ? '#F2AFB8' : 'rgba(255,255,255,0.08)' },
+      }}
+    >
+      <Typography variant="sub1" color="inherit">
+        {team.name}
+      </Typography>
+    </Button>
+  );
+}
 
-  const selectedTeamDetails = {
-    name: 'تیم اول',
-    members: [
-      {
-        name: 'mamad',
-        avatar: '/images/player_card_sample.png',
-        rank: 1,
-        isLeader: true,
-      },
-      {
-        name: 'ali',
-        avatar: '/images/player_card_sample.png',
-        rank: 2,
-        isLeader: false,
-      },
-    ],
-  };
-  const navigate = useNavigate();
+function MemberRow({ member }) {
+  return (
+    <Box
+      sx={{
+        height: 68,
+        px: 1.5,
+        borderRadius: '8px',
+        bgcolor: 'custom.bg2',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+      }}
+      dir="rtl"
+    >
+      {member.isLeader ? (
+        <Typography variant="caption1" color="custom.tint3">
+          لیدر تیم
+        </Typography>
+      ) : (
+        <Box sx={{ width: 52 }} />
+      )}
 
-  // Use custom hook for horizontal scroll logic
-  const { containerRef, motionProps, scrollStyles } = useSmoothHorizentalScroll();
+      <Stack direction="row-reverse" alignItems="center" gap={1.25}>
+        <Stack alignItems="flex-end" sx={{ minWidth: 0 }}>
+          <Typography variant="sub2" color={member.isLeader ? 'custom.tint3' : 'custom.white'} noWrap>
+            {member.name}
+          </Typography>
+          <Typography variant="caption2" color="custom.grey1">
+            رتبه {member.rank}
+          </Typography>
+        </Stack>
+        <Avatar src={member.avatar} sx={{ width: 42, height: 42, borderRadius: '8px' }} />
+      </Stack>
+    </Box>
+  );
+}
 
-  const handleSelectTeam = (team) => {
-    setSelectedTeam(team);
-  };
-
-  const handleCreateTeam = () => {
-    navigate('/teams/create');
-  };
+export default function TeamsView({ teams, selectedTeamIndex, onSelectTeam, onCreateTeam }) {
+  const selectedTeam = teams[selectedTeamIndex] || teams[0];
 
   return (
-    <Box>
-      {/* Horizental scrollable section */}
-      <Stack
-        component={motion.div}
-        direction="row"
-        justifyContent="flex-start"
-        alignItems="center"
-        gap={1}
-        px="16px"
-        ref={containerRef}
-        {...motionProps}
-        sx={scrollStyles}
+    <Stack gap={2}>
+      <Box
+        sx={{
+          display: 'flex',
+          gap: 1,
+          overflowX: 'auto',
+          px: 0,
+          pb: 0.25,
+          direction: 'rtl',
+          '&::-webkit-scrollbar': { display: 'none' },
+          scrollbarWidth: 'none',
+        }}
       >
-        <ButtonGroup color="white" sx={{ direction: 'ltr' }}>
-          <Button onClick={() => handleSelectTeam('team3')}>تیم سوم</Button>
-          <Button onClick={() => handleSelectTeam('team2')}>تیم دوم</Button>
-          <Button onClick={() => handleSelectTeam('team1')}>تیم اول</Button>
-        </ButtonGroup>
+        {teams.map((team, index) => (
+          <TeamTab
+            key={team.name}
+            team={team}
+            active={index === selectedTeamIndex}
+            onClick={() => onSelectTeam(index)}
+          />
+        ))}
 
-        {/* <Button
-          variant="outlined"
-          color="white"
-          onClick={handleCreateTeam}
-          sx={{ px: '10px' }}
+        <Button
+          onClick={onCreateTeam}
+          sx={{
+            height: 40,
+            px: 2,
+            borderRadius: '8px',
+            border: '1px solid',
+            borderColor: 'rgba(255,255,255,0.75)',
+            color: 'custom.white',
+            whiteSpace: 'nowrap',
+            bgcolor: 'transparent',
+          }}
         >
-          + ساخت تیم جدید
-        </Button> */}
-      </Stack>
-
-      <Box>
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          sx={{ px: '16px', direction: 'rtl' }}
-        >
-          <Typography variant="title3" color="white">
-            نام اعضا
+          <Typography variant="sub1" color="inherit">
+            + ساخت تیم جدید
           </Typography>
-          <Button color="white">افزودن عضو جدید</Button>
+        </Button>
+      </Box>
+
+      <Box sx={{ px: 0.5 }} dir="rtl">
+        <Stack direction="row-reverse" alignItems="center" justifyContent="space-between" sx={{ mb: 1 }}>
+          <Button onClick={onCreateTeam} sx={{ color: 'primary.main', p: 0, minWidth: 'fit-content' }}>
+            <Typography variant="caption1" color="inherit">
+              افزودن عضو جدید
+            </Typography>
+          </Button>
+          <Typography variant="title3" color="custom.white">
+            اعضای {selectedTeam.name}
+          </Typography>
         </Stack>
 
-        <List>
-          {selectedTeamDetails.members.map((member) => (
-            <ListItem
-              key={member.name}
-              sx={{
-                direction: 'rtl',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-            >
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <ListItemAvatar sx={{ width: '50px', height: '50px' }}>
-                  <Avatar src={member.avatar} sx={{ width: '50px', height: '50px' }} />
-                </ListItemAvatar>
-                <ListItemText
-                  sx={{
-                    color: member.isLeader ? 'custom.tint3' : 'custom.white',
-                  }}
-                >
-                  <Typography
-                    variant="sub1"
-                    color={member.isLeader ? 'custom.tint3' : 'custom.white'}
-                  >
-                    {member.name}
-                  </Typography>
-                </ListItemText>
-              </Box>
-
-              {/* Show leader badge if member is leader */}
-              {member.isLeader && (
-                <Box>
-                  <Typography variant="sub1" color="custom.tint3">
-                    لیدر تیم
-                  </Typography>
-                </Box>
-              )}
-            </ListItem>
+        <Stack gap={1}>
+          {(selectedTeam.members || []).map((member) => (
+            <MemberRow key={`${selectedTeam.name}-${member.name}`} member={member} />
           ))}
-        </List>
+        </Stack>
       </Box>
-    </Box>
+    </Stack>
   );
 }

@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Divider,
   IconButton,
   Stack,
   Typography,
@@ -14,6 +13,7 @@ import GameModeSelector from '@/components/game-mode-selector.jsx';
 import BattleRoyalIcon from '@/components/icons/BattleRoyal';
 import MultiPlayerIcon from '@/components/icons/MultiPlayer';
 import LeaderBoardIcon from '@/components/icons/navigation/LeaderBoard';
+import leaderboardBanner from '@/assets/images/image 17.png';
 import playerAvatar from '@/assets/images/Lobbies card avatar.png';
 import agentAvatar from '@/assets/images/photo_2025-11-16_17-02-55 1.png';
 import skullAvatar from '@/assets/images/photo_2025-11-12_16-12-31 2.png';
@@ -45,25 +45,28 @@ const rankColors = ['#18A0FB', '#DBB037', '#A3A6B0', '#A36640'];
 
 const RankRow = ({ row, index }) => {
   const [name, score, avatar, rankIndex] = row;
+  const isTopRank = index < 3;
 
   return (
     <Box
       sx={{
-        height: 64,
-        bgcolor: 'custom.bg2',
+        width: '100%',
+        height: 74,
+        bgcolor: '#1F1F1F',
         borderRadius: '8px',
-        px: 1,
+        border: index === 0 ? '1px solid rgba(102, 212, 229, 0.48)' : '1px solid transparent',
+        px: 1.5,
         display: 'grid',
-        gridTemplateColumns: '52px 1fr 76px',
+        gridTemplateColumns: '66px minmax(0, 1fr) 82px',
         alignItems: 'center',
-        columnGap: 1,
+        columnGap: 0.75,
       }}
     >
-      <Stack direction="row" alignItems="center" gap={0.75}>
+      <Stack direction="row" alignItems="center" justifyContent="flex-start" gap={0.75}>
         <Box
           sx={{
-            width: 22,
-            height: 22,
+            width: 24,
+            height: 24,
             borderRadius: '50%',
             border: '1px solid',
             borderColor: rankColors[rankIndex],
@@ -72,15 +75,17 @@ const RankRow = ({ row, index }) => {
             placeItems: 'center',
           }}
         >
-          <Typography variant="caption2">{index + 1}</Typography>
+          <Typography variant="caption2" sx={{ fontWeight: isTopRank ? 700 : 400 }}>
+            {index + 1}
+          </Typography>
         </Box>
-        <Box component="img" src={rankIcons[rankIndex]} alt="" sx={{ width: 20, height: 20 }} />
+        <Box component="img" src={rankIcons[rankIndex]} alt="" sx={{ width: 24, height: 24 }} />
       </Stack>
 
       <Stack direction="row" alignItems="center" justifyContent="flex-end" gap={1} sx={{ minWidth: 0 }}>
         <Typography
-          variant="caption1"
-          color={rankIndex === 0 ? 'custom.prize' : 'custom.white'}
+          variant="sub2"
+          color={rankIndex === 0 ? 'custom.prize' : 'custom.whiteOnBg2'}
           noWrap
           sx={{ minWidth: 0 }}
         >
@@ -91,9 +96,9 @@ const RankRow = ({ row, index }) => {
           src={avatar}
           alt=""
           sx={{
-            width: 36,
-            height: 36,
-            borderRadius: '6px',
+            width: 48,
+            height: 48,
+            borderRadius: '8px',
             objectFit: 'cover',
             flexShrink: 0,
           }}
@@ -101,14 +106,48 @@ const RankRow = ({ row, index }) => {
       </Stack>
 
       <Stack direction="row" alignItems="center" justifyContent="flex-end" gap={0.6}>
-        <Typography variant="caption1" color="custom.grey0">
+        <Typography variant="sub2" color="custom.grey0">
           {score}
         </Typography>
-        <LeaderBoardIcon color={rankColors[rankIndex]} />
+        <LeaderBoardIcon color={rankColors[rankIndex]} width={20} height={20} />
       </Stack>
     </Box>
   );
 };
+
+const NotLoggedInCta = () => (
+  <Stack
+    alignItems="center"
+    justifyContent="center"
+    gap={1}
+    sx={{
+      width: '100%',
+      height: 114,
+      py: '17px',
+      borderTop: '1px solid #020202',
+      borderBottom: '1px solid #020202',
+      bgcolor: 'custom.bg1',
+    }}
+  >
+    <Typography variant="sub2" color="custom.grey0" textAlign="center">
+      برای مشاهده رتبه خود وارد حساب کاربری شوید
+    </Typography>
+    <Button
+      variant="contained"
+      sx={{
+        width: 144,
+        height: 40,
+        bgcolor: 'primary.main',
+        color: 'custom.white',
+        borderRadius: '8px',
+        boxShadow: 'none',
+        '&:hover': { bgcolor: 'primary.dark', boxShadow: 'none' },
+      }}
+    >
+      <Typography variant="button2">ورود / ثبت نام</Typography>
+    </Button>
+  </Stack>
+);
 
 const GuideSheet = ({ onClose }) => (
   <Box
@@ -172,76 +211,52 @@ export default function LeaderboardPage() {
   return (
     <Stack
       sx={{
-        minHeight: 'calc(100vh - 64px)',
+        minHeight: 'calc(100vh - 56px)',
         bgcolor: 'custom.bg1',
         width: '100%',
         boxSizing: 'border-box',
         overflowX: 'hidden',
-        px: 2,
-        pt: 2,
-        pb: 12,
+        pt: 1,
+        pb: 10,
       }}
-      gap={2}
+      gap={0}
+      alignItems="center"
     >
       <Box
+        component="img"
+        src={leaderboardBanner}
+        alt=""
         sx={{
-          position: 'relative',
-          height: 121,
+          width: 'calc(100% - 32px)',
+          height: 120,
           borderRadius: '8px',
-          overflow: 'hidden',
-          bgcolor: '#3A0049',
-          background: 'linear-gradient(135deg, #3A0049 0%, #3A0049 58%, #FF6F97 58%, #7B28FF 100%)',
+          objectFit: 'cover',
+          display: 'block',
         }}
-      >
-        <Box
-          component="img"
-          src={playerAvatar}
-          alt=""
-          sx={{
-            position: 'absolute',
-            right: 18,
-            bottom: 0,
-            width: 122,
-            height: 122,
-            objectFit: 'cover',
-            objectPosition: 'top',
-          }}
-        />
-        <Stack
-          alignItems="flex-end"
-          gap={0.75}
-          sx={{ position: 'relative', zIndex: 1, pt: 1.8, px: 2, width: 222 }}
-        >
-          <Typography variant="title3" color="custom.white" textAlign="right">
-            در فصل رتبه‌بندی شرکت کن
-          </Typography>
-          <Typography variant="caption2" color="custom.white" textAlign="right" lineHeight={1.7}>
-            با شرکت در لابی‌های رتبه‌بندی، امتیاز بگیر و به سطح لجند برس.
-          </Typography>
-          <Button
-            sx={{
-              position: 'absolute',
-              top: 82,
-              right: 16,
-              height: 30,
-              minWidth: 126,
-              bgcolor: 'primary.main',
-              color: 'custom.white',
-              borderRadius: '4px',
-              '&:hover': { bgcolor: 'primary.dark' },
-            }}
-          >
-            شروع مسابقه
-          </Button>
-        </Stack>
+      />
+
+      <Box sx={{ width: 'calc(100% - 32px)', mt: 3 }}>
+        <GameModeSelector value={mode} onChange={setMode} />
       </Box>
 
-      <GameModeSelector value={mode} onChange={setMode} />
-
-      <Stack direction="row" alignItems="center" justifyContent="space-between">
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        sx={{
+          width: 'calc(100% - 73px)',
+          height: 24,
+          mt: 1.75,
+        }}
+      >
         <Button
           onClick={() => setShowGuide(true)}
-          sx={{ color: 'custom.linkBlue', minWidth: 0, px: 0.5 }}
+          sx={{
+            color: 'custom.linkBlue',
+            minWidth: 0,
+            p: 0,
+            height: 24,
+          }}
         >
           <Stack direction="row" alignItems="center" gap={0.5}>
             <Typography variant="caption1">راهنمای رتبه‌بندی</Typography>
@@ -250,35 +265,43 @@ export default function LeaderboardPage() {
         </Button>
         <Stack direction="row" alignItems="center" gap={0.75}>
           <Typography variant="sub1" color="custom.white">
-            لیدربرد فصل
+            لیدربرد
           </Typography>
           <ModeIcon color="#FF3F7C" width={20} height={20} />
         </Stack>
       </Stack>
 
-      <Stack gap={1.25}>
+      <Box sx={{ mt: 3.125, width: '100%' }}>
+        <NotLoggedInCta />
+      </Box>
+
+      <Stack sx={{ width: 'calc(100% - 32px)', mt: 4 }} gap={1}>
         <Stack
           direction="row"
           alignItems="center"
-          sx={{ px: 1, color: 'custom.grey0' }}
+          sx={{
+            height: 32,
+            px: 1.5,
+            color: 'custom.grey0',
+            bgcolor: 'transparent',
+          }}
         >
-          <Typography variant="caption1" sx={{ width: 68 }}>
+          <Typography variant="caption1" sx={{ width: 82 }}>
             امتیاز
           </Typography>
           <Typography variant="caption1" sx={{ flex: 1, textAlign: 'right' }}>
             بازیکن
           </Typography>
-          <Typography variant="caption1" sx={{ width: 52, textAlign: 'right' }}>
+          <Typography variant="caption1" sx={{ width: 66, textAlign: 'right' }}>
             رتبه
           </Typography>
         </Stack>
-        <Divider sx={{ borderColor: 'custom.grey5' }} />
         {leaderboardRows[mode].map((row, index) => (
           <RankRow key={`${mode}-${row[0]}`} row={row} index={index} />
         ))}
       </Stack>
 
-      <Box sx={{ flexGrow: 1, minHeight: 80 }} />
+      <Box sx={{ flexGrow: 1, minHeight: 24 }} />
       <BottomNav />
       {showGuide && <GuideSheet onClose={() => setShowGuide(false)} />}
     </Stack>

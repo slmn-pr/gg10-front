@@ -91,7 +91,7 @@ const menuItems = [
     title: 'پشتیبانی',
     subtitle: 'پاسخ‌دهی به سوالات و ابهامات شما',
     icon: HelpOutlineOutlinedIcon,
-    path: '/user/profile/support',
+    path: '/user/support',
   },
   {
     title: 'قوانین و مقررات',

@@ -1,106 +1,93 @@
+import ChevronForward from '@/components/icons/ChevronForward';
+import { Box, Stack, Typography, useTheme } from '@mui/material';
+import { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-
-import useAuthStore from '@/store/auth-store';
-import { Box, Button, useTheme } from '@mui/material';
-import TeamEmptyView from './components/TeamEmptyView';
-import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import CustomToast from '@/components/toast/CustomToast';
-import BackwardButton from '@/components/layout/BackwardButton';
-import { TEAMS_MOCK } from './_mock';
 import InvitesButton from './components/InvitesButton';
+import TeamEmptyView from './components/TeamEmptyView';
 import TeamsView from './components/TeamsView';
+import { getTeamInvites, TEAMS_MOCK } from './_mock';
 
 export default function TeamsPage() {
   const theme = useTheme();
-  const isAuthenticated = useAuthStore(
-    (state) => state.logged_in && !!state.access_token,
-  );
-
-  const [userTeams, setUserTeams] = useState(TEAMS_MOCK);
-
   const navigate = useNavigate();
+  const location = useLocation();
+  const routeState = location.state;
 
-  const { state } = useLocation();
+  const seededTeams = useMemo(() => {
+    if (!routeState?.message) return TEAMS_MOCK;
+    return [
+      ...TEAMS_MOCK,
+      {
+        name: routeState.teamName,
+        members: routeState.teamMembers,
+      },
+    ];
+  }, [routeState]);
+
+  const [userTeams] = useState(seededTeams);
+  const [selectedTeamIndex, setSelectedTeamIndex] = useState(0);
 
   useEffect(() => {
-    if (state && state.message) {
-      toast.custom((t) => (
-        <CustomToast
-          t={t}
-          message={state.message}
-          onClose={() => {
-            navigate(location.pathname, { replace: true });
-          }}
-        />
-      ));
+    if (!routeState?.message) return;
 
-      // append to userTeams
-      setUserTeams([
-        ...userTeams,
-        {
-          name: state.teamName,
-          members: state.teamMembers,
-        },
-      ]);
-
-      // Clear the state
-      navigate(location.pathname, { replace: true });
-    }
-  }, [state]);
-
-  /** This variable or state -> store the teams of the user
-   * if this variable is null, we need to show the empty box
-   */
-
-  // Show login modal if not authenticated
-  //   if (!isAuthenticated) {
-  //     return (
-  //       <LoginModal
-  //         open={true}
-  //         onClose={() => {
-  //           // Redirect to home when modal is closed
-  //           navigate('/home');
-  //         }}
-  //       />
-  //     );
-  //   }
-
-  //   if (userTeams === null) {
-  //     return <TeamEmptyView />;
-  //   }
-
-  // Show teams page content if authenticated and user has teams
-  return (
-    <Box sx={{ backgroundColor: theme.palette.custom.primaryBg }}>
-      {/* Header */}
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'flex-end',
-          alignItems: 'flex-end',
-          mb: '12px',
-          borderTop: `1px solid black`,
-          borderBottom: `1px solid black`,
+    toast.custom((t) => (
+      <CustomToast
+        t={t}
+        message={routeState.message}
+        onClose={() => {
+          navigate(location.pathname, { replace: true });
         }}
-      >
-        <BackwardButton>تیم ها</BackwardButton>
-        <InvitesButton />
-      </Box>
+      />
+    ));
 
-      {/* Content */}
-      <Box>
-        {userTeams.length === 0 ? (
-          <Box sx={{ mt: '60px' }}>
-            <TeamEmptyView />
-          </Box>
+    navigate(location.pathname, { replace: true });
+  }, [routeState, navigate, location.pathname]);
+
+  const invitesCount = useMemo(() => getTeamInvites().length, []);
+
+  const hasTeams = userTeams.length > 0;
+
+  return (
+    <Box
+      sx={{
+        minHeight: 'calc(100vh - 56px)',
+        backgroundColor: theme.palette.custom.primaryBg,
+        pb: 10,
+      }}
+      dir="rtl"
+    >
+      <Stack sx={{ px: 2, pt: 1.5 }} gap={1.25}>
+        <Box
+          sx={{
+            height: 56,
+            borderTop: '1px solid rgba(255,255,255,0.08)',
+            borderBottom: '1px solid rgba(255,255,255,0.08)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            gap: 0.75,
+          }}
+        >
+          <Typography variant="title2" color="custom.white">
+            تیم‌ها
+          </Typography>
+          <ChevronForward color="#fff" />
+        </Box>
+        <InvitesButton count={invitesCount} />
+
+        {hasTeams ? (
+          <TeamsView
+            teams={userTeams}
+            selectedTeamIndex={selectedTeamIndex}
+            onSelectTeam={setSelectedTeamIndex}
+            onCreateTeam={() => navigate('/teams/create')}
+          />
         ) : (
-          <Box sx={{ mt: '16px' }}>
-            <TeamsView />
-          </Box>
+          <TeamEmptyView onCreateTeam={() => navigate('/teams/create')} />
         )}
-      </Box>
+      </Stack>
     </Box>
   );
 }
