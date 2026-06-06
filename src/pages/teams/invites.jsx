@@ -1,5 +1,5 @@
 import { Avatar, Box, Button, Divider, Stack, Typography } from '@mui/material';
-import BackwardButton from '@/components/layout/BackwardButton';
+import ChevronForward from '@/components/icons/ChevronForward';
 import toast from 'react-hot-toast';
 import { useMemo, useState } from 'react';
 import CustomToast from '@/components/toast/CustomToast';
@@ -72,17 +72,36 @@ export default function TeamInvitesPage() {
 
   return (
     <Box sx={{ minHeight: 'calc(100vh - 56px)', bgcolor: 'custom.primaryBg', pb: 8 }} dir="rtl">
-      <Stack sx={{ px: 2, pt: 1.5 }} gap={2}>
-        <BackwardButton>دعوت نامه ها</BackwardButton>
+      <Stack sx={{ px: 0.5, pt: 1.5 }} gap={2}>
+        <Box
+          sx={{
+            width: 'calc(100% - 32px)',
+            mx: 'auto',
+            height: 52,
+            borderTop: '1px solid rgba(255,255,255,0.08)',
+            borderBottom: '1px solid rgba(255,255,255,0.08)',
+            display: 'flex',
+            alignItems: 'flex-end',
+            justifyContent: 'flex-end',
+            gap: 0.75,
+            px: 3,
+            pb: 1.25,
+          }}
+        >
+          <Typography variant="title2" color="custom.white">
+            دعوت نامه ها
+          </Typography>
+          <ChevronForward color="#fff" />
+        </Box>
 
-        <Box sx={{ bgcolor: 'custom.bg2', borderRadius: '8px', p: 1.5 }}>
+        <Box sx={{ width: 'calc(100% - 32px)', mx: 'auto', bgcolor: 'custom.bg2', borderRadius: '8px', p: 1.5 }}>
           <Typography variant="caption1" color="custom.grey0" textAlign="right">
             دعوت‌نامه‌های تیمی خود را مدیریت کنید. پس از قبول دعوت، تیم در بخش تیم‌ها نمایش داده می‌شود.
           </Typography>
         </Box>
 
         {hasInvites ? (
-          <Stack gap={1.25}>
+          <Stack gap={1.25} sx={{ width: 'calc(100% - 32px)', mx: 'auto' }}>
             {invites.map((invite) => (
               <InviteCard
                 key={invite.id}
@@ -93,14 +112,14 @@ export default function TeamInvitesPage() {
             ))}
           </Stack>
         ) : (
-          <Box sx={{ bgcolor: 'custom.bg2', borderRadius: '8px', p: 2 }}>
+          <Box sx={{ width: 'calc(100% - 32px)', mx: 'auto', bgcolor: 'custom.bg2', borderRadius: '8px', p: 2 }}>
             <Typography variant="caption1" color="custom.grey1" textAlign="center">
               در حال حاضر دعوت‌نامه جدیدی ندارید.
             </Typography>
           </Box>
         )}
 
-        <Divider sx={{ borderColor: 'custom.grey6' }} />
+        <Divider sx={{ borderColor: 'custom.grey6', width: 'calc(100% - 32px)', mx: 'auto' }} />
       </Stack>
     </Box>
   );

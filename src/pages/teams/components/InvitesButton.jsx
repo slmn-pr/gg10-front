@@ -1,18 +1,14 @@
 import ChevronBackward from '@/components/icons/ChevronBackward';
-import NotificationsIcon from '@/components/icons/Notifications';
-import { Box, Button, Typography, useTheme } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { Box, Button, Typography } from '@mui/material';
 
-function InvitesButtonIcon({ count }) {
-  const theme = useTheme();
-
+function Badge({ count }) {
   return (
     <Box
       sx={{
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: 'primary.main',
         borderRadius: '999px',
-        minWidth: 20,
-        height: 20,
+        minWidth: 22,
+        height: 22,
         px: 0.5,
         display: 'flex',
         justifyContent: 'center',
@@ -26,15 +22,12 @@ function InvitesButtonIcon({ count }) {
   );
 }
 
-export default function InvitesButton({ count = 4 }) {
-  const navigate = useNavigate();
-  const theme = useTheme();
-
+export default function InvitesButton({ count = 4, onClick }) {
   return (
     <Button
       variant="text"
       fullWidth
-      onClick={() => navigate('/teams/invites')}
+      onClick={onClick}
       sx={{
         px: 0,
         py: 0.75,
@@ -44,22 +37,23 @@ export default function InvitesButton({ count = 4 }) {
     >
       <Box
         sx={{
-          width: '100%',
+          width: 'calc(100% - 32px)',
+          height: 48,
+          mx: 'auto',
           display: 'flex',
-          justifyContent: 'space-between',
           alignItems: 'center',
+          justifyContent: 'space-between',
+          borderBottom: '1px solid rgba(255,255,255,0.08)',
         }}
-        dir="rtl"
       >
-        <ChevronBackward color="white" />
-
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }} dir="rtl">
           <Typography variant="sub1" color="custom.white">
-            دعوت نامه ها
+            دعوت‌نامه‌ها
           </Typography>
-          <InvitesButtonIcon count={count} />
-          <NotificationsIcon color={theme.palette.custom.white} />
+          <Badge count={count} />
         </Box>
+
+        <ChevronBackward color="white" />
       </Box>
     </Button>
   );
