@@ -12,6 +12,7 @@ import muiListItem from './components/mui-list-item';
 import muiListItemText from './components/mui-list-item-text';
 import muiLink from './components/mui-link';
 import muiDrawer from './components/mui-drawer';
+import muiFormControlLabel from './components/mui-form-control-label';
 
 const theme = createTheme({
   breakpoints: {
@@ -196,11 +197,7 @@ const theme = createTheme({
     },
   },
   components: {
-    MuiFormControlLabel: {
-      defaultProps: {
-        dir: 'rtl',
-      },
-    },
+    MuiFormControlLabel: muiFormControlLabel,
     MuiSwitch: muiSwitch,
     MuiButton: muiButton,
     MuiTypography: muiTypography,
