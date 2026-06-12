@@ -5,7 +5,14 @@ import apiClient from './config';
  * مدیریت تمام endpoint های مربوط به احراز هویت
  */
 
-export const requestOTPReq = (payload) => {
+export type RequestOTPCodePurposeType = 'login' | 'register' | 'password_reset';
+
+export interface RequestOTPCodeInterface {
+  phone_number: string;
+  purpose: RequestOTPCodePurposeType;
+}
+
+export const requestOTPReq = async (payload: RequestOTPCodeInterface) => {
   return apiClient.post('auth/otp/request', payload);
 };
 

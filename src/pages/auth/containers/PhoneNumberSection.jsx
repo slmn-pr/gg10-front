@@ -51,15 +51,17 @@ export default function PhoneNumberSection() {
       return;
     }
 
-    mutate(
-      { phoneNumber, purpose: 'signup' },
-      {
-        onSuccess: (data) => onSuccessOTP(data, phoneNumber),
-        onError: (error) => {
-          toast.error(error.message);
-        },
+    const payload = {
+      phone_number: phoneNumber,
+      purpose: 'register',
+    };
+
+    mutate(payload, {
+      onSuccess: (data) => onSuccessOTP(data, phoneNumber),
+      onError: (error) => {
+        toast.error(error.message);
       },
-    );
+    });
   };
 
   return (
