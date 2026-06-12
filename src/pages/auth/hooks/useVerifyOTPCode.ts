@@ -21,10 +21,9 @@ export default function useVerifyOTPCode() {
     mutationFn: verifyOTPCode,
     onError: (error) => {
       console.log('[OTP_CODE][useVerifyOTPCode] error', error);
-
       const msg = error?.response.data.message || error.message;
 
-      toast.error(msg);
+      return msg;
     },
   });
 }
