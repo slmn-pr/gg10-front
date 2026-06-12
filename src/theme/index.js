@@ -170,9 +170,11 @@ const theme = createTheme({
       greyOnBg2: '#D0D0D0',
       disabledGreyOnBg2: '#8A8A8A',
       primaryOnBg2: '#E40B5A',
+
       // Component backgrounds
       modalBg: '#161616',
       progressBarBg: '#171717',
+
       // State colors
       error: '#DA0606',
       onError: '#FFFFFF',
@@ -184,6 +186,7 @@ const theme = createTheme({
       onWarning: '#020202',
       deleteOnModal: '#FF3333',
       linkBlue: '#7E9CFF',
+
       // Stroke colors
       primaryStroke: '#DD6161',
       blackStroke: '#000000',

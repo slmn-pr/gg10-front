@@ -159,8 +159,15 @@ export default function PhoneNumberSection() {
           justifyContent: 'center',
         }}
       >
-        <Button variant="text" color="primary">
-          تماس با پشتیبانی
+        <Button
+          variant="text"
+          sx={(theme) => ({
+            color: theme.palette.custom.linkBlue,
+          })}
+        >
+          <Typography variant="caption1" color="custom.linkBlue">
+            تماس با پشتیبانی
+          </Typography>
         </Button>
       </Box>
     </Box>
