@@ -14,7 +14,7 @@ export const PERSIAN_PHONE_NUMBER_SCHEMA = z
   .string()
   .refine((value) => /^09\d{9}$/.test(normalizePhoneNumber(value)), ERROR_MESSAGE);
 
-export const gameNameSchema = z
+export const gameUsernameSchema = z
   .string()
   .min(1, 'نام بازی الزامی است')
   .min(3, 'نام بازی باید حداقل 3 کاراکتر باشد');

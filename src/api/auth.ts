@@ -29,8 +29,22 @@ interface VerfiySuccessfullResult {
   requires_profile: boolean;
 }
 
-interface VerfiyFailedResult {
+interface FailedResult {
   detail: {};
+}
+
+export interface CreateUserReqPaylaod {
+  phone_number: string;
+  username: string;
+  password: string;
+}
+
+interface CreateUserSuccessfullResponse {
+  user_id: string;
+  phone_number: string;
+  username: string;
+  access_token: string;
+  refresh_token: string;
 }
 
 export const requestOTPReq = async (payload: RequestOTPCodeInterface) => {
@@ -39,13 +53,14 @@ export const requestOTPReq = async (payload: RequestOTPCodeInterface) => {
 
 export const verifyOTPReq = async (
   payload: VerifyOTPCodeInterface,
-): Promise<AxiosResponse<VerfiySuccessfullResult | VerfiyFailedResult>> => {
+): Promise<AxiosResponse<VerfiySuccessfullResult | FailedResult>> => {
   return apiClient.post('auth/otp/verify', payload);
 };
 
-export const createUserReq = async (payload) => {
-  const response = await apiClient.post('auth/create-user', payload);
-  return response.data;
+export const createUserReq = async (
+  payload: CreateUserReqPaylaod,
+): Promise<AxiosResponse<CreateUserSuccessfullResponse | FailedResult>> => {
+  return apiClient.post('auth/create-user', payload);
 };
 
 export default {

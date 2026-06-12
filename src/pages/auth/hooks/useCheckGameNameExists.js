@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { gameNameSchema } from '../schema';
+import { gameUsernameSchema } from '../schema';
 
 export default function useCheckGameNameExists(gameName) {
   /**
@@ -13,7 +13,7 @@ export default function useCheckGameNameExists(gameName) {
     const throttle = (ms = 2000) => new Promise((resolve) => setTimeout(resolve, ms));
 
     // if not valid not need to check
-    const isValid = gameNameSchema.safeParse(gameName);
+    const isValid = gameUsernameSchema.safeParse(gameName);
     if (!isValid.success) {
       return false;
     }

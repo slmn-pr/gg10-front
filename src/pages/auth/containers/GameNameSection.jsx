@@ -13,52 +13,65 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import InputLoading from '../../../components/form/InputLoading';
 import CircleCheckIcon from '../../../components/icons/CircleCheckIcon';
-import useCheckGameNameExists from '../hooks/useCheckGameNameExists';
 import CloseIcon from '@/components/icons/general/CloseIcon';
 import { useStep } from '../context';
 import { STEP_TYPES } from '../const';
+import useCreateUser from '../hooks/useCreateUser';
+import toast from 'react-hot-toast';
+import ButtonLoading from '@/components/form/ButtonLoading';
+import useAuthStore from '@/store/auth-store';
 
 export default function GameNameSection() {
   const theme = useTheme();
-  const { setStep } = useStep();
+  const { setStep, phoneNumber, password } = useStep();
+  const { mutate, isPending } = useCreateUser();
+  const { setAuth } = useAuthStore();
+  console.log('STORE', setAuth);
+
   const [gameName, setGameName] = useState('');
-  const [debouncedGameName, setDebouncedGameName] = useState('');
-  const debounceTimerRef = useRef(null);
   const [openHelp, setOpenHelp] = useState(false);
 
-  // Debounce: Update debouncedGameName after 2 seconds when user finishes typing
-  useEffect(() => {
-    // Clear previous timer
-    if (debounceTimerRef.current) {
-      clearTimeout(debounceTimerRef.current);
-    }
-
-    // Set timer for 2 seconds (debounce)
-    debounceTimerRef.current = setTimeout(() => {
-      setDebouncedGameName(gameName);
-    }, 2000);
-
-    // Cleanup
-    return () => {
-      if (debounceTimerRef.current) {
-        clearTimeout(debounceTimerRef.current);
-      }
-    };
-  }, [gameName]);
-
-  // Use the hook to check if game name exists
-  const { data: nameExists, isLoading: isCheckingName } =
-    useCheckGameNameExists(debouncedGameName);
-
-  const hasChecked = !isCheckingName && debouncedGameName.trim().length > 0;
-  const isNameAvailable = hasChecked && !nameExists;
-  const isNameUnavailable = hasChecked && nameExists;
+  // TODO: Add real state for checking name exist from database
+  // These are fake to test app
+  const isCheckingName = false;
+  const isNameAvailable = true;
 
   const handleOpenHelpModal = () => {
     setOpenHelp(true);
+  };
+
+  const onSuccess = (data) => {
+    setStep(STEP_TYPES.SUCCESS_SIGNUP);
+
+    // TODO: Save access token and refresh token in global store (zustand)
+    //     {
+    //     "user_id": "056cb4dd-2350-41e8-ad49-976a13f6dfc9",
+    //     "phone_number": "09022424917",
+    //     "username": "Sython",
+    //     "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwNTZjYjRkZC0yMzUwLTQxZTgtYWQ0OS05NzZhMTNmNmRmYzkiLCJpYXQiOjE3ODEyOTk4MTksImV4cCI6MTc4NjQ4MzgxOX0.mnturKf4ehaPBJS46mjZZVJn9bA2PhVHfnPvaqLfQL4",
+    //     "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwNTZjYjRkZC0yMzUwLTQxZTgtYWQ0OS05NzZhMTNmNmRmYzkiLCJpYXQiOjE3ODEyOTk4MTksImV4cCI6MTc4NjQ4MzgxOX0.mnturKf4ehaPBJS46mjZZVJn9bA2PhVHfnPvaqLfQL4"
+    // }
+
+    setAuth(data?.access_token, data?.refresh_token, 1);
+
+    // TODO: Save in cookies
+  };
+  const onError = () => {
+    toast.error('نام قبلا ثبت شده است!');
+  };
+
+  const handleSubmit = () => {
+    mutate(
+      {
+        password: password,
+        phone_number: phoneNumber,
+        username: gameName,
+      },
+      { onSuccess, onError },
+    );
   };
 
   return (
@@ -101,47 +114,35 @@ export default function GameNameSection() {
             '& .MuiInputBase-input': {
               color: isNameAvailable
                 ? theme.palette.custom.success
-                : isNameUnavailable
-                  ? theme.palette.custom.errorOnTertiaryBg
-                  : 'inherit',
+                : theme.palette.custom.errorOnTertiaryBg,
             },
             // For standard variant (underline)
             '& .MuiInput-underline:after': {
               borderBottomColor: isNameAvailable
                 ? theme.palette.custom.success
-                : isNameUnavailable
-                  ? theme.palette.custom.errorOnTertiaryBg
-                  : 'inherit',
+                : theme.palette.custom.errorOnTertiaryBg,
             },
             '& .MuiInput-underline:before': {
               borderBottomColor: isNameAvailable
                 ? theme.palette.custom.success
-                : isNameUnavailable
-                  ? theme.palette.custom.errorOnTertiaryBg
-                  : 'inherit',
+                : theme.palette.custom.errorOnTertiaryBg,
             },
             // For outlined variant
             '& .MuiOutlinedInput-root': {
               '& fieldset': {
                 borderColor: isNameAvailable
                   ? theme.palette.custom.success
-                  : isNameUnavailable
-                    ? theme.palette.custom.errorOnTertiaryBg
-                    : 'inherit',
+                  : theme.palette.custom.errorOnTertiaryBg,
               },
               '&:hover fieldset': {
                 borderColor: isNameAvailable
                   ? theme.palette.custom.success
-                  : isNameUnavailable
-                    ? theme.palette.custom.errorOnTertiaryBg
-                    : 'inherit',
+                  : theme.palette.custom.errorOnTertiaryBg,
               },
               '&.Mui-focused fieldset': {
                 borderColor: isNameAvailable
                   ? theme.palette.custom.success
-                  : isNameUnavailable
-                    ? theme.palette.custom.errorOnTertiaryBg
-                    : 'inherit',
+                  : theme.palette.custom.errorOnTertiaryBg,
               },
             },
           }}
@@ -160,7 +161,7 @@ export default function GameNameSection() {
           }}
         />
         {/* Error text */}
-        {isNameUnavailable && (
+        {!isNameAvailable && (
           <Typography
             variant="sub2"
             color="custom.errorOnPrimaryBg"
@@ -194,10 +195,11 @@ export default function GameNameSection() {
           variant="contained"
           color="primary"
           sx={{ width: '252px', height: '40px', mx: 'auto' }}
-          disabled={!isNameAvailable}
-          onClick={() => setStep(STEP_TYPES.SUCCESS_SIGNUP)}
+          disabled={!isNameAvailable || isPending}
+          onClick={handleSubmit}
         >
-          تایید و ثبت
+          {!isPending && <> تایید و ثبت</>}
+          {isPending && <ButtonLoading />}
         </Button>
       </Box>
 

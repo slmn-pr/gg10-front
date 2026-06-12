@@ -5,6 +5,8 @@ interface StepContextData {
   setStep: Dispatch<SetStateAction<string>>;
   phoneNumber: string;
   setPhoneNumber: Dispatch<SetStateAction<string>>;
+  password?: string;
+  setPassword?: Dispatch<SetStateAction<string>>;
 }
 
 export const StepContext = createContext<StepContextData>({
@@ -12,6 +14,7 @@ export const StepContext = createContext<StepContextData>({
   setStep: () => {},
   phoneNumber: '',
   setPhoneNumber: () => {},
+  password: '',
 });
 
 export const useStep = () => {
