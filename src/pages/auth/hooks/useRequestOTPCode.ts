@@ -22,11 +22,12 @@ export default function useRequestOTPCode() {
   const requestOTPCode = async (params: RequestOTPCodeInterface) => {
     const { data, status } = await requestOTPReq(params);
 
-    console.log('[OTP CODE]', status, data);
+    console.log('[OTP_CODE][useRequestOTPCode]', status, data);
 
     // if (status === 201) {
     //   return {
-
+    //     expires_at: '2026-06-12T11:10:12.751Z',
+    //     resend_available_at: '2026-06-12T11:10:12.751Z',
     //   };
     // }
   };

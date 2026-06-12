@@ -11,7 +11,7 @@ export const STEP_TYPES = {
   LOGIN_OTP_VERIFICATION: 'login_otp_verification',
 };
 
-export const STEP_PROGRESS = {
+export const SIGNUP_STEP_PROGRESS = {
   [STEP_TYPES.SIGNUP_OTP_VERIFICATION]: 0,
   [STEP_TYPES.GAME_NAME]: 1,
   [STEP_TYPES.SUCCESS_SIGNUP]: 2,

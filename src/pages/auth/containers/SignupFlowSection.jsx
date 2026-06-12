@@ -1,19 +1,12 @@
-import {
-  Box,
-  Container,
-  IconButton,
-  Step,
-  StepLabel,
-  Stepper,
-} from '@mui/material';
-import { useStep } from '..';
-import { STEP_PROGRESS, STEP_TYPES } from '../const';
+import { Box, Container, IconButton, Step, StepLabel, Stepper } from '@mui/material';
+import { SIGNUP_STEP_PROGRESS, STEP_TYPES } from '../const';
 import OtpVerificationSection from './OtpVerificationSection';
 import GameNameSection from './GameNameSection';
 import BackwardButton from '@/components/layout/BackwardButton';
 import CloseIcon from '@/components/icons/general/CloseIcon';
 import SuccessSignupSection from './SuccessSignupSection';
 import SupportFooter from '../components/SupportFooter';
+import { useStep } from '../context';
 
 export default function SignupFlow() {
   const { step } = useStep();
@@ -26,7 +19,7 @@ export default function SignupFlow() {
         p: 0,
       }}
     >
-      <Box sx={{ px: { xs: '16px' }, pt: { xs: '16px' } }}>
+      <Box sx={{ pt: { xs: '16px' } }}>
         {/* Header */}
         <Box
           sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
@@ -40,7 +33,7 @@ export default function SignupFlow() {
 
         {/* Stepper */}
         <Stepper
-          activeStep={STEP_PROGRESS[step]}
+          activeStep={SIGNUP_STEP_PROGRESS[step]}
           alternativeLabel
           sx={{ width: '100%', mt: '30px' }}
         >

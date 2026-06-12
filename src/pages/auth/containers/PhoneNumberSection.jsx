@@ -4,10 +4,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema, normalizePhoneNumber } from '../schema';
 import useCheckPhoneNumberExist from '../hooks/useCheckPhoneNumberExist';
 import PhoneNumberInput from '../components/PhoneNumberInput';
-import { useStep } from '../index';
 import { STEP_TYPES } from '../const';
 import useRequestOTPCode from '../hooks/useRequestOTPCode';
 import toast from 'react-hot-toast';
+import { useStep } from '../context';
 
 export default function PhoneNumberSection() {
   const { setStep, setPhoneNumber } = useStep();
@@ -22,14 +22,19 @@ export default function PhoneNumberSection() {
     reValidateMode: 'onChange',
   });
 
-  const { formState, control } = methods;
-  const { isValid } = formState;
+  const {
+    formState: { isValid },
+    control,
+  } = methods;
+
   const phoneNumberValue = useWatch({ control, name: 'phoneNumber' });
 
   const { mutate, isPending } = useRequestOTPCode();
 
   const checkPhoneNumberExist = useCheckPhoneNumberExist();
 
+  // Call if send OTP Code successfull to client number
+  // Naviagte to Verify OTP code section
   const onSuccessOTP = (_, phoneNumber) => {
     setPhoneNumber(phoneNumber);
     setStep(STEP_TYPES.SIGNUP_OTP_VERIFICATION);
@@ -43,19 +48,19 @@ export default function PhoneNumberSection() {
       return;
     }
 
+    // if phone number exist, naviagte to login using password
+    // TODO: Complete the number check exist from database
     const phoneExists = await checkPhoneNumberExist(phoneNumber);
     setPhoneNumber(phoneNumber);
-
     if (phoneExists) {
-      setStep(STEP_TYPES.PASSWORD_LOGIN);
-      return;
+      return setStep(STEP_TYPES.PASSWORD_LOGIN);
     }
 
+    // If number not exist in db send request otp code
     const payload = {
       phone_number: phoneNumber,
       purpose: 'register',
     };
-
     mutate(payload, {
       onSuccess: (data) => onSuccessOTP(data, phoneNumber),
       onError: (error) => {

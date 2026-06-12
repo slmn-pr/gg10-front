@@ -87,7 +87,7 @@ export default function OtpInput({ value, onChange, onComplete, isValid, isError
       sx={{
         display: 'flex',
         gap: '8px',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
       }}
     >
       {displayOtp.map((digit, index) => (

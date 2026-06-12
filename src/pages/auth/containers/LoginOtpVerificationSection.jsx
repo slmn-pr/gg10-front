@@ -4,7 +4,7 @@ import { Box, Button, Container, IconButton, Stack, Typography } from '@mui/mate
 import { useState } from 'react';
 import OtpSection from './OtpSection';
 import useVerifyOTPCode from '../hooks/useVerifyOTPCode';
-import { useStep } from '..';
+import { useStep } from '../context';
 import { STEP_TYPES } from '../const';
 import ButtonLoading from '@/components/form/ButtonLoading';
 import useAuthStore from '@/store/auth-store';

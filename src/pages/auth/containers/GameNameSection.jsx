@@ -18,7 +18,7 @@ import InputLoading from '../../../components/form/InputLoading';
 import CircleCheckIcon from '../../../components/icons/CircleCheckIcon';
 import useCheckGameNameExists from '../hooks/useCheckGameNameExists';
 import CloseIcon from '@/components/icons/general/CloseIcon';
-import { useStep } from '..';
+import { useStep } from '../context';
 import { STEP_TYPES } from '../const';
 
 export default function GameNameSection() {

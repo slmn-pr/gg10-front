@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import apiClient from './config';
 
 /**
@@ -12,13 +13,34 @@ export interface RequestOTPCodeInterface {
   purpose: RequestOTPCodePurposeType;
 }
 
+export interface VerifyOTPCodeInterface {
+  phone_number: string;
+  purpose: RequestOTPCodePurposeType;
+  code: string;
+}
+
+interface VerfiySuccessfullResult {
+  phone_number: string;
+  purpose: RequestOTPCodePurposeType;
+  verified_at: string;
+  user_id: string;
+  access_token: string;
+  refresh_token: string;
+  requires_profile: boolean;
+}
+
+interface VerfiyFailedResult {
+  detail: {};
+}
+
 export const requestOTPReq = async (payload: RequestOTPCodeInterface) => {
   return apiClient.post('auth/otp/request', payload);
 };
 
-export const verifyOTPReq = async (payload) => {
-  const response = await apiClient.post('auth/otp/verify', payload);
-  return response.data;
+export const verifyOTPReq = async (
+  payload: VerifyOTPCodeInterface,
+): Promise<AxiosResponse<VerfiySuccessfullResult | VerfiyFailedResult>> => {
+  return apiClient.post('auth/otp/verify', payload);
 };
 
 export const createUserReq = async (payload) => {

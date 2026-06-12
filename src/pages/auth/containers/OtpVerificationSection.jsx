@@ -1,10 +1,11 @@
+import { useMemo, useState } from 'react';
 import { Box, Button, Stack, Typography } from '@mui/material';
-import { useState } from 'react';
-import ButtonLoading from '@/components/form/ButtonLoading';
-import { useStep } from '..';
+import { useStep } from '../context';
 import { STEP_TYPES } from '../const';
+import ButtonLoading from '@/components/form/ButtonLoading';
 import OtpSection from './OtpSection';
 import useVerifyOTPCode from '../hooks/useVerifyOTPCode';
+import toast from 'react-hot-toast';
 
 export default function OtpVerificationSection() {
   const [otpValue, setOtpValue] = useState('');
@@ -13,18 +14,27 @@ export default function OtpVerificationSection() {
   const { setStep, phoneNumber } = useStep();
   const { mutate, isPending } = useVerifyOTPCode();
 
+  const isDisabled = useMemo(
+    () => otpValue.length !== 5 || isPending,
+    [otpValue, isPending],
+  );
+
+  // Handle send OTP code to verify
   const onNextStep = () => {
-    if (isPending || otpValue.length !== 5) return;
+    if (isDisabled) return;
 
     mutate(
-      { phone_number: phoneNumber, code: otpValue, purpose: 'signup' },
+      { phone_number: phoneNumber, code: otpValue, purpose: 'register' },
       {
-        onSuccess: () => {
+        onSuccess: (data) => {
+          console.log('[OtpVerificationSection] mutate -> data', data);
+
           setIsError(false);
           setStep(STEP_TYPES.GAME_NAME);
         },
-        onError: () => {
+        onError: (error) => {
           setIsError(true);
+          toast.error('کد وارد شده صحیح نیست!');
         },
       },
     );
@@ -36,8 +46,6 @@ export default function OtpVerificationSection() {
       setIsError(false);
     }
   };
-
-  const isDisabled = otpValue.length !== 5 || isPending;
 
   return (
     <>

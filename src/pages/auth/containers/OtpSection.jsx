@@ -1,8 +1,8 @@
 import { Box, Button, Stack, Typography } from '@mui/material';
 import OtpInput from '../components/OtpInput';
 import { useCallback, useState } from 'react';
-import { useStep } from '..';
 import { STEP_TYPES } from '../const';
+import { useStep } from '../context';
 
 export default function OtpSection({
   phoneNumber = '09123456789',

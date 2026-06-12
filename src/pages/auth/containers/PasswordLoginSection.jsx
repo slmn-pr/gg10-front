@@ -17,7 +17,7 @@ import { useState } from 'react';
 import SupportFooter from '../components/SupportFooter';
 import KeyIcon from '@/components/icons/KeyIcon';
 import ChevronBackward from '@/components/icons/ChevronBackward';
-import { useStep } from '..';
+import { useStep } from '../context';
 import { STEP_TYPES } from '../const';
 import useRequestOTPCode from '../hooks/useRequestOTPCode';
 import toast from 'react-hot-toast';
