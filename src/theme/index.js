@@ -1,4 +1,17 @@
 import { createTheme } from '@mui/material/styles';
+import { CUSTOM_PALLETE } from './custom-pallete';
+import muiSwitch from './components/mui-switch';
+import muiButton from './components/mui-button';
+import muiTypography from './components/mui-typography';
+import muiSnackbar from './components/mui-snackbar';
+import muiAccordion from './components/mui-accordion';
+import muiModal from './components/mui-modal';
+import muiFormControl from './components/mui-form-control';
+import muiTextField from './components/mui-text-field';
+import muiListItem from './components/mui-list-item';
+import muiListItemText from './components/mui-list-item-text';
+import muiLink from './components/mui-link';
+import muiDrawer from './components/mui-drawer';
 
 const theme = createTheme({
   breakpoints: {
@@ -143,104 +156,7 @@ const theme = createTheme({
       contrastText: '#FFFFFF',
     },
     // Custom palette extensions
-    custom: {
-      // Primary shades
-      shade1: '#A9023F',
-      shade2: '#79012D',
-      shade3: '#48011B',
-      shade4: '#180009',
-      // Primary tints
-      tint0: '#FFDFEB',
-      tint1: '#FFC4C4',
-      tint2: '#DD6161',
-      tint3: '#FF317C',
-      tint4: '#E40B5A',
-      // Primary text colors
-      whiteOnPrimary: '#FFFFFF',
-      blackOnPrimary: '#020202',
-      // Main backgrounds
-      bg1: '#131313', // Meshki
-      bg2: '#212121', // Zoghali
-      bg3: '#FFFFFF', // White
-      // On Background 1 colors
-      whiteOnBg1: '#FFFFFF',
-      greyOnBg1: '#A4A4A4',
-      // On Background 2 colors
-      whiteOnBg2: '#F9F9F9',
-      greyOnBg2: '#D0D0D0',
-      disabledGreyOnBg2: '#8A8A8A',
-      primaryOnBg2: '#E40B5A',
-
-      // Component backgrounds
-      modalBg: '#161616',
-      progressBarBg: '#171717',
-
-      // State colors
-      error: '#DA0606',
-      onError: '#FFFFFF',
-      info: '#FFDFEB',
-      onInfo: '#020202',
-      success: '#119859',
-      onSuccess: '#020202',
-      warning: '#FFC225',
-      onWarning: '#020202',
-      deleteOnModal: '#FF3333',
-      linkBlue: '#7E9CFF',
-
-      // Stroke colors
-      primaryStroke: '#DD6161',
-      blackStroke: '#000000',
-      progressStroke: '#262626',
-      bottomNavigationGreyLine: '#454545',
-
-      // Lobbies
-      dollar: '#00C016',
-      prize: '#DBB037',
-      glassOnCards: '#1A1D26',
-      cardsBg: '#1F1F1F',
-
-      // tags
-      tagOnCardPicBg: '#cfcfcf',
-      iconsWhite: '#FFFFFF',
-      iconsBlack: '#020202',
-      tagsBlackBg: '#090406',
-      tagsOnCardsPicBg: '#CFCFCF',
-      registering: '#00834F',
-      live: '#E80000',
-      full: '#BE9305',
-      finished: '#6D6D6D',
-
-      // States
-      errorOnPrimaryBg: '#FE3A3A',
-      errorOnSecondaryBg: '#FF4242',
-      errorOnTertiaryBg: '#B10A0A',
-      warning: '#FFC225',
-      info: '#FFDFEB',
-
-      // greys
-      black: '#020202',
-      grey8: '#090406',
-      grey7: '#161616',
-      grey6: '#1f1f1f',
-      grey5: '#262626',
-      grey4: '#454545',
-      grey3: '#717171',
-      grey2: '#8a8a8a',
-      grey1: '#a4a4a4',
-      grey0: '#d0d0d0',
-      white: '#ffffff',
-
-      //  Neutral colors
-      primaryBg: '#131313',
-      secondaryBg: '#212121',
-      tertiaryBackground: '#ffffff',
-
-      // ranks
-      legend: '#66D4E5',
-      gold: '#9A7D26',
-      silver: '#C0C0C0',
-      bronze: '#A97142',
-    },
+    custom: CUSTOM_PALLETE,
 
     stroke: {
       primary: '#DD6161',
@@ -285,241 +201,18 @@ const theme = createTheme({
         dir: 'rtl',
       },
     },
-    MuiSwitch: {
-      defaultProps: {
-        dir: 'rtl',
-      },
-      styleOverrides: {
-        root: {
-          width: 52,
-          height: 32,
-          padding: 0,
-          display: 'flex',
-          marginInlineEnd: 8,
-        },
-
-        switchBase: ({ theme }) => ({
-          paddingTop: 8,
-          transitionDuration: '200ms',
-
-          '&.Mui-checked': {
-            transform: 'translateX(20px)',
-            color: '#fff',
-
-            '& + .MuiSwitch-track': {
-              backgroundColor: theme.palette.primary.main,
-              borderColor: theme.palette.primary.main,
-              opacity: 1,
-            },
-
-            '& .MuiSwitch-thumb': {
-              backgroundColor: '#fff',
-            },
-          },
-        }),
-
-        thumb: {
-          width: 16,
-          height: 16,
-          backgroundColor: '#9e9e9e',
-          borderRadius: 100,
-        },
-
-        track: {
-          borderRadius: 100,
-          backgroundColor: '#ffffff',
-          border: '2px solid #8a8a8a',
-          opacity: 1,
-          boxSizing: 'border-box',
-        },
-      },
-    },
-    MuiButton: {
-      defaultProps: {
-        dir: 'rtl',
-      },
-      styleOverrides: {
-        root: ({ theme }) => ({
-          borderRadius: '8px',
-          '&.Mui-disabled': {
-            backgroundColor: theme.palette.custom.grey2,
-            color: theme.palette.custom.white,
-          },
-        }),
-        startIcon: {
-          marginRight: -4, // -4px
-          marginLeft: '8px',
-        },
-        endIcon: {
-          marginRight: 8,
-          marginLeft: -4,
-          // margin-right: -4px;
-          // margin-left: 8px;
-        },
-      },
-    },
-    MuiTypography: {
-      styleOverrides: {
-        root: {
-          direction: 'rtl',
-          textAlign: 'right',
-        },
-      },
-    },
-
-    MuiSnackbar: {
-      defaultProps: {
-        anchorOrigin: {
-          vertical: 'bottom',
-          horizontal: 'center',
-        },
-      },
-      styleOverrides: {
-        root: {
-          // direction: 'rtl',
-          px: '16px',
-          py: '6px',
-          width: '345px !important',
-          left: '50% !important',
-          right: 'auto !important',
-          bottom: '16px',
-          transform: 'translateX(-50%) !important',
-          marginLeft: '0 !important',
-          marginRight: '0 !important',
-        },
-      },
-    },
-
-    MuiAccordion: {
-      defaultProps: {
-        // dir: 'rtl',
-      },
-      styleOverrides: {
-        root: ({ theme }) => ({
-          backgroundColor: theme.palette.custom.black,
-          paddingLeft: '16px',
-          paddingRight: '16px',
-          boxShadow: 'none',
-          '&:before': { display: 'none' },
-          '&.Mui-expanded': { margin: 0 },
-          '& .MuiAccordionSummary-root': {
-            minHeight: 'auto',
-            px: 2,
-            py: 1,
-          },
-        }),
-      },
-    },
-
-    MuiModal: {
-      styleOverrides: {
-        root: {
-          '& .MuiBackdrop-root': {
-            backdropFilter: 'blur(2px)',
-          },
-          '& > .MuiBox-root': {
-            border: 'none',
-            outline: 'none',
-          },
-        },
-      },
-    },
-
-    MuiFormControl: {
-      styleOverrides: {
-        root: ({ theme }) => ({
-          width: '100%',
-          '& .MuiFormHelperText-root': {
-            textAlign: 'right',
-            display: 'block',
-            mt: '4px',
-            mx: '16px',
-            color: 'white',
-            fontSize: theme.typography.sub2.fontSize,
-            lineHeight: theme.typography.sub2.lineHeight,
-            fontWeight: theme.typography.sub2.fontWeight,
-          },
-
-          '& .MuiInputBase-root': {
-            paddingLeft: '8px',
-          },
-
-          "& input[aria-invalid='false']": {
-            borderColor: 'green',
-          },
-        }),
-      },
-    },
-
-    MuiTextField: {
-      styleOverrides: {
-        root: ({ theme }) => ({
-          direction: 'rtl',
-          textAlign: 'right',
-          // backgroundColor: 'white',
-          color: theme.palette.custom.grey3,
-          '& .MuiInputBase-root': {
-            backgroundColor: 'white',
-            color: theme.palette.custom.grey3,
-
-            // font variant -> title3
-            fontSize: theme.typography.title3.fontSize,
-            lineHeight: theme.typography.title3.lineHeight,
-            fontWeight: theme.typography.title3.fontWeight,
-          },
-        }),
-      },
-    },
-
-    MuiListItem: {
-      styleOverrides: {
-        root: ({ theme }) => ({
-          direction: 'rtl',
-          padding: 0,
-          paddingRight: '20px',
-        }),
-      },
-    },
-
-    MuiListItemText: {
-      styleOverrides: {
-        root: ({ theme }) => ({
-          direction: 'rtl',
-          display: 'list-item',
-
-          '& .MuiTypography-root': {
-            fontSize: theme.typography.sub2.fontSize,
-            lineHeight: theme.typography.sub2.lineHeight,
-            fontWeight: theme.typography.sub2.fontWeight,
-          },
-        }),
-      },
-    },
-
-    MuiLink: {
-      styleOverrides: {
-        root: ({ theme }) => ({
-          color: theme.palette.custom.linkBlue,
-          textDecoration: 'none',
-        }),
-      },
-    },
-
-    MuiDrawer: {
-      styleOverrides: {
-        root: ({ theme }) => ({
-          '& > .MuiPaper-root ': {
-            padding: '16px',
-            maxWidth: theme.breakpoints.values.sm,
-            width: '100%',
-            marginInline: 'auto',
-            backgroundColor: theme.palette.custom.grey7,
-            backgroundImage: 'none',
-            // borderRadius: '16px 16px 0 0',
-          },
-        }),
-      },
-    },
+    MuiSwitch: muiSwitch,
+    MuiButton: muiButton,
+    MuiTypography: muiTypography,
+    MuiSnackbar: muiSnackbar,
+    MuiAccordion: muiAccordion,
+    MuiModal: muiModal,
+    MuiFormControl: muiFormControl,
+    MuiTextField: muiTextField,
+    MuiListItem: muiListItem,
+    MuiListItemText: muiListItemText,
+    MuiLink: muiLink,
+    MuiDrawer: muiDrawer,
   },
 });
 

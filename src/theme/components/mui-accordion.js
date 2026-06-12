@@ -1,0 +1,20 @@
+export default {
+  defaultProps: {
+    // dir: 'rtl',
+  },
+  styleOverrides: {
+    root: ({ theme }) => ({
+      backgroundColor: theme.palette.custom.black,
+      paddingLeft: '16px',
+      paddingRight: '16px',
+      boxShadow: 'none',
+      '&:before': { display: 'none' },
+      '&.Mui-expanded': { margin: 0 },
+      '& .MuiAccordionSummary-root': {
+        minHeight: 'auto',
+        px: 2,
+        py: 1,
+      },
+    }),
+  },
+};
