@@ -14,6 +14,7 @@ const BottomNav = () => {
   const theme = useTheme();
 
   const activePath = useMemo(() => location.pathname, [location.pathname]);
+  const isAccountActive = activePath === '/user/profile' || activePath.startsWith('/profile/');
 
   return (
     <Paper
@@ -36,6 +37,7 @@ const BottomNav = () => {
       }}
     >
       <Stack
+        dir="ltr"
         direction="row"
         alignItems="center"
         justifyContent="space-between"
@@ -141,8 +143,21 @@ const BottomNav = () => {
 
         {/* Missions */}
         <BottomNavigationItem path="/missions" active={activePath === '/missions'}>
-          <MissionsIcon color={theme.palette.custom.whiteOnBg1} />
-          <Typography variant="sub2" color={theme.palette.custom.whiteOnBg1}>
+          <MissionsIcon
+            color={
+              activePath === '/missions'
+                ? theme.palette.primary.main
+                : theme.palette.custom.whiteOnBg1
+            }
+          />
+          <Typography
+            variant="sub2"
+            color={
+              activePath === '/missions'
+                ? theme.palette.primary.main
+                : theme.palette.custom.whiteOnBg1
+            }
+          >
             مأموریت‌ها
           </Typography>
         </BottomNavigationItem>
@@ -150,10 +165,23 @@ const BottomNav = () => {
         {/* User Profile */}
         <BottomNavigationItem
           path="/user/profile"
-          active={activePath === '/user/profile'}
+          active={isAccountActive}
         >
-          <AccountIcon color={theme.palette.custom.whiteOnBg1} />
-          <Typography variant="sub2" color={theme.palette.custom.whiteOnBg1}>
+          <AccountIcon
+            color={
+              isAccountActive
+                ? theme.palette.primary.main
+                : theme.palette.custom.whiteOnBg1
+            }
+          />
+          <Typography
+            variant="sub2"
+            color={
+              isAccountActive
+                ? theme.palette.primary.main
+                : theme.palette.custom.whiteOnBg1
+            }
+          >
             حساب کاربری
           </Typography>
         </BottomNavigationItem>

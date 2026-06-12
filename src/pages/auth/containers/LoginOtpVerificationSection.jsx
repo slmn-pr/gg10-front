@@ -1,17 +1,51 @@
 import CloseIcon from '@/components/icons/general/CloseIcon';
 import BackwardButton from '@/components/layout/BackwardButton';
 import { Box, Button, Container, IconButton, Stack, Typography } from '@mui/material';
-import OtpInput from '../components/OtpInput';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import OtpSection from './OtpSection';
 import useVerifyOTPCode from '../hooks/useVerifyOTPCode';
 import { useStep } from '..';
+import { STEP_TYPES } from '../const';
+import ButtonLoading from '@/components/form/ButtonLoading';
+import useAuthStore from '@/store/auth-store';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 export default function LoginOtpVerificationSection() {
-  const { phoneNumber } = useStep();
+  const navigate = useNavigate();
+  const setAuth = useAuthStore((state) => state.setAuth);
+  const { phoneNumber, setStep } = useStep();
   const { mutate, isPending } = useVerifyOTPCode();
+  const [otpValue, setOtpValue] = useState('');
+  const [isError, setIsError] = useState(false);
 
-  const otpValue = useRef('');
+  const handleVerified = (data) => {
+    const payload = data?.data || data;
+    const accessToken = payload?.access_token || payload?.accessToken || payload?.token;
+    const refreshToken = payload?.refresh_token || payload?.refreshToken || null;
+    const playerRank = payload?.player_rank || payload?.playerRank || null;
+
+    if (accessToken) {
+      setAuth(accessToken, refreshToken, playerRank);
+    }
+
+    toast.success('ورود با موفقیت انجام شد');
+    navigate('/home', { replace: true });
+  };
+
+  const handleSubmit = (code = otpValue) => {
+    if (isPending || code.length !== 5) return;
+
+    mutate(
+      { phone_number: phoneNumber, code },
+      {
+        onSuccess: handleVerified,
+        onError: () => {
+          setIsError(true);
+        },
+      },
+    );
+  };
 
   return (
     <Container maxWidth="sm" sx={{ p: 0 }}>
@@ -23,7 +57,7 @@ export default function LoginOtpVerificationSection() {
         <Box
           sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
         >
-          <IconButton>
+          <IconButton onClick={() => setStep(STEP_TYPES.PHONE_NUMBER)}>
             <CloseIcon />
           </IconButton>
 
@@ -39,21 +73,13 @@ export default function LoginOtpVerificationSection() {
         <Stack mt="60px">
           <OtpSection
             phoneNumber={phoneNumber}
-            onComplete={(otpCode) => {
-              otpValue.current = otpCode;
-              mutate(
-                { phone_number: phoneNumber, code: otpCode },
-                {
-                  onSuccess: () => {
-                    console.log('OTP verified');
-                    otpValue.current = '';
-                  },
-                  onError: (error) => {
-                    console.error('OTP verification failed', error);
-                  },
-                },
-              );
+            value={otpValue}
+            onChange={(value) => {
+              setOtpValue(value);
+              setIsError(false);
             }}
+            isError={isError}
+            errorText="کد وارد شده صحیح نیست"
           />
 
           {/* Button */}
@@ -61,13 +87,16 @@ export default function LoginOtpVerificationSection() {
             variant="contained"
             color="primary"
             sx={{ width: '252px', height: '40px', mx: 'auto', mt: '100px' }}
-            disabled={isPending}
-            onClick={() => mutate({ phone_number: phoneNumber, code: otpValue.current })}
-            loading={isPending}
+            disabled={isPending || otpValue.length !== 5}
+            onClick={() => handleSubmit()}
           >
-            <Typography variant="button1" component="p" color="white">
-              تایید و ادامه
-            </Typography>
+            {isPending ? (
+              <ButtonLoading />
+            ) : (
+              <Typography variant="button1" component="p" color="white">
+                تایید و ادامه
+              </Typography>
+            )}
           </Button>
         </Stack>
       </Box>

@@ -1,0 +1,71 @@
+import {
+  ArrowDownward,
+  ArrowUpward,
+  CardGiftcardOutlined,
+} from '@mui/icons-material';
+
+export const moneyFlowConfig = {
+  deposit: {
+    title: 'افزایش موجودی',
+    subtitle: 'مبلغ مورد نظر برای شارژ کیف پول را وارد کنید.',
+    icon: ArrowDownward,
+    primaryLabel: 'پرداخت',
+    inputLabel: 'مبلغ افزایش موجودی',
+    placeholder: 'مثلا ۵۰۰,۰۰۰',
+    helper: 'حداقل مبلغ افزایش موجودی ۵۰,۰۰۰ تومان است.',
+    suffix: 'تومان',
+    presets: ['۱۰۰,۰۰۰', '۳۰۰,۰۰۰', '۵۰۰,۰۰۰', '۱,۰۰۰,۰۰۰'],
+    minError: 'مبلغ وارد شده کمتر از حداقل مجاز است.',
+    maxError: 'مبلغ وارد شده بیشتر از سقف مجاز است.',
+    maxAmount: 10000000,
+    successMessage: 'در حال انتقال به درگاه پرداخت...',
+  },
+  withdraw: {
+    title: 'برداشت وجه',
+    subtitle: 'مبلغ برداشت از کیف پول و واریز به کارت بانکی را وارد کنید.',
+    icon: ArrowUpward,
+    primaryLabel: 'ثبت درخواست برداشت',
+    inputLabel: 'مبلغ برداشت',
+    placeholder: 'مثلا ۵۰۰,۰۰۰',
+    helper: 'برداشت فقط به کارت بانکی ثبت‌شده انجام می‌شود.',
+    suffix: 'تومان',
+    presets: ['۲۰۰,۰۰۰', '۵۰۰,۰۰۰', '۱,۰۰۰,۰۰۰', '۲,۰۰۰,۰۰۰'],
+    minError: 'مبلغ برداشت کمتر از حداقل مجاز است.',
+    maxError: 'مبلغ برداشت بیشتر از موجودی قابل برداشت است.',
+    maxAmount: 2750000,
+    successMessage: 'درخواست برداشت با موفقیت ثبت شد.',
+  },
+  gift: {
+    title: 'ثبت کد هدیه',
+    subtitle: 'کد هدیه یا جایزه خود را وارد کنید.',
+    icon: CardGiftcardOutlined,
+    primaryLabel: 'ثبت کد',
+    inputLabel: 'کد هدیه',
+    placeholder: 'مثلا GG10-2026',
+    helper: 'کد هدیه پس از بررسی به موجودی کیف پول اضافه می‌شود.',
+    suffix: '',
+    presets: [],
+    minError: 'کد هدیه وارد شده معتبر نیست.',
+    maxError: 'این کد قبلا استفاده شده است.',
+    successMessage: 'کد هدیه با موفقیت ثبت شد و جایزه به کیف پول اضافه شد.',
+  },
+};
+
+export const bankCardConfig = {
+  register: {
+    title: 'ثبت کارت بانکی',
+    subtitle: 'برای برداشت وجه، کارت بانکی به نام خودتان را ثبت کنید.',
+    primaryLabel: 'ثبت کارت',
+    successMessage: 'کارت بانکی با موفقیت ثبت شد.',
+    initialCardNumber: '',
+    initialCardName: '',
+  },
+  edit: {
+    title: 'ویرایش کارت بانکی',
+    subtitle: 'اطلاعات کارت بانکی ثبت‌شده را اصلاح کنید.',
+    primaryLabel: 'ذخیره تغییرات',
+    successMessage: 'اطلاعات کارت با موفقیت ویرایش شد.',
+    initialCardNumber: '۶۰۳۷ ۹۹۷۵ ۱۲۳۴ ۵۶۷۸',
+    initialCardName: 'امیر محمدی',
+  },
+};

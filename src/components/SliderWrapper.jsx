@@ -2,8 +2,8 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Box, Typography, useTheme } from '@mui/material';
+import { Swiper } from 'swiper/react';
+import { Box, useTheme } from '@mui/material';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { useRTL } from '@/app/providers/rtl-provider';
 
@@ -28,35 +28,6 @@ import { useRTL } from '@/app/providers/rtl-provider';
 export default function SliderWrapper({ children, autoplayDelay = 3000, loop = true }) {
   const theme = useTheme();
   const { direction } = useRTL();
-
-  /**
-   * Splits title text and highlights the specified word
-   */
-  const renderTitle = (title, highlight) => {
-    if (!highlight) {
-      return <Typography variant="title1">{title}</Typography>;
-    }
-
-    const parts = title.split(highlight);
-    if (parts.length === 1) {
-      return <Typography variant="title1">{title}</Typography>;
-    }
-
-    return (
-      <Typography variant="title1" component="div">
-        {parts.map((part, index) => (
-          <span key={index}>
-            {part}
-            {index < parts.length - 1 && (
-              <Box component="span" sx={{ color: theme.palette.primary.main }}>
-                {highlight}
-              </Box>
-            )}
-          </span>
-        ))}
-      </Typography>
-    );
-  };
 
   return (
     <Box
@@ -120,8 +91,6 @@ export default function SliderWrapper({ children, autoplayDelay = 3000, loop = t
             justifyContent: 'center',
             alignItems: 'center',
             gap: '2px',
-            display: 'flex !important',
-            justifyContent: 'center !important',
           },
           '& .swiper-pagination-bullet': {
             width: '6px',

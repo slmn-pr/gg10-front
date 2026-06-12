@@ -17,10 +17,29 @@ import { useState } from 'react';
 import SupportFooter from '../components/SupportFooter';
 import KeyIcon from '@/components/icons/KeyIcon';
 import ChevronBackward from '@/components/icons/ChevronBackward';
+import { useStep } from '..';
+import { STEP_TYPES } from '../const';
+import useRequestOTPCode from '../hooks/useRequestOTPCode';
+import toast from 'react-hot-toast';
+import ButtonLoading from '@/components/form/ButtonLoading';
 
 export default function PasswordLoginSection() {
   const theme = useTheme();
+  const { phoneNumber, setStep } = useStep();
+  const { mutate, isPending } = useRequestOTPCode();
   const [isVisible, setIsVisible] = useState(false);
+  const [password, setPassword] = useState('');
+  const [showPasswordError, setShowPasswordError] = useState(false);
+
+  const handleOtpLogin = () => {
+    mutate(
+      { phoneNumber, purpose: 'login' },
+      {
+        onSuccess: () => setStep(STEP_TYPES.LOGIN_OTP_VERIFICATION),
+        onError: (error) => toast.error(error.message),
+      },
+    );
+  };
 
   return (
     <Container
@@ -48,7 +67,7 @@ export default function PasswordLoginSection() {
         >
           <BackwardButton>ورود به حساب کاربری</BackwardButton>
 
-          <IconButton>
+          <IconButton onClick={() => setStep(STEP_TYPES.PHONE_NUMBER)}>
             <CloseIcon />
           </IconButton>
         </Stack>
@@ -78,6 +97,12 @@ export default function PasswordLoginSection() {
           <TextField
             type={isVisible ? 'text' : 'password'}
             placeholder="رمز عبور"
+            value={password}
+            onChange={(event) => {
+              setPassword(event.target.value);
+              setShowPasswordError(false);
+            }}
+            error={showPasswordError}
             sx={{ direction: 'rtl' }}
             slotProps={{
               input: {
@@ -94,7 +119,7 @@ export default function PasswordLoginSection() {
           <Typography
             variant="sub2"
             color="custom.errorOnPrimaryBg"
-            sx={{ mt: 0.5 }}
+            sx={{ mt: 0.5, visibility: showPasswordError ? 'visible' : 'hidden' }}
             component="p"
             textAlign="right"
           >
@@ -105,17 +130,28 @@ export default function PasswordLoginSection() {
         {/* Buttons  */}
         <Stack gap={1} mt="100px" sx={{ width: '252px', mx: 'auto' }}>
           {/* Login using password */}
-          <Button variant="contained" color="primary" disabled>
+          <Button
+            variant="contained"
+            color="primary"
+            disabled={!password || isPending}
+            onClick={() => setShowPasswordError(true)}
+          >
             <Typography variant="button1">تایید و ورود به حساب</Typography>
           </Button>
 
           {/* Login using OTP */}
           {/* Click on this get to OTP Verifications */}
-          <Button variant="outlined" color="white">
+          <Button variant="outlined" color="white" onClick={handleOtpLogin} disabled={isPending}>
             <Stack direction="row" alignItems="center" gap={1}>
-              <KeyIcon />
-              <Typography variant="button1">ورود با کد پیامکی</Typography>
-              <ChevronBackward />
+              {isPending ? (
+                <ButtonLoading />
+              ) : (
+                <>
+                  <KeyIcon />
+                  <Typography variant="button1">ورود با کد پیامکی</Typography>
+                  <ChevronBackward />
+                </>
+              )}
             </Stack>
           </Button>
         </Stack>

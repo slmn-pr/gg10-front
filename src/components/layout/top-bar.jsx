@@ -27,6 +27,7 @@ export default function TopBar() {
       }}
     >
       <Toolbar
+        dir="ltr"
         sx={{
           maxWidth: 'sm',
           width: '100%',
@@ -68,7 +69,7 @@ export default function TopBar() {
             }}
           >
             <WalletIcon color={theme.palette.custom.tint4} />
-            <Typography variant="button2" sx={{ mx: 0.5 }}>
+            <Typography variant="button2" sx={{ mx: 0.5, whiteSpace: 'nowrap' }}>
               افزایش موجودی
             </Typography>
             <ChevronBackwardIcon color={theme.palette.custom.whiteOnBg2} />

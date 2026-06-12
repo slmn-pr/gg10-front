@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
@@ -128,7 +128,6 @@ const LobbyCard = ({
               borderBottomLeftRadius: '8px',
               padding: 1,
               py: 0,
-              borderRadius: 1,
               gap: 0.5,
 
               display: 'inline-flex',

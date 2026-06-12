@@ -1,7 +1,6 @@
-import { Box, Link, useTheme } from '@mui/material';
+import { Box, Link } from '@mui/material';
 
 export default function SupportFooter() {
-  const theme = useTheme();
   return (
     <Box
       sx={{

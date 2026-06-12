@@ -1,7 +1,7 @@
 import { Box, Link, useTheme, Typography, Stack, Button } from '@mui/material';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { loginSchema } from '../schema';
+import { loginSchema, normalizePhoneNumber } from '../schema';
 import useCheckPhoneNumberExist from '../hooks/useCheckPhoneNumberExist';
 import PhoneNumberInput from '../components/PhoneNumberInput';
 import { useStep } from '../index';
@@ -19,38 +19,47 @@ export default function PhoneNumberSection() {
     },
     resolver: zodResolver(loginSchema),
     mode: 'onChange',
+    reValidateMode: 'onChange',
   });
 
-  const { watch, formState } = methods;
-  const { errors } = formState;
+  const { formState, control } = methods;
+  const { isValid } = formState;
+  const phoneNumberValue = useWatch({ control, name: 'phoneNumber' });
 
   const { mutate, isPending } = useRequestOTPCode();
 
   const checkPhoneNumberExist = useCheckPhoneNumberExist();
 
-  const onSuccessOTP = (data) => {
-    setStep(STEP_TYPES.LOGIN_OTP_VERIFICATION);
-
-    // set in context
-    setPhoneNumber(data?.phone_number);
+  const onSuccessOTP = (_, phoneNumber) => {
+    setPhoneNumber(phoneNumber);
+    setStep(STEP_TYPES.SIGNUP_OTP_VERIFICATION);
   };
 
-  const onSubmit = () => {
-    const phoneNumber = watch('phoneNumber');
+  const onSubmit = async () => {
+    const phoneNumber = normalizePhoneNumber(phoneNumberValue);
 
     if (!phoneNumber) {
       toast.error('شماره معتبر نیست');
       return;
     }
 
-    mutate(phoneNumber, {
-      onSuccess: onSuccessOTP,
-      onError: (error) => {
-        console.log('SHOW ERROR <<<<', error);
+    const phoneExists = await checkPhoneNumberExist(phoneNumber);
+    setPhoneNumber(phoneNumber);
 
-        toast.error(error.message);
+    if (phoneExists) {
+      setStep(STEP_TYPES.PASSWORD_LOGIN);
+      return;
+    }
+
+    mutate(
+      { phoneNumber, purpose: 'signup' },
+      {
+        onSuccess: (data) => onSuccessOTP(data, phoneNumber),
+        onError: (error) => {
+          toast.error(error.message);
+        },
       },
-    });
+    );
   };
 
   return (
@@ -64,8 +73,20 @@ export default function PhoneNumberSection() {
     >
       <Stack sx={{ px: '16px' }}>
         {/* Top image */}
-        <Box sx={{ width: '342px', height: '193px', mx: 'auto', mt: '80px' }}>
-          <img src="/images/login/login_banner.png" alt="login" />
+        <Box
+          sx={{
+            width: '100%',
+            maxWidth: '342px',
+            aspectRatio: '342 / 193',
+            mx: 'auto',
+            mt: '80px',
+          }}
+        >
+          <img
+            src="/images/login/login_banner.png"
+            alt="login"
+            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+          />
         </Box>
 
         {/* Text box */}
@@ -118,9 +139,9 @@ export default function PhoneNumberSection() {
 
             {/* Button */}
             <Button
-              sx={{ mt: 10, width: '252px', mx: 'auto' }}
+              sx={{ mt: 10, width: '252px', height: '40px', mx: 'auto' }}
               variant="contained"
-              disabled={isPending || errors.phoneNumber || watch('phoneNumber') === ''}
+              disabled={isPending || !isValid || !phoneNumberValue}
               type="submit"
             >
               {isPending ? 'در حال بررسی...' : 'تایید و دریافت کد'}

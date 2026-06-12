@@ -1,64 +1,60 @@
 import ChevronBackward from '@/components/icons/ChevronBackward';
-import ChevronForwardIcon from '@/components/icons/ChevronForward';
-import { Box, Button, Typography, useTheme } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { Box, Button, Typography } from '@mui/material';
 
-export const InvitesButtonIcon = () => {
-  const theme = useTheme();
-
+function Badge({ count }) {
   return (
     <Box
       sx={{
-        backgroundColor: theme.palette.primary.main,
-        borderRadius: '50%',
-        width: '20px',
-        height: '20px',
+        backgroundColor: 'primary.main',
+        borderRadius: '999px',
+        minWidth: 22,
+        height: 22,
+        px: 0.5,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
       }}
     >
       <Typography variant="caption2" color="white">
-        4
+        {count}
       </Typography>
     </Box>
   );
-};
+}
 
-export default function InvitesButton() {
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate('/teams/invites');
-  };
-
+export default function InvitesButton({ count = 4, onClick }) {
   return (
     <Button
       variant="text"
-      color="primary"
       fullWidth
-      onClick={handleClick}
-      //   sx={{ mx: 1.5 }}
-      //   endIcon={<InvitesButtonIcon color="white" />}
+      onClick={onClick}
+      sx={{
+        px: 0,
+        py: 0.75,
+        color: 'custom.white',
+        '&:hover': { bgcolor: 'transparent' },
+      }}
     >
       <Box
         sx={{
-          width: '100%',
+          width: 'calc(100% - 32px)',
+          height: 48,
+          mx: 'auto',
           display: 'flex',
-          justifyContent: 'flex-start',
           alignItems: 'center',
-          gap: 1,
-          px: 1.5,
+          justifyContent: 'space-between',
+          borderBottom: '1px solid rgba(255,255,255,0.08)',
         }}
       >
-        <Typography variant="sub1" color="white">
-          دعوت نامه ها
-        </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }} dir="rtl">
+          <Typography variant="sub1" color="custom.white">
+            دعوت‌نامه‌ها
+          </Typography>
+          <Badge count={count} />
+        </Box>
 
-        <InvitesButtonIcon />
+        <ChevronBackward color="white" />
       </Box>
-
-      <ChevronBackward color="white" />
     </Button>
   );
 }

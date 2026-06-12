@@ -18,13 +18,16 @@ import InputLoading from '../../../components/form/InputLoading';
 import CircleCheckIcon from '../../../components/icons/CircleCheckIcon';
 import useCheckGameNameExists from '../hooks/useCheckGameNameExists';
 import CloseIcon from '@/components/icons/general/CloseIcon';
+import { useStep } from '..';
+import { STEP_TYPES } from '../const';
 
 export default function GameNameSection() {
   const theme = useTheme();
+  const { setStep } = useStep();
   const [gameName, setGameName] = useState('');
   const [debouncedGameName, setDebouncedGameName] = useState('');
   const debounceTimerRef = useRef(null);
-  const [openHelp, setOpenHelp] = useState(true);
+  const [openHelp, setOpenHelp] = useState(false);
 
   // Debounce: Update debouncedGameName after 2 seconds when user finishes typing
   useEffect(() => {
@@ -191,6 +194,8 @@ export default function GameNameSection() {
           variant="contained"
           color="primary"
           sx={{ width: '252px', height: '40px', mx: 'auto' }}
+          disabled={!isNameAvailable}
+          onClick={() => setStep(STEP_TYPES.SUCCESS_SIGNUP)}
         >
           تایید و ثبت
         </Button>

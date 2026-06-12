@@ -4,16 +4,33 @@ import { useCallback, useState } from 'react';
 import { useStep } from '..';
 import { STEP_TYPES } from '../const';
 
-export default function OtpSection({ phoneNumber = '09123456789', onComplete }) {
-  const [otpValue, setOtpValue] = useState('');
-  const [isValid, setIsValid] = useState(false);
-  const [isError, setIsError] = useState(false);
-
+export default function OtpSection({
+  phoneNumber = '09123456789',
+  value,
+  onChange,
+  onComplete,
+  isValid = false,
+  isError = false,
+  errorText,
+}) {
+  const [internalOtpValue, setInternalOtpValue] = useState('');
   const { setStep } = useStep();
+  const otpValue = value ?? internalOtpValue;
 
   const handleChangeNumber = useCallback(() => {
     setStep(STEP_TYPES.PHONE_NUMBER);
-  }, []);
+  }, [setStep]);
+
+  const handleChange = useCallback(
+    (newValue) => {
+      if (value === undefined) {
+        setInternalOtpValue(newValue);
+      }
+
+      onChange?.(newValue);
+    },
+    [onChange, value],
+  );
 
   return (
     <Stack>
@@ -45,19 +62,23 @@ export default function OtpSection({ phoneNumber = '09123456789', onComplete }) 
       <Box>
         <OtpInput
           value={otpValue}
-          onChange={(value) => {
-            setOtpValue(value);
-            // Reset validation states when user types
-            if (isValid || isError) {
-              setIsValid(false);
-              setIsError(false);
-            }
-          }}
+          onChange={handleChange}
           onComplete={onComplete}
           isValid={isValid}
           isError={isError}
         />
       </Box>
+
+      {isError && errorText && (
+        <Typography
+          variant="sub2"
+          component="p"
+          color="custom.errorOnPrimaryBg"
+          sx={{ mt: '8px', textAlign: 'center' }}
+        >
+          {errorText}
+        </Typography>
+      )}
 
       {/* Countdown */}
       <Box sx={{ mt: '10px' }}>

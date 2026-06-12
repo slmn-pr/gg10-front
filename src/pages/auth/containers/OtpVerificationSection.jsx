@@ -1,42 +1,43 @@
 import { Box, Button, Stack, Typography } from '@mui/material';
 import { useState } from 'react';
-import OtpInput from '../components/OtpInput';
-import useAuthorizeOTPCode from '../hooks/useAuthorizeOTPCode';
 import ButtonLoading from '@/components/form/ButtonLoading';
 import { useStep } from '..';
 import { STEP_TYPES } from '../const';
 import OtpSection from './OtpSection';
+import useVerifyOTPCode from '../hooks/useVerifyOTPCode';
 
-export default function OtpVerificationSection({
-  phoneNumber = '09123456789',
-  onComplete,
-}) {
+export default function OtpVerificationSection() {
   const [otpValue, setOtpValue] = useState('');
-  const [isValid, setIsValid] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  const { setStep } = useStep();
-  const { mutateAsync: authorizeOTPCode, isPending } = useAuthorizeOTPCode();
+  const { setStep, phoneNumber } = useStep();
+  const { mutate, isPending } = useVerifyOTPCode();
 
-  const onAuthorizeOTPCode = async (otpCode) => {
-    if (isPending) return;
+  const onNextStep = () => {
+    if (isPending || otpValue.length !== 5) return;
 
-    const isAuthorized = await authorizeOTPCode(otpCode);
-    if (isAuthorized) {
-      setIsValid(true);
+    mutate(
+      { phone_number: phoneNumber, code: otpValue, purpose: 'signup' },
+      {
+        onSuccess: () => {
+          setIsError(false);
+          setStep(STEP_TYPES.GAME_NAME);
+        },
+        onError: () => {
+          setIsError(true);
+        },
+      },
+    );
+  };
+
+  const handleOtpChange = (value) => {
+    setOtpValue(value);
+    if (isError) {
       setIsError(false);
-    } else {
-      setIsValid(false);
-      setIsError(true);
     }
   };
 
-  const onNextStep = () => {
-    if (isPending || !isValid || isError) return;
-    setStep(STEP_TYPES.GAME_NAME);
-  };
-
-  const isDisabled = otpValue.length !== 5;
+  const isDisabled = otpValue.length !== 5 || isPending;
 
   return (
     <>
@@ -48,7 +49,13 @@ export default function OtpVerificationSection({
       {/* Otp section */}
       <Stack mt="60px">
         {/* Otp input */}
-        <OtpSection onComplete={onAuthorizeOTPCode} />
+        <OtpSection
+          phoneNumber={phoneNumber}
+          value={otpValue}
+          onChange={handleOtpChange}
+          isError={isError}
+          errorText="کد وارد شده صحیح نیست"
+        />
 
         {/* Button */}
         <Button
