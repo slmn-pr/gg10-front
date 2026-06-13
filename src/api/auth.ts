@@ -13,6 +13,13 @@ export interface RequestOTPCodeInterface {
   purpose: RequestOTPCodePurposeType;
 }
 
+// expires_at: '2026-06-13T12:07:13.886Z';
+// resend_available_at: '2026-06-13T12:07:13.886Z';
+export interface RequestOTPCodeSuccessResponse {
+  expires_at: string;
+  resend_available_at: string;
+}
+
 export interface VerifyOTPCodeInterface {
   phone_number: string;
   purpose: RequestOTPCodePurposeType;
@@ -47,7 +54,9 @@ interface CreateUserSuccessfullResponse {
   refresh_token: string;
 }
 
-export const requestOTPReq = async (payload: RequestOTPCodeInterface) => {
+export const requestOTPReq = async (
+  payload: RequestOTPCodeInterface,
+): Promise<AxiosResponse<RequestOTPCodeSuccessResponse | FailedResult>> => {
   return apiClient.post('auth/otp/request', payload);
 };
 

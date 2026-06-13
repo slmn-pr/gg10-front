@@ -1,8 +1,7 @@
 import { Box, Link, useTheme, Typography, Stack, Button } from '@mui/material';
-import { FormProvider, useForm, useWatch } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema, normalizePhoneNumber } from '../schema';
-import useCheckPhoneNumberExist from '../hooks/useCheckPhoneNumberExist';
 import PhoneNumberInput from '../components/PhoneNumberInput';
 import { STEP_TYPES } from '../const';
 import useRequestOTPCode from '../hooks/useRequestOTPCode';
@@ -10,12 +9,13 @@ import toast from 'react-hot-toast';
 import { useStep } from '../context';
 
 export default function PhoneNumberSection() {
-  const { setStep, setPhoneNumber } = useStep();
   const theme = useTheme();
+
+  const { setStep, setPhoneNumber } = useStep();
+
   const methods = useForm({
     defaultValues: {
       phoneNumber: '',
-      purpose: 'login',
     },
     resolver: zodResolver(loginSchema),
     mode: 'onChange',
@@ -24,14 +24,9 @@ export default function PhoneNumberSection() {
 
   const {
     formState: { isValid },
-    control,
   } = methods;
 
-  const phoneNumberValue = useWatch({ control, name: 'phoneNumber' });
-
   const { mutate, isPending } = useRequestOTPCode();
-
-  const checkPhoneNumberExist = useCheckPhoneNumberExist();
 
   // Call if send OTP Code successfull to client number
   // Naviagte to Verify OTP code section
@@ -40,27 +35,26 @@ export default function PhoneNumberSection() {
     setStep(STEP_TYPES.SIGNUP_OTP_VERIFICATION);
   };
 
-  const onSubmit = async () => {
-    const phoneNumber = normalizePhoneNumber(phoneNumberValue);
-
-    if (!phoneNumber) {
-      toast.error('شماره معتبر نیست');
-      return;
-    }
+  const onSubmit = async (values) => {
+    let phoneNumber = values?.phoneNumber;
+    let normalizedPhoneNumber = normalizePhoneNumber(phoneNumber);
 
     // if phone number exist, naviagte to login using password
     // TODO: Complete the number check exist from database
-    const phoneExists = await checkPhoneNumberExist(phoneNumber);
-    setPhoneNumber(phoneNumber);
-    if (phoneExists) {
-      return setStep(STEP_TYPES.PASSWORD_LOGIN);
-    }
+    // const phoneExists = await checkPhoneNumberExist(phoneNumber);
+    // setPhoneNumber(phoneNumber);
+    // if (phoneExists) {
+    //   return setStep(STEP_TYPES.PASSWORD_LOGIN);
+    // }
 
     // If number not exist in db send request otp code
     const payload = {
-      phone_number: phoneNumber,
+      phone_number: normalizedPhoneNumber,
       purpose: 'register',
     };
+
+    console.log('[PhoneNumberSection] onSubmit -> payload ', payload);
+    // return;
     mutate(payload, {
       onSuccess: (data) => onSuccessOTP(data, phoneNumber),
       onError: (error) => {
@@ -148,7 +142,7 @@ export default function PhoneNumberSection() {
             <Button
               sx={{ mt: 10, width: '252px', height: '40px', mx: 'auto' }}
               variant="contained"
-              disabled={isPending || !isValid || !phoneNumberValue}
+              disabled={isPending || !isValid}
               type="submit"
             >
               {isPending ? 'در حال بررسی...' : 'تایید و دریافت کد'}

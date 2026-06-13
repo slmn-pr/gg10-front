@@ -1,5 +1,6 @@
 import axios from 'axios';
 import useAuthStore from '@/store/auth-store';
+import { cookies } from '@/lib/cookies';
 
 /**
  * API Base URL
@@ -24,7 +25,7 @@ const apiClient = axios.create({
  */
 apiClient.interceptors.request.use(
   (config) => {
-    const accessToken = useAuthStore.getState().getAccessToken();
+    const accessToken = cookies.get('access_token');
 
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;

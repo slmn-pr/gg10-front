@@ -6,6 +6,8 @@ import ButtonLoading from '@/components/form/ButtonLoading';
 import OtpSection from './OtpSection';
 import useVerifyOTPCode from '../hooks/useVerifyOTPCode';
 import toast from 'react-hot-toast';
+import useAuthStore from '@/store/auth-store';
+import { cookies } from '@/lib/cookies';
 
 export default function OtpVerificationSection() {
   const [otpValue, setOtpValue] = useState('');
@@ -13,6 +15,8 @@ export default function OtpVerificationSection() {
 
   const { setStep, phoneNumber } = useStep();
   const { mutate, isPending } = useVerifyOTPCode();
+
+  const { setAuth } = useAuthStore();
 
   const isDisabled = useMemo(
     () => otpValue.length !== 5 || isPending,
@@ -30,9 +34,31 @@ export default function OtpVerificationSection() {
           console.log('[OtpVerificationSection] mutate -> data', data);
 
           setIsError(false);
-          setStep(STEP_TYPES.GAME_NAME);
+
+          // TODO: Save the data return from API to auth-store
+          // {
+          //   "phone_number": "string",
+          //   "purpose": "login",
+          //   "verified_at": "2026-06-13T12:13:14.477Z",
+          //   "user_id": "string",
+          //   "access_token": "string",
+          //   "refresh_token": "string",
+          //   "requires_profile": false
+          // }
+          setAuth(data); // Need to test
+
+          // Save to cookies
+          cookies.set('access_token', data.access_token);
+          cookies.set('refresh_token', data.refresh_token);
+
+          // TODO: If `requires_profile` is false dont need to set game name section
+          if (data.requires_profile) {
+            return setStep(STEP_TYPES.GAME_NAME);
+          } else {
+            return setStep(STEP_TYPES.SUCCESS_SIGNUP); // or redirect to home page
+          }
         },
-        onError: (error) => {
+        onError: () => {
           setIsError(true);
           toast.error('کد وارد شده صحیح نیست!');
         },
