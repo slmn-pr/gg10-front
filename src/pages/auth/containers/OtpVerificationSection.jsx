@@ -49,7 +49,7 @@ export default function OtpVerificationSection() {
 
   return (
     <>
-      {/* LOgo */}
+      {/* Logo */}
       <Box sx={{ mt: '100px', display: 'flex', justifyContent: 'center' }}>
         <img src="/images/logo.png" alt="logo" style={{ height: '38px' }} />
       </Box>
@@ -62,7 +62,7 @@ export default function OtpVerificationSection() {
           value={otpValue}
           onChange={handleOtpChange}
           isError={isError}
-          errorText="کد وارد شده صحیح نیست"
+          errorText="کد تایید صحیح نیست. لطفا دوباره تلاش کنید"
         />
 
         {/* Button */}

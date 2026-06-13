@@ -8,6 +8,36 @@ import SuccessSignupSection from './SuccessSignupSection';
 import SupportFooter from '../components/SupportFooter';
 import { useStep } from '../context';
 
+export const StepLabelRoot = ({ className, ownerState }) => {
+  // console.log('Props', ownerState);
+  const { active } = ownerState;
+
+  return (
+    <Box
+      className={className}
+      sx={{
+        width: '30px',
+        height: '30px',
+        borderRadius: '60%',
+        backgroundColor: !active ? 'custom.disabledGreyOnBg2' : 'custom.success',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 2,
+      }}
+    >
+      <Box
+        sx={{
+          width: '15px',
+          height: '15px',
+          borderRadius: '60%',
+          backgroundColor: 'custom.grey0',
+        }}
+      ></Box>
+    </Box>
+  );
+};
+
 export default function SignupFlow() {
   const { step } = useStep();
   return (
@@ -35,17 +65,37 @@ export default function SignupFlow() {
         <Stepper
           activeStep={SIGNUP_STEP_PROGRESS[step]}
           alternativeLabel
-          sx={{ width: '100%', mt: '30px' }}
+          sx={{ width: '100%', mt: '30px', direction: 'rtl' }}
+          connector={
+            <Box
+              sx={{
+                width: '100%',
+                height: '1px',
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translateX(-50)',
+                backgroundColor: 'custom.disabledGreyOnBg2',
+                zIndex: 1,
+              }}
+            ></Box>
+          }
         >
-          <Step>
-            <StepLabel></StepLabel>
-          </Step>
-          <Step>
-            <StepLabel></StepLabel>
-          </Step>
-          <Step>
-            <StepLabel></StepLabel>
-          </Step>
+          {Object.keys(SIGNUP_STEP_PROGRESS).map((step) => (
+            <Step
+              key={step}
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                direction: 'rtl',
+              }}
+            >
+              <StepLabel
+                slots={{ root: StepLabelRoot }}
+                sx={{ direction: 'rtl' }}
+              ></StepLabel>
+            </Step>
+          ))}
         </Stepper>
 
         {/* Steps */}

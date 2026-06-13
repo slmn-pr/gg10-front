@@ -8,7 +8,7 @@ import LoginOtpVerificationSection from './containers/LoginOtpVerificationSectio
 import { StepContext } from './context';
 
 export default function AuthPage() {
-  const [step, setStep] = useState(STEP_TYPES.PHONE_NUMBER);
+  const [step, setStep] = useState(STEP_TYPES.SIGNUP_OTP_VERIFICATION);
   const [phoneNumber, setPhoneNumber] = useState('');
 
   const isSignupStep = useMemo(() => {
