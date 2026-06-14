@@ -5,18 +5,50 @@ import OTPInputWrapper from './OtpInputWrapper';
 import ButtonLoading from '@/components/form/ButtonLoading';
 import { useStep } from '../context';
 import { STEP_TYPES } from '../const';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import useRequestOTPCode from '../hooks/useRequestOTPCode';
+import toast from 'react-hot-toast';
+import { RequestOTPCodePurposeType } from '@/api';
 
 interface OTPSectionProps {
   isPending: boolean;
   handleSubmit: (otpCode: string) => void | any;
+  purpose: RequestOTPCodePurposeType;
 }
 
-export default function OPTSection({ isPending, handleSubmit }: OTPSectionProps) {
+export default function OPTSection({
+  isPending,
+  handleSubmit,
+  purpose,
+}: OTPSectionProps) {
   const { setStep, phoneNumber } = useStep();
+  const { mutate: requestOTPCode, isPending: isPendingOTPCode } = useRequestOTPCode();
+
+  const isLoading = isPending || isPendingOTPCode;
 
   const [otpValue, setOtpValue] = useState('');
   const [isError, setIsError] = useState(false);
+
+  // Auto request OTP code when render
+  useEffect(() => {
+    if (!phoneNumber) {
+      toast.error('شماره اشتباه است');
+      return;
+    }
+
+    requestOTPCode(
+      { phone_number: phoneNumber, purpose },
+      {
+        onSuccess: () => {
+          toast.success(`کد با موفقیت به شماره ${phoneNumber} ارسال شد`);
+        },
+
+        onError: () => {
+          toast.error('ارسال کد با خطا مواجه شد');
+        },
+      },
+    );
+  }, []);
 
   return (
     <Container maxWidth="sm" sx={{ p: 0 }}>
@@ -59,7 +91,7 @@ export default function OPTSection({ isPending, handleSubmit }: OTPSectionProps)
             variant="contained"
             color="primary"
             sx={{ width: '252px', height: '40px', mx: 'auto', mt: '100px' }}
-            disabled={isPending || otpValue.length !== 5}
+            disabled={isLoading || otpValue.length !== 5}
             onClick={() => handleSubmit(otpValue)}
           >
             {isPending ? (

@@ -9,6 +9,9 @@ export const STEP_TYPES = {
   // Login
   PASSWORD_LOGIN: 'password_login',
   LOGIN_OTP_VERIFICATION: 'login_otp_verification',
+
+  FORGET_PASSWORD: 'forget_password',
+  SET_NEW_PASSWORD: 'set_new_password',
 };
 
 export const SIGNUP_STEP_PROGRESS = {

@@ -53,5 +53,7 @@ export default function OtpVerificationSection() {
     );
   };
 
-  return <OtpSection handleSubmit={handleSubmit} isPending={isPending} />;
+  return (
+    <OtpSection handleSubmit={handleSubmit} isPending={isPending} purpose="register" />
+  );
 }

@@ -59,5 +59,5 @@ export default function LoginOtpVerificationSection() {
     );
   }, []);
 
-  return <OtpSection handleSubmit={handleSubmit} isPending={isPending} />;
+  return <OtpSection handleSubmit={handleSubmit} isPending={isPending} purpose="login" />;
 }
