@@ -3,7 +3,6 @@ import apiClient from './config';
 
 /**
  * Auth API
- * مدیریت تمام endpoint های مربوط به احراز هویت
  */
 
 export type RequestOTPCodePurposeType = 'login' | 'register' | 'password_reset';
@@ -13,8 +12,6 @@ export interface RequestOTPCodeInterface {
   purpose: RequestOTPCodePurposeType;
 }
 
-// expires_at: '2026-06-13T12:07:13.886Z';
-// resend_available_at: '2026-06-13T12:07:13.886Z';
 export interface RequestOTPCodeSuccessResponse {
   expires_at: string;
   resend_available_at: string;
@@ -36,7 +33,7 @@ interface VerfiySuccessfullResult {
   requires_profile: boolean;
 }
 
-interface FailedResult {
+interface FailedResponse {
   detail: {};
 }
 
@@ -54,22 +51,40 @@ interface CreateUserSuccessfullResponse {
   refresh_token: string;
 }
 
+export interface LoginReqPayload {
+  username: string;
+  password: string;
+}
+
+export interface LoginReqSuccessfullResponse {
+  user_id: string;
+  username: string;
+  access_token: string;
+  refresh_token: string;
+}
+
 export const requestOTPReq = async (
   payload: RequestOTPCodeInterface,
-): Promise<AxiosResponse<RequestOTPCodeSuccessResponse | FailedResult>> => {
+): Promise<AxiosResponse<RequestOTPCodeSuccessResponse | FailedResponse>> => {
   return apiClient.post('auth/otp/request', payload);
 };
 
 export const verifyOTPReq = async (
   payload: VerifyOTPCodeInterface,
-): Promise<AxiosResponse<VerfiySuccessfullResult | FailedResult>> => {
+): Promise<AxiosResponse<VerfiySuccessfullResult | FailedResponse>> => {
   return apiClient.post('auth/otp/verify', payload);
 };
 
 export const createUserReq = async (
   payload: CreateUserReqPaylaod,
-): Promise<AxiosResponse<CreateUserSuccessfullResponse | FailedResult>> => {
+): Promise<AxiosResponse<CreateUserSuccessfullResponse | FailedResponse>> => {
   return apiClient.post('auth/create-user', payload);
+};
+
+export const loginReq = async (
+  paylaod: LoginReqPayload,
+): Promise<AxiosResponse<LoginReqSuccessfullResponse | FailedResponse>> => {
+  return apiClient.post('auth/login', paylaod);
 };
 
 export default {
