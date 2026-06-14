@@ -1,9 +1,7 @@
 import { useMemo, useState } from 'react';
-import { Box, Button, Stack, Typography } from '@mui/material';
 import { useStep } from '../context';
 import { STEP_TYPES } from '../const';
-import ButtonLoading from '@/components/form/ButtonLoading';
-import OtpSection from './OtpSection';
+import OtpSection from './OTPSection';
 import useVerifyOTPCode from '../hooks/useVerifyOTPCode';
 import toast from 'react-hot-toast';
 import useAuthStore from '@/store/auth-store';
@@ -13,21 +11,13 @@ export default function OtpVerificationSection() {
   const { setAuth } = useAuthStore();
   const saveAuth = useSaveUserAuth(setAuth);
 
-  const [otpValue, setOtpValue] = useState('');
   const [isError, setIsError] = useState(false);
 
   const { setStep, phoneNumber } = useStep();
   const { mutate, isPending } = useVerifyOTPCode();
 
-  const isDisabled = useMemo(
-    () => otpValue.length !== 5 || isPending,
-    [otpValue, isPending],
-  );
-
   // Handle send OTP code to verify
-  const onNextStep = () => {
-    if (isDisabled) return;
-
+  const handleSubmit = (otpValue: string) => {
     mutate(
       { phone_number: phoneNumber, code: otpValue, purpose: 'register' },
       {
@@ -49,7 +39,7 @@ export default function OtpVerificationSection() {
           saveAuth(data); // Need to test
 
           // TODO: If `requires_profile` is false dont need to set game name section
-          if (data.requires_profile) {
+          if ('access_token' in data && data.requires_profile) {
             return setStep(STEP_TYPES.GAME_NAME);
           } else {
             return setStep(STEP_TYPES.SUCCESS_SIGNUP); // or redirect to home page
@@ -63,48 +53,5 @@ export default function OtpVerificationSection() {
     );
   };
 
-  const handleOtpChange = (value) => {
-    setOtpValue(value);
-    if (isError) {
-      setIsError(false);
-    }
-  };
-
-  return (
-    <>
-      {/* Logo */}
-      <Box sx={{ mt: '100px', display: 'flex', justifyContent: 'center' }}>
-        <img src="/images/logo.png" alt="logo" style={{ height: '38px' }} />
-      </Box>
-
-      {/* Otp section */}
-      <Stack mt="60px">
-        {/* Otp input */}
-        <OtpSection
-          phoneNumber={phoneNumber}
-          value={otpValue}
-          onChange={handleOtpChange}
-          isError={isError}
-          errorText="کد تایید صحیح نیست. لطفا دوباره تلاش کنید"
-        />
-
-        {/* Button */}
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{ width: '252px', height: '40px', mx: 'auto', mt: '100px' }}
-          disabled={isDisabled}
-          onClick={onNextStep}
-        >
-          {!isPending ? (
-            <Typography variant="button1" component="p" color="white">
-              تایید و ادامه
-            </Typography>
-          ) : (
-            <ButtonLoading />
-          )}
-        </Button>
-      </Stack>
-    </>
-  );
+  return <OtpSection handleSubmit={handleSubmit} isPending={isPending} />;
 }

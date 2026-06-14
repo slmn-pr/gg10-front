@@ -1,6 +1,6 @@
 import { Box, Container, IconButton, Step, StepLabel, Stepper } from '@mui/material';
 import { SIGNUP_STEP_PROGRESS, STEP_TYPES } from '../const';
-import OtpVerificationSection from './OtpVerificationSection';
+import OtpVerificationSection from './SignupOtpVerificationSection';
 import GameNameSection from './GameNameSection';
 import BackwardButton from '@/components/layout/BackwardButton';
 import CloseIcon from '@/components/icons/general/CloseIcon';

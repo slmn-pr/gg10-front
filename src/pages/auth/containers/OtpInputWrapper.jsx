@@ -4,7 +4,7 @@ import { useCallback, useState } from 'react';
 import { STEP_TYPES } from '../const';
 import { useStep } from '../context';
 
-export default function OtpSection({
+export default function OTPInputWrapper({
   phoneNumber = '09123456789',
   value,
   onChange,
