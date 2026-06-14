@@ -7,16 +7,17 @@ import OtpSection from './OtpSection';
 import useVerifyOTPCode from '../hooks/useVerifyOTPCode';
 import toast from 'react-hot-toast';
 import useAuthStore from '@/store/auth-store';
-import { cookies } from '@/lib/cookies';
+import useSaveUserAuth from '../hooks/useSaveUserAuth';
 
 export default function OtpVerificationSection() {
+  const { setAuth } = useAuthStore();
+  const saveAuth = useSaveUserAuth(setAuth);
+
   const [otpValue, setOtpValue] = useState('');
   const [isError, setIsError] = useState(false);
 
   const { setStep, phoneNumber } = useStep();
   const { mutate, isPending } = useVerifyOTPCode();
-
-  const { setAuth } = useAuthStore();
 
   const isDisabled = useMemo(
     () => otpValue.length !== 5 || isPending,
@@ -45,11 +46,7 @@ export default function OtpVerificationSection() {
           //   "refresh_token": "string",
           //   "requires_profile": false
           // }
-          setAuth(data); // Need to test
-
-          // Save to cookies
-          cookies.set('access_token', data.access_token);
-          cookies.set('refresh_token', data.refresh_token);
+          saveAuth(data); // Need to test
 
           // TODO: If `requires_profile` is false dont need to set game name section
           if (data.requires_profile) {

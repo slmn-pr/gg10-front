@@ -1,7 +1,7 @@
 import CloseIcon from '@/components/icons/general/CloseIcon';
 import BackwardButton from '@/components/layout/BackwardButton';
 import { Box, Button, Container, IconButton, Stack, Typography } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import OtpSection from './OtpSection';
 import useVerifyOTPCode from '../hooks/useVerifyOTPCode';
 import { useStep } from '../context';
@@ -10,23 +10,34 @@ import ButtonLoading from '@/components/form/ButtonLoading';
 import useAuthStore from '@/store/auth-store';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import useRequestOTPCode from '../hooks/useRequestOTPCode';
+import useSaveUserAuth from '../hooks/useSaveUserAuth';
 
 export default function LoginOtpVerificationSection() {
-  const navigate = useNavigate();
   const setAuth = useAuthStore((state) => state.setAuth);
+  const saveAuth = useSaveUserAuth(setAuth);
+
+  const { mutate: requestOTPCode, isPending: isPendingOTPCode } = useRequestOTPCode();
+  const { mutate: verifyOTPCode, isPending: isVerifyingOTPCode } = useVerifyOTPCode();
+  const navigate = useNavigate();
+
   const { phoneNumber, setStep } = useStep();
-  const { mutate, isPending } = useVerifyOTPCode();
   const [otpValue, setOtpValue] = useState('');
   const [isError, setIsError] = useState(false);
 
+  const isPending = useMemo(
+    () => isPendingOTPCode || isVerifyingOTPCode,
+    [isPendingOTPCode, isVerifyingOTPCode],
+  );
+
   const handleVerified = (data) => {
     const payload = data?.data || data;
-    const accessToken = payload?.access_token || payload?.accessToken || payload?.token;
-    const refreshToken = payload?.refresh_token || payload?.refreshToken || null;
-    const playerRank = payload?.player_rank || payload?.playerRank || null;
 
-    if (accessToken) {
-      setAuth(accessToken, refreshToken, playerRank);
+    console.log('[LoginOtpVerificationSection] handleVerified -> data', data);
+    console.log('[LoginOtpVerificationSection] handleVerified -> payload', payload);
+
+    if (payload) {
+      saveAuth(data);
     }
 
     toast.success('ورود با موفقیت انجام شد');
@@ -34,10 +45,10 @@ export default function LoginOtpVerificationSection() {
   };
 
   const handleSubmit = (code = otpValue) => {
-    if (isPending || code.length !== 5) return;
+    if (isPending) return;
 
-    mutate(
-      { phone_number: phoneNumber, code },
+    verifyOTPCode(
+      { phone_number: phoneNumber, code, purpose: 'login' },
       {
         onSuccess: handleVerified,
         onError: () => {
@@ -46,6 +57,17 @@ export default function LoginOtpVerificationSection() {
       },
     );
   };
+
+  // Send OTP Code when component is present
+  useEffect(() => {
+    requestOTPCode(
+      { phoneNumber, purpose: 'login' },
+      {
+        onSuccess: () => toast.success(`کد با موفقیت به شماره ${phoneNumber} ارسال شد`),
+        onError: (error) => toast.error(error.message),
+      },
+    );
+  }, []);
 
   return (
     <Container maxWidth="sm" sx={{ p: 0 }}>

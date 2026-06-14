@@ -19,24 +19,50 @@ import KeyIcon from '@/components/icons/KeyIcon';
 import ChevronBackward from '@/components/icons/ChevronBackward';
 import { useStep } from '../context';
 import { STEP_TYPES } from '../const';
-import useRequestOTPCode from '../hooks/useRequestOTPCode';
 import toast from 'react-hot-toast';
 import ButtonLoading from '@/components/form/ButtonLoading';
+import useLoginUsernamePassword from '../hooks/useLoginUsernamePassword';
+import useAuthStore from '@/store/auth-store';
+import useSaveUserAuth from '../hooks/useSaveUserAuth';
 
 export default function PasswordLoginSection() {
   const theme = useTheme();
+
+  const setAuth = useAuthStore((state) => state.setAuth);
+  const saveAuth = useSaveUserAuth(setAuth);
+
+  const { mutate, isPending } = useLoginUsernamePassword();
+
   const { phoneNumber, setStep } = useStep();
-  const { mutate, isPending } = useRequestOTPCode();
+
   const [isVisible, setIsVisible] = useState(false);
   const [password, setPassword] = useState('');
   const [showPasswordError, setShowPasswordError] = useState(false);
 
-  const handleOtpLogin = () => {
+  // Navigate to LOgin using OTP code section
+  const navigateToLoginUsingOTP = () => {
+    if (!phoneNumber) {
+      return toast.error('شماره صحیح نیست');
+    }
+
+    setStep(STEP_TYPES.LOGIN_OTP_VERIFICATION);
+  };
+
+  const handleSuccess = (data) => {
+    toast.success('ورود با موفقیت انجام شد');
+    saveAuth(data);
+  };
+
+  const handleLogin = () => {
+    setShowPasswordError(false);
     mutate(
-      { phoneNumber, purpose: 'login' },
+      { username: phoneNumber, password },
       {
-        onSuccess: () => setStep(STEP_TYPES.LOGIN_OTP_VERIFICATION),
-        onError: (error) => toast.error(error.message),
+        onSuccess: handleSuccess,
+        onError: () => {
+          setShowPasswordError(true);
+          toast.error('ورود نا موفق بود');
+        },
       },
     );
   };
@@ -133,15 +159,20 @@ export default function PasswordLoginSection() {
           <Button
             variant="contained"
             color="primary"
-            disabled={!password || isPending}
-            onClick={() => setShowPasswordError(true)}
+            disabled={!password}
+            onClick={handleLogin}
           >
             <Typography variant="button1">تایید و ورود به حساب</Typography>
           </Button>
 
           {/* Login using OTP */}
           {/* Click on this get to OTP Verifications */}
-          <Button variant="outlined" color="white" onClick={handleOtpLogin} disabled={isPending}>
+          <Button
+            variant="outlined"
+            color="white"
+            onClick={navigateToLoginUsingOTP}
+            disabled={isPending}
+          >
             <Stack direction="row" alignItems="center" gap={1}>
               {isPending ? (
                 <ButtonLoading />
