@@ -1,6 +1,4 @@
 import CloseIcon from '@/components/icons/general/CloseIcon';
-import VisibilyOffIcon from '@/components/icons/VisibilyOffIcon';
-import VisibilyOnIcon from '@/components/icons/VisibilyOnIcon';
 import BackwardButton from '@/components/layout/BackwardButton';
 import {
   Box,
@@ -9,7 +7,6 @@ import {
   IconButton,
   Link,
   Stack,
-  TextField,
   Typography,
   useTheme,
 } from '@mui/material';
@@ -24,6 +21,7 @@ import ButtonLoading from '@/components/form/ButtonLoading';
 import useLoginUsernamePassword from '../hooks/useLoginUsernamePassword';
 import useAuthStore from '@/store/auth-store';
 import useSaveUserAuth from '../hooks/useSaveUserAuth';
+import PasswordInput from '../components/PasswordInput';
 
 export default function PasswordLoginSection() {
   const theme = useTheme();
@@ -35,7 +33,6 @@ export default function PasswordLoginSection() {
 
   const { phoneNumber, setStep } = useStep();
 
-  const [isVisible, setIsVisible] = useState(false);
   const [password, setPassword] = useState('');
   const [showPasswordError, setShowPasswordError] = useState(false);
 
@@ -120,25 +117,10 @@ export default function PasswordLoginSection() {
           </Stack>
 
           {/* Input */}
-          <TextField
-            type={isVisible ? 'text' : 'password'}
-            placeholder="رمز عبور"
-            value={password}
-            onChange={(event) => {
-              setPassword(event.target.value);
-              setShowPasswordError(false);
-            }}
-            error={showPasswordError}
-            sx={{ direction: 'rtl' }}
-            slotProps={{
-              input: {
-                endAdornment: (
-                  <IconButton onClick={() => setIsVisible(!isVisible)}>
-                    {isVisible ? <VisibilyOffIcon /> : <VisibilyOnIcon />}
-                  </IconButton>
-                ),
-              },
-            }}
+          <PasswordInput
+            hasError={showPasswordError}
+            password={password}
+            setPassword={setPassword}
           />
 
           {/* Error message */}
