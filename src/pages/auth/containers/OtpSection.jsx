@@ -80,6 +80,7 @@ export default function OtpSection({
         </Typography>
       )}
 
+      {/* TODO: Make dynamic count down */}
       {/* Countdown */}
       <Box sx={{ mt: '10px' }}>
         <Typography variant="sub3" component="p" color="custom.grey0">
