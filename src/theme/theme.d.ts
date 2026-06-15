@@ -1,99 +1,95 @@
 import '@mui/material/styles';
+import '@mui/material/Typography';
+import type { CSSProperties } from 'react';
+import { CUSTOM_PALLETE } from './custom-pallete';
+
+type CustomPalette = typeof CUSTOM_PALLETE;
 
 declare module '@mui/material/styles' {
   interface Palette {
-    custom: {
-      // Primary shades
-      shade1: string;
-      shade2: string;
-      shade3: string;
-      shade4: string;
-      // Primary tints
-      tint1: string;
-      tint2: string;
-      tint3: string;
-      tint4: string;
-      // Primary text colors
-      whiteOnPrimary: string;
-      blackOnPrimary: string;
-      // Main backgrounds
-      bg1: string; // Meshki
-      bg2: string; // Zoghali
-      bg3: string; // White
-      // On Background 1 colors
-      whiteOnBg1: string;
-      greyOnBg1: string;
-      // On Background 2 colors
-      whiteOnBg2: string;
-      greyOnBg2: string;
-      disabledGreyOnBg2: string;
-      primaryOnBg2: string;
-      // Component backgrounds
-      modalBg: string;
-      progressBarBg: string;
-      // State colors
-      error: string;
-      onError: string;
-      info: string;
-      onInfo: string;
-      success: string;
-      onSuccess: string;
-      warning: string;
-      onWarning: string;
-      deleteOnModal: string;
-      // Stroke colors
-      primaryStroke: string;
-      blackStroke: string;
-      progressStroke: string;
+    custom: CustomPalette;
+
+    stroke: {
+      primary: string;
+      black: string;
+      progressbar: string;
       bottomNavigationGreyLine: string;
     };
   }
 
   interface PaletteOptions {
-    custom?: {
-      // Primary shades
-      shade1?: string;
-      shade2?: string;
-      shade3?: string;
-      shade4?: string;
-      // Primary tints
-      tint1?: string;
-      tint2?: string;
-      tint3?: string;
-      tint4?: string;
-      // Primary text colors
-      whiteOnPrimary?: string;
-      blackOnPrimary?: string;
-      // Main backgrounds
-      bg1?: string; // Meshki
-      bg2?: string; // Zoghali
-      bg3?: string; // White
-      // On Background 1 colors
-      whiteOnBg1?: string;
-      greyOnBg1?: string;
-      // On Background 2 colors
-      whiteOnBg2?: string;
-      greyOnBg2?: string;
-      disabledGreyOnBg2?: string;
-      primaryOnBg2?: string;
-      // Component backgrounds
-      modalBg?: string;
-      progressBarBg?: string;
-      // State colors
-      error?: string;
-      onError?: string;
-      info?: string;
-      onInfo?: string;
-      success?: string;
-      onSuccess?: string;
-      warning?: string;
-      onWarning?: string;
-      deleteOnModal?: string;
-      // Stroke colors
-      primaryStroke?: string;
-      blackStroke?: string;
-      progressStroke?: string;
+    custom?: Partial<CustomPalette>;
+
+    stroke?: {
+      primary?: string;
+      black?: string;
+      progressbar?: string;
       bottomNavigationGreyLine?: string;
     };
+  }
+
+  interface TypographyVariants {
+    title1: CSSProperties;
+    title2: CSSProperties;
+    title3: CSSProperties;
+
+    sub1: CSSProperties;
+    sub2: CSSProperties;
+    sub3: CSSProperties;
+
+    button1: CSSProperties;
+    button2: CSSProperties;
+
+    body3: CSSProperties;
+
+    caption1: CSSProperties;
+    caption2: CSSProperties;
+
+    eng_numbers_bold: CSSProperties;
+    eng_numbers_regular: CSSProperties;
+  }
+
+  interface TypographyVariantsOptions {
+    title1?: CSSProperties;
+    title2?: CSSProperties;
+    title3?: CSSProperties;
+
+    sub1?: CSSProperties;
+    sub2?: CSSProperties;
+    sub3?: CSSProperties;
+
+    button1?: CSSProperties;
+    button2?: CSSProperties;
+
+    body3?: CSSProperties;
+
+    caption1?: CSSProperties;
+    caption2?: CSSProperties;
+
+    eng_numbers_bold?: CSSProperties;
+    eng_numbers_regular?: CSSProperties;
+  }
+}
+
+declare module '@mui/material/Typography' {
+  interface TypographyPropsVariantOverrides {
+    title1: true;
+    title2: true;
+    title3: true;
+
+    sub1: true;
+    sub2: true;
+    sub3: true;
+
+    button1: true;
+    button2: true;
+
+    body3: true;
+
+    caption1: true;
+    caption2: true;
+
+    eng_numbers_bold: true;
+    eng_numbers_regular: true;
   }
 }
