@@ -10,6 +10,7 @@ import RankRow from './sections/RankRow';
 import NotLoggedInCta from './sections/NotLoginCta';
 import { GameMode } from './sections/leaderboard-types';
 import GuideSheet from './sections/GuideSheet';
+import { _mockRows } from './sections/_mock';
 
 export default function LeaderboardPage() {
   const [mode, setMode] = useState<GameMode>('battle-royal');
@@ -63,19 +64,28 @@ export default function LeaderboardPage() {
             bgcolor: 'transparent',
           }}
         >
-          <Typography variant="caption1" sx={{ width: 82 }}>
+          <Typography variant="title3" color="custom.grey2" sx={{ width: 80 }}>
             امتیاز
           </Typography>
-          <Typography variant="caption1" sx={{ flex: 1, textAlign: 'right' }}>
+
+          <Typography
+            variant="title3"
+            color="custom.grey2"
+            sx={{ flex: 1, textAlign: 'right' }}
+          >
             بازیکن
           </Typography>
-          <Typography variant="caption1" sx={{ width: 66, textAlign: 'right' }}>
+          <Typography
+            variant="title3"
+            color="custom.grey2"
+            sx={{ width: 80, textAlign: 'right' }}
+          >
             رتبه
           </Typography>
         </Stack>
-        {/* {_mockRows[mode].map((row, index) => (
-          <RankRow key={`${mode}-${row}`} row={row} index={index} />
-        ))} */}
+        {_mockRows[mode].map((row, index) => (
+          <RankRow key={`${mode}-${row.player.name}`} row={row} />
+        ))}
       </Stack>
 
       <Box sx={{ flexGrow: 1, minHeight: 24 }} />

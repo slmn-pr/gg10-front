@@ -1,17 +1,22 @@
 import { Box, Stack, Typography } from '@mui/material';
 import LeaderBoardIcon from '@/components/icons/navigation/LeaderBoard';
+import { LeaderboardRowItem } from './leaderboard-types';
 
-import BronzeRank from '@/assets/icons/Rank icons/Bronze.svg';
-import SilverRank from '@/assets/icons/Rank icons/Silver.svg';
-import GoldRank from '@/assets/icons/Rank icons/Gold.svg';
-import LegendRank from '@/assets/icons/Rank icons/Legend.svg';
+// import BronzeRank from '@/assets/icons/Rank icons/Bronze.svg';
+// import SilverRank from '@/assets/icons/Rank icons/Silver.svg';
+// import GoldRank from '@/assets/icons/Rank icons/Gold.svg';
+// import LegendRank from '@/assets/icons/Rank icons/Legend.svg';
 
-const rankIcons = [LegendRank, GoldRank, SilverRank, BronzeRank];
-const rankColors = ['#18A0FB', '#DBB037', '#A3A6B0', '#A36640'];
+// const rankIcons = [LegendRank, GoldRank, SilverRank, BronzeRank];
+// const rankColors = ['#18A0FB', '#DBB037', '#A3A6B0', '#A36640'];
 
-export default function RankRow({ row, index }) {
-  const [name, score, avatar, rankIndex] = row;
-  const isTopRank = index < 3;
+interface RankRowProps {
+  row: LeaderboardRowItem;
+  isTopRank?: boolean;
+}
+
+export default function RankRow({ row, isTopRank = false }: RankRowProps) {
+  //   const isTopRank = index < 3;
 
   return (
     <Box
@@ -20,8 +25,9 @@ export default function RankRow({ row, index }) {
         height: 74,
         bgcolor: '#1F1F1F',
         borderRadius: '8px',
-        border:
-          index === 0 ? '1px solid rgba(102, 212, 229, 0.48)' : '1px solid transparent',
+        border: isTopRank
+          ? '1px solid rgba(102, 212, 229, 0.48)'
+          : '1px solid transparent',
         px: 1.5,
         display: 'grid',
         gridTemplateColumns: '66px minmax(0, 1fr) 82px',
@@ -36,22 +42,25 @@ export default function RankRow({ row, index }) {
             height: 24,
             borderRadius: '50%',
             border: '1px solid',
-            borderColor: rankColors[rankIndex],
-            color: rankColors[rankIndex],
+            // borderColor: rankColors[rankIndex],
+            // color: rankColors[rankIndex],
             display: 'grid',
             placeItems: 'center',
           }}
         >
-          <Typography variant="caption2" sx={{ fontWeight: isTopRank ? 700 : 400 }}>
+          {/* <Typography variant="caption2" sx={{ fontWeight: isTopRank ? 700 : 400 }}>
             {index + 1}
-          </Typography>
+          </Typography> */}
         </Box>
-        <Box
+
+
+        
+        {/* <Box
           component="img"
           src={rankIcons[rankIndex]}
           alt=""
           sx={{ width: 24, height: 24 }}
-        />
+        /> */}
       </Stack>
 
       <Stack
@@ -63,15 +72,15 @@ export default function RankRow({ row, index }) {
       >
         <Typography
           variant="sub2"
-          color={rankIndex === 0 ? 'custom.prize' : 'custom.whiteOnBg2'}
+          //   color={rankIndex === 0 ? 'custom.prize' : 'custom.whiteOnBg2'}
           noWrap
           sx={{ minWidth: 0 }}
         >
-          {name}
+          {row.player.name}
         </Typography>
         <Box
           component="img"
-          src={avatar}
+          //   src={avatar}
           alt=""
           sx={{
             width: 48,
@@ -85,9 +94,9 @@ export default function RankRow({ row, index }) {
 
       <Stack direction="row" alignItems="center" justifyContent="flex-end" gap={0.6}>
         <Typography variant="sub2" color="custom.grey0">
-          {score}
+          {row.rank}
         </Typography>
-        <LeaderBoardIcon color={rankColors[rankIndex]} width={20} height={20} />
+        {/* <LeaderBoardIcon color={rankColors[rankIndex]} width={20} height={20} /> */}
       </Stack>
     </Box>
   );
