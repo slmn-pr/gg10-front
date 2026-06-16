@@ -54,27 +54,23 @@ export default function LeaderboardPage() {
       <GuideSheet />
 
       <Stack sx={{ width: 'calc(100% - 32px)', mt: 4 }} gap={1}>
+        {/* TODO: Add user rank row */}
+        <Box sx={{ my: 1 }}>
+          <RankRow rank={1} row={_mockRows[mode][0]} isUser />
+        </Box>
+
         <Stack
           direction="row"
           alignItems="center"
+          justifyContent="space-between"
           sx={{
             height: 32,
             px: 1.5,
             color: 'custom.grey0',
             bgcolor: 'transparent',
+            direction: 'rtl',
           }}
         >
-          <Typography variant="title3" color="custom.grey2" sx={{ width: 80 }}>
-            امتیاز
-          </Typography>
-
-          <Typography
-            variant="title3"
-            color="custom.grey2"
-            sx={{ flex: 1, textAlign: 'right' }}
-          >
-            بازیکن
-          </Typography>
           <Typography
             variant="title3"
             color="custom.grey2"
@@ -82,9 +78,26 @@ export default function LeaderboardPage() {
           >
             رتبه
           </Typography>
+
+          <Typography
+            variant="title3"
+            color="custom.grey2"
+            sx={{ width: '180px', textAlign: 'right' }}
+          >
+            بازیکن
+          </Typography>
+
+          <Typography variant="title3" color="custom.grey2">
+            امتیاز
+          </Typography>
         </Stack>
         {_mockRows[mode].map((row, index) => (
-          <RankRow key={`${mode}-${row.player.name}`} row={row} />
+          <RankRow
+            key={`${mode}-${row.player.name}`}
+            row={row}
+            rank={index + 1}
+            isUser={index === 0}
+          />
         ))}
       </Stack>
 
