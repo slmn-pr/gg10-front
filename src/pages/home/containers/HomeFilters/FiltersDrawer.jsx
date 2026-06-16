@@ -1,12 +1,11 @@
 import { Drawer, Typography, Box, Stack, Button, IconButton } from '@mui/material';
-import FilterChip from './components/FilterChip';
 import FilterChipIcon from '@/components/icons/FilterChipIcon';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import CloseIcon from '@/components/icons/general/CloseIcon';
 import { useSearchParams } from 'react-router-dom';
 import { BATTLE_ROYAL_DEFAULT_VALUES, MULTIPLAYER_DEFAULT_VALUES } from './conts';
 import { useTheme } from '@mui/material/styles';
-import { useFormContext, useWatch } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import FilterDrawerToggler from './components/FilterDrawerToggler';
 
 export default function FiltersDrawer({ children }) {
