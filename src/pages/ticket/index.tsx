@@ -11,14 +11,7 @@ import {
   useTheme,
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import z from 'zod';
-
-const newTicketSchema = z.object({
-  title: z.string().min(3, 'پر کردن این فیلد الزامی است'),
-  section: z.string().optional(),
-  message: z.string().min(5, 'پر کردن این فیلد الزامی است'),
-  fileUploadId: z.string().optional(),
-});
+import { newTicketSchema } from './schema';
 
 export default function TicketPage() {
   const theme = useTheme();
