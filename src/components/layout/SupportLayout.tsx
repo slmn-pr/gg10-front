@@ -40,7 +40,7 @@ export default function SupportLayout() {
             direction="row"
             spacing={0.5}
             alignItems="center"
-            sx={{ direction: 'rtl' }}
+            sx={{ direction: 'rtl', mb: "30px" }}
           >
             <IconButton>
               <ChevronForwardIcon color="white" />

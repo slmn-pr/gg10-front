@@ -40,6 +40,7 @@ import CreateTeamPage from '@/pages/create_team/index.jsx';
 import useScrollTop from '@/hooks/useScrollTop.js';
 import AuthPage from '@/pages/auth/index.jsx';
 import SupportLayout from '@/components/layout/SupportLayout.js';
+import SupportPage from '@/pages/support/index.js';
 
 const AppRouter = () => {
   useScrollTop();
@@ -105,7 +106,7 @@ const AppRouter = () => {
       </Route>
 
       <Route element={<SupportLayout />}>
-        <Route path="/support" element={<p>Support gonna be here ...</p>} />
+        <Route path="/support" element={<SupportPage />} />
       </Route>
     </Routes>
   );
