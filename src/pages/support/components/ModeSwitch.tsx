@@ -6,10 +6,12 @@ import {
   useTheme,
 } from '@mui/material';
 import { ModeSwitchProps, ModeVariants } from './modes-types';
+import FaqIcon from './FaqIcon';
+import TicketIcon from './TicketIcon';
 
 const tabs = [
-  { name: 'ticket', label: 'تیکت', icon: null },
-  { name: 'faq', label: 'سوالات متداول', icon: null },
+  { name: 'ticket', label: 'تیکت', icon: TicketIcon },
+  { name: 'faq', label: 'سوالات متداول', icon: FaqIcon },
 ];
 
 export default function ModeSwitch({ mode, setMode }: ModeSwitchProps) {
@@ -70,7 +72,7 @@ export default function ModeSwitch({ mode, setMode }: ModeSwitchProps) {
             >
               {tab.label}
             </Typography>
-            {/* {tab.icon && <tab.icon />} */}
+            {tab.icon && <tab.icon color={mode === tab.name ? '#000' : '#fff'} />}
           </Box>
         </ToggleButton>
       ))}
