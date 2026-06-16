@@ -30,18 +30,6 @@ import {
   ProfileRulesPage,
   ProfileSecuritySettingsPage,
 } from '@/pages/user/pages/profile/index.js';
-import {
-  SupportAccountGuidePage,
-  SupportLoginIssuesPage,
-  SupportPage,
-  SupportSecurityHelpPage,
-  SupportTicketsHasTicketDefaultPage,
-  SupportTicketsHasTicketErrorPage,
-  SupportTicketsNoTicketPage,
-  SupportTicketsSubmitFieldsFilledPage,
-  SupportTicketsSubmitPage,
-  SupportTicketsSubmitRequiredErrorsPage,
-} from '@/pages/support/index.js';
 import AdminDashboardPage from '@/pages/admin/pages/admin-dashboard-page.jsx';
 import MainLayout from '@/components/layout/main-layout.jsx';
 import NotificationsPage from '@/pages/notifications/index.jsx';
@@ -51,6 +39,7 @@ import TeamInvitesPage from '@/pages/teams/invites.jsx';
 import CreateTeamPage from '@/pages/create_team/index.jsx';
 import useScrollTop from '@/hooks/useScrollTop.js';
 import AuthPage from '@/pages/auth/index.jsx';
+import SupportLayout from '@/components/layout/SupportLayout.js';
 
 const AppRouter = () => {
   useScrollTop();
@@ -73,7 +62,10 @@ const AppRouter = () => {
         <Route path="/missions/ready" element={<MissionsReadyPage />} />
         <Route path="/missions/ready/empty" element={<MissionsReadyEmptyPage />} />
         <Route path="/missions/completed" element={<MissionsCompletedPage />} />
-        <Route path="/missions/completed/empty" element={<MissionsCompletedEmptyPage />} />
+        <Route
+          path="/missions/completed/empty"
+          element={<MissionsCompletedEmptyPage />}
+        />
         <Route path="/missions/expired" element={<MissionsExpiredPage />} />
         <Route path="/missions/expired/empty" element={<MissionsExpiredEmptyPage />} />
         <Route path="/lobby" element={<LobbyPage />} />
@@ -87,102 +79,19 @@ const AppRouter = () => {
         <Route path="/notifications" element={<NotificationsPage />} />
         <Route path="/user/profile" element={<UserProfilePage />} />
         <Route path="/user/profile/edit" element={<ProfileEditPage />} />
-        <Route path="/user/profile/lobbies-history" element={<ProfileLobbiesHistoryPage />} />
+        <Route
+          path="/user/profile/lobbies-history"
+          element={<ProfileLobbiesHistoryPage />}
+        />
         <Route path="/user/profile/security" element={<ProfileSecuritySettingsPage />} />
         <Route path="/user/profile/referral" element={<ProfileReferralPage />} />
-        <Route path="/user/profile/support" element={<SupportPage />} />
-        <Route path="/user/support" element={<SupportPage />} />
-        <Route path="/user/profile/support/account-guide" element={<SupportAccountGuidePage />} />
-        <Route path="/user/support/account-guide" element={<SupportAccountGuidePage />} />
-        <Route path="/user/profile/support/login-issues" element={<SupportLoginIssuesPage />} />
-        <Route path="/user/support/login-issues" element={<SupportLoginIssuesPage />} />
-        <Route path="/user/profile/support/security-help" element={<SupportSecurityHelpPage />} />
-        <Route path="/user/support/security-help" element={<SupportSecurityHelpPage />} />
-        <Route path="/user/profile/support/tickets/no-ticket" element={<SupportTicketsNoTicketPage />} />
-        <Route path="/user/support/tickets/no-ticket" element={<SupportTicketsNoTicketPage />} />
-        <Route path="/user/profile/support/tickets/submit" element={<SupportTicketsSubmitPage />} />
-        <Route path="/user/support/tickets/submit" element={<SupportTicketsSubmitPage />} />
-        <Route
-          path="/user/profile/support/tickets/submit/errors"
-          element={<SupportTicketsSubmitRequiredErrorsPage />}
-        />
-        <Route
-          path="/user/support/tickets/submit/errors"
-          element={<SupportTicketsSubmitRequiredErrorsPage />}
-        />
-        <Route
-          path="/user/profile/support/tickets/submit/filled"
-          element={<SupportTicketsSubmitFieldsFilledPage />}
-        />
-        <Route
-          path="/user/support/tickets/submit/filled"
-          element={<SupportTicketsSubmitFieldsFilledPage />}
-        />
-        <Route
-          path="/user/profile/support/tickets/has-ticket/default"
-          element={<SupportTicketsHasTicketDefaultPage />}
-        />
-        <Route
-          path="/user/support/tickets/has-ticket/default"
-          element={<SupportTicketsHasTicketDefaultPage />}
-        />
-        <Route
-          path="/user/profile/support/tickets/has-ticket/error"
-          element={<SupportTicketsHasTicketErrorPage />}
-        />
-        <Route
-          path="/user/support/tickets/has-ticket/error"
-          element={<SupportTicketsHasTicketErrorPage />}
-        />
+
         <Route path="/user/profile/rules" element={<ProfileRulesPage />} />
         <Route path="/profile/edit" element={<ProfileEditPage />} />
         <Route path="/profile/lobbies-history" element={<ProfileLobbiesHistoryPage />} />
         <Route path="/profile/security" element={<ProfileSecuritySettingsPage />} />
         <Route path="/profile/referral" element={<ProfileReferralPage />} />
-        <Route path="/profile/support" element={<SupportPage />} />
-        <Route path="/support" element={<SupportPage />} />
-        <Route path="/profile/support/account-guide" element={<SupportAccountGuidePage />} />
-        <Route path="/support/account-guide" element={<SupportAccountGuidePage />} />
-        <Route path="/profile/support/login-issues" element={<SupportLoginIssuesPage />} />
-        <Route path="/support/login-issues" element={<SupportLoginIssuesPage />} />
-        <Route path="/profile/support/security-help" element={<SupportSecurityHelpPage />} />
-        <Route path="/support/security-help" element={<SupportSecurityHelpPage />} />
-        <Route path="/profile/support/tickets/no-ticket" element={<SupportTicketsNoTicketPage />} />
-        <Route path="/support/tickets/no-ticket" element={<SupportTicketsNoTicketPage />} />
-        <Route path="/profile/support/tickets/submit" element={<SupportTicketsSubmitPage />} />
-        <Route path="/support/tickets/submit" element={<SupportTicketsSubmitPage />} />
-        <Route
-          path="/profile/support/tickets/submit/errors"
-          element={<SupportTicketsSubmitRequiredErrorsPage />}
-        />
-        <Route
-          path="/support/tickets/submit/errors"
-          element={<SupportTicketsSubmitRequiredErrorsPage />}
-        />
-        <Route
-          path="/profile/support/tickets/submit/filled"
-          element={<SupportTicketsSubmitFieldsFilledPage />}
-        />
-        <Route
-          path="/support/tickets/submit/filled"
-          element={<SupportTicketsSubmitFieldsFilledPage />}
-        />
-        <Route
-          path="/profile/support/tickets/has-ticket/default"
-          element={<SupportTicketsHasTicketDefaultPage />}
-        />
-        <Route
-          path="/support/tickets/has-ticket/default"
-          element={<SupportTicketsHasTicketDefaultPage />}
-        />
-        <Route
-          path="/profile/support/tickets/has-ticket/error"
-          element={<SupportTicketsHasTicketErrorPage />}
-        />
-        <Route
-          path="/support/tickets/has-ticket/error"
-          element={<SupportTicketsHasTicketErrorPage />}
-        />
+
         <Route path="/profile/rules" element={<ProfileRulesPage />} />
         <Route
           path="/admin"
@@ -193,6 +102,10 @@ const AppRouter = () => {
           }
         />
         <Route path="*" element={<NotFoundPage />} />
+      </Route>
+
+      <Route element={<SupportLayout />}>
+        <Route path="/support" element={<p>Support gonna be here ...</p>} />
       </Route>
     </Routes>
   );
