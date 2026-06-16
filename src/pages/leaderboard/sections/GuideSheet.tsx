@@ -1,19 +1,30 @@
-import { Box, Button, IconButton, Stack, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Drawer,
+  IconButton,
+  Stack,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { useState } from 'react';
+import GuideContent from './GuideContent';
 
 export default function GuideSheet() {
-  const [showGuide, setShowGuide] = useState(false);
+  const theme = useTheme();
+
+  const [open, setOpen] = useState(true);
 
   function onClose() {
-    setShowGuide(false);
+    setOpen(false);
   }
 
   return (
     <Box sx={{ width: '100%' }}>
       <Button
-        onClick={() => setShowGuide(true)}
+        onClick={() => setOpen(true)}
         sx={{
           color: 'custom.linkBlue',
           minWidth: 0,
@@ -30,81 +41,53 @@ export default function GuideSheet() {
         </Typography>
       </Button>
 
-      {showGuide && (
-        <Box
-          sx={{
-            position: 'fixed',
-            inset: 0,
-            zIndex: 1400,
-            bgcolor: 'rgba(0,0,0,0.58)',
-            display: 'flex',
-            alignItems: 'flex-end',
-            justifyContent: 'center',
-          }}
+      <Drawer
+        anchor="bottom"
+        variant="temporary"
+        open={open}
+        onClose={onClose}
+        sx={{
+          zIndex: 999, // higher than bottom navigation which has zIndex: 1000
+          '& .MuiBackdrop-root': {
+            maxWidth: 'sm', // maxWidth="sm" in Material-UI is approximately 600px
+            mx: 'auto',
+          },
+          '& .MuiDrawer-paper': {
+            maxWidth: 'sm', // maxWidth="sm" in Material-UI is approximately 600px
+            width: '100%',
+            mx: 'auto',
+            mb: 6,
+            height: 'auto',
+            borderTopLeftRadius: 8,
+            borderTopRightRadius: 8,
+            bgcolor: theme.palette.custom.modalBg,
+            backgroundImage: 'none',
+          },
+        }}
+        BackdropProps={{
+          sx: {
+            bottom: '70px', // bottom navigation height
+          },
+        }}
+      >
+        {' '}
+        {/* Header */}
+        <Stack
+          direction="row"
+          spacing={2}
+          justifyContent="space-between"
+          alignItems="center"
+          mb="38px"
         >
-          <Box
-            sx={{
-              width: 'min(440px, 100vw)',
-              maxHeight: '78vh',
-              overflowY: 'auto',
-              bgcolor: 'custom.bg1',
-              borderRadius: '8px 8px 0 0',
-              px: 2,
-              pt: 2,
-              pb: 4,
-            }}
-          >
-            <Stack
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
-              mb={2}
-            >
-              <IconButton onClick={onClose} sx={{ color: 'custom.white' }}>
-                <CloseIcon />
-              </IconButton>
-              <Typography variant="title3" color="custom.white">
-                راهنمای رتبه‌ها
-              </Typography>
-            </Stack>
-
-            <Stack gap={2} alignItems="flex-end">
-              {[
-                [
-                  'رتبه بازیکن چیست؟',
-                  'رتبه براساس امتیاز عملکرد شما در لابی‌های رتبه‌بندی محاسبه می‌شود.',
-                ],
-                [
-                  'امتیاز چطور محاسبه می‌شود؟',
-                  'برد، جایگاه نهایی، تعداد حضور موفق و قوانین هر مود روی امتیاز اثر می‌گذارد.',
-                ],
-                [
-                  'سطوح رنک',
-                  'بازیکن‌ها در سطح‌های برنز، سیلور، گلد و لجند دسته‌بندی می‌شوند.',
-                ],
-                [
-                  'پایان فصل',
-                  'در پایان هر فصل، رتبه‌ها ثبت و فصل بعد با شرایط جدید شروع می‌شود.',
-                ],
-              ].map(([title, body]) => (
-                <Stack key={title} gap={0.6} alignItems="flex-end">
-                  <Typography variant="sub1" color="custom.white">
-                    {title}
-                  </Typography>
-                  <Typography
-                    variant="caption1"
-                    color="custom.grey0"
-                    textAlign="right"
-                    lineHeight={1.9}
-                  >
-                    {body}
-                  </Typography>
-                </Stack>
-              ))}
-            </Stack>
-          </Box>
-        </Box>
-      )}
+          <IconButton onClick={() => setOpen(false)}>
+            <CloseIcon />
+          </IconButton>
+          <Typography variant="title2" color="white">
+            راهنمای رنک ها
+          </Typography>
+        </Stack>
+        <GuideContent />
+      </Drawer>
     </Box>
   );
 }
