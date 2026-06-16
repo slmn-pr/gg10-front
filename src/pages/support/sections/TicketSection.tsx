@@ -1,18 +1,8 @@
-import {
-  Box,
-  Button,
-  List,
-  ListItem,
-  ListItemText,
-  Tab,
-  Tabs,
-  Typography,
-} from '@mui/material';
-import NoTicketIcon from '../components/NoTicketIcon';
+import { Box, List, ListItem, ListItemText, Tab, Tabs, Typography } from '@mui/material';
 import { useState } from 'react';
-import { _mockTickets } from '../_mock';
 import TicketList from '../components/TicketsList';
 import NoTicketView from '../components/NoTicketView';
+import { _mockTickets } from '../_mock';
 
 export interface Ticket {
   title: string;
