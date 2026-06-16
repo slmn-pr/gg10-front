@@ -8,7 +8,10 @@ import CloseIcon from '../icons/general/CloseIcon';
 import ChevronBackward from '../icons/ChevronBackward';
 import ChevronForwardIcon from '../icons/ChevronForward';
 
-export default function SupportLayout() {
+interface SimpleLayoutProps {
+  title: string;
+}
+export default function SimpleLayout({ title }: SimpleLayoutProps) {
   return (
     <ThemeProvider theme={mainTheme}>
       <CssBaseline />
@@ -45,7 +48,7 @@ export default function SupportLayout() {
             <IconButton>
               <ChevronForwardIcon color="white" />
             </IconButton>
-            <Typography variant="h6">پشتیبانی</Typography>
+            <Typography variant="h6">{title}</Typography>
           </Stack>
 
           <OfflineSnakbar />

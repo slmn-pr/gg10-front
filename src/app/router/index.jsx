@@ -39,7 +39,7 @@ import TeamInvitesPage from '@/pages/teams/invites.jsx';
 import CreateTeamPage from '@/pages/create_team/index.jsx';
 import useScrollTop from '@/hooks/useScrollTop.js';
 import AuthPage from '@/pages/auth/index.jsx';
-import SupportLayout from '@/components/layout/SupportLayout.js';
+import SimpleLayout from '@/components/layout/SimpleLayout.js';
 import SupportPage from '@/pages/support/index.js';
 
 const AppRouter = () => {
@@ -105,8 +105,12 @@ const AppRouter = () => {
         <Route path="*" element={<NotFoundPage />} />
       </Route>
 
-      <Route element={<SupportLayout />}>
+      <Route element={<SimpleLayout title="پشتیبانی" />}>
         <Route path="/support" element={<SupportPage />} />
+      </Route>
+
+      <Route path="/ticket/new" element={<SimpleLayout title="تیکت جدید" />}>
+        <Route index element={<>سس</>} />
       </Route>
     </Routes>
   );
