@@ -38,6 +38,7 @@ export default function ModeSwitch({ mode, setMode }: ModeSwitchProps) {
         <ToggleButton
           value={tab.name}
           sx={{
+            width: '174px',
             flexGrow: 1,
             py: 1,
             borderRadius: '8px',

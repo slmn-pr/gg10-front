@@ -30,7 +30,7 @@ export default function SupportLayout() {
             display: 'flex',
             flexDirection: 'column',
             flexGrow: 1,
-            backgroundColor: '#000',
+            backgroundColor: mainTheme.palette.custom.primaryBg,
             gap: 0.5,
             pt: 2,
           }}
@@ -40,7 +40,7 @@ export default function SupportLayout() {
             direction="row"
             spacing={0.5}
             alignItems="center"
-            sx={{ direction: 'rtl', mb: "30px" }}
+            sx={{ direction: 'rtl', mb: '30px' }}
           >
             <IconButton>
               <ChevronForwardIcon color="white" />

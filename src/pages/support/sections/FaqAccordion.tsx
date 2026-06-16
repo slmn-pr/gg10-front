@@ -30,6 +30,7 @@ export default function FaqAccordion({ expanded, onChange, title }: FaqAccordion
           '&:before': { display: 'none' },
           '&.Mui-expanded': { margin: 0 },
           borderBottom: '1px solid #000',
+          p: 0,
         }}
       >
         <AccordionSummary

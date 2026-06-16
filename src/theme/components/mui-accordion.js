@@ -4,7 +4,8 @@ export default {
   },
   styleOverrides: {
     root: ({ theme }) => ({
-      backgroundColor: theme.palette.custom.black,
+      backgroundColor: theme.palette.custom.primaryBg,
+      backgroundImage: 'none',
       paddingLeft: '16px',
       paddingRight: '16px',
       boxShadow: 'none',
