@@ -15,7 +15,7 @@ import GuideContent from './GuideContent';
 export default function GuideSheet() {
   const theme = useTheme();
 
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   function onClose() {
     setOpen(false);
