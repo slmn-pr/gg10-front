@@ -11,6 +11,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { useState } from 'react';
 import GuideContent from './GuideContent';
+import InfoIcon from '@/components/icons/InfoIcon';
 
 export default function GuideSheet() {
   const theme = useTheme();
@@ -35,7 +36,7 @@ export default function GuideSheet() {
           gap: 0.5,
         }}
       >
-        <InfoOutlinedIcon sx={{ fontSize: 18 }} />
+        <InfoIcon color={theme.palette.custom.linkBlue} />
         <Typography variant="sub2" color="custom.linkBlue">
           راهنمای رنک‌های لیدربورد: رنک‌ها چطور محاسبه شده‌اند؟
         </Typography>

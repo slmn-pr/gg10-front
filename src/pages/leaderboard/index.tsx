@@ -49,7 +49,7 @@ export default function LeaderboardPage() {
       <Box sx={{ width: 'calc(100% - 32px)', mt: 3 }}>
         <GameModeSelector value={mode} onChange={setMode} />
       </Box>
-
+        
       {!loggedIn && (
         <Box sx={{ mt: 3.125, width: '100%' }}>
           <NotLoggedInCta />
