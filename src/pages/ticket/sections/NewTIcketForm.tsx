@@ -12,10 +12,10 @@ import { Controller, useFormContext } from 'react-hook-form';
 import TicketFileUploader from '../components/TicketFileUploader';
 import useCreateTicket from '@/pages/support/hook/useCreateTicket';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 export default function NewTicketForm() {
-  const theme = useTheme();
-
+  const naviagte = useNavigate();
   const {
     control,
     handleSubmit,
@@ -30,6 +30,7 @@ export default function NewTicketForm() {
     createTicket(values, {
       onSuccess: () => {
         toast.success('تیکت شما ثبت‌ شد');
+        naviagte('/support', { state: { section: 'tickets' } });
       },
       onError: () => {
         toast.error('ثبت تیکت با شکست مواجه شد');
