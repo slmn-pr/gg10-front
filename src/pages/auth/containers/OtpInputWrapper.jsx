@@ -1,8 +1,10 @@
 import { Box, Button, Stack, Typography } from '@mui/material';
 import OtpInput from '../components/OtpInput';
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { STEP_TYPES } from '../const';
 import { useStep } from '../context';
+import Countdown from 'react-countdown';
+import CountDownView from '../components/CountDownView';
 
 export default function OTPInputWrapper({
   phoneNumber = '09123456789',
@@ -12,6 +14,7 @@ export default function OTPInputWrapper({
   isValid = false,
   isError = false,
   errorText,
+  resendAvailableAt,
 }) {
   const [internalOtpValue, setInternalOtpValue] = useState('');
   const { setStep } = useStep();
@@ -30,6 +33,12 @@ export default function OTPInputWrapper({
       onChange?.(newValue);
     },
     [onChange, value],
+  );
+
+  // 1 minute after now
+  const countdownValue = useMemo(
+    () => (resendAvailableAt ? new Date(resendAvailableAt) : Date.now() + 1_000 * 60),
+    [],
   );
 
   return (
@@ -80,12 +89,9 @@ export default function OTPInputWrapper({
         </Typography>
       )}
 
-      {/* TODO: Make dynamic count down */}
       {/* Countdown */}
       <Box sx={{ mt: '10px' }}>
-        <Typography variant="sub3" component="p" color="custom.grey0">
-          01:30 تا درخواست مجدد ارسال کد
-        </Typography>
+        <Countdown renderer={CountDownView} date={countdownValue} />
       </Box>
     </Stack>
   );

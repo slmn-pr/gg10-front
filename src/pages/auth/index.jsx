@@ -11,6 +11,7 @@ import CreateNewPasswordSection from './containers/CreateNewPasswordSection';
 
 export default function AuthPage() {
   const [step, setStep] = useState(STEP_TYPES.PHONE_NUMBER);
+  // const [step, setStep] = useState(STEP_TYPES.LOGIN_OTP_VERIFICATION);
   const [phoneNumber, setPhoneNumber] = useState('09022424917');
 
   const isSignupStep = useMemo(() => {

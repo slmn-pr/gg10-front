@@ -24,12 +24,7 @@ export default function useRequestOTPCode() {
 
     console.log('[OTP_CODE][useRequestOTPCode]', status, data);
 
-    // if (status === 201) {
-    //   return {
-    //     expires_at: '2026-06-12T11:10:12.751Z',
-    //     resend_available_at: '2026-06-12T11:10:12.751Z',
-    //   };
-    // }
+    return data;
   };
 
   return useMutation({

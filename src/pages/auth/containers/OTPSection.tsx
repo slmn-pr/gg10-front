@@ -1,10 +1,7 @@
-import CloseIcon from '@/components/icons/general/CloseIcon';
-import BackwardButton from '@/components/layout/BackwardButton';
-import { Box, Button, Container, IconButton, Stack, Typography } from '@mui/material';
+import { Box, Button, Container, Stack, Typography } from '@mui/material';
 import OTPInputWrapper from './OtpInputWrapper';
 import ButtonLoading from '@/components/form/ButtonLoading';
 import { useStep } from '../context';
-import { STEP_TYPES } from '../const';
 import { useEffect, useState } from 'react';
 import useRequestOTPCode from '../hooks/useRequestOTPCode';
 import toast from 'react-hot-toast';
@@ -29,6 +26,8 @@ export default function OPTSection({
   const [otpValue, setOtpValue] = useState('');
   const [isError, setIsError] = useState(false);
 
+  const [resendAvailableAt, setResendAvailableAt] = useState<string | null>(null);
+
   // Auto request OTP code when render
   useEffect(() => {
     if (!phoneNumber) {
@@ -39,8 +38,9 @@ export default function OPTSection({
     requestOTPCode(
       { phone_number: phoneNumber, purpose },
       {
-        onSuccess: () => {
+        onSuccess: (data) => {
           toast.success(`کد با موفقیت به شماره ${phoneNumber} ارسال شد`);
+          setResendAvailableAt(data?.resend_available_at);
         },
 
         onError: () => {
@@ -56,17 +56,6 @@ export default function OPTSection({
       sx={{ p: 0, background: (theme) => theme.palette.custom.primaryBg }}
     >
       <Box sx={{ pt: { xs: '16px' }, minHeight: '100vh' }} bgcolor="custom.default">
-        {/* Header */}
-        {/* <Box
-          sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
-        >
-          <IconButton onClick={() => setStep(STEP_TYPES.PHONE_NUMBER)}>
-            <CloseIcon />
-          </IconButton>
-
-          <BackwardButton>ورود به حساب کاربری</BackwardButton>
-        </Box> */}
-
         {/* Logo */}
         <Box sx={{ mt: '100px', display: 'flex', justifyContent: 'center' }}>
           <img src="/images/logo.png" alt="logo" style={{ height: '38px' }} />
