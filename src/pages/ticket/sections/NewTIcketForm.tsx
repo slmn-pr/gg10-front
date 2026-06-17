@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
 import TicketFileUploader from '../components/TicketFileUploader';
+import { createTicketReq } from '@/api/ticket';
 
 export default function NewTicketForm() {
   const theme = useTheme();
@@ -20,8 +21,17 @@ export default function NewTicketForm() {
     formState: { errors },
   } = useFormContext();
 
-  function onFinish(values: any) {
+  async function onFinish(values: any) {
     console.log('[TicketPage] handleSubmit -> values', values);
+
+    const { data } = await createTicketReq({
+      description: values?.description,
+      lobby_id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+      priority: 'medium',
+      title: values?.title,
+    });
+
+    console.log('[NewTicketForm] data', data);
 
     // if success full -> redirect to /support
   }
@@ -52,24 +62,24 @@ export default function NewTicketForm() {
           />
         </Box>
 
-        {/* Section */}
+        {/* lobby ID */}
         <Box>
           <InputLabel>
-            <Typography variant="title3" color={errors.section ? 'error.main' : 'white'}>
+            <Typography variant="title3" color={errors.lobby_id ? 'error.main' : 'white'}>
               بخش مربوطه (اختیاری)
             </Typography>
           </InputLabel>
 
           <Controller
-            name="section"
+            name="lobby_id"
             control={control}
             render={({ field }) => (
               <TextField
                 {...field}
                 fullWidth
                 placeholder="مثلا جوایز لابی"
-                error={!!errors.section}
-                helperText={<>errors.section?.message</>}
+                error={!!errors.lobby_id}
+                helperText={<>{errors.lobby_id?.message}</>}
               />
             )}
           />
@@ -78,13 +88,16 @@ export default function NewTicketForm() {
         {/* Message */}
         <Box>
           <InputLabel>
-            <Typography variant="title3" color={errors.message ? 'error.main' : 'white'}>
+            <Typography
+              variant="title3"
+              color={errors.description ? 'error.main' : 'white'}
+            >
               متن پیام
             </Typography>
           </InputLabel>
 
           <Controller
-            name="section"
+            name="description"
             control={control}
             render={({ field, fieldState: { error } }) => (
               <TextField
@@ -93,7 +106,7 @@ export default function NewTicketForm() {
                 rows={5}
                 placeholder="پیام خود را اینجا تایپ کنید"
                 error={!!error?.message}
-                helperText={<>{errors.title?.message}</>}
+                helperText={<>{errors.description?.message}</>}
               />
             )}
           />
