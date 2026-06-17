@@ -9,8 +9,8 @@ export default function TicketPage() {
   const methods = useForm<NewTicketFormValues>({
     defaultValues: {
       title: '',
-      section: '',
-      message: '',
+      lobby_id: '',
+      description: '',
       fileUploadId: undefined,
     },
     resolver: zodResolver(newTicketSchema),

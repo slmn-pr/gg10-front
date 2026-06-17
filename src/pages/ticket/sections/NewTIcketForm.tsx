@@ -10,7 +10,8 @@ import {
 } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
 import TicketFileUploader from '../components/TicketFileUploader';
-import { createTicketReq } from '@/api/ticket';
+import useCreateTicket from '@/pages/support/hook/useCreateTicket';
+import toast from 'react-hot-toast';
 
 export default function NewTicketForm() {
   const theme = useTheme();
@@ -21,14 +22,18 @@ export default function NewTicketForm() {
     formState: { errors },
   } = useFormContext();
 
+  const { mutate: createTicket, isPending } = useCreateTicket();
+
   async function onFinish(values: any) {
     console.log('[TicketPage] handleSubmit -> values', values);
 
-    const { data } = await createTicketReq({
-      description: values?.description,
-      lobby_id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-      priority: 'medium',
-      title: values?.title,
+    createTicket(values, {
+      onSuccess: () => {
+        toast.success('تیکت شما ثبت‌ شد');
+      },
+      onError: () => {
+        toast.error('ثبت تیکت با شکست مواجه شد');
+      },
     });
 
     console.log('[NewTicketForm] data', data);
@@ -118,6 +123,8 @@ export default function NewTicketForm() {
         {/* Submit */}
         <Stack justifyContent="center" alignContent="center">
           <Button
+            loading={isPending}
+            disabled={isPending}
             variant="contained"
             sx={{ width: '292px', mx: 'auto' }}
             type="submit"
