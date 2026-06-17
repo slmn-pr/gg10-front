@@ -36,7 +36,7 @@ export default function NewTicketForm() {
       },
     });
 
-    console.log('[NewTicketForm] data', data);
+    console.log('[NewTicketForm] data', values);
 
     // if success full -> redirect to /support
   }
