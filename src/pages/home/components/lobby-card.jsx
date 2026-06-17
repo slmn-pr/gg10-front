@@ -84,6 +84,7 @@ const LobbyCard = ({
         overflow: 'hidden',
         width: '100%',
         minHeight: '112px',
+        direction: 'ltr', // TODO: FIX it after, its wrong direction but temp fix
       }}
     >
       <CardActionArea
