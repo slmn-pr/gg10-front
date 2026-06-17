@@ -51,13 +51,13 @@ export default function OPTSection({
   }, []);
 
   return (
-    <Container maxWidth="sm" sx={{ p: 0 }}>
-      <Box
-        sx={{ px: { xs: '16px' }, pt: { xs: '16px' }, minHeight: '100vh' }}
-        bgcolor="custom.secondaryBg"
-      >
+    <Container
+      maxWidth="sm"
+      sx={{ p: 0, background: (theme) => theme.palette.custom.primaryBg }}
+    >
+      <Box sx={{ pt: { xs: '16px' }, minHeight: '100vh' }} bgcolor="custom.default">
         {/* Header */}
-        <Box
+        {/* <Box
           sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
         >
           <IconButton onClick={() => setStep(STEP_TYPES.PHONE_NUMBER)}>
@@ -65,7 +65,7 @@ export default function OPTSection({
           </IconButton>
 
           <BackwardButton>ورود به حساب کاربری</BackwardButton>
-        </Box>
+        </Box> */}
 
         {/* Logo */}
         <Box sx={{ mt: '100px', display: 'flex', justifyContent: 'center' }}>

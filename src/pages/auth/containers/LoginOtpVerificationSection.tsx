@@ -7,6 +7,9 @@ import toast from 'react-hot-toast';
 import useRequestOTPCode from '../hooks/useRequestOTPCode';
 import useSaveUserAuth from '../hooks/useSaveUserAuth';
 import OtpSection from './OTPSection';
+import { Box, Container, IconButton } from '@mui/material';
+import CloseIcon from '@/components/icons/general/CloseIcon';
+import BackwardButton from '@/components/layout/BackwardButton';
 
 export default function LoginOtpVerificationSection() {
   const { setAuth } = useAuthStore();
@@ -59,5 +62,25 @@ export default function LoginOtpVerificationSection() {
     );
   }, []);
 
-  return <OtpSection handleSubmit={handleSubmit} isPending={isPending} purpose="login" />;
+  return (
+    <Container
+      maxWidth="sm"
+      sx={{
+        minHeight: '100vh',
+        backgroundColor: 'background.default',
+        p: 1,
+      }}
+    >
+      {/* Header */}
+      <Box
+        sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+      >
+        <IconButton>
+          <CloseIcon />
+        </IconButton>
+        <BackwardButton>ورود به حساب کاربری</BackwardButton>
+      </Box>
+      <OtpSection handleSubmit={handleSubmit} isPending={isPending} purpose="login" />;
+    </Container>
+  );
 }

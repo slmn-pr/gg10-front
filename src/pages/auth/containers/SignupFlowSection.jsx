@@ -49,7 +49,7 @@ export default function SignupFlow() {
         p: 0,
       }}
     >
-      <Box sx={{ pt: { xs: '16px' } }}>
+      <Box sx={{ pt: { xs: '16px', background: 'transparent' } }}>
         {/* Header */}
         <Box
           sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
