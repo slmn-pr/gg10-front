@@ -70,7 +70,7 @@ const AppRouter = () => {
         />
         <Route path="/missions/expired" element={<MissionsExpiredPage />} />
         <Route path="/missions/expired/empty" element={<MissionsExpiredEmptyPage />} />
-        <Route path="/lobby" element={<LobbyPage />} />
+        <Route path="/lobby/:id" element={<LobbyPage />} />
         {/* TEAMS ROUTES */}
         <Route path="/teams">
           <Route index element={<TeamsPage />} />

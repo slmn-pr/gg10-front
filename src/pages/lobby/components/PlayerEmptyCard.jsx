@@ -1,10 +1,10 @@
 import AddPLayerCTAIcon from '@/components/icons/AddPLayerCTAIcon';
 import { Button } from '@mui/material';
-import { useLobby } from '../contexts/LobbyContext';
+import {  useLobbyContext } from '../contexts/LobbyContext';
 import { useLobbyStatus } from '../hooks/useLobbyStatus';
 
 export default function PlayerEmptyCard({ onSignupAttempt }) {
-  const { showErrorIfNotRegisterable, lobbyData } = useLobby();
+  const { showErrorIfNotRegisterable, lobbyData } = useLobbyContext();
   const { isNotRegisterable } = useLobbyStatus(lobbyData.status);
 
   const handleClick = () => {

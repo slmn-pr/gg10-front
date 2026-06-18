@@ -6,34 +6,54 @@ import {
   useEffect,
   useMemo,
 } from 'react';
+import type { LobbyDetailResponse } from '@/api/lobbies/lobbies';
 import { useLobbyStatus } from '../hooks/useLobbyStatus';
 import ErrorSnakBar from '@/components/snackbar/ErrorSnakBar';
 
-const LobbyContext = createContext(null);
+// ==================== Types ====================
 
-export const useLobby = () => {
+interface LobbyContextValue {
+  lobbyData: LobbyDetailResponse;
+  updateLobbyData: (newData: Partial<LobbyDetailResponse>) => void;
+  errorSnackbarOpen: boolean;
+  getErrorMessage: string;
+  showErrorIfNotRegisterable: () => void;
+  closeErrorSnackbar: () => void;
+  isRegisterable: boolean;
+  isNotRegisterable: boolean;
+}
+
+interface LobbyProviderProps {
+  children: React.ReactNode;
+  initialLobbyData: LobbyDetailResponse;
+}
+
+// ==================== Context ====================
+
+const LobbyContext = createContext<LobbyContextValue | null>(null);
+
+export const useLobbyContext = (): LobbyContextValue => {
   const context = useContext(LobbyContext);
   if (!context) {
-    throw new Error('useLobby must be used within LobbyProvider');
+    throw new Error('useLobbyContext must be used within LobbyProvider');
   }
   return context;
 };
 
-export const LobbyProvider = ({ children, initialLobbyData }) => {
-  const [lobbyData, setLobbyData] = useState(initialLobbyData);
+// ==================== Provider ====================
+
+export const LobbyProvider = ({ children, initialLobbyData }: LobbyProviderProps) => {
+  const [lobbyData, setLobbyData] = useState<LobbyDetailResponse>(initialLobbyData);
   const [errorSnackbarOpen, setErrorSnackbarOpen] = useState(false);
 
-  // Use the lobby status hook
   const { isRegisterable, isNotRegisterable, getErrorMessage } = useLobbyStatus(
     lobbyData?.status,
   );
 
-  // Update lobby data
-  const updateLobbyData = useCallback((newData) => {
+  const updateLobbyData = useCallback((newData: Partial<LobbyDetailResponse>) => {
     setLobbyData((prev) => ({ ...prev, ...newData }));
   }, []);
 
-  // Show error snackbar if status is not registerable
   const showErrorIfNotRegisterable = useCallback(() => {
     if (isNotRegisterable) {
       setErrorSnackbarOpen(true);
@@ -51,23 +71,18 @@ export const LobbyProvider = ({ children, initialLobbyData }) => {
     }
   }, [lobbyData?.status, isNotRegisterable]);
 
-  // Update lobby data when initialLobbyData changes - defer to avoid blocking
+  // Sync lobbyData when initialLobbyData changes
   useEffect(() => {
-    if (initialLobbyData) {
-      // Use requestAnimationFrame to defer state update
-      let rafId = requestAnimationFrame(() => {
-        setLobbyData(initialLobbyData);
-      });
+    if (!initialLobbyData) return;
 
-      // Cleanup: cancel the animation frame if component unmounts
-      return () => {
-        cancelAnimationFrame(rafId);
-      };
-    }
+    const rafId = requestAnimationFrame(() => {
+      setLobbyData(initialLobbyData);
+    });
+
+    return () => cancelAnimationFrame(rafId);
   }, [initialLobbyData]);
 
-  // Memoize context value to prevent unnecessary re-renders
-  const value = useMemo(
+  const value = useMemo<LobbyContextValue>(
     () => ({
       lobbyData,
       updateLobbyData,
@@ -93,7 +108,6 @@ export const LobbyProvider = ({ children, initialLobbyData }) => {
   return (
     <LobbyContext.Provider value={value}>
       {children}
-      {/* Error Snackbar for non-registerable lobbies */}
       {errorSnackbarOpen && getErrorMessage && (
         <ErrorSnakBar
           open={errorSnackbarOpen}
