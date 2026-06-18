@@ -6,7 +6,7 @@ import {
   getLobbyById,
   registerLobby,
   changeLobbyStatus,
-} from '../lobbies';
+} from '../lobbies/lobbies';
 
 /**
  * Hook برای دریافت تمام لابی‌ها

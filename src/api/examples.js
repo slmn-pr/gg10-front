@@ -22,7 +22,7 @@ export function ExampleOTPFlow() {
         phone_number: '09123456789',
         purpose: 'login', // 'login' | 'register' | 'password_reset'
       });
-      
+
       console.log('OTP sent:', response);
       console.log('Expires at:', response.expires_at);
       console.log('Resend available at:', response.resend_available_at);
@@ -41,10 +41,7 @@ export function ExampleOTPFlow() {
 
       // ذخیره tokens در auth store
       if (response.access_token && response.refresh_token) {
-        authStore.setAuth(
-          response.access_token,
-          response.refresh_token
-        );
+        authStore.setAuth(response.access_token, response.refresh_token);
       }
 
       // بررسی نیاز به تکمیل پروفایل
@@ -66,7 +63,11 @@ export function ExampleOTPFlow() {
  * مثال 2: استفاده از Lobbies
  */
 export function ExampleLobbies() {
-  const { data: lobbies, isLoading, error } = useGetAllLobbies({
+  const {
+    data: lobbies,
+    isLoading,
+    error,
+  } = useGetAllLobbies({
     status: 'registering',
     game_mode: 'multiplayer',
     limit: 20,
@@ -136,7 +137,7 @@ export function ExampleUser() {
  */
 export async function exampleDirectAPI() {
   const { requestOTP, verifyOTP } = await import('./auth');
-  const { getAllLobbies, getLobbyById } = await import('./lobbies');
+  const { getAllLobbies, getLobbyById } = await import('./lobbies/lobbies');
 
   try {
     // درخواست OTP
@@ -167,4 +168,3 @@ export async function exampleDirectAPI() {
     console.error('API Error:', error);
   }
 }
-
