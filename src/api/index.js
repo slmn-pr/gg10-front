@@ -5,12 +5,12 @@
 
 export { default as apiClient } from './config';
 export { default as authAPI } from './auth';
-export { default as lobbiesAPI } from './lobbies/lobbies';
+export { default as lobbiesAPI } from './lobbies/index';
 export { default as usersAPI } from './users';
 export { default as healthAPI } from './health';
 
 // Named exports برای استفاده راحت‌تر
 export * from './auth';
-export * from './lobbies/lobbies';
+export * from './lobbies/index';
 export * from './users';
 export * from './health';
