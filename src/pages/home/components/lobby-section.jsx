@@ -1,6 +1,6 @@
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import LobbyCard from './lobby-card.jsx';
+import LobbyCard from '../containers/LobbyCard/index.js';
 
 const LobbySection = ({ title, subtitle, lobbies }) => (
   <Stack spacing={2}>

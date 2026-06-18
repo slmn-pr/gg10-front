@@ -1,3 +1,5 @@
+// src/pages/containers/HomeFIlters/index.jsx
+
 import { Stack, useTheme } from '@mui/material';
 import FilterChip from './components/FilterChip';
 import FiltersDrawer from './FiltersDrawer';

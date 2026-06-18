@@ -1,6 +1,6 @@
+// src/home/_mock.js
 import { LOBBY_STATUS, LOBBY_STATUS_TEXT } from '../lobby/constants/lobbyStatus';
 
-// Mock data for lobby cards
 export const lobbyCardsMockData = [
   {
     id: '1',
@@ -16,7 +16,7 @@ export const lobbyCardsMockData = [
     schedule: 'امروز ۱۷:۳۰',
     tags: ['اسکوادی', 'اتوریوایو', 'جایگاهی'],
     game_mode: 'multiplayer',
-    team_type: 4, // 4V4
+    team_type: 4,
   },
   {
     id: '2',
@@ -27,18 +27,17 @@ export const lobbyCardsMockData = [
     prize: '۱۰,۰۰۰,۰۰۰ تومن',
     currentPlayers: 40,
     maxPlayers: 40,
-    isFull: true,
     isVip: false,
     schedule: 'امروز ۱۸:۰۰',
     tags: ['اسکوادی', 'اتوریوایو', 'جایگاهی'],
     game_mode: 'multiplayer',
-    team_type: 3, // 3V3
+    team_type: 3,
   },
   {
     id: '3',
     title: 'آیزولیتد ۴۰ نفره جایگاهی',
-    status: LOBBY_STATUS.IN_PROGRESS,
-    statusText: LOBBY_STATUS_TEXT[LOBBY_STATUS.IN_PROGRESS],
+    status: LOBBY_STATUS.RUNNING,
+    statusText: LOBBY_STATUS_TEXT[LOBBY_STATUS.RUNNING],
     entryFee: '۱۰۰,۰۰۰ تومن',
     prize: '۱۰,۰۰۰,۰۰۰ تومن',
     currentPlayers: 30,
@@ -46,14 +45,14 @@ export const lobbyCardsMockData = [
     isVip: true,
     schedule: 'امروز ۱۹:۰۰',
     tags: ['اسکوادی', 'اتوریوایو', 'جایگاهی'],
-    game_mode: 'battle-royal',
-    team_type: 1, // Solo (1 player per team)
+    game_mode: 'battle_royale',
+    team_type: 1,
   },
   {
     id: '4',
     title: 'آیزولیتد ۴۰ نفره جایگاهی',
-    status: LOBBY_STATUS.IN_PROGRESS,
-    statusText: LOBBY_STATUS_TEXT[LOBBY_STATUS.IN_PROGRESS],
+    status: LOBBY_STATUS.RUNNING,
+    statusText: LOBBY_STATUS_TEXT[LOBBY_STATUS.RUNNING],
     entryFee: '۱۰۰,۰۰۰ تومن',
     prize: '۱۰,۰۰۰,۰۰۰ تومن',
     currentPlayers: 35,
@@ -62,28 +61,28 @@ export const lobbyCardsMockData = [
     schedule: 'امروز ۲۰:۰۰',
     tags: ['اسکوادی', 'اتوریوایو', 'جایگاهی'],
     game_mode: 'multiplayer',
-    team_type: 5, // 5V5
+    team_type: 5,
   },
   {
     id: '5',
     title: 'آیزولیتد ۴۰ نفره جایگاهی',
-    status: LOBBY_STATUS.IN_PROGRESS,
-    statusText: LOBBY_STATUS_TEXT[LOBBY_STATUS.IN_PROGRESS],
+    status: LOBBY_STATUS.FINISHED,
+    statusText: LOBBY_STATUS_TEXT[LOBBY_STATUS.FINISHED],
     entryFee: '۱۰۰,۰۰۰ تومن',
     prize: '۱۰,۰۰۰,۰۰۰ تومن',
-    currentPlayers: 38,
+    currentPlayers: 40,
     maxPlayers: 40,
     isVip: false,
     schedule: 'امروز ۲۱:۰۰',
     tags: ['اسکوادی', 'اتوریوایو', 'جایگاهی'],
-    game_mode: 'battle-royal',
-    team_type: 2, // Double (2 players per team)
+    game_mode: 'battle_royale',
+    team_type: 2,
   },
   {
     id: '6',
     title: 'آیزولیتد ۴۰ نفره جایگاهی',
-    status: LOBBY_STATUS.IN_PROGRESS,
-    statusText: LOBBY_STATUS_TEXT[LOBBY_STATUS.IN_PROGRESS],
+    status: LOBBY_STATUS.CANCELED,
+    statusText: LOBBY_STATUS_TEXT[LOBBY_STATUS.CANCELED],
     entryFee: '۱۰۰,۰۰۰ تومن',
     prize: '۱۰,۰۰۰,۰۰۰ تومن',
     currentPlayers: 25,
@@ -92,34 +91,9 @@ export const lobbyCardsMockData = [
     schedule: 'امروز ۲۲:۰۰',
     tags: ['اسکوادی', 'اتوریوایو', 'جایگاهی'],
     game_mode: 'multiplayer',
-    team_type: 2, // 2V2
+    team_type: 2,
   },
 ];
 
-// Mock function to get lobby detail by ID
-export const getLobbyById = (id) => {
-  const lobby = lobbyCardsMockData.find((l) => l.id === id);
-  if (!lobby) {
-    return null;
-  }
-
-  // Return extended lobby data for detail page
-  return {
-    ...lobby,
-    link: `https://lobby.example.com/${id}`,
-    time: 'امشب 23:30',
-    capacity: `${lobby.currentPlayers}/${lobby.maxPlayers}`,
-    progress: Math.min(100, Math.round((lobby.currentPlayers / lobby.maxPlayers) * 100)),
-    gameMode: 'جایگاهی',
-    teamType: '4 نفره',
-    teamCapacity: 4,
-    game_mode: lobby.game_mode || 'multiplayer',
-    team_type: lobby.team_type || 4,
-  };
-};
-
-// Mock data for "My Lobbies" section
-export const myLobbiesMockData = lobbyCardsMockData.filter((lobby) => lobby.isRegistered);
-
-// Mock data for "All Lobbies" section
+export const myLobbiesMockData = lobbyCardsMockData.filter((l) => l.isRegistered);
 export const allLobbiesMockData = lobbyCardsMockData;

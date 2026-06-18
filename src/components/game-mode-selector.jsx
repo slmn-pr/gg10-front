@@ -1,3 +1,5 @@
+// src/components/game-mode-selector.jsx
+
 import { Box, ToggleButton, ToggleButtonGroup, Typography, useTheme } from '@mui/material';
 import { useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';

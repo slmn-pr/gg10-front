@@ -8,7 +8,7 @@ import {
   useTheme,
 } from '@mui/material';
 
-import LobbyCard from './components/lobby-card.jsx';
+import LobbyCard from './containers/LobbyCard/index.js';
 import UserStats from './containers/UserStats.jsx';
 import BannerSlider from './containers/BannerSlider.jsx';
 import GameModeSelector from './components/GameModeTab.jsx';
@@ -65,6 +65,7 @@ const HomePage = () => {
         <BannerSlider />
       </Box>
 
+      {/* Game mode + Stickey header */}
       <Stack
         bgcolor="custom.black"
         // px={2}
