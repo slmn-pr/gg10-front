@@ -23,6 +23,7 @@ export default function LobbiesAccordionContainer({
 }: LobbiesAccordionContainerProsp) {
   const theme = useTheme();
 
+  // TODO: Read real filter items using search params and set
   const fetchAllParams = useMemo<GetLobbiesParams>(
     () => ({
       game_mode: 'battle_royale',
@@ -38,9 +39,9 @@ export default function LobbiesAccordionContainer({
     }),
     [],
   );
-
   const { data: allLobbies, isPending } = useFetchAllLobbies(fetchAllParams);
 
+  // TODO: Read real filter items using search params and set
   const { data: myLobbies } = useFetchMyLobbies({
     game_mode: 'battle_royale',
     limit: 5,
