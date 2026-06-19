@@ -52,15 +52,15 @@ export default function LoginOtpVerificationSection() {
   };
 
   // Send OTP Code when component is present
-  useEffect(() => {
-    requestOTPCode(
-      { phone_number: phoneNumber, purpose: 'login' },
-      {
-        onSuccess: () => toast.success(`کد با موفقیت به شماره ${phoneNumber} ارسال شد`),
-        onError: (error) => toast.error(error.message),
-      },
-    );
-  }, []);
+  // useEffect(() => {
+  //   requestOTPCode(
+  //     { phone_number: phoneNumber, purpose: 'login' },
+  //     {
+  //       onSuccess: () => toast.success(`کد با موفقیت به شماره ${phoneNumber} ارسال شد`),
+  //       onError: (error) => toast.error(error.message),
+  //     },
+  //   );
+  // }, []);
 
   return (
     <Container

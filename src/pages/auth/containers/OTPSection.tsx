@@ -29,26 +29,26 @@ export default function OPTSection({
   const [resendAvailableAt, setResendAvailableAt] = useState<string | null>(null);
 
   // Auto request OTP code when render
-  useEffect(() => {
-    if (!phoneNumber) {
-      toast.error('شماره اشتباه است');
-      return;
-    }
+  // useEffect(() => {
+  //   if (!phoneNumber) {
+  //     toast.error('شماره اشتباه است');
+  //     return;
+  //   }
 
-    requestOTPCode(
-      { phone_number: phoneNumber, purpose },
-      {
-        onSuccess: (data) => {
-          toast.success(`کد با موفقیت به شماره ${phoneNumber} ارسال شد`);
-          setResendAvailableAt(data?.resend_available_at);
-        },
+  //   requestOTPCode(
+  //     { phone_number: phoneNumber, purpose },
+  //     {
+  //       onSuccess: (data) => {
+  //         toast.success(`کد با موفقیت به شماره ${phoneNumber} ارسال شد`);
+  //         setResendAvailableAt(data?.resend_available_at);
+  //       },
 
-        onError: () => {
-          toast.error('ارسال کد با خطا مواجه شد');
-        },
-      },
-    );
-  }, []);
+  //       onError: () => {
+  //         toast.error('ارسال کد با خطا مواجه شد');
+  //       },
+  //     },
+  //   );
+  // }, []);
 
   return (
     <Container

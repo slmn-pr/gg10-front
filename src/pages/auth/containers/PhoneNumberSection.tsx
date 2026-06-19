@@ -7,8 +7,15 @@ import { STEP_TYPES } from '../const';
 import useRequestOTPCode from '../hooks/useRequestOTPCode';
 import toast from 'react-hot-toast';
 import { useStep } from '../context';
+import { RequestOTPCodePurposeType } from '@/api';
 
-export default function PhoneNumberSection() {
+interface PhoneNumberSectionProsp {
+  purpose: RequestOTPCodePurposeType;
+}
+
+export default function PhoneNumberSection({
+  purpose = 'login',
+}: PhoneNumberSectionProsp) {
   const theme = useTheme();
 
   const { setStep, setPhoneNumber } = useStep();
@@ -30,12 +37,14 @@ export default function PhoneNumberSection() {
 
   // Call if send OTP Code successfull to client number
   // Naviagte to Verify OTP code section
-  const onSuccessOTP = (_, phoneNumber) => {
+  const onSuccessOTP = (_: unknown, phoneNumber: string) => {
     setPhoneNumber(phoneNumber);
-    setStep(STEP_TYPES.SIGNUP_OTP_VERIFICATION);
+
+    if (purpose === 'register') setStep(STEP_TYPES.SIGNUP_OTP_VERIFICATION);
+    else if (purpose === 'login') setStep(STEP_TYPES.LOGIN_OTP_VERIFICATION);
   };
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values: { phoneNumber: string }) => {
     let phoneNumber = values?.phoneNumber;
     let normalizedPhoneNumber = normalizePhoneNumber(phoneNumber);
 
@@ -50,7 +59,7 @@ export default function PhoneNumberSection() {
     // If number not exist in db send request otp code
     const payload = {
       phone_number: normalizedPhoneNumber,
-      purpose: 'register',
+      purpose,
     };
 
     console.log('[PhoneNumberSection] onSubmit -> payload ', payload);

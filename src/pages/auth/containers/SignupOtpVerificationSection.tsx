@@ -17,7 +17,7 @@ export default function OtpVerificationSection() {
   const { mutate, isPending } = useVerifyOTPCode();
 
   // Handle send OTP code to verify
-  const handleSubmit = (otpValue: string) => {
+  const handleSubmit = (otpValue: string, p) => {
     mutate(
       { phone_number: phoneNumber, code: otpValue, purpose: 'register' },
       {
