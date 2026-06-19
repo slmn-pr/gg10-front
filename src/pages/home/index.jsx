@@ -1,26 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
-import {
-  Box,
-  Stack,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  useTheme,
-} from '@mui/material';
+import { Box, Stack, useTheme } from '@mui/material';
 
-import LobbyCard from './containers/LobbyCard/index.js';
 import UserStats from './containers/UserStats.jsx';
 import BannerSlider from './containers/BannerSlider.jsx';
 import GameModeSelector from './components/GameModeTab.jsx';
 import HomeFilters from './containers/HomeFilters/index.jsx';
-import ChevronUpIcon from '@/components/icons/ChevronUp.jsx';
-import LobbyCardHeader from './components/LobbyCardHeader.jsx';
 import BottomNav from '@/components/layout/bottom-navigation.jsx';
-import { myLobbiesMockData, allLobbiesMockData } from './_mock.js';
+import LobbiesAccordionContainer from './containers/LobbiesAccordionContainer.js';
 
 const HomePage = () => {
-  const [myLobbiesExpanded, setMyLobbiesExpanded] = useState(true);
-  const [allLobbiesExpanded, setAllLobbiesExpanded] = useState(true);
   const stickyHeaderRef = useRef(null);
   const [stickyHeaderHeight, setStickyHeaderHeight] = useState(0);
 
@@ -94,143 +82,7 @@ const HomePage = () => {
         </Box>
 
         <Box>
-          {/* My Lobbies Accordion */}
-          <Accordion
-            expanded={myLobbiesExpanded}
-            onChange={(e, expanded) => setMyLobbiesExpanded(expanded)}
-            sx={{
-              bgcolor: 'transparent',
-              boxShadow: 'none',
-              '&:before': { display: 'none' },
-              '&.Mui-expanded': { margin: 0 },
-              '& .MuiAccordionDetails-root': {
-                px: 0,
-                pb: 0,
-              },
-              '& .MuiAccordionSummary-root': {
-                minHeight: 'auto',
-                px: 0,
-                py: 1,
-                bgcolor: theme.palette.custom.bg1,
-                position: 'sticky',
-                top: 56 + stickyHeaderHeight,
-                zIndex: 998,
-                '&.Mui-expanded': {
-                  minHeight: 'auto',
-                },
-              },
-            }}
-          >
-            <AccordionSummary
-              expandIcon={false}
-              sx={{
-                '& .MuiAccordionSummary-content': {
-                  margin: 0,
-                  '&.Mui-expanded': {
-                    margin: 0,
-                  },
-                },
-              }}
-            >
-              <LobbyCardHeader
-                name="لابی های شما"
-                title={`${myLobbiesMockData.length} لابی`}
-                expandIcon={
-                  <Box
-                    component="span"
-                    sx={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: 'text.secondary',
-                      transform: myLobbiesExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
-                      transition: 'transform 0.3s ease',
-                      width: 32,
-                      height: 32,
-                    }}
-                  >
-                    <ChevronUpIcon />
-                  </Box>
-                }
-              />
-            </AccordionSummary>
-            <AccordionDetails>
-              <Stack spacing={2}>
-                {myLobbiesMockData.map((lobby) => (
-                  <LobbyCard key={lobby.id} {...lobby} />
-                ))}
-              </Stack>
-            </AccordionDetails>
-          </Accordion>
-
-          {/* All Lobbies Accordion */}
-          <Accordion
-            expanded={allLobbiesExpanded}
-            onChange={(e, expanded) => setAllLobbiesExpanded(expanded)}
-            sx={{
-              bgcolor: 'transparent',
-              boxShadow: 'none',
-              '&:before': { display: 'none' },
-              '&.Mui-expanded': { margin: 0 },
-              '& .MuiAccordionDetails-root': {
-                px: 0,
-                pb: 0,
-              },
-              '& .MuiAccordionSummary-root': {
-                minHeight: 'auto',
-                px: 0,
-                py: 1,
-                bgcolor: theme.palette.custom.bg1,
-                position: 'sticky',
-                top: 56 + stickyHeaderHeight,
-                zIndex: 998,
-                '&.Mui-expanded': {
-                  minHeight: 'auto',
-                },
-              },
-            }}
-          >
-            <AccordionSummary
-              expandIcon={false}
-              sx={{
-                '& .MuiAccordionSummary-content': {
-                  margin: 0,
-                  '&.Mui-expanded': {
-                    margin: 0,
-                  },
-                },
-              }}
-            >
-              <LobbyCardHeader
-                name="فهرست همه لابی‌ها"
-                title={`${allLobbiesMockData.length} لابی`}
-                expandIcon={
-                  <Box
-                    component="span"
-                    sx={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: 'text.secondary',
-                      transform: allLobbiesExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
-                      transition: 'transform 0.3s ease',
-                      width: 32,
-                      height: 32,
-                    }}
-                  >
-                    <ChevronUpIcon />
-                  </Box>
-                }
-              />
-            </AccordionSummary>
-            <AccordionDetails>
-              <Stack spacing={2}>
-                {allLobbiesMockData.map((lobby) => (
-                  <LobbyCard key={lobby.id} {...lobby} />
-                ))}
-              </Stack>
-            </AccordionDetails>
-          </Accordion>
+          <LobbiesAccordionContainer stickyHeaderHeight={stickyHeaderHeight} />
         </Box>
       </Stack>
 

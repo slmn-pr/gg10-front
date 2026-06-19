@@ -7,6 +7,7 @@ import SquadSmallIcon from '../../components/icons/SquadSmallIcon';
 import { LobbyResponse } from '@/api/lobbies/lobbies';
 import LobbyCardImage from './LobbyCardImage';
 import LobbyCardContent from './LobbyCardContent';
+import usePersianStatusText from '../../hooks/usePersianStatusText';
 
 const tagIcons = {
   اسکوادی: <SquadSmallIcon />,
@@ -22,6 +23,8 @@ const LobbyCard = ({ lobbyInfo }: LobbyCardProsp) => {
   const theme = useTheme();
   const navigate = useNavigate();
 
+  if (!lobbyInfo) return <></>;
+
   const {
     lobby_id: id,
     entry_fee: entryFee,
@@ -32,6 +35,8 @@ const LobbyCard = ({ lobbyInfo }: LobbyCardProsp) => {
     title,
     start_time: schedule,
   } = lobbyInfo;
+
+  const persianStatus = usePersianStatusText(statusText);
 
   // TODO: MUst add in API response `maxPlayers` and `currentPlayers`
   // const progress = maxPlayers
@@ -63,7 +68,7 @@ const LobbyCard = ({ lobbyInfo }: LobbyCardProsp) => {
         onClick={handleCardClick}
       >
         {/* Image Section */}
-        <LobbyCardImage status={statusText} />
+        <LobbyCardImage label={persianStatus} status={statusText} />
 
         {/* Content Section */}
         <LobbyCardContent

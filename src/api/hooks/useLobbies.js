@@ -1,23 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   createLobby,
-  getAllLobbies,
   getMyLobbies,
   getLobbyById,
   registerLobby,
   changeLobbyStatus,
 } from '../lobbies/index';
-
-/**
- * Hook برای دریافت تمام لابی‌ها
- */
-export const useGetAllLobbies = (params = {}, options = {}) => {
-  return useQuery({
-    queryKey: ['lobbies', 'all', params],
-    queryFn: () => getAllLobbies(params),
-    ...options,
-  });
-};
 
 /**
  * Hook برای دریافت لابی‌های من

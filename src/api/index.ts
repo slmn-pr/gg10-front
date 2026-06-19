@@ -4,7 +4,6 @@ export {
   createLobby,
   changeLobbyStatus,
   deleteLobby,
-  getAllLobbies,
   getLobbyById,
   getMyLobbies,
   registerLobby,

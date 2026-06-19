@@ -10,9 +10,10 @@ import { LobbyStatus } from '@/api/lobbies/lobbies';
 
 interface LobbyCardImageProps {
   status: LobbyStatus;
+  label: string;
 }
 
-export default function LobbyCardImage({ status }: LobbyCardImageProps) {
+export default function LobbyCardImage({ status, label }: LobbyCardImageProps) {
   const theme = useTheme();
 
   const statusPalette = getStatusPalette(status);
@@ -62,7 +63,7 @@ export default function LobbyCardImage({ status }: LobbyCardImageProps) {
           />
         )}
         <Typography variant="sub3" sx={{ color: statusPalette.color }}>
-          {status}
+          {label}
         </Typography>
       </Box>
 

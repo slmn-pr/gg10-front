@@ -4,6 +4,7 @@ export type GameMode = 'multiplayer' | 'battle_royale';
 
 export type LobbyStatus = 'registering' | 'full' | 'running' | 'finished' | 'canceled';
 
+
 export type MultiplayerTag =
   | 'squad'
   | 'trio'

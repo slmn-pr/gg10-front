@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import apiClient from '../config';
 import type {
   CreateLobbyPayload,
@@ -17,11 +18,10 @@ export const createLobby = async (
   return response.data;
 };
 
-export const getAllLobbies = async (
+export const getAllLobbiesReq = async (
   params: GetLobbiesParams = {},
-): Promise<LobbyResponse[]> => {
-  const response = await apiClient.get<LobbyResponse[]>('lobbies', { params });
-  return response.data;
+): Promise<AxiosResponse<LobbyResponse[]>> => {
+  return apiClient.get('lobbies', { params });
 };
 
 export const getMyLobbies = async (
