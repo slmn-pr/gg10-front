@@ -1,11 +1,4 @@
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Stack,
-  useTheme,
-} from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 
 import useFetchAllLobbies from '../hooks/useFetchAllLobbies';
 import { useMemo } from 'react';
