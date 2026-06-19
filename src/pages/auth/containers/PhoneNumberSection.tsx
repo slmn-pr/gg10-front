@@ -18,11 +18,11 @@ export default function PhoneNumberSection({
 }: PhoneNumberSectionProsp) {
   const theme = useTheme();
 
-  const { setStep, setPhoneNumber } = useStep();
+  const { setStep, phoneNumber, setPhoneNumber } = useStep();
 
   const methods = useForm({
     defaultValues: {
-      phoneNumber: '',
+      phoneNumber,
     },
     resolver: zodResolver(loginSchema),
     mode: 'onChange',

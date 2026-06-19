@@ -11,12 +11,14 @@ interface OTPSectionProps {
   isPending: boolean;
   handleSubmit: (otpCode: string) => void | any;
   purpose: RequestOTPCodePurposeType;
+  hasError?: boolean;
 }
 
 export default function OPTSection({
   isPending,
   handleSubmit,
   purpose,
+  hasError,
 }: OTPSectionProps) {
   const { setStep, phoneNumber } = useStep();
   const { mutate: requestOTPCode, isPending: isPendingOTPCode } = useRequestOTPCode();
@@ -24,38 +26,43 @@ export default function OPTSection({
   const isLoading = isPending || isPendingOTPCode;
 
   const [otpValue, setOtpValue] = useState('');
-  const [isError, setIsError] = useState(false);
 
   const [resendAvailableAt, setResendAvailableAt] = useState<string | null>(null);
 
-  // Auto request OTP code when render
-  // useEffect(() => {
-  //   if (!phoneNumber) {
-  //     toast.error('شماره اشتباه است');
-  //     return;
-  //   }
+  function sendOTPCode() {
+    if (!phoneNumber) {
+      toast.error('شماره اشتباه است');
+      return;
+    }
+    requestOTPCode(
+      { phone_number: phoneNumber, purpose },
+      {
+        onSuccess: (data) => {
+          console.log('[OPTSection] sendOTPCode, data', data);
 
-  //   requestOTPCode(
-  //     { phone_number: phoneNumber, purpose },
-  //     {
-  //       onSuccess: (data) => {
-  //         toast.success(`کد با موفقیت به شماره ${phoneNumber} ارسال شد`);
-  //         setResendAvailableAt(data?.resend_available_at);
-  //       },
+          toast.success(`کد با موفقیت به شماره ${phoneNumber} ارسال شد`);
+          setResendAvailableAt(data?.resend_available_at);
+        },
+        onError: () => {
+          toast.error('ارسال کد با خطا مواجه شد');
+        },
+      },
+    );
+  }
 
-  //       onError: () => {
-  //         toast.error('ارسال کد با خطا مواجه شد');
-  //       },
-  //     },
-  //   );
-  // }, []);
+  // Listen to resend otp code event
+  useEffect(() => {
+    window.addEventListener('resend_otp', sendOTPCode);
+
+    return () => window.removeEventListener('resend_otp', sendOTPCode);
+  }, []);
 
   return (
     <Container
       maxWidth="sm"
       sx={{ p: 0, background: (theme) => theme.palette.custom.primaryBg }}
     >
-      <Box sx={{ pt: { xs: '16px' }, minHeight: '100vh' }} bgcolor="custom.default">
+      <Box sx={{ pt: { xs: '16px' } }} bgcolor="custom.default">
         {/* Logo */}
         <Box sx={{ mt: '100px', display: 'flex', justifyContent: 'center' }}>
           <img src="/images/logo.png" alt="logo" style={{ height: '38px' }} />
@@ -64,15 +71,16 @@ export default function OPTSection({
         {/* Otp section */}
         <Stack mt="60px">
           <OTPInputWrapper
+            resendAvailableAt={resendAvailableAt}
             onComplete={(otpCode: string) => handleSubmit(otpCode)}
             phoneNumber={phoneNumber}
             value={otpValue}
             onChange={(value: string) => {
               setOtpValue(value);
-              setIsError(false);
+              // setIsError(false);
             }}
-            isError={isError}
-            errorText="کد وارد شده صحیح نیست"
+            isError={hasError}
+            errorText="کد تایید صحیح نیست، لطفا دوباره تلاش کنید"
           />
 
           {/* Button */}

@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import useVerifyOTPCode from '../hooks/useVerifyOTPCode';
 import { useStep } from '../context';
 import useAuthStore from '@/store/auth-store';
@@ -10,6 +10,7 @@ import OtpSection from './OTPSection';
 import { Box, Container, IconButton } from '@mui/material';
 import CloseIcon from '@/components/icons/general/CloseIcon';
 import BackwardButton from '@/components/layout/BackwardButton';
+import SupportFooter from '../components/SupportFooter';
 
 export default function LoginOtpVerificationSection() {
   const { setAuth } = useAuthStore();
@@ -18,6 +19,8 @@ export default function LoginOtpVerificationSection() {
   const { mutate: requestOTPCode, isPending: isPendingOTPCode } = useRequestOTPCode();
   const { mutate: verifyOTPCode, isPending: isVerifyingOTPCode } = useVerifyOTPCode();
   const navigate = useNavigate();
+
+  const [hasError, setHasError] = useState(false);
 
   const { phoneNumber } = useStep();
 
@@ -47,6 +50,10 @@ export default function LoginOtpVerificationSection() {
       { phone_number: phoneNumber, code, purpose: 'login' },
       {
         onSuccess: handleVerified,
+        onError: (error) => {
+          console.error('[LoginOtpVerificationSection] handleSubmit, error', error);
+          setHasError(true);
+        },
       },
     );
   };
@@ -80,7 +87,14 @@ export default function LoginOtpVerificationSection() {
         </IconButton>
         <BackwardButton>ورود به حساب کاربری</BackwardButton>
       </Box>
-      <OtpSection handleSubmit={handleSubmit} isPending={isPending} purpose="login" />;
+      <OtpSection
+        hasError={hasError}
+        handleSubmit={handleSubmit}
+        isPending={isPending}
+        purpose="login"
+      />
+
+      <SupportFooter />
     </Container>
   );
 }

@@ -1,6 +1,6 @@
 import { Box, Button, Stack, Typography } from '@mui/material';
 import OtpInput from '../components/OtpInput';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { STEP_TYPES } from '../const';
 import { useStep } from '../context';
 import Countdown from 'react-countdown';
@@ -35,11 +35,15 @@ export default function OTPInputWrapper({
     [onChange, value],
   );
 
-  // 1 minute after now
-  const countdownValue = useMemo(
-    () => (resendAvailableAt ? new Date(resendAvailableAt) : Date.now() + 1_000 * 60),
-    [],
-  );
+  // 1:30 minute after now
+  const countdownValue = useMemo(() => {
+    // return resendAvailableAt ? new Date(resendAvailableAt) : Date.now() + 1_000 * 90;
+    return Date.now() + 1_000 * 90;
+  }, [resendAvailableAt]);
+
+  useEffect(() => {
+    console.log('[OTPInputWrapper] countdownValue changed:', countdownValue);
+  }, [countdownValue]);
 
   return (
     <Stack>
@@ -83,15 +87,21 @@ export default function OTPInputWrapper({
           variant="sub2"
           component="p"
           color="custom.errorOnPrimaryBg"
-          sx={{ mt: '8px', textAlign: 'center' }}
+          sx={{ mt: '4px', mb: 0 }}
         >
           {errorText}
         </Typography>
       )}
 
       {/* Countdown */}
-      <Box sx={{ mt: '10px' }}>
-        <Countdown renderer={CountDownView} date={countdownValue} />
+      <Box sx={{ mt: '4px' }}>
+        <Countdown
+          zeroPadTime={2}
+          key={countdownValue}
+          renderer={CountDownView}
+          date={countdownValue}
+          autoStart
+        />
       </Box>
     </Stack>
   );
