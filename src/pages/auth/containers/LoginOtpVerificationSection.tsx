@@ -11,6 +11,7 @@ import { Box, Container, IconButton } from '@mui/material';
 import CloseIcon from '@/components/icons/general/CloseIcon';
 import BackwardButton from '@/components/layout/BackwardButton';
 import SupportFooter from '../components/SupportFooter';
+import { STEP_TYPES } from '../const';
 
 export default function LoginOtpVerificationSection() {
   const { setAuth } = useAuthStore();
@@ -22,7 +23,7 @@ export default function LoginOtpVerificationSection() {
 
   const [hasError, setHasError] = useState(false);
 
-  const { phoneNumber } = useStep();
+  const { phoneNumber, setStep } = useStep();
 
   const isPending = useMemo(
     () => isPendingOTPCode || isVerifyingOTPCode,
@@ -35,12 +36,17 @@ export default function LoginOtpVerificationSection() {
     console.log('[LoginOtpVerificationSection] handleVerified -> data', data);
     console.log('[LoginOtpVerificationSection] handleVerified -> payload', payload);
 
-    if (payload) {
-      saveAuth(data);
-    }
-
     toast.success('ورود با موفقیت انجام شد');
-    navigate('/home', { replace: true });
+
+    if (data?.requires_profile) {
+      // Navigate to set name section
+      setStep(STEP_TYPES.GAME_NAME);
+    } else {
+      if (payload) {
+        saveAuth(data);
+      }
+      navigate('/home', { replace: true });
+    }
   };
 
   const handleSubmit = (code: string) => {

@@ -23,12 +23,16 @@ import useCreateUser from '../hooks/useCreateUser';
 import toast from 'react-hot-toast';
 import ButtonLoading from '@/components/form/ButtonLoading';
 import useAuthStore from '@/store/auth-store';
+import useSaveUserAuth from '../hooks/useSaveUserAuth';
 
 export default function GameNameSection() {
   const theme = useTheme();
   const { setStep, phoneNumber, password } = useStep();
   const { mutate, isPending } = useCreateUser();
   const { setAuth } = useAuthStore();
+
+  const saveAuth = useSaveUserAuth(setAuth);
+
   console.log('STORE', setAuth);
 
   const [gameName, setGameName] = useState('');
@@ -46,18 +50,7 @@ export default function GameNameSection() {
   const onSuccess = (data) => {
     setStep(STEP_TYPES.SUCCESS_SIGNUP);
 
-    // TODO: Save access token and refresh token in global store (zustand)
-    //     {
-    //     "user_id": "056cb4dd-2350-41e8-ad49-976a13f6dfc9",
-    //     "phone_number": "09022424917",
-    //     "username": "Sython",
-    //     "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwNTZjYjRkZC0yMzUwLTQxZTgtYWQ0OS05NzZhMTNmNmRmYzkiLCJpYXQiOjE3ODEyOTk4MTksImV4cCI6MTc4NjQ4MzgxOX0.mnturKf4ehaPBJS46mjZZVJn9bA2PhVHfnPvaqLfQL4",
-    //     "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwNTZjYjRkZC0yMzUwLTQxZTgtYWQ0OS05NzZhMTNmNmRmYzkiLCJpYXQiOjE3ODEyOTk4MTksImV4cCI6MTc4NjQ4MzgxOX0.mnturKf4ehaPBJS46mjZZVJn9bA2PhVHfnPvaqLfQL4"
-    // }
-
-    setAuth(data?.access_token, data?.refresh_token, 1);
-
-    // TODO: Save in cookies
+    saveAuth(data);
   };
   const onError = () => {
     toast.error('نام قبلا ثبت شده است!');

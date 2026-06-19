@@ -50,13 +50,6 @@ export default function OPTSection({
     );
   }
 
-  // Listen to resend otp code event
-  useEffect(() => {
-    window.addEventListener('resend_otp', sendOTPCode);
-
-    return () => window.removeEventListener('resend_otp', sendOTPCode);
-  }, []);
-
   return (
     <Container
       maxWidth="sm"
