@@ -6,12 +6,10 @@ import {
   Stack,
   useTheme,
 } from '@mui/material';
-import ChevronUpIcon from '@/components/icons/ChevronUp';
-import LobbyCardHeader from '../components/LobbyCardHeader';
+
 import useFetchAllLobbies from '../hooks/useFetchAllLobbies';
 import { useMemo } from 'react';
 import { GetLobbiesParams } from '@/api/lobbies/lobbies';
-import LobbyCard from './LobbyCard';
 import useFetchMyLobbies from '../hooks/useFetchMyLobbies';
 import LobbyAccordion from './LobbyAccordion';
 
