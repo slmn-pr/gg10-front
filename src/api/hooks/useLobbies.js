@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   createLobby,
-  getMyLobbies,
+  getMyLobbiesReq,
   getLobbyById,
   registerLobby,
   changeLobbyStatus,
@@ -13,7 +13,7 @@ import {
 export const useGetMyLobbies = (params = {}, options = {}) => {
   return useQuery({
     queryKey: ['lobbies', 'me', params],
-    queryFn: () => getMyLobbies(params),
+    queryFn: () => getMyLobbiesReq(params),
     ...options,
   });
 };

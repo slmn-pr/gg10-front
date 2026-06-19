@@ -12,6 +12,7 @@ import useFetchAllLobbies from '../hooks/useFetchAllLobbies';
 import { useMemo } from 'react';
 import { GetLobbiesParams } from '@/api/lobbies/lobbies';
 import LobbyCard from './LobbyCard';
+import useFetchMyLobbies from '../hooks/useFetchMyLobbies';
 
 interface LobbiesAccordionContainerProsp {
   stickyHeaderHeight: number;
@@ -40,10 +41,81 @@ export default function LobbiesAccordionContainer({
 
   const { data: allLobbies, isPending } = useFetchAllLobbies(fetchAllParams);
 
+  const { data: myLobbies } = useFetchMyLobbies({
+    game_mode: 'battle_royale',
+    limit: 5,
+    offset: 0,
+    // status: 'running',
+  });
+
   console.log('[LobbiesAccordionContainer] allLobbies', allLobbies);
 
   return (
     <Box>
+      {/* My Lobbies Accordion */}
+      <Accordion
+        defaultExpanded
+        sx={{
+          bgcolor: 'transparent',
+          boxShadow: 'none',
+          '&:before': { display: 'none' },
+          '&.Mui-expanded': { margin: 0 },
+          '& .MuiAccordionDetails-root': {
+            px: 0,
+            pb: 0,
+          },
+          '& .MuiAccordionSummary-root': {
+            minHeight: 'auto',
+            px: 0,
+            py: 1,
+            bgcolor: theme.palette.custom.bg1,
+            position: 'sticky',
+            top: 56 + stickyHeaderHeight,
+            zIndex: 998,
+            '&.Mui-expanded': {
+              minHeight: 'auto',
+            },
+          },
+        }}
+      >
+        <AccordionSummary
+          expandIcon={
+            <Box
+              component="span"
+              sx={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'text.secondary',
+                transition: 'transform 0.3s ease',
+                width: 32,
+                height: 32,
+              }}
+            >
+              <ChevronUpIcon />
+            </Box>
+          }
+          sx={{
+            '& .MuiAccordionSummary-content': {
+              margin: 0,
+              '&.Mui-expanded': {
+                margin: 0,
+              },
+            },
+          }}
+        >
+          <LobbyCardHeader name="لابی های شما" title={`4 لابی`} />
+        </AccordionSummary>
+        <AccordionDetails>
+          <Stack spacing={2}>
+            {/* TODO: Render real data from API */}
+            {myLobbies?.map((lobby) => (
+              <LobbyCard key={lobby.id} lobbyInfo={lobby} />
+            ))}
+          </Stack>
+        </AccordionDetails>
+      </Accordion>
+
       {/* All Lobbies Accordion */}
       <Accordion
         defaultExpanded
@@ -103,7 +175,6 @@ export default function LobbiesAccordionContainer({
         </AccordionSummary>
         <AccordionDetails>
           <Stack spacing={2}>
-            {/* TODO: Render real data from API */}
             {allLobbies?.map((lobby) => (
               <LobbyCard lobbyInfo={lobby} key={lobby.id} />
             ))}

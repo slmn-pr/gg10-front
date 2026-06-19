@@ -24,13 +24,12 @@ export const getAllLobbiesReq = async (
   return apiClient.get('lobbies', { params });
 };
 
-export const getMyLobbies = async (
+export const getMyLobbiesReq = async (
   params: GetMyLobbiesParams = {},
-): Promise<LobbyResponse[]> => {
-  const response = await apiClient.get<LobbyResponse[]>('lobbies/me', {
+): Promise<AxiosResponse<LobbyResponse[]>> => {
+  return apiClient.get<LobbyResponse[]>('lobbies/me', {
     params,
   });
-  return response.data;
 };
 
 export const getLobbyById = async (lobbyId: string): Promise<LobbyDetailResponse> => {

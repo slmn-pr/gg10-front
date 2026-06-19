@@ -5,7 +5,7 @@ export {
   changeLobbyStatus,
   deleteLobby,
   getLobbyById,
-  getMyLobbies,
+  getMyLobbiesReq,
   registerLobby,
   unregisterLobby,
   updateLobby,
