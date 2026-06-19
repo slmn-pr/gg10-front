@@ -113,7 +113,7 @@ export default function PhoneNumberSection({
           <Typography
             component="p"
             variant="title2"
-            color={theme.palette.custom.secondary}
+            color={theme.palette.custom.white}
             textAlign="center"
           >
             با وارد کردن شماره موبایل، در چند قدم وارد جذاب‌ترین رقابت‌ها شوید
@@ -125,7 +125,7 @@ export default function PhoneNumberSection({
           sx={{
             width: '342px',
             mx: 'auto',
-            mt: '22px',
+            mt: '70px',
           }}
         >
           <form
