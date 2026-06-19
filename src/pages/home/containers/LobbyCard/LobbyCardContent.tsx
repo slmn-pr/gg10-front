@@ -4,6 +4,8 @@ import LeadingIcon from '@/components/icons/LeadingIcon';
 import EntryFreeIcon from '@/components/icons/lobbie/EntryFreeIcon';
 import PrizeIcon from '@/components/icons/lobbie/PrizeIcon';
 import TimeIcon from '@/components/icons/lobbie/TimeIcon';
+import useFormatCurrency from '@/hooks/useFormatCurrency';
+import useFormatDate from '@/hooks/useFormatDate';
 import { Box, Divider, Stack, Typography, useTheme } from '@mui/material';
 
 interface LobbyCardContentProps {
@@ -23,11 +25,15 @@ export default function LobbyCardContent({
 }: LobbyCardContentProps) {
   const theme = useTheme();
 
+  const formattedEntryFee = useFormatCurrency(entryFee);
+  const formattedPrize = useFormatCurrency(totalPrize);
+
+  const formattedTime = useFormatDate(time);
+
   return (
     <Box
       sx={{
         flex: 1,
-        background: vip ? theme.palette.custom.shade3 : theme.palette.custom.cardsBg,
         px: 1,
         display: 'flex',
         flexDirection: 'column',
@@ -74,8 +80,12 @@ export default function LobbyCardContent({
             spacing={0.25}
             sx={{ width: '100%' }}
           >
-            <Typography variant="sub2" color={theme.palette.custom.whiteOnBg2}>
-              {time}
+            <Typography
+              variant="sub2"
+              color={theme.palette.custom.whiteOnBg2}
+              sx={{ direction: 'ltr' }}
+            >
+              {formattedTime}
             </Typography>
             <TimeIcon color={theme.palette.custom.iconsWhite} />
           </Stack>
@@ -102,7 +112,7 @@ export default function LobbyCardContent({
               sx={{ display: 'flex', gap: 0.5, direction: 'rtl' }}
             >
               <span>ورودی:</span>
-              <span>{entryFee}</span>
+              <span>{formattedEntryFee} تومن</span>
             </Typography>
             <EntryFreeIcon />
           </Stack>
@@ -113,7 +123,7 @@ export default function LobbyCardContent({
               sx={{ display: 'flex', gap: 0.5, direction: 'rtl' }}
             >
               <span>جایزه:</span>
-              <span>{totalPrize}</span>
+              <span>{formattedPrize} تومن</span>
             </Typography>
             <PrizeIcon />
           </Stack>
@@ -122,7 +132,7 @@ export default function LobbyCardContent({
 
       <Box mt="1.5px">
         {/* TODO: Add real calced progress value instead of 0 */}
-        <CustomProgressBar progress={0} />
+        <CustomProgressBar progress={Math.random() * 100} />
       </Box>
 
       <Divider sx={{ my: 0.5, background: theme.palette.stroke.black, height: '2px' }} />

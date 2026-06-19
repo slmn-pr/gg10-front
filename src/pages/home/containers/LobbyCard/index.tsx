@@ -52,7 +52,7 @@ const LobbyCard = ({ lobbyInfo }: LobbyCardProsp) => {
     <Card
       sx={{
         mb: '12px',
-        background: vip ? theme.palette.custom.grey6 : theme.palette.custom.cardsBg,
+        background: vip ? theme.palette.custom.shade3 : theme.palette.custom.grey6,
         borderRadius: 2,
         border: 'none',
         padding: 0,

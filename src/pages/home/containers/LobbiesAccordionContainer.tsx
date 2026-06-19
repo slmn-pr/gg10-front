@@ -46,6 +46,7 @@ export default function LobbiesAccordionContainer({
     <Box>
       {/* All Lobbies Accordion */}
       <Accordion
+        defaultExpanded
         sx={{
           bgcolor: 'transparent',
           boxShadow: 'none',
