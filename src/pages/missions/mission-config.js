@@ -7,9 +7,9 @@ import {
 
 export const missionTabs = [
   { value: 'active', label: 'فعال', path: '/missions/active' },
-  { value: 'ready', label: 'دریافت جایزه', path: '/missions/ready' },
-  { value: 'completed', label: 'دریافت شده', path: '/missions/completed' },
-  { value: 'expired', label: 'منقضی شده', path: '/missions/expired' },
+  { value: 'ready', label: 'آماده دریافت جایزه', path: '/missions/ready' },
+  { value: 'completed', label: 'تکمیل شده', path: '/missions/completed' },
+  { value: 'expired', label: 'منقضی', path: '/missions/expired' },
 ];
 
 export const missionStatusConfig = {

@@ -11,16 +11,7 @@ import {
   WalletWithdrawPage,
 } from '@/pages/wallet/wallet-pages.jsx';
 import MissionsPage from '@/pages/missions/index.jsx';
-import {
-  MissionsActiveEmptyPage,
-  MissionsActivePage,
-  MissionsCompletedEmptyPage,
-  MissionsCompletedPage,
-  MissionsExpiredEmptyPage,
-  MissionsExpiredPage,
-  MissionsReadyEmptyPage,
-  MissionsReadyPage,
-} from '@/pages/missions/mission-pages.jsx';
+
 import NotFoundPage from '@/pages/not-found/index.jsx';
 import UserProfilePage from '@/pages/user/pages/user-profile-page.jsx';
 import {
@@ -59,17 +50,7 @@ const AppRouter = () => {
         <Route path="/wallet/card/register" element={<WalletRegisterCardPage />} />
         <Route path="/wallet/card/edit" element={<WalletEditCardPage />} />
         <Route path="/missions" element={<MissionsPage />} />
-        <Route path="/missions/active" element={<MissionsActivePage />} />
-        <Route path="/missions/active/empty" element={<MissionsActiveEmptyPage />} />
-        <Route path="/missions/ready" element={<MissionsReadyPage />} />
-        <Route path="/missions/ready/empty" element={<MissionsReadyEmptyPage />} />
-        <Route path="/missions/completed" element={<MissionsCompletedPage />} />
-        <Route
-          path="/missions/completed/empty"
-          element={<MissionsCompletedEmptyPage />}
-        />
-        <Route path="/missions/expired" element={<MissionsExpiredPage />} />
-        <Route path="/missions/expired/empty" element={<MissionsExpiredEmptyPage />} />
+
         <Route path="/lobby/:id" element={<LobbyPage />} />
         {/* TEAMS ROUTES */}
         <Route path="/teams">
