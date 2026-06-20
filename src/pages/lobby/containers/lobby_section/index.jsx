@@ -45,7 +45,7 @@ export default function LobbySection({ onSignupAttempt, game_mode, team_type }) 
       )}
 
       {/* TEAM SIDE (Battle Royal version) */}
-      {gameMode === 'battle-royal' && (
+      {gameMode === 'battle_royale' && (
         <BattleRoyalContainer onSignupAttempt={onSignupAttempt} />
       )}
     </Box>

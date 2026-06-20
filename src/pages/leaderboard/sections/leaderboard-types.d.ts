@@ -8,8 +8,8 @@ export interface LeaderboardRowItem {
 }
 
 export interface LeaderboardRows {
-  'battle-royal': LeaderboardRowItem[];
+  battle_royale: LeaderboardRowItem[];
   multiplayer: LeaderboardRowItem[];
 }
 
-export type GameMode = 'battle-royal' | 'multiplayer';
+export type GameMode = 'battle_royale' | 'multiplayer';

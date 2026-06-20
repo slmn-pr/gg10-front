@@ -7,8 +7,8 @@ import { lobbyHistory } from './shared/data.js';
 import { Card, LobbyMetaIcon, Page } from './shared/ui.jsx';
 
 export const ProfileLobbiesHistoryPage = () => {
-  const [mode, setMode] = useState('battle-royal');
-  const items = lobbyHistory[mode === 'battle-royal' ? 'battleRoyal' : 'multiplayer'];
+  const [mode, setMode] = useState('battle_royale');
+  const items = lobbyHistory[mode === 'battle_royale' ? 'battleRoyal' : 'multiplayer'];
 
   return (
     <Page title="تاریخچه لابی‌ها">
@@ -17,20 +17,39 @@ export const ProfileLobbiesHistoryPage = () => {
       <Stack gap={2}>
         {items.map((item) => (
           <Card key={item.id} sx={{ p: 1.5, minHeight: 117 }}>
-            <Stack direction="row" alignItems="center" justifyContent="space-between" gap={1.5}>
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+              gap={1.5}
+            >
               <Stack alignItems="flex-end" sx={{ flex: 1, minWidth: 0 }}>
                 <Stack direction="row" alignItems="center" gap={1} sx={{ width: '100%' }}>
-                  <Typography variant="caption1" color="custom.white" sx={{ flexShrink: 0 }}>
+                  <Typography
+                    variant="caption1"
+                    color="custom.white"
+                    sx={{ flexShrink: 0 }}
+                  >
                     {item.time}
                   </Typography>
-                  <Typography variant="caption1" color="custom.white" sx={{ flexShrink: 0 }}>
+                  <Typography
+                    variant="caption1"
+                    color="custom.white"
+                    sx={{ flexShrink: 0 }}
+                  >
                     {item.date}
                   </Typography>
                   <Typography variant="sub2" color="custom.white" noWrap sx={{ flex: 1 }}>
                     {item.title}
                   </Typography>
                 </Stack>
-                <Stack direction="row" alignItems="center" gap={0.5} mt={1} color="custom.dollar">
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  gap={0.5}
+                  mt={1}
+                  color="custom.dollar"
+                >
                   <Typography variant="caption1" color="custom.dollar">
                     {item.entry}
                   </Typography>
@@ -44,7 +63,12 @@ export const ProfileLobbiesHistoryPage = () => {
                 </Stack>
               </Stack>
 
-              <Box component="img" src={item.image} alt="" sx={{ width: 44, height: 44, borderRadius: '8px', objectFit: 'cover' }} />
+              <Box
+                component="img"
+                src={item.image}
+                alt=""
+                sx={{ width: 44, height: 44, borderRadius: '8px', objectFit: 'cover' }}
+              />
             </Stack>
           </Card>
         ))}

@@ -1,6 +1,12 @@
 // src/components/game-mode-selector.jsx
 
-import { Box, ToggleButton, ToggleButtonGroup, Typography, useTheme } from '@mui/material';
+import {
+  Box,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import { useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import MultiPlayerIcon from '@/components/icons/MultiPlayer';
@@ -63,8 +69,13 @@ export default function GameModeSelector({ value, onChange }) {
           },
         }}
       >
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
-          <Typography variant="title3" sx={{ color: isMultiplayerSelected ? '#000' : '#fff' }}>
+        <Box
+          sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}
+        >
+          <Typography
+            variant="title3"
+            sx={{ color: isMultiplayerSelected ? '#000' : '#fff' }}
+          >
             مولتی پلیر
           </Typography>
           <MultiPlayerIcon color={isMultiplayerSelected ? '#000' : '#fff'} />
@@ -72,7 +83,7 @@ export default function GameModeSelector({ value, onChange }) {
       </ToggleButton>
 
       <ToggleButton
-        value="battle-royal"
+        value="battle_royale"
         sx={{
           flexGrow: 1,
           py: 1,
@@ -88,8 +99,13 @@ export default function GameModeSelector({ value, onChange }) {
           },
         }}
       >
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
-          <Typography variant="title3" sx={{ color: !isMultiplayerSelected ? '#000' : '#fff' }}>
+        <Box
+          sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}
+        >
+          <Typography
+            variant="title3"
+            sx={{ color: !isMultiplayerSelected ? '#000' : '#fff' }}
+          >
             بتل رویال
           </Typography>
           <BattleRoyalIcon color={!isMultiplayerSelected ? '#000' : '#fff'} />

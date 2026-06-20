@@ -41,7 +41,7 @@ const FreeForAllChipIcon = HardPointIcon;
 const DuoChipIcon = SquadChipIcon;
 
 export const FILTERS_MAP = {
-  'battle-royal': {
+  battle_royale: {
     suggested: [
       { label: 'کیلی', icon: KillChipIcon, key: 'killie' },
       { label: 'اتوریوایو', icon: AutoReviveChipIcon, key: 'autoRevive' },

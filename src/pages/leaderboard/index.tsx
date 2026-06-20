@@ -1,23 +1,28 @@
-import { useState } from 'react';
-import { Box, Button, IconButton, Stack, Typography } from '@mui/material';
+import { useMemo, useState } from 'react';
+import { Box, Stack, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 
 import BottomNav from '@/components/layout/bottom-navigation.jsx';
 import GameModeSelector from '@/components/game-mode-selector.jsx';
-import BattleRoyalIcon from '@/components/icons/BattleRoyal';
-import MultiPlayerIcon from '@/components/icons/MultiPlayer';
 import leaderboardBanner from '@/assets/images/image 17.png';
 import RankRow from './sections/RankRow';
 import NotLoggedInCta from '../../components/NotLoginCta';
-import { GameMode } from './sections/leaderboard-types';
 import GuideSheet from './sections/GuideSheet';
-import { _mockRows } from './sections/_mock';
 import useUserStore from '@/store/user-store';
+import { getLeaderboard } from '@/api';
+import type { GameMode } from '@/api/leaderboard/leaderboard';
 
 export default function LeaderboardPage() {
-  const [mode, setMode] = useState<GameMode>('battle-royal');
-  const ModeIcon = mode === 'battle-royal' ? BattleRoyalIcon : MultiPlayerIcon;
-
+  const [mode, setMode] = useState<GameMode>('battle_royale');
   const loggedIn = useUserStore((s) => s.logged_in);
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['leaderboard', mode],
+    queryFn: () => getLeaderboard({ mode, limit: 100 }),
+  });
+
+  const rows = data?.rows ?? [];
+  const myRow = data?.me ?? null;
 
   return (
     <Stack
@@ -59,10 +64,12 @@ export default function LeaderboardPage() {
       <GuideSheet />
 
       <Stack sx={{ width: 'calc(100% - 32px)', mt: 4 }} gap={1}>
-        {/* TODO: Add user rank row */}
-        <Box sx={{ my: 1 }}>
-          <RankRow rank={1} row={_mockRows[mode][0]} isUser />
-        </Box>
+        {/* Current user's row, if authenticated */}
+        {myRow && (
+          <Box sx={{ my: 1 }}>
+            <RankRow rank={myRow.rank} row={myRow} isUser />
+          </Box>
+        )}
 
         <Stack
           direction="row"
@@ -83,7 +90,6 @@ export default function LeaderboardPage() {
           >
             رتبه
           </Typography>
-
           <Typography
             variant="title3"
             color="custom.grey2"
@@ -91,19 +97,28 @@ export default function LeaderboardPage() {
           >
             بازیکن
           </Typography>
-
           <Typography variant="title3" color="custom.grey2">
             امتیاز
           </Typography>
         </Stack>
-        {_mockRows[mode].map((row, index) => (
-          <RankRow
-            key={`${mode}-${row.player.name}`}
-            row={row}
-            rank={index + 1}
-            isUser={index === 0}
-          />
-        ))}
+
+        {isLoading && (
+          <Typography variant="sub1" color="custom.grey2" textAlign="center" mt={2}>
+            در حال بارگذاری...
+          </Typography>
+        )}
+
+        {isError && (
+          <Typography variant="sub1" color="error" textAlign="center" mt={2}>
+            خطا در دریافت لیدربورد
+          </Typography>
+        )}
+
+        {!isLoading &&
+          !isError &&
+          rows.map((row) => (
+            <RankRow key={row.player.id} row={row} rank={row.rank} isUser={false} />
+          ))}
       </Stack>
 
       <Box sx={{ flexGrow: 1, minHeight: 24 }} />
