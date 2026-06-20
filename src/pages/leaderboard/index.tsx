@@ -65,7 +65,7 @@ export default function LeaderboardPage() {
 
       <Stack sx={{ width: 'calc(100% - 32px)', mt: 4 }} gap={1}>
         {/* Current user's row, if authenticated */}
-        {myRow && (
+        {loggedIn && myRow && (
           <Box sx={{ my: 1 }}>
             <RankRow rank={myRow.rank} row={myRow} isUser />
           </Box>

@@ -4,6 +4,9 @@ import type { LeaderboardRow } from '@/api/leaderboard/leaderboard';
 import PlayerRankMedal from '../components/PlayerRankMedal';
 import { getRankByPoints } from '@/utils/rankTier';
 
+// TODO: use optimze image instead of this in production
+import sampleAvatar from '@/assets/images/lobby/avatar.png';
+
 interface RankRowProps {
   row: LeaderboardRow;
   rank: number;
@@ -56,9 +59,11 @@ export default function RankRow({ row, rank, isUser }: RankRowProps) {
           sx={{ width: '250px' }}
           gap={1}
         >
+          {/* Avatara */}
+          {/* TODO: Render the avatar form API `player.avatar`*/}
           <Box
-            component={row.player.avatar ? 'img' : 'div'}
-            src={row.player.avatar ?? undefined}
+            component={'img'}
+            src={row.player.avatar ?? sampleAvatar}
             sx={{
               width: '40px',
               height: '40px',
@@ -67,6 +72,8 @@ export default function RankRow({ row, rank, isUser }: RankRowProps) {
               objectFit: 'cover',
             }}
           />
+
+          {/* Player name */}
           <Typography variant="sub1" color="white">
             {row.player.name}
           </Typography>
