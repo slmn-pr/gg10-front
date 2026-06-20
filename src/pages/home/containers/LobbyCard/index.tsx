@@ -26,7 +26,7 @@ const LobbyCard = ({ lobbyInfo }: LobbyCardProsp) => {
   if (!lobbyInfo) return <></>;
 
   const {
-    lobby_id: id,
+    id,
     entry_fee: entryFee,
     status: statusText,
     total_prize: prize,
@@ -40,11 +40,6 @@ const LobbyCard = ({ lobbyInfo }: LobbyCardProsp) => {
   } = lobbyInfo;
 
   const persianStatus = usePersianStatusText(statusText);
-
-  // TODO: MUst add in API response `maxPlayers` and `currentPlayers`
-  // const progress = maxPlayers
-  //   ? Math.min(100, Math.round((currentPlayers / maxPlayers) * 100))
-  //   : 0;
 
   const handleCardClick = useCallback(() => {
     if (!id) return;
