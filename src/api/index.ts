@@ -16,3 +16,4 @@ export { default as healthAPI } from './health';
 export * from './auth';
 export * from './users';
 export * from './health';
+export * from './leaderboard/index';
