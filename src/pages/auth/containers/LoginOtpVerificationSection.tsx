@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import useVerifyOTPCode from '../hooks/useVerifyOTPCode';
 import { useStep } from '../context';
-import useAuthStore from '@/store/auth-store';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import useRequestOTPCode from '../hooks/useRequestOTPCode';
@@ -12,10 +11,11 @@ import CloseIcon from '@/components/icons/general/CloseIcon';
 import BackwardButton from '@/components/layout/BackwardButton';
 import SupportFooter from '../components/SupportFooter';
 import { STEP_TYPES } from '../const';
+import useUserStore from '@/store/user-store';
 
 export default function LoginOtpVerificationSection() {
-  const { setAuth } = useAuthStore();
-  const saveAuth = useSaveUserAuth(setAuth);
+  const { setUser } = useUserStore();
+  const saveAuth = useSaveUserAuth();
 
   const { mutate: requestOTPCode, isPending: isPendingOTPCode } = useRequestOTPCode();
   const { mutate: verifyOTPCode, isPending: isVerifyingOTPCode } = useVerifyOTPCode();
@@ -44,6 +44,7 @@ export default function LoginOtpVerificationSection() {
     } else {
       if (payload) {
         saveAuth(data);
+        // TODO: Call /users/me and save response to user-store
       }
       navigate('/home', { replace: true });
     }

@@ -11,13 +11,13 @@ import NotLoggedInCta from './sections/NotLoginCta';
 import { GameMode } from './sections/leaderboard-types';
 import GuideSheet from './sections/GuideSheet';
 import { _mockRows } from './sections/_mock';
-import useAuthStore from '@/store/auth-store';
+import useUserStore from '@/store/user-store';
 
 export default function LeaderboardPage() {
   const [mode, setMode] = useState<GameMode>('battle-royal');
   const ModeIcon = mode === 'battle-royal' ? BattleRoyalIcon : MultiPlayerIcon;
 
-  const loggedIn = useAuthStore((s) => s.logged_in);
+  const loggedIn = useUserStore((s) => s.logged_in);
 
   return (
     <Stack
@@ -49,7 +49,7 @@ export default function LeaderboardPage() {
       <Box sx={{ width: 'calc(100% - 32px)', mt: 3 }}>
         <GameModeSelector value={mode} onChange={setMode} />
       </Box>
-        
+
       {!loggedIn && (
         <Box sx={{ mt: 3.125, width: '100%' }}>
           <NotLoggedInCta />

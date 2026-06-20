@@ -22,18 +22,16 @@ import { STEP_TYPES } from '../const';
 import useCreateUser from '../hooks/useCreateUser';
 import toast from 'react-hot-toast';
 import ButtonLoading from '@/components/form/ButtonLoading';
-import useAuthStore from '@/store/auth-store';
+import useUserStore from '@/store/user-store';
 import useSaveUserAuth from '../hooks/useSaveUserAuth';
 
 export default function GameNameSection() {
   const theme = useTheme();
   const { setStep, phoneNumber, password } = useStep();
   const { mutate, isPending } = useCreateUser();
-  const { setAuth } = useAuthStore();
+  const { setUser } = useUserStore();
 
-  const saveAuth = useSaveUserAuth(setAuth);
-
-  console.log('STORE', setAuth);
+  const saveAuth = useSaveUserAuth();
 
   const [gameName, setGameName] = useState('');
   const [openHelp, setOpenHelp] = useState(false);
@@ -51,6 +49,8 @@ export default function GameNameSection() {
     setStep(STEP_TYPES.SUCCESS_SIGNUP);
 
     saveAuth(data);
+
+    // TODO: Call /users/me and save response to user-store
   };
   const onError = () => {
     toast.error('نام قبلا ثبت شده است!');

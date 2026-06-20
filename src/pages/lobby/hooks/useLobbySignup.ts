@@ -1,4 +1,6 @@
-import useAuthStore from '@/store/auth-store';
+// pages/lobby/hooks/useLobbySignup.ts
+
+import useUserStore from '@/store/user-store';
 import { useState } from 'react';
 import { VALIDATION_RESULT } from '../constants';
 import type { LobbyDetailResponse } from '@/api/lobbies/lobbies';
@@ -9,10 +11,10 @@ type ValidationResult = {
 };
 
 export default function useLobbySignup(lobbyData: LobbyDetailResponse) {
-  const isAuthenticated = useAuthStore(
-    (state) => state.logged_in && !!state.access_token,
-  );
-  const playerRank = useAuthStore((state) => state.player_rank);
+  const isAuthenticated = useUserStore((state) => state.logged_in && !!state.user);
+  const battleRoyalRank = useUserStore((state) => state.user?.battle_rank_tier_id);
+  const multiplayerRank = useUserStore((state) => state.user?.multiplayer_rank_tier_id);
+
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showNotAllowedModal, setShowNotAllowedModal] = useState(false);
 
@@ -22,7 +24,10 @@ export default function useLobbySignup(lobbyData: LobbyDetailResponse) {
     }
 
     const allowedRanks = lobbyData?.allowed_ranks ?? [];
-    if (allowedRanks.length > 0 && playerRank !== null) {
+    const playerRank =
+      lobbyData.game_mode === 'battle_royale' ? battleRoyalRank : multiplayerRank;
+
+    if (allowedRanks.length > 0 && playerRank != null) {
       const rankAllowed = allowedRanks.some((rank) => rank === playerRank);
       if (!rankAllowed) {
         return { valid: false, reason: VALIDATION_RESULT.RANK_NOT_ALLOWED };

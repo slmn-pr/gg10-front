@@ -4,18 +4,18 @@ import { VerifyOTPCodeInterface } from '@/api';
 import { useStep } from '../context';
 import toast from 'react-hot-toast';
 import { STEP_TYPES } from '../const';
-import useAuthStore from '@/store/auth-store';
+import useUserStore from '@/store/user-store';
 import useSaveUserAuth from '../hooks/useSaveUserAuth';
 
 export default function ForgetPasswordSection() {
   const { mutate, isPending } = useVerifyOTPCode();
   const { setStep, phoneNumber } = useStep();
-  const setAuth = useAuthStore((state) => state.setAuth);
-  const saveAuth = useSaveUserAuth(setAuth);
+  const setUser = useUserStore((state) => state.setUser);
+  const saveAuth = useSaveUserAuth();
 
   function onSuccess(data: any) {
     setStep(STEP_TYPES.SET_NEW_PASSWORD);
-    saveAuth(data)
+    saveAuth(data);
   }
 
   function handleSubmit(otpCode: string) {

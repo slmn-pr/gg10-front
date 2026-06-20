@@ -19,15 +19,15 @@ import { STEP_TYPES } from '../const';
 import toast from 'react-hot-toast';
 import ButtonLoading from '@/components/form/ButtonLoading';
 import useLoginUsernamePassword from '../hooks/useLoginUsernamePassword';
-import useAuthStore from '@/store/auth-store';
 import useSaveUserAuth from '../hooks/useSaveUserAuth';
 import PasswordInput from '../components/PasswordInput';
+import useUserStore from '@/store/user-store';
 
 export default function PasswordLoginSection() {
   const theme = useTheme();
 
-  const setAuth = useAuthStore((state) => state.setAuth);
-  const saveAuth = useSaveUserAuth(setAuth);
+  const setUser = useUserStore((state) => state.setUser);
+  const saveAuth = useSaveUserAuth();
 
   const { mutate, isPending } = useLoginUsernamePassword();
 
@@ -48,6 +48,8 @@ export default function PasswordLoginSection() {
   const handleSuccess = (data) => {
     toast.success('ورود با موفقیت انجام شد');
     saveAuth(data);
+
+    // TODO: Call /users/me and save response to user-store
   };
 
   const handleLogin = () => {

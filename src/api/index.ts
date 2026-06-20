@@ -10,7 +10,7 @@ export {
   unregisterLobby,
   updateLobby,
 } from './lobbies/index';
-export { default as usersAPI } from './users';
+export * from './users/index';
 export { default as healthAPI } from './health';
 
 export * from './auth';

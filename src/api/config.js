@@ -1,5 +1,5 @@
 import axios from 'axios';
-import useAuthStore from '@/store/auth-store';
+import useAuthStore from '@/store/user-store';
 import {
   getAccessToken,
   getRefreshToken,
@@ -46,7 +46,7 @@ const processQueue = (error, token = null) => {
 
 const redirectToLogin = () => {
   clearAuthTokens();
-  useAuthStore.getState().clearAuth();
+  useAuthStore.getState().clearUser();
   window.location.href = '/login';
 };
 

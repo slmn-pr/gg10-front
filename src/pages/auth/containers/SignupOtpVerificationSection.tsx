@@ -4,12 +4,12 @@ import { STEP_TYPES } from '../const';
 import OtpSection from './OTPSection';
 import useVerifyOTPCode from '../hooks/useVerifyOTPCode';
 import toast from 'react-hot-toast';
-import useAuthStore from '@/store/auth-store';
+import useUSerStore from '@/store/user-store';
 import useSaveUserAuth from '../hooks/useSaveUserAuth';
 
 export default function OtpVerificationSection() {
-  const { setAuth } = useAuthStore();
-  const saveAuth = useSaveUserAuth(setAuth);
+  const { setUser } = useUSerStore();
+  const saveAuth = useSaveUserAuth();
 
   const [isError, setIsError] = useState(false);
 
@@ -37,6 +37,8 @@ export default function OtpVerificationSection() {
           //   "requires_profile": false
           // }
           saveAuth(data); // Need to test
+
+          // TODO: Call /users/me and save response to user-store
 
           // TODO: If `requires_profile` is false dont need to set game name section
           if ('access_token' in data && data.requires_profile) {
