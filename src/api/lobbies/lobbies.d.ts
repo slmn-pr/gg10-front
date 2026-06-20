@@ -118,13 +118,13 @@ export interface LobbyResponse {
   tags: LobbyTag[];
   allowed_ranks: string[];
   capacity: number;
+  registered_count: number;
   start_time?: string;
   end_time?: string;
   reward_description?: string;
   rank_description?: string;
   result_screenshots: string[];
   created_at: string;
-  registeredCount?: number;
 }
 
 export interface LobbyDetailResponse extends LobbyResponse {

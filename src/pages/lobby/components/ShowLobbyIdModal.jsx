@@ -66,10 +66,6 @@ export default function ShowLobbyIdModal({ lobbyStatus }) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  console.log('lobbyStatus', lobbyStatus);
-
-  //   const { isInProgress } = useLobbyStatus(lobbyStatus);
-  // Check if lobby status is in_progress
   const isInProgress = lobbyStatus === LOBBY_STATUS.IN_PROGRESS;
 
   if (!isInProgress && lobbyStatus === LOBBY_STATUS.REGISTERING) {

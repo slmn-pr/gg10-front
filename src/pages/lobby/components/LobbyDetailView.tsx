@@ -13,30 +13,30 @@ import CustomProgressBar from '@/components/CustomProgressBar';
 import { FILTER_ITEMS } from '../constants';
 import { useSearchParams } from 'react-router-dom';
 import { useMemo } from 'react';
+import useFormatCurrency from '@/hooks/useFormatCurrency';
+import useFormatDate from '@/hooks/useFormatDate';
 
 export default function LobbyDetailView() {
   const theme = useTheme();
-  const { lobbyData } = useLobbyContext();
+  const {
+    lobbyData: { registered_count, capacity, status, start_time, entry_fee },
+  } = useLobbyContext();
+
+  const foramttedEntryFee = useFormatCurrency(entry_fee);
+  const formattedTime = useFormatDate(start_time);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
   const activeFilter = searchParams.get('filter') || 'lobby';
 
-  const progeressPlayers = useMemo(() => {
-    if (!lobbyData.slots?.length) return 0;
-
-    return lobbyData.slots
-      ? Math.round(
-          (lobbyData.slots.filter((s) => s.players?.length > 0).length /
-            lobbyData.capacity) *
-            100,
-        )
-      : 0;
-  }, [lobbyData.slots]);
+  const progressPlayers = useMemo(() => {
+    if (!capacity) return 0;
+    return Math.round((registered_count / capacity) * 100);
+  }, [registered_count, capacity]);
 
   return (
     <Box sx={{ width: '100%', px: '16px', mt: '12px' }}>
-      <ShowLobbyIdModal lobbyStatus={lobbyData?.status} />
+      <ShowLobbyIdModal lobbyStatus={status} />
 
       <Box>
         <Stack
@@ -46,18 +46,15 @@ export default function LobbyDetailView() {
           sx={{ direction: 'rtl' }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <StatusIcon color={getStatusPalette(lobbyData.status).hexColor} />
-            <Typography
-              variant="sub1"
-              sx={{ color: getStatusPalette(lobbyData.status).color }}
-            >
-              وضعیت: {LOBBY_STATUS_TEXT[lobbyData.status]}
+            <StatusIcon color={getStatusPalette(status).hexColor} />
+            <Typography variant="sub1" sx={{ color: getStatusPalette(status).color }}>
+              وضعیت: {LOBBY_STATUS_TEXT[status]}
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <TimeIcon color={theme.palette.custom.tint1} />
             <Typography variant="sub1" color="custom.tint1">
-              زمان: {lobbyData.start_time ?? '—'}
+              زمان: <span dir="ltr">{formattedTime ?? '—'}</span>
             </Typography>
           </Box>
         </Stack>
@@ -71,20 +68,20 @@ export default function LobbyDetailView() {
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <EntryFreeIcon color={theme.palette.custom.dollar} />
             <Typography variant="sub1" color="custom.dollar">
-              ورودی: {lobbyData.entry_fee}
+              ورودی: {foramttedEntryFee} تومان
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <CapacityIcon color={theme.palette.custom.greyOnBg1} />
             <Typography variant="sub1" color="custom.greyOnBg1">
-              ظرفیت: {lobbyData.capacity}
+              ظرفیت: {capacity} نفر
             </Typography>
           </Box>
         </Stack>
 
         <Box mt={0.25} mb={1.25}>
           {/* progress = filled slots / capacity * 100 */}
-          <CustomProgressBar progress={progeressPlayers} />
+          <CustomProgressBar progress={progressPlayers} />
         </Box>
       </Box>
 
