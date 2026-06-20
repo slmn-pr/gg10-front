@@ -17,3 +17,4 @@ export * from './auth';
 export * from './users';
 export * from './health';
 export * from './leaderboard/index';
+export * from './wallet/index';

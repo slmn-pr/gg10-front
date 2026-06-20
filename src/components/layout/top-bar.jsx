@@ -15,6 +15,9 @@ import { useNavigate } from 'react-router-dom';
 export default function TopBar() {
   const navigate = useNavigate();
   const theme = useTheme();
+
+  // TODO: Get wallete credit from API
+
   return (
     <AppBar
       position="sticky"
@@ -40,7 +43,10 @@ export default function TopBar() {
         }}
       >
         {/* Logo */}
-        <Button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} sx={{ p: 0 }}>
+        <Button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          sx={{ p: 0 }}
+        >
           <Logo />
         </Button>
 
