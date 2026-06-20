@@ -1,4 +1,5 @@
 import { Button, Stack, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 export default function NotLoggedInCta() {
   return (
@@ -15,13 +16,13 @@ export default function NotLoggedInCta() {
         bgcolor: 'custom.bg1',
       }}
     >
-      <Typography variant="title3" color="white" textAlign="center">
-        جهت مشاهده رنک خود وارد حساب کاربری شوید
+      <Typography variant="title2" color="white" textAlign="center">
+        رقابت کنید، امتیاز بگیرید و جایزه ببر ید!
       </Typography>
       <Button
         variant="contained"
         sx={{
-          width: 252,
+          width: "252px",
           height: 40,
           bgcolor: 'primary.main',
           color: 'custom.white',
@@ -30,7 +31,9 @@ export default function NotLoggedInCta() {
           '&:hover': { bgcolor: 'primary.dark', boxShadow: 'none' },
         }}
       >
-        <Typography variant="button1">ورود / ساخت حساب</Typography>
+        <Link to="/login">
+          <Typography variant="button1">ورود / ساخت حساب</Typography>
+        </Link>
       </Button>
     </Stack>
   );

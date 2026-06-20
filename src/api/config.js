@@ -65,11 +65,11 @@ apiClient.interceptors.response.use(
     // TODO: backend has no /auth/refresh endpoint yet.
     // Once it exists, remove this block and uncomment the refresh logic below.
     if (!refreshToken) {
-      redirectToLogin();
+      // redirectToLogin();
       return Promise.reject(error);
     }
 
-    redirectToLogin();
+    // redirectToLogin();
     return Promise.reject(error);
 
     /* ==== Uncomment once POST /api/v1/auth/refresh exists ====

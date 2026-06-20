@@ -7,7 +7,7 @@ import BattleRoyalIcon from '@/components/icons/BattleRoyal';
 import MultiPlayerIcon from '@/components/icons/MultiPlayer';
 import leaderboardBanner from '@/assets/images/image 17.png';
 import RankRow from './sections/RankRow';
-import NotLoggedInCta from './sections/NotLoginCta';
+import NotLoggedInCta from '../../components/NotLoginCta';
 import { GameMode } from './sections/leaderboard-types';
 import GuideSheet from './sections/GuideSheet';
 import { _mockRows } from './sections/_mock';

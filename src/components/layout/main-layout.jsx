@@ -5,9 +5,25 @@ import { Outlet } from 'react-router-dom';
 import mainTheme from '@/theme/index.js';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import OfflineSnakbar from '../OfflineSnakbar';
-import { Toaster } from 'react-hot-toast';
+import { useQuery } from '@tanstack/react-query';
+import { getMeReq } from '@/api';
+import useUserStore from '@/store/user-store';
 
 const MainLayout = () => {
+  const { setUser } = useUserStore();
+
+  const { data } = useQuery({
+    queryKey: ['users', 'me'],
+    queryFn: async () => {
+      const userInfo = await getMeReq();
+
+      if (userInfo) setUser(userInfo);
+    },
+    refetchInterval: 5_000, // refresh each 5 seconds
+  });
+
+  console.log('[MainLayout] data', data);
+
   return (
     <ThemeProvider theme={mainTheme}>
       {/* Offline Snakbar */}

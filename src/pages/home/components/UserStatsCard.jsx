@@ -1,6 +1,4 @@
-import { RANK_CODE_MAP } from '@/consts';
-import { Box, Card, Icon, Stack, SvgIcon, Typography } from '@mui/material';
-
+import { Box, Card, Icon, Stack, Typography } from '@mui/material';
 
 // RANK CODE GUIDE
 // 1: Legend
@@ -8,16 +6,7 @@ import { Box, Card, Icon, Stack, SvgIcon, Typography } from '@mui/material';
 // 3: Silver
 // 4: Bronze
 
-export default function UserStatsCard({
-  title,
-  icon,
-  rankIcon,
-  randCode = 1,
-  value = 5000,
-}) {
-  const rankTitle = RANK_CODE_MAP[randCode].title;
-  const rankColor = RANK_CODE_MAP[randCode].color;
-
+export default function UserStatsCard({ title, icon, rankIcon, value,rankColor }) {
   return (
     <Card
       sx={{
@@ -56,7 +45,7 @@ export default function UserStatsCard({
         >
           {rankIcon}
           <Typography variant="sub2" fontWeight="bold" color={rankColor}>
-            {rankTitle}
+            {title}
           </Typography>
         </Box>
 
