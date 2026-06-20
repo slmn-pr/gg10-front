@@ -11,12 +11,21 @@ import ChevronBackwardIcon from '../icons/ChevronBackward';
 import NotificationsIcon from '../icons/Notifications';
 import Logo from '../icons/Logo';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { getMyWalletReq } from '@/api';
+import useFormatCurrency from '@/hooks/useFormatCurrency';
 
 export default function TopBar() {
   const navigate = useNavigate();
   const theme = useTheme();
 
   // TODO: Get wallete credit from API
+  const { data } = useQuery({
+    queryKey: ['wallet'],
+    queryFn: getMyWalletReq,
+  });
+
+  const formattedBalance = useFormatCurrency(data?.main_balance ?? '0');
 
   return (
     <AppBar
@@ -75,9 +84,21 @@ export default function TopBar() {
             }}
           >
             <WalletIcon color={theme.palette.custom.tint4} />
-            <Typography variant="button2" sx={{ mx: 0.5, whiteSpace: 'nowrap' }}>
-              افزایش موجودی
-            </Typography>
+            {!data && (
+              <Typography variant="button2" sx={{ mx: 0.5, whiteSpace: 'nowrap' }}>
+                افزایش موجودی
+              </Typography>
+            )}
+
+            {data?.main_balance && (
+              <Typography
+                variant="button2"
+                sx={{ mx: 0.5, whiteSpace: 'nowrap', gap: 1 }}
+              >
+                <span> {formattedBalance}</span>
+                <span> تومان</span>
+              </Typography>
+            )}
             <ChevronBackwardIcon color={theme.palette.custom.whiteOnBg2} />
           </Button>
         </Box>
