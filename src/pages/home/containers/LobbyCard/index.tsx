@@ -30,6 +30,9 @@ const LobbyCard = ({ lobbyInfo }: LobbyCardProsp) => {
     entry_fee: entryFee,
     status: statusText,
     total_prize: prize,
+    capacity,
+    registeredCount,
+
     // tags,
     vip,
     title,
@@ -77,6 +80,8 @@ const LobbyCard = ({ lobbyInfo }: LobbyCardProsp) => {
           totalPrize={prize}
           vip={vip}
           time={schedule}
+          capacity={capacity}
+          registeredCount={registeredCount}
         />
       </CardActionArea>
     </Card>

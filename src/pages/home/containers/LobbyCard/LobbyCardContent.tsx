@@ -14,6 +14,8 @@ interface LobbyCardContentProps {
   time?: string;
   entryFee: string;
   totalPrize: string;
+  capacity: number;
+  registeredCount?: number;
 }
 
 export default function LobbyCardContent({
@@ -22,6 +24,8 @@ export default function LobbyCardContent({
   time,
   entryFee,
   totalPrize,
+  capacity,
+  registeredCount = 0,
 }: LobbyCardContentProps) {
   const theme = useTheme();
 
@@ -96,9 +100,7 @@ export default function LobbyCardContent({
             sx={{ width: '100%' }}
           >
             <Typography variant="sub2" color={theme.palette.custom.greyOnBg1}>
-              {/* TODO: Add real calaed value from API after added from backend team */}
-              {/* {currentPlayers}/{maxPlayers}  */}
-              12/24
+              {registeredCount}/{capacity}
             </Typography>
             <CapacityIcon color={theme.palette.custom.greyOnBg1} />
           </Stack>
@@ -131,8 +133,7 @@ export default function LobbyCardContent({
       </Stack>
 
       <Box mt="1.5px">
-        {/* TODO: Add real calced progress value instead of 0 */}
-        <CustomProgressBar progress={Math.random() * 100} />
+        <CustomProgressBar progress={(registeredCount * 100) / capacity} />
       </Box>
 
       <Divider sx={{ my: 0.5, background: theme.palette.stroke.black, height: '2px' }} />

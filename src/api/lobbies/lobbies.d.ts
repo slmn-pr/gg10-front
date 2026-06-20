@@ -4,7 +4,6 @@ export type GameMode = 'multiplayer' | 'battle_royale';
 
 export type LobbyStatus = 'registering' | 'full' | 'running' | 'finished' | 'canceled';
 
-
 export type MultiplayerTag =
   | 'squad'
   | 'trio'
@@ -125,6 +124,7 @@ export interface LobbyResponse {
   rank_description?: string;
   result_screenshots: string[];
   created_at: string;
+  registeredCount?: number;
 }
 
 export interface LobbyDetailResponse extends LobbyResponse {
