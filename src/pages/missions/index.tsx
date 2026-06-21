@@ -6,6 +6,7 @@ import MissionCard from './components/MissionCard';
 import { listMissionsReq } from '@/api';
 import { MissionsBanner } from './components/MissionsBanner';
 import { missionTabs, TAB_TO_API_STATE } from './mission-config';
+import NoMissionView from './components/NoMissionView';
 
 export default function MissionsPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -61,9 +62,7 @@ export default function MissionsPage() {
         )}
 
         {!isLoading && !isError && missions.length === 0 && (
-          <Typography variant="sub1" color="custom.grey2" textAlign="center" mt={2}>
-            ماموریتی یافت نشد
-          </Typography>
+          <NoMissionView />
         )}
 
         {!isLoading &&
