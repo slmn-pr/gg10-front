@@ -1,4 +1,4 @@
-import { Box, Stack, Tab, Tabs } from '@mui/material';
+import { Stack, Tab, Tabs } from '@mui/material';
 import { MissionsBanner } from './components/MissionsBanner';
 import { missions, missionTabs } from './mission-config';
 import BottomNav from '@/components/layout/bottom-navigation';
