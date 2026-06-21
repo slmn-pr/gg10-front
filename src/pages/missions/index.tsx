@@ -7,6 +7,7 @@ import { listMissionsReq } from '@/api';
 import { MissionsBanner } from './components/MissionsBanner';
 import { missionTabs, TAB_TO_API_STATE } from './mission-config';
 import NoMissionView from './components/NoMissionView';
+import { missionsMock } from './_mock';
 
 export default function MissionsPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -61,13 +62,20 @@ export default function MissionsPage() {
           </Typography>
         )}
 
-        {!isLoading && !isError && missions.length === 0 && (
-          <NoMissionView />
-        )}
-
+        {/* TODO: Enable this in production */}
+        {!isLoading && !isError && missions.length === 0 && <NoMissionView />}
         {!isLoading &&
           !isError &&
           missions.map((mission) => <MissionCard key={mission.id} mission={mission} />)}
+
+        {/* TODO: This is mock data render remove in production and use data come from API */}
+        {/* <Stack gap={2}>
+          {!isLoading &&
+            !isError &&
+            missionsMock.map((mission) => (
+              <MissionCard key={mission.id} mission={mission} />
+            ))}
+        </Stack> */}
       </Stack>
 
       <BottomNav />

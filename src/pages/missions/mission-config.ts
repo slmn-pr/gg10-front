@@ -4,6 +4,7 @@ import {
   LockOutlined,
   RocketLaunchOutlined,
 } from '@mui/icons-material';
+import { color } from 'framer-motion';
 
 export const missionTabs = [
   { value: 'active', label: 'فعال', path: '/missions/active' },
@@ -53,7 +54,10 @@ export const missionStatusConfig = {
 };
 
 export const missionDifficultyLabel = {
-  easy: 'ساده',
-  medium: 'متوسط',
-  hard: 'سخت',
+  easy: {
+    label: 'ساده',
+    color: '#066E45',
+  },
+  medium: { label: 'متوسط', color: '#FFC225' },
+  hard: { label: 'دشوار', color: '#DD2828' },
 };

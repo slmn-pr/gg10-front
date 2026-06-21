@@ -59,12 +59,12 @@ export default function MissionCardImage({
           variant="sub3"
           component="p"
           sx={{
-            color: statusConfig?.color ?? '#066E45',
+            color: missionDifficultyLabel[difficulty]?.color ?? '#fff',
             textAlign: 'center',
             width: '100%',
           }}
         >
-          {missionDifficultyLabel[difficulty]}
+          {missionDifficultyLabel[difficulty].label ?? 'نا مشخص'}
         </Typography>
       </Box>
     </Box>

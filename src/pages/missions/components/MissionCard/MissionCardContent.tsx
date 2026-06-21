@@ -89,7 +89,7 @@ export default function MissionCardContent({
             >
               <span>پیشرفت ماموریت:</span>
               <span>
-                {progress}/{goal}
+                {progress} / {goal}
               </span>
             </Typography>
           </Stack>
@@ -99,7 +99,7 @@ export default function MissionCardContent({
             <Typography
               variant="sub2"
               color={theme.palette.custom.grey2}
-              sx={{ display: 'flex', gap: 0.5, direction: 'rtl' }}
+              sx={{ display: 'flex', gap: 0.5, direction: 'ltr' }}
             >
               <span>{timeLabel}</span>
             </Typography>
