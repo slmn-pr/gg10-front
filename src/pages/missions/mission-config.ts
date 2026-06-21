@@ -12,6 +12,8 @@ export const missionTabs = [
   { value: 'expired', label: 'منقضی', path: '/missions/expired' },
 ];
 
+export type TabValue = 'active' | 'ready' | 'completed' | 'expired';
+
 /**
  * UI tab value -> API MissionState value.
  * Only 'ready' differs from the API ('claimable').

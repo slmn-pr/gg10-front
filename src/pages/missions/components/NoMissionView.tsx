@@ -1,16 +1,52 @@
 import { Rocket, RocketLaunch } from '@mui/icons-material';
-import { Stack, Typography } from '@mui/material';
+import { Button, Stack, Typography } from '@mui/material';
+import { useSearchParams } from 'react-router-dom';
+import { missionTabs, TabValue } from '../mission-config';
 
 export default function NoMissionView() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const selectedTab = searchParams.get('mission_tab') || missionTabs[0].value;
+
+  function NavigateToActiveMissionTab() {
+    searchParams.set('mission_tab', 'active');
+    setSearchParams(searchParams);
+  }
+
+  if (selectedTab === 'ready')
+    return (
+      <Stack
+        justifyContent="center"
+        alignItems="center"
+        sx={{ direction: 'rtl', gap: 1, mt: 15 }}
+        gap={2}
+      >
+        <Typography variant="title3">در حال حاضر جایزه‌ای برای دریافت ندارید</Typography>
+
+        {selectedTab === 'ready' && (
+          <Button
+            variant="outlined"
+            size="large"
+            color="white"
+            sx={{ width: '252px' }}
+            onClick={NavigateToActiveMissionTab}
+          >
+            مشاهده مأموریت‌های فعال
+          </Button>
+        )}
+      </Stack>
+    );
+
   return (
     <Stack
-      direction="row"
       justifyContent="center"
       alignItems="center"
       sx={{ direction: 'rtl', gap: 1, mt: 15 }}
     >
-      <RocketLaunch />
-      <Typography variant='title3'>در حال حاضر مأموریت فعالی ندارید</Typography>
+      <Stack direction="row" justifyContent="center" alignItems="center" gap={0.5}>
+        <RocketLaunch />
+        <Typography variant="title3">در حال حاضر مأموریت فعالی ندارید</Typography>
+      </Stack>
     </Stack>
   );
 }
