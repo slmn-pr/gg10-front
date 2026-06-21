@@ -23,17 +23,61 @@ export default function NoMissionView() {
       >
         <Typography variant="title3">در حال حاضر جایزه‌ای برای دریافت ندارید</Typography>
 
-        {selectedTab === 'ready' && (
-          <Button
-            variant="outlined"
-            size="large"
-            color="white"
-            sx={{ width: '252px' }}
-            onClick={NavigateToActiveMissionTab}
-          >
-            مشاهده مأموریت‌های فعال
-          </Button>
-        )}
+        <Button
+          variant="outlined"
+          size="large"
+          color="white"
+          sx={{ width: '252px' }}
+          onClick={NavigateToActiveMissionTab}
+        >
+          مشاهده مأموریت‌های فعال
+        </Button>
+      </Stack>
+    );
+
+  if (selectedTab === 'expired')
+    return (
+      <Stack
+        justifyContent="center"
+        alignItems="center"
+        sx={{ direction: 'rtl', gap: 1, mt: 15 }}
+        gap={2}
+      >
+        <Typography variant="title3">
+          در حال حاضر مأموریت منقضی‌ ‌شده‌ای ندارید
+        </Typography>
+
+        <Button
+          variant="outlined"
+          size="large"
+          color="white"
+          sx={{ width: '252px' }}
+          onClick={NavigateToActiveMissionTab}
+        >
+          مشاهده مأموریت‌های فعال
+        </Button>
+      </Stack>
+    );
+
+  if (selectedTab === 'completed')
+    return (
+      <Stack
+        justifyContent="center"
+        alignItems="center"
+        sx={{ direction: 'rtl', gap: 1, mt: 15 }}
+        gap={2}
+      >
+        <Typography variant="title3">در حال حاضر مأموریت تکمیل‌شده‌ای ندارید </Typography>
+
+        <Button
+          variant="outlined"
+          size="large"
+          color="white"
+          sx={{ width: '252px' }}
+          onClick={NavigateToActiveMissionTab}
+        >
+          مشاهده مأموریت‌های فعال
+        </Button>
       </Stack>
     );
 
