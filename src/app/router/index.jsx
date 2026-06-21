@@ -33,6 +33,7 @@ import AuthPage from '@/pages/auth/index.jsx';
 import SimpleLayout from '@/components/layout/SimpleLayout.js';
 import SupportPage from '@/pages/support/index.js';
 import TicketPage from '@/pages/ticket/index.js';
+import TicketDetailPage from '@/pages/ticket/detail/index.js';
 
 const AppRouter = () => {
   useScrollTop();
@@ -94,6 +95,11 @@ const AppRouter = () => {
       <Route path="/ticket/new" element={<SimpleLayout title="تیکت جدید" />}>
         <Route index element={<TicketPage />} />
       </Route>
+
+      <Route path="/ticket/:id" element={<SimpleLayout title="جزئیات تیکت" />}>
+        <Route index element={<TicketDetailPage />} />
+      </Route>
+    
     </Routes>
   );
 };
