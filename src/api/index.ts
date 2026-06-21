@@ -18,3 +18,4 @@ export * from './users';
 export * from './health';
 export * from './leaderboard/index';
 export * from './wallet/index';
+export * from './missions/index';
