@@ -20,7 +20,7 @@ export default function MissionCard({ mission }: MissionCardProps) {
     mutationKey: ['mission', 'claim', mission.id],
     mutationFn: claimMissionRewardReq,
     onSuccess: (data) => {
-      toast.success(`جایزه با موفقیت دریافت شد: ${data.reward} تومان`);
+      toast.success('جایزه با موفقیت دریافت شد و به حسابتان افزوده شد');
       queryClient.invalidateQueries({ queryKey: ['missions'] });
     },
     onError: (error: any) => {
