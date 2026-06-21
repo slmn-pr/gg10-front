@@ -1,5 +1,4 @@
 import axios from 'axios';
-import useAuthStore from '@/store/user-store';
 import {
   getAccessToken,
   getRefreshToken,
@@ -44,12 +43,6 @@ const processQueue = (error, token = null) => {
   pendingQueue = [];
 };
 
-const redirectToLogin = () => {
-  clearAuthTokens();
-  useAuthStore.getState().clearUser();
-  window.location.href = '/login';
-};
-
 apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -62,17 +55,12 @@ apiClient.interceptors.response.use(
 
     const refreshToken = getRefreshToken();
 
-    // TODO: backend has no /auth/refresh endpoint yet.
-    // Once it exists, remove this block and uncomment the refresh logic below.
     if (!refreshToken) {
-      // redirectToLogin();
+      // No refresh token available — nothing we can do here.
+      // TODO: decide how to surface this to the user (e.g. show login modal).
+      clearAuthTokens();
       return Promise.reject(error);
     }
-
-    // redirectToLogin();
-    return Promise.reject(error);
-
-    /* ==== Uncomment once POST /api/v1/auth/refresh exists ====
 
     if (isRefreshing) {
       // Queue requests while a refresh is already in progress
@@ -101,13 +89,13 @@ apiClient.interceptors.response.use(
       return apiClient(originalRequest);
     } catch (refreshError) {
       processQueue(refreshError, null);
-      redirectToLogin();
+      clearAuthTokens();
+      // TODO: decide how to surface this to the user (e.g. show login modal)
+      // instead of a hard redirect.
       return Promise.reject(refreshError);
     } finally {
       isRefreshing = false;
     }
-
-    ==== end refresh block ==== */
   },
 );
 
