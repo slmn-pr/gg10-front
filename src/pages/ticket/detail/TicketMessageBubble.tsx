@@ -5,8 +5,8 @@ import type { TicketMessageResponse } from '@/api/support/support';
 
 interface TicketMessageBubbleProps {
   message: TicketMessageResponse;
-  /** true if this message belongs to the current logged-in user (always the ticket owner, not admin) */
   isMine: boolean;
+  onAttachmentClick?: (attachmentUrl: string) => void;
 }
 
 const TIME_ONLY_OPTIONS: Intl.DateTimeFormatOptions = {
@@ -18,7 +18,8 @@ const TIME_ONLY_OPTIONS: Intl.DateTimeFormatOptions = {
 export default function TicketMessageBubble({
   message,
   isMine,
-}: TicketMessageBubbleProps) {  
+  onAttachmentClick,
+}: TicketMessageBubbleProps) {
   const time = useFormatDate(message.created_at, TIME_ONLY_OPTIONS);
   const fileName = message.attachment_url?.split('/').pop();
 
@@ -51,7 +52,14 @@ export default function TicketMessageBubble({
         )}
       </Box>
 
-      {message.attachment_url && fileName && <TicketAttachmentChip fileName={fileName} />}
+      {message.attachment_url && fileName && (
+        <Box
+          onClick={() => onAttachmentClick?.(message.attachment_url!)}
+          sx={{ cursor: onAttachmentClick ? 'pointer' : 'default' }}
+        >
+          <TicketAttachmentChip fileName={fileName} />
+        </Box>
+      )}
 
       <Typography variant="caption2" color="custom.grey3">
         {time}
