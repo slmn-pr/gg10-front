@@ -7,8 +7,7 @@ const FaqSection = lazy(() => import('./sections/FaqSection'));
 const TicketSection = lazy(() => import('./sections/TicketSection'));
 
 export default function SupportPage() {
-  // const [mode, setMode] = useState<ModeVariants>('faq');
-  const [mode, setMode] = useState<ModeVariants>('ticket'); // TODO: Remove this when product and uncomment above line
+  const [mode, setMode] = useState<ModeVariants>('faq');
 
   return (
     <Container>
