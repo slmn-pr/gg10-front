@@ -11,7 +11,7 @@ export default function TicketPage() {
       title: '',
       lobby_id: '',
       description: '',
-      fileUploadId: undefined,
+      attachment_url: undefined,
     },
     resolver: zodResolver(newTicketSchema),
   });

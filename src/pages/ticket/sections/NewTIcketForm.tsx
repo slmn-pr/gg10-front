@@ -23,11 +23,15 @@ export default function NewTicketForm() {
   } = useFormContext();
 
   const { mutate: createTicket, isPending } = useCreateTicket();
-
   async function onFinish(values: any) {
-    console.log('[TicketPage] handleSubmit -> values', values);
+    const payload = {
+      title: values.title,
+      description: values.description,
+      lobby_id: values.lobby_id || undefined,
+      attachment_url: values.attachment_url || undefined,
+    };
 
-    createTicket(values, {
+    createTicket(payload, {
       onSuccess: () => {
         toast.success('تیکت شما ثبت‌ شد');
         naviagte('/support', { state: { section: 'tickets' } });
@@ -36,10 +40,6 @@ export default function NewTicketForm() {
         toast.error('ثبت تیکت با شکست مواجه شد');
       },
     });
-
-    console.log('[NewTicketForm] data', values);
-
-    // if success full -> redirect to /support
   }
 
   return (
