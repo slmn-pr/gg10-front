@@ -19,23 +19,28 @@ export default function MissionCardImage({ status, label }: LobbyCardImageProps)
     <Box
       sx={{
         width: '88px',
-        height: '100%',
+        minHeight: '112px',
+
         position: 'relative',
         flexShrink: 0,
         zIndex: 1,
       }}
     >
-      <Box
-        component="img"
-        src="/images/bg-vip.png"
+      <img
+        src="/images/player_card_sample.png"
         alt=""
-        sx={{ objectFit: 'contain' }}
+        style={{
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+        }}
       />
 
       {/* Status Badge */}
       <Box
         bgcolor={theme.palette.custom.tagOnCardPicBg}
         sx={{
+          width: '75px',
           direction: 'rtl',
           position: 'absolute',
           top: 4,
@@ -49,17 +54,12 @@ export default function MissionCardImage({ status, label }: LobbyCardImageProps)
           gap: 0.5,
         }}
       >
-        {status === LOBBY_STATUS.RUNNING && (
-          <Box
-            sx={{
-              width: 4,
-              height: 4,
-              borderRadius: '50%',
-              backgroundColor: statusPalette.dot,
-            }}
-          />
-        )}
-        <Typography variant="sub3" sx={{ color: statusPalette.color }}>
+        <Typography
+          textAlign="center"
+          variant="sub3"
+          component="p"
+          sx={{ color: '#066E45', textAlign: 'center', width: '100%' }}
+        >
           {label}
         </Typography>
       </Box>

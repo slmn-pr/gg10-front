@@ -1,44 +1,19 @@
-import { Card, CardActionArea, useTheme } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { Card, CardActionArea, Stack, useTheme } from '@mui/material';
 import MissionCardImage from './MissionCardImage';
 import MissionCardContent from './MissionCardContent';
 
-interface LobbyCardProsp {
+interface MissionCardProsp {
   data: {};
 }
 
-export default function MissionCard({ data }: LobbyCardProsp) {
+export default function MissionCard({ data }: MissionCardProsp) {
   const theme = useTheme();
-  const navigate = useNavigate();
-
-  // if (!data) return <></>;
-
-  // const {
-  //   id,
-  //   entry_fee: entryFee,
-  //   status: statusText,
-  //   total_prize: prize,
-  //   capacity,
-  //   registeredCount,
-
-  //   // tags,
-  //   vip,
-  //   title,
-  //   start_time: schedule,
-  // } = data;
-
-  // const persianStatus = usePersianStatusText(statusText);
-
-  // const handleCardClick = useCallback(() => {
-  //   if (!id) return;
-  //   navigate(`/lobby/${id}`);
-  // }, [id, navigate]);
 
   return (
     <Card
       sx={{
         width: '100%',
-        height: '112px',
+        minHeight: '112px',
         mb: '12px',
         background: theme.palette.custom.grey6,
         borderRadius: 2,
@@ -49,8 +24,9 @@ export default function MissionCard({ data }: LobbyCardProsp) {
         direction: 'ltr',
       }}
     >
-      <CardActionArea
-        sx={{ display: 'flex', flexDirection: 'row-reverse' }}
+      <Stack
+        direction="row"
+        sx={{ display: 'flex', flexDirection: 'row-reverse', alignItems: 'stretch' }}
         // onClick={handleCardClick}
       >
         {/* Image Section */}
@@ -58,14 +34,14 @@ export default function MissionCard({ data }: LobbyCardProsp) {
 
         {/* Content Section */}
         <MissionCardContent
-          description="از تب کیف پول 500هزار تومان حسابتان را شارژ کنید"
+          description="به بخش لابی‌ها بروید و در 10 لابی ثبت‌نام کنید. ثبت‌نام، به تنهایی به معنای شرکت در لابی‌ها نیست"
           title={'واریز 500 هزار تومان'}
           // vip={vip}
           // time={schedule}
           // capacity={capacity}
           // registeredCount={registeredCount}
         />
-      </CardActionArea>
+      </Stack>
     </Card>
   );
 }

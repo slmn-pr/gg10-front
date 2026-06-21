@@ -4,6 +4,7 @@ import LeadingIcon from '@/components/icons/LeadingIcon';
 import EntryFreeIcon from '@/components/icons/lobbie/EntryFreeIcon';
 import PrizeIcon from '@/components/icons/lobbie/PrizeIcon';
 import TimeIcon from '@/components/icons/lobbie/TimeIcon';
+import ProgressIcon from '@/components/icons/ProgressIcon';
 import useFormatDate from '@/hooks/useFormatDate';
 import { Box, Divider, Stack, Typography, useTheme } from '@mui/material';
 
@@ -30,6 +31,7 @@ export default function MissionCardContent({
       sx={{
         flex: 1,
         px: 1,
+        py: 0.5,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
@@ -43,58 +45,52 @@ export default function MissionCardContent({
       </Stack>
 
       {/* Info Grid */}
-      <Stack direction="row" justifyContent="flex-end">
-        <Stack alignItems="flex-end" sx={{ flex: 1 }}>
-          <Stack
-            direction="row"
-            alignItems="center"
-            spacing={0.25}
-            sx={{ width: '100%' }}
+      <Stack alignItems="flex-end">
+        {/* Prize text */}
+        <Stack direction="row" alignItems="center" spacing={0.5}>
+          <Typography
+            variant="sub2"
+            color={theme.palette.custom.prize}
+            sx={{ display: 'flex', gap: 0.5, direction: 'rtl' }}
           >
-            <Typography
-              variant="sub2"
-              color={theme.palette.custom.whiteOnBg2}
-              sx={{ direction: 'ltr' }}
-            >
-              {formattedTime}
-            </Typography>
-            <TimeIcon color={theme.palette.custom.iconsWhite} />
-          </Stack>
-          <Stack
-            direction="row"
-            alignItems="center"
-            spacing={0.25}
-            sx={{ width: '100%' }}
-          >
-            {/* <Typography variant="sub2" color={theme.palette.custom.greyOnBg1}>
-              {registeredCount}/{capacity}
-            </Typography> */}
-            <CapacityIcon color={theme.palette.custom.greyOnBg1} />
-          </Stack>
+            <span>جایزه:</span>
+            <span>50,000 تومن اعتبار کیف پول</span>
+          </Typography>
+          <PrizeIcon />
         </Stack>
 
-        <Stack alignItems="flex-end">
-          <Stack direction="row" alignItems="center" spacing={0.5}>
+        {/* Pogress & eliminate time */}
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          sx={{ direction: 'rtl', width: '100%' }}
+        >
+          {/* Pogress */}
+          <Stack direction="row" alignItems="center" gap={0.5}>
+            <ProgressIcon color="#D90251" />
+
             <Typography
               variant="sub2"
-              color={theme.palette.custom.dollar}
+              color={theme.palette.primary.main}
               sx={{ display: 'flex', gap: 0.5, direction: 'rtl' }}
             >
-              <span>ورودی:</span>
-              {/* <span>{formattedEntryFee} تومن</span> */}
+              <span>پیشرفت ماموریت:</span>
+              <span>0/1</span>
             </Typography>
-            <EntryFreeIcon />
           </Stack>
-          <Stack direction="row" alignItems="center" spacing={0.5}>
+
+          {/* Eliminate time */}
+          <Stack direction="row" alignItems="center">
+            <TimeIcon color={theme.palette.custom.grey2} />
+
             <Typography
               variant="sub2"
-              color={theme.palette.custom.prize}
+              color={theme.palette.custom.grey2}
               sx={{ display: 'flex', gap: 0.5, direction: 'rtl' }}
             >
-              <span>جایزه:</span>
-              {/* <span>{formattedPrize} تومن</span> */}
+              <span>2 روز مانده</span>
             </Typography>
-            <PrizeIcon />
           </Stack>
         </Stack>
       </Stack>
@@ -102,21 +98,6 @@ export default function MissionCardContent({
       <Box mt="1.5px">
         <CustomProgressBar progress={0} />
       </Box>
-
-      <Divider sx={{ my: 0.5, background: theme.palette.stroke.black, height: '2px' }} />
-
-      {/* Tags */}
-      {/* TODO: Fix tags render from  API */}
-      {/* <Stack
-            direction="row"
-            spacing={0.5}
-            sx={{ justifyContent: 'flex-end' }}
-            mb={0.25}
-          >
-            {tags.slice(0, 3).map((tag, index) => (
-              <LobbyCardTag key={`${tag}-${index}`} title={tag} icon={tagIcons[tag]} />
-            ))}
-          </Stack> */}
     </Box>
   );
 }
