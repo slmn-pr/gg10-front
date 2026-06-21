@@ -12,6 +12,17 @@ export const missionTabs = [
   { value: 'expired', label: 'منقضی', path: '/missions/expired' },
 ];
 
+/**
+ * UI tab value -> API MissionState value.
+ * Only 'ready' differs from the API ('claimable').
+ */
+export const TAB_TO_API_STATE = {
+  active: 'active',
+  ready: 'claimable',
+  completed: 'completed',
+  expired: 'expired',
+};
+
 export const missionStatusConfig = {
   active: {
     label: 'در حال انجام',
@@ -19,7 +30,7 @@ export const missionStatusConfig = {
     icon: RocketLaunchOutlined,
     action: 'ادامه مأموریت',
   },
-  ready: {
+  claimable: {
     label: 'آماده دریافت',
     color: '#FFC225',
     icon: CardGiftcardOutlined,
@@ -39,55 +50,8 @@ export const missionStatusConfig = {
   },
 };
 
-export const missions = [
-  {
-    id: 1,
-    title: 'شرکت در ۳ لابی رتبه‌بندی',
-    description: 'در لابی‌های رتبه‌بندی بازی کن و امتیاز فصلت را بالا ببر.',
-    progress: 66,
-    current: '۲ از ۳',
-    reward: '۱۵۰,۰۰۰ تومان',
-    time: '۲ روز باقی مانده',
-    status: 'active',
-  },
-  {
-    id: 2,
-    title: 'برد در یک لابی مولتی پلیر',
-    description: 'یک مسابقه مولتی پلیر را با جایگاه برنده تمام کن.',
-    progress: 100,
-    current: '۱ از ۱',
-    reward: '۵۰ امتیاز رنک',
-    time: 'آماده دریافت',
-    status: 'ready',
-  },
-  {
-    id: 3,
-    title: 'دعوت از یک دوست',
-    description: 'لینک دعوتت را برای یک دوست بفرست و بعد از ثبت‌نام جایزه بگیر.',
-    progress: 25,
-    current: '۰ از ۱',
-    reward: '۱۰۰,۰۰۰ تومان',
-    time: '۵ روز باقی مانده',
-    status: 'active',
-  },
-  {
-    id: 4,
-    title: 'تکمیل پروفایل بازی',
-    description: 'نام کاربری بازی و اطلاعات حساب را کامل کن.',
-    progress: 100,
-    current: 'کامل شده',
-    reward: '۳۰ امتیاز رنک',
-    time: 'دریافت شده',
-    status: 'completed',
-  },
-  {
-    id: 5,
-    title: 'برد در ۵ مسابقه بتل رویال',
-    description: 'این مأموریت فصل قبل منقضی شده است.',
-    progress: 40,
-    current: '۲ از ۵',
-    reward: '۳۰۰,۰۰۰ تومان',
-    time: 'منقضی شده',
-    status: 'expired',
-  },
-];
+export const missionDifficultyLabel = {
+  easy: 'ساده',
+  medium: 'متوسط',
+  hard: 'سخت',
+};

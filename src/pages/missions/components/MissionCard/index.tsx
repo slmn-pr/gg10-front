@@ -1,12 +1,13 @@
-import { Card, CardActionArea, Stack, useTheme } from '@mui/material';
+import { Card, Stack, useTheme } from '@mui/material';
 import MissionCardImage from './MissionCardImage';
 import MissionCardContent from './MissionCardContent';
+import type { MissionResponse } from '@/api/missions/missions';
 
-interface MissionCardProsp {
-  data: {};
+interface MissionCardProps {
+  mission: MissionResponse;
 }
 
-export default function MissionCard({ data }: MissionCardProsp) {
+export default function MissionCard({ mission }: MissionCardProps) {
   const theme = useTheme();
 
   return (
@@ -27,19 +28,21 @@ export default function MissionCard({ data }: MissionCardProsp) {
       <Stack
         direction="row"
         sx={{ display: 'flex', flexDirection: 'row-reverse', alignItems: 'stretch' }}
-        // onClick={handleCardClick}
       >
-        {/* Image Section */}
-        <MissionCardImage label={'ساده'} status={'simple'} />
+        <MissionCardImage
+          difficulty={mission.difficulty}
+          state={mission.state}
+          imageUrl={mission.image_url}
+        />
 
-        {/* Content Section */}
         <MissionCardContent
-          description="به بخش لابی‌ها بروید و در 10 لابی ثبت‌نام کنید. ثبت‌نام، به تنهایی به معنای شرکت در لابی‌ها نیست"
-          title={'واریز 500 هزار تومان'}
-          // vip={vip}
-          // time={schedule}
-          // capacity={capacity}
-          // registeredCount={registeredCount}
+          title={mission.title}
+          description={mission.description}
+          reward={mission.reward}
+          progress={mission.progress}
+          goal={mission.goal}
+          expiresAt={mission.expires_at}
+          state={mission.state}
         />
       </Stack>
     </Card>
