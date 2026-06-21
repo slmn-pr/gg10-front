@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import SearchNotFoundIcon from '../components/NotFoundIcon';
 import FaqAccordion from '../components/FaqAccordion';
 import { listFaqReq } from '@/api';
+import { faqMock } from '../_mock';
 
 export default function FaqSection() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -14,7 +15,7 @@ export default function FaqSection() {
     queryFn: listFaqReq,
   });
 
-  const faqs = data ?? [];
+  const faqs = faqMock ?? []; // TODO: Replace data instead mock data
 
   const filteredFaqs = useMemo(() => {
     if (!searchTerm.trim()) return faqs;
