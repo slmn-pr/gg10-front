@@ -1,17 +1,20 @@
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import mainTheme from '@/theme/index.js';
 import { CssBaseline, IconButton, Stack, ThemeProvider, Typography } from '@mui/material';
 import OfflineSnakbar from '../OfflineSnakbar';
-import CloseIcon from '../icons/general/CloseIcon';
-import ChevronBackward from '../icons/ChevronBackward';
 import ChevronForwardIcon from '../icons/ChevronForward';
 
 interface SimpleLayoutProps {
   title: string;
 }
-export default function SimpleLayout({ title }: SimpleLayoutProps) {
+
+export default function SimpleLayout({ title: defaultTitle }: SimpleLayoutProps) {
+  const navigate = useNavigate();
+  const [title, setTitle] = useState(defaultTitle);
+
   return (
     <ThemeProvider theme={mainTheme}>
       <CssBaseline />
@@ -45,7 +48,7 @@ export default function SimpleLayout({ title }: SimpleLayoutProps) {
             alignItems="center"
             sx={{ direction: 'rtl', mb: '30px' }}
           >
-            <IconButton>
+            <IconButton onClick={() => navigate(-1)}>
               <ChevronForwardIcon color="white" />
             </IconButton>
             <Typography variant="h6">{title}</Typography>
@@ -54,7 +57,7 @@ export default function SimpleLayout({ title }: SimpleLayoutProps) {
           <OfflineSnakbar />
 
           <Box component="main" sx={{ flexGrow: 1, pb: 8, px: 0 }}>
-            <Outlet />
+            <Outlet context={{ setTitle }} />
           </Box>
         </Container>
       </Box>

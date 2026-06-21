@@ -96,10 +96,9 @@ const AppRouter = () => {
         <Route index element={<TicketPage />} />
       </Route>
 
-      <Route path="/ticket/:id" element={<SimpleLayout title="جزئیات تیکت" />}>
+      <Route path="/ticket/:id" element={<SimpleLayout title="در حال بارگذاری..." />}>
         <Route index element={<TicketDetailPage />} />
       </Route>
-    
     </Routes>
   );
 };

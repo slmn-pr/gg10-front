@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Stack, Typography, CircularProgress } from '@mui/material';
-import { useParams } from 'react-router-dom';
+import { useParams, useOutletContext } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { getTicketDetailReq, sendTicketMessageReq } from '@/api';
@@ -10,9 +10,14 @@ import TicketAttachmentDrawer from './TicketAttachmentDrawer';
 import useTicketAttachments from './hooks/useTicketAttachments';
 import useFormatDate from '@/hooks/useFormatDate';
 
+interface OutletContextType {
+  setTitle: (title: string) => void;
+}
+
 export default function TicketDetailPage() {
   const { id } = useParams();
   const queryClient = useQueryClient();
+  const { setTitle } = useOutletContext<OutletContextType>();
 
   const [drawerIndex, setDrawerIndex] = useState<number | null>(null);
 
@@ -25,6 +30,12 @@ export default function TicketDetailPage() {
     queryFn: () => getTicketDetailReq(id as string),
     enabled: !!id,
   });
+
+  useEffect(() => {
+    if (ticket?.title) {
+      setTitle(ticket.title);
+    }
+  }, [ticket?.title, setTitle]);
 
   const attachments = useTicketAttachments(ticket);
 
@@ -68,9 +79,13 @@ export default function TicketDetailPage() {
   return (
     <Stack sx={{ width: '100%', height: 'calc(100vh - 120px)' }}>
       <Stack sx={{ flex: 1, px: 2, py: 2, overflowY: 'auto' }}>
-        <Typography variant="sub3" color="custom.grey3" textAlign="center" mb={2}>
-          {createdDate}
-        </Typography>
+        <Stack direction="row" alignItems="center" spacing={1.5} mb={2}>
+          <Box sx={{ flex: 1, height: '1px', bgcolor: 'custom.grey4' }} />
+          <Typography variant="sub3" color="custom.grey3" sx={{ whiteSpace: 'nowrap' }}>
+            {createdDate}
+          </Typography>
+          <Box sx={{ flex: 1, height: '1px', bgcolor: 'custom.grey4' }} />
+        </Stack>
 
         <TicketMessageBubble
           message={{
@@ -105,11 +120,11 @@ export default function TicketDetailPage() {
             borderTop: '1px solid #000',
           }}
         >
-            <TicketComposer
-              onSend={sendMessage}
-              isSending={isSending}
-              disabled={isClosed}
-            />
+          <TicketComposer
+            onSend={sendMessage}
+            isSending={isSending}
+            disabled={isClosed}
+          />
         </Box>
       )}
 
