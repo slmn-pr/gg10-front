@@ -1,12 +1,10 @@
-import { Box, List, ListItem, ListItemText, Typography } from '@mui/material';
+import { List, ListItem, ListItemText, Typography } from '@mui/material';
 import { useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Tab, Tabs } from '@mui/material';
 import TicketList from '../components/TicketsList';
-import NoTicketView from '../components/NoTicketView';
 import { listMyTicketsReq } from '@/api';
 import type { TicketStatus } from '@/api/support/support';
-import { ticketsMock } from '../_mock';
 
 type SelectedTab = 'current' | 'answered';
 
@@ -20,7 +18,7 @@ export default function TicketSection() {
     queryFn: () => listMyTicketsReq(),
   });
 
-  const tickets = ticketsMock ?? []; // TODO: Use real data instead mock data
+  const tickets = data ?? [];
 
   const filteredTickets = useMemo(() => {
     if (selectedTab === 'current') {
