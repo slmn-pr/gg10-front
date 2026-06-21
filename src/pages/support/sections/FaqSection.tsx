@@ -1,37 +1,72 @@
 import GG10Loading from '@/components/GG10Loading';
 import { Box, TextField } from '@mui/material';
+import { useMemo, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import SearchNotFoundIcon from '../components/NotFoundIcon';
 import FaqAccordion from '../components/FaqAccordion';
-import { useState } from 'react';
+import { listFaqReq } from '@/api';
 
 export default function FaqSection() {
-  const [isSearching, setIsSearching] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const [result, setResult] = useState([1, 2]);
+  const { data, isLoading } = useQuery({
+    queryKey: ['faq'],
+    queryFn: listFaqReq,
+  });
+
+  const faqs = data ?? [];
+
+  const filteredFaqs = useMemo(() => {
+    if (!searchTerm.trim()) return faqs;
+    const term = searchTerm.trim().toLowerCase();
+    return faqs.filter(
+      (faq) =>
+        faq.question.toLowerCase().includes(term) ||
+        faq.answer.toLowerCase().includes(term),
+    );
+  }, [faqs, searchTerm]);
+
+  const groupedByCategory = useMemo(() => {
+    const groups: Record<string, typeof faqs> = {};
+    filteredFaqs.forEach((faq) => {
+      if (!groups[faq.category]) groups[faq.category] = [];
+      groups[faq.category].push(faq);
+    });
+    return groups;
+  }, [filteredFaqs]);
+
+  const categories = Object.keys(groupedByCategory);
+
   return (
     <>
-      {/* Search */}
-      <TextField placeholder="جستجو در سوالات" variant="filled" />
+      <TextField
+        placeholder="جستجو در سوالات"
+        variant="filled"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        fullWidth
+      />
 
-      {isSearching && (
+      {isLoading && (
         <Box sx={{ mt: 10 }}>
           <GG10Loading />
         </Box>
       )}
 
-      {!isSearching && result.length <= 0 && (
+      {!isLoading && categories.length === 0 && (
         <Box sx={{ mt: 10 }}>
           <SearchNotFoundIcon />
         </Box>
       )}
 
-      {!isSearching && result.length > 0 && (
-        <>
-          {' '}
-          <FaqAccordion title="عنوان" />
-          <FaqAccordion title="عنوان" />
-        </>
-      )}
+      {!isLoading &&
+        categories.map((category) => (
+          <FaqAccordion
+            key={category}
+            title={category}
+            items={groupedByCategory[category]}
+          />
+        ))}
     </>
   );
 }
