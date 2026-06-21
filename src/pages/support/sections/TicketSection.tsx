@@ -6,6 +6,7 @@ import TicketList from '../components/TicketsList';
 import NoTicketView from '../components/NoTicketView';
 import { listMyTicketsReq } from '@/api';
 import type { TicketStatus } from '@/api/support/support';
+import { ticketsMock } from '../_mock';
 
 type SelectedTab = 'current' | 'answered';
 
@@ -19,7 +20,7 @@ export default function TicketSection() {
     queryFn: () => listMyTicketsReq(),
   });
 
-  const tickets = data ?? [];
+  const tickets = ticketsMock ?? []; // TODO: Use real data instead mock data
 
   const filteredTickets = useMemo(() => {
     if (selectedTab === 'current') {
